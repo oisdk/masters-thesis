@@ -1,0 +1,131 @@
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{turnstile}
+\usepackage{bbm}
+\usepackage[greek, english]{babel}
+\usepackage{stmaryrd}
+\usepackage{latexsym}
+\newcommand\doubleplus{+\kern-1.3ex+\kern0.8ex}
+\newcommand\mdoubleplus{\ensuremath{\mathbin{+\mkern-8mu+}}}
+% \usepackage[dvipsnames]{xcolor}
+\usepackage{relsize}
+\newcommand\doublelbrace{%
+  {\{\mkern-4mu\lvert}%
+}
+\newcommand\doublerbrace{%
+  {\rvert\mkern-4mu\}}%
+}
+
+\makeatletter
+\newcommand\incircbin
+{%
+  \mathpalette\@incircbin
+}
+\newcommand\@incircbin[2]
+{%
+  \mathbin%
+  {%
+    \ooalign{\hidewidth$#1#2$\hidewidth\crcr$#1\bigcirc$}%
+  }%
+}
+\newcommand{\oeq}{\ensuremath{\incircbin{=}}}
+\makeatother
+\makeatletter
+\newcommand\insquarebin
+{%
+  \mathpalette\@insquarebin
+}
+\newcommand\@insquarebin[2]
+{%
+  \mathbin%
+  {%
+    \ooalign{\hidewidth$#1#2$\hidewidth\crcr$#1\bigbox$}%
+  }%
+}
+\newcommand{\sqtri}{\ensuremath{\insquarebin{\triangle}}}
+\makeatother
+\newcommand{\circeps}{\ensuremath{\insquarebin{\epsilon}}}
+\makeatother
+\newcommand{\qeq}{\mathrel{\mathpalette\qeqf\relax}}
+\newcommand{\qeqf}[2]{%
+  \ooalign{$#1=$\cr
+    \hidewidth\raisebox{1ex}{$#1\mkern0mu{\mathsmaller{\mathsmaller{?}}}$}\hidewidth\cr}}
+\usepackage{ucs}
+\DeclareUnicodeCharacter{8605}{\ensuremath{\leadsto}}
+\DeclareUnicodeCharacter{951}{\textgreek{\texteta}}
+\DeclareUnicodeCharacter{957}{\textgreek{\textnu}}
+\DeclareUnicodeCharacter{961}{\textgreek{\textrho}}
+\DeclareUnicodeCharacter{929}{\textgreek{\textRho}}
+\DeclareUnicodeCharacter{954}{\textgreek{\textkappa}}
+\DeclareUnicodeCharacter{928}{\textgreek{\textPi}}
+\DeclareUnicodeCharacter{922}{\textgreek{\textKappa}}
+\DeclareUnicodeCharacter{931}{\textgreek{\textSigma}}
+\DeclareUnicodeCharacter{916}{\textgreek{\textDelta}}
+\DeclareUnicodeCharacter{921}{\textgreek{\textIota}}
+\DeclareUnicodeCharacter{8759}{\ensuremath{\dblcolon}}
+\DeclareUnicodeCharacter{737}{\ensuremath{^\text{l}}}
+\DeclareUnicodeCharacter{691}{\ensuremath{^\text{r}}}
+\DeclareUnicodeCharacter{7523}{\ensuremath{_\text{r}}}
+\DeclareUnicodeCharacter{8343}{\ensuremath{_\text{l}}}
+\DeclareUnicodeCharacter{8718}{\ensuremath{\blacksquare}}
+\DeclareUnicodeCharacter{10214}{\ensuremath{\llbracket}}
+\DeclareUnicodeCharacter{10215}{\ensuremath{\rrbracket}}
+\DeclareUnicodeCharacter{8857}{\ensuremath{\odot}}
+\DeclareUnicodeCharacter{8860}{\oeq}
+\DeclareUnicodeCharacter{9043}{\ensuremath{\sqtri}}
+\DeclareUnicodeCharacter{3870}{\ensuremath{\cong}}
+\DeclareUnicodeCharacter{8799}{\ensuremath{\qeq}}
+\DeclareUnicodeCharacter{10181}{\ensuremath{\lbag}}
+\DeclareUnicodeCharacter{10182}{\ensuremath{\rbag}}
+\DeclareUnicodeCharacter{8760}{\ensuremath{-}}
+\DeclareUnicodeCharacter{9428}{\ensuremath{\textcircled{ε}}}
+\DeclareUnicodeCharacter{8623}{\ensuremath{\lightning}}
+\DeclareUnicodeCharacter{10627}{\ensuremath{\doublelbrace}}
+\DeclareUnicodeCharacter{10628}{\ensuremath{\doublerbrace}}
+\DeclareUnicodeCharacter{10631}{\ensuremath{\llparenthesis}}
+\DeclareUnicodeCharacter{10632}{\ensuremath{\rrparenthesis}}
+\DeclareUnicodeCharacter{9666}{\ensuremath{\scriptscriptstyle\blacktriangleleft}}
+\DeclareUnicodeCharacter{8855}{\ensuremath{\otimes}}
+\DeclareUnicodeCharacter{894}{\ensuremath{\fatsemi}}
+\DeclareUnicodeCharacter{65373}{\ensuremath{\}}}
+\DeclareUnicodeCharacter{65371}{\ensuremath{\{}}
+\DeclareUnicodeCharacter{120021}{\ensuremath{\mathcal{F}}}
+\DeclareUnicodeCharacter{120017}{\ensuremath{\mathcal{B}}}
+\DeclareUnicodeCharacter{8761}{\ensuremath{\coloneq}}
+\DeclareUnicodeCharacter{8788}{\ensuremath{\mathrel{\mathop:}=}}
+\DeclareUnicodeCharacter{119974}{\ensuremath{\mathcal{K}}}
+\DeclareUnicodeCharacter{8492}{\ensuremath{\mathcal{B}}}
+\DeclareUnicodeCharacter{8495}{\ensuremath{\mathcal{E}}}
+\DeclareUnicodeCharacter{8466}{\ensuremath{\mathcal{L}}}
+\DeclareUnicodeCharacter{8779}{\ensuremath{\equiv}}
+\DeclareUnicodeCharacter{10626}{\ensuremath{:}}
+\DeclareUnicodeCharacter{10629}{\ensuremath{\llparenthesis}}
+\DeclareUnicodeCharacter{10630}{\ensuremath{\rrparenthesis}}
+\DeclareUnicodeCharacter{9671}{\ensuremath{\Diamond}}
+\DeclareUnicodeCharacter{9723}{\ensuremath{\Box}}
+\DeclareUnicodeCharacter{9655}{\ensuremath{\triangleright}}
+\DeclareUnicodeCharacter{7584}{\ensuremath{^\text{f}}}
+\DeclareUnicodeCharacter{8346}{\ensuremath{_\text{p}}}
+\DeclareUnicodeCharacter{8621}{\ensuremath{\leftrightsquigarrow}}
+\DeclareUnicodeCharacter{12310}{\ensuremath{\lbparen}}
+\DeclareUnicodeCharacter{12311}{\ensuremath{\rbparen}}
+\DeclareUnicodeCharacter{7470}{\ensuremath{^\text{B}}}
+\DeclareUnicodeCharacter{7468}{\ensuremath{^\text{A}}}
+\DeclareUnicodeCharacter{7580}{\ensuremath{^\text{c}}}
+\usepackage[references]{agda}
+
+\newcommand{\Nat}{\AgdaDatatype{ℕ}}
+\newcommand{\Int}{\AgdaDatatype{ℤ}}
+\colorlet{AgdaKeyword}{BlueViolet}
+\colorlet{AgdaFunction}{OliveGreen}
+\colorlet{AgdaDatatype}{OliveGreen}
+\colorlet{AgdaPostulate}{OliveGreen}
+\colorlet{AgdaPrimitive}{OliveGreen}
+\colorlet{AgdaRecord}{OliveGreen}
+\colorlet{AgdaRecordtype}{OliveGreen}
+\colorlet{AgdaPrimitiveType}{OliveGreen}
+\colorlet{AgdaModule}{OliveGreen}
+\colorlet{AgdaInductiveConstructor}{Sepia}
+\colorlet{AgdaField}{Sepia}
+\renewcommand{\AgdaKeywordFontStyle}[1]{\textbf{#1}}
+\usepackage{csquotes}

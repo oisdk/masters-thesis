@@ -1,0 +1,111 @@
+%   1     3     7    10    25    50
+%   |     |     |    |     |     |        011111
+%   X     v     v    v     v     v
+%         3     7    10    25    50
+%         |     |      \     \ _/
+%         |     |       \  ___/
+%         |     |       __/    \          1 2 5 3 4
+%         |     |      /  \     \
+%         v     v     v    v     v
+%         3     7    50    10    25
+%         |  *  |  * |  -  |  -  |       (*,*,-,-)
+%         v     v    v     v     v
+%         3  *  7  * 50 -  10 -  25
+%          \     \     \  /     /
+%           \     \     \/     /
+%            \     \    40    /
+%             \     \  /     /
+%              \     \/     /            \ \ \/ /
+%               \    280   /              \ \/ /
+%                \     \  /                \ \/
+%                 \     \/                  \/
+%                  \    255
+%                   \  /
+%                    \/
+%                   765
+\begin{wrapfigure}[23]{r}[1.1\marginparwidth]{7.8cm}\vspace{-1.5\baselineskip}
+  \tikzset{>=Triangle[open]}
+  \begin{tikzpicture}
+    \node (o1)  at (-1, 1.5) { 1} ;
+    \node (o3)  at ( 0, 1.5) { 3} ;
+    \node (o7)  at ( 1, 1.5) { 7} ;
+    \node (o10) at ( 2, 1.5) {10} ;
+    \node (o25) at ( 3, 1.5) {25} ;
+    \node (o50) at ( 4, 1.5) {50} ;
+
+    \node(t1)   at (-1,  0) {\xcancel{1}}  ;
+    \node(t3)   at (0 ,  0) {3}  ;
+    \node(t7)   at (1 ,  0) {7}  ;
+    \node(t10)  at (2 ,  0) {10} ;
+    \node(t25)  at (3 ,  0) {25} ;
+    \node(t50)  at (4 ,  0) {50} ;
+
+    \draw [-{Rays[n=4]}] (o1.south)  -- (t1.north) ;
+    \draw [->] (o3.south)  -- (t3.north) ;
+    \draw [->] (o7.south)  -- (t7.north) ;
+    \draw [->] (o10.south) -- (t10.north) ;
+    \draw [->] (o25.south) -- (t25.north) ;
+    \draw [->] (o50.south) -- (t50.north) ;
+
+    \node(b3)   at (0 , -1.5) {3}  ;
+    \node(b7)   at (1 , -1.5) {7}  ;
+    \node(b50)  at (2 , -1.5) {50} ;
+    \node(b10)  at (3 , -1.5) {10} ;
+    \node(b25)  at (4 , -1.5) {25} ;
+  
+    \draw [->, rounded corners] (t3.south) --  (b3.north) ;
+    \draw [->, rounded corners] (t7.south) --  (b7.north) ;
+    \draw [->, rounded corners] (t10.south) to[out=-90, in=90] (b10.north) ;
+    \draw [->, rounded corners] (t25.south) to[out=-90, in=90] (b25.north) ;
+    \draw [->, rounded corners] (t50.south) to[out=-90, in=90] (b50.north) ;
+
+    \node[draw] at (0.5 , -2.25) {$\times$} ;
+    \node[draw] at (1.5 , -2.25) {$\times$} ;
+    \node[draw] at (2.5 , -2.25) {$-$} ;
+    \node[draw] at (3.5 , -2.25) {$-$} ;
+  
+    \node at (0.5 , -3) {$\times$} ;
+    \node at (1.5 , -3) {$\times$} ;
+    \node at (2.5 , -3) {$-$} ;
+    \node at (3.5 , -3) {$-$} ;
+
+    \node(e3) at (0   , -3) {3}  ;
+    \node(e7) at (1   , -3) {7}  ;
+    \node(e50) at (2   , -3) {50} ;
+    \node(e10) at (3   , -3) {10} ;
+    \node(e25) at (4   , -3) {25} ;
+
+    \draw[->] (b3)  -- (e3) ;
+    \draw[->] (b7)  -- (e7) ;
+    \draw[->] (b50) -- (e50) ;
+    \draw[->] (b10) -- (e10) ;
+    \draw[->] (b25) -- (e25) ;
+
+    \node(r40)  [circle, inner sep=0pt, fill=white, anchor=center] at (2.5, -4) {40} ;
+    \node(r280) [circle, inner sep=0pt, fill=white, anchor=center] at (2  , -5) {280} ;
+    \node(r255) [circle, inner sep=0pt, fill=white, anchor=center] at (2.5, -6) {255} ;
+    \node(r765) [circle, inner sep=0pt, fill=white, anchor=center] at (2  , -7) {765} ;
+
+    \draw[->] (e50)  to[out=-90, in=90] (r40) ;
+    \draw[->] (e10)  to[out=-90, in=90] (r40) ;
+    \draw[->] (e25)  to[out=-90, in=90] (r255) ;
+    \draw[->] (e7)   to[out=-90, in=90] (r280) ;
+    \draw[->] (e3)   to[out=-90, in=90] (r765) ;
+    \draw[->] (r255) to[out=-90, in=90] (r765) ;
+    \draw[->] (r280) to[out=-90, in=90] (r255) ;
+    \draw[->] (r40)  to[out=-90, in=90] (r280) ;
+
+    \node at (5.6, 0.9) {\parbox{2.2cm}{\subcaption{Selection  \hfill \; \label{countdown-selection}}}} ;
+    \node at (5.6,-0.7) {\parbox{2.2cm}{\subcaption{Permutation\hfill \; \label{countdown-permutation}}}} ;
+    \node at (5.6,-2.2) {\parbox{2.2cm}{\subcaption{Operators  \hfill \; \label{countdown-operators}}}} ;
+    \node at (5.6,-5) {\parbox{2.2cm}{\subcaption{Parentheses\hfill \; \label{countdown-parens}}}} ;
+  \end{tikzpicture}
+  \caption{The components of a transformation which makes up a Countdown
+    candidate solution}
+  \label{countdown-transform}
+\end{wrapfigure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

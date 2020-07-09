@@ -1,0 +1,41 @@
+\begin{figure*}
+  \centering
+  \tikzcdset{
+  cramped,
+  every matrix/.append style={nodes={font=\scriptsize}},
+  row    sep/normal=1em,
+  column sep/normal=1em,
+  }
+  \begin{subfigure}[b]{.49\textwidth}
+    \centering
+    \begin{tikzcd}
+      (1,e) \ar[rdddd, out=-45, in=135] & (2,e) \ar[rdddd, out=-45, in=135] & (3,e) \ar[rdddd, out=-45, in=135] & (4,e) \ar[rdddd, out=-45, in=135] & (5,e)        \\
+      (1,d) \ar[u]     & (2,d) \ar[u]    & (3,d) \ar[u]    & (4,d) \ar[u]    & (5,d) \ar[u] \\
+      (1,c) \ar[u]     & (2,c) \ar[u]    & (3,c) \ar[u]    & (4,c) \ar[u]    & (5,c) \ar[u] \\
+      (1,b) \ar[u]     & (2,b) \ar[u]    & (3,b) \ar[u]    & (4,b) \ar[u]    & (5,b) \ar[u] \\
+      (1,a) \ar[u]     & (2,a) \ar[u]    & (3,a) \ar[u]    & (4,a) \ar[u]    & (5,a) \ar[u]
+    \end{tikzcd}
+    \caption{Depth-First}
+    \label{depth-first}
+  \end{subfigure} \hfill
+  \begin{subfigure}[b]{.49\textwidth}
+    \centering
+    \begin{tikzcd}
+      (1,e) \ar[dr] & (2,e) \ar[dr]  & (3,e) \ar[dr]    & (4,e) \ar[dr] & (5,e) \\
+      (1,d) \ar[dr] & (2,d) \ar[dr]  & (3,d) \ar[dr]    & (4,d) \ar[dr] & (5,d) \ar[u] \\
+      (1,c) \ar[dr] & (2,c) \ar[dr]  & (3,c) \ar[dr]    & (4,c) \ar[dr] & (5,c) \ar[uul] \\
+      (1,b) \ar[dr] & (2,b) \ar[dr]  & (3,b) \ar[dr]    & (4,b) \ar[dr] & (5,b) \ar[uuull, out=130, in=-50] \\
+      (1,a) \ar[u]  & (2,a) \ar[uul, out=130, in=-50] & (3,a) \ar[uuull, out=130, in=-50] & (4,a) \ar[uuuulll, out=130, in=-50] & (5,a) \ar[uuuulll, out=130, in=-50]
+    \end{tikzcd}
+    \caption{Breadth-First}
+    \label{breadth-first}
+  \end{subfigure}
+  \caption{Two possible products for the sets \(\left[ 1 \dots 5 \right]\) and
+    \(\left[  a \dots e \right]\)}
+  \label{pairings}
+\end{figure*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

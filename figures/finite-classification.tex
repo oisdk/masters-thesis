@@ -1,0 +1,96 @@
+\begin{figure*}
+  \centering
+  \begin{tikzcd}[cramped, row sep=small, column sep=2.3em]
+    {} &
+    {} \ar[ddddd, dash, start anchor={[yshift=4ex]}, end anchor={[yshift=-4ex]}] &
+    \text{Non Discrete} &
+    \ar[ddddd, dash, dashed, start anchor={[yshift=4ex]}, end anchor={[yshift=-4ex]}] &
+    \text{Discrete} &
+    {}
+    \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ar[rrrr, dash, start anchor={[xshift=-6ex]}, end anchor={[xshift=10ex]}] &
+    &
+    &
+    &
+    {}
+    &
+    {}
+    \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \text{Ordered} &
+    &
+    \text{\parbox{2.6cm}{\centering Manifest Enumerable (\ref{manifest-enumerability})}}
+    \ar[
+      from=rr,
+      bend left=15,
+      crossing over,
+      start anchor={[yshift=-2ex]west},
+      end anchor={[yshift=-2ex]east}
+      ]
+    \ar[
+      rr,
+      bend left=15,
+      "\text{Discrete}" description,
+      start anchor={[yshift=2ex]east},
+      end anchor={[yshift=2ex]west}
+      ]
+    \ar[ddd, crossing over]
+    &
+    &
+    \text{\parbox{2.6cm}{\centering Split Enumerable (\ref{split-enumerability})}}
+      \ar[d, xshift=-1ex, bend right=30]
+    &
+    \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    &
+    &
+    &
+    &
+    \text{\parbox{2.6cm}{\centering Manifest Bishop (\ref{manifest-bishop-finiteness})}}
+      \ar[u, xshift=1ex, bend right=30]
+    &
+    \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ar[rrrr, dash, dashed, start anchor={[xshift=-6ex]}, end anchor={[xshift=10ex]}] &
+    &
+    &
+    &
+    {}
+    &
+    \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \text{Unordered} &
+    {} &
+    \text{\parbox{2.6cm}{\centering Kuratowski (\ref{kuratowski})}}
+    \ar[rr, crossing over, bend left=15, "\text{Discrete}" description, start anchor=north east, end anchor=north west]
+    \ar[from=rr, crossing over, bend left=15, start anchor=south west, end anchor=south east]
+    &
+    {}
+    &
+    \text{\parbox{2.2cm}{\centering Cardinal (\ref{cardinal-finiteness})}}
+      \ar[from=uu, crossing over]
+      \ar[
+      uuu,
+      crossing over,
+      "\text{Ord}" {description, near end},
+      end anchor=east,
+      start anchor=east,
+      in=-15, out=20
+      ]
+    &
+    \\
+    & & & & &
+    \\
+    & \ar[rrrr, "\text{More Restrictive}" description, end anchor={[xshift=-6ex]}]
+    &
+    &
+    &
+    &
+    \ar[uuuuuu, "\text{More Informative}" {description, very near start}]
+    {}
+  \end{tikzcd}
+  \caption{Classification of finiteness predicates according to whether they are
+    discrete (imply decidable equality) and whether they imply a total order.}
+  \label{finite-classification}
+\end{figure*}%
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

@@ -1,0 +1,74 @@
+\chapter{Countably Infinite Types} \label{infinite}
+In the previous sections we saw different flavours of finiteness which were
+really just different flavours of relations to \(\mathbf{Fin}\).
+In this section we will see that we can construct a similar classification of
+relations to \(\mathbb{N}\), in the form of the countably infinite types.
+\section{Two Countable Types}
+The two types for countability we will consider are analogous to split
+enumerability and cardinal finiteness.
+The change will be a simple one: we will swap out lists for streams.
+\begin{definition}[Streams]
+  \begin{equation}
+    \mathbf{Stream}(A) \coloneqq (\mathbb{N} \rightarrow A)
+    \simeq \llbracket \top , \text{const}(\mathbb{N}) \rrbracket
+  \end{equation}
+\end{definition}
+\begin{definition}[Split Countability]
+  \begin{equation}
+    \aleph_0!(A) \coloneqq \Sigma {(\mathit{xs} : \mathbf{Stream}(A))} , \Pi {(x : A)} , x \in \mathit{xs}
+  \end{equation}
+\end{definition}
+This type is definitionally equal to it surjection equivalent (\(\mathbb{N}
+\twoheadrightarrow ! \; A\)).
+We construct the unordered, propositional version of the predicate in much the
+same way as we constructed cardinal finiteness.
+\begin{definition}[Countability]
+  \begin{equation}
+    \aleph_0(A) \coloneqq \lVert \aleph_0!(A) \rVert
+  \end{equation}
+\end{definition}
+
+From both of these types we can derive decidable equality.
+\begin{lemma}
+  Any countable type has decidable equality.
+\end{lemma}
+\section{Closure}
+\input{figures/pairing-functions}
+We know that countable infinity is not closed under the exponential (function
+arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
+what's left.
+\begin{theorem} \label{split-countability-sigma}
+  Split countability is closed under \(\Sigma\).
+\end{theorem}
+We know that countable infinity is not closed under the exponential (function
+arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
+what's left.
+To do this we have to take a slightly different approach to the functions we
+defined before.
+Figure~\ref{pairings} illustrates the reason why: previously, we used the
+depth-first product pairing for each support list.
+This diverges if the first list is infinite, never exploring anything other than
+the first element in the second list.
+Instead, we use here the cantor pairing function, which performs a breadth-first
+search of the pairings of both lists.
+
+Finally, while we have lost certain closure proofs by allowing for infinite
+types, we also \emph{gain} some: in particular the Kleene star.
+\begin{theorem}
+  Split countability is closed under Kleene star.
+  \begin{equation}
+    \aleph_0!(A) \rightarrow \aleph_0!(\mathbf{List}(A))
+  \end{equation}
+\end{theorem}
+Again, this proof requires a particular pattern to ensure productivity.
+The pattern here builds an intermediate stream \(\mathcal{KV}\) of non-empty
+lists from the input support stream \(\mathit{xs}\), which is subsequently
+flattened.
+\begin{equation}
+  \mathcal{KV}_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} \in \mathbf{List}(\mathbb{N}) ; \text{sum}(\mathit{js}) = i ; 0 \notin \mathit{js}  \right]
+\end{equation}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:

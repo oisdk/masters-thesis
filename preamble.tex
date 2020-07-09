@@ -1,0 +1,190 @@
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\documentclass[draft]{memoir}
+
+\usepackage{graphicx}
+\chapterstyle{veelo}
+\hangsecnum
+
+\usepackage{url}
+
+\ifdraftdoc
+\newcommand{\todo}[1]{\sidepar{TODO: \\ #1}}
+\else
+\newcommand{\todo}[1]{}
+\fi
+
+\usepackage[mono=false]{libertine}
+\usepackage{catchfilebetweentags}
+\input{agda}
+\AgdaNoSpaceAroundCode{}
+
+\usepackage{tikz-cd}
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}},
+}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\renewcommand{\qed}{\ensuremath{\hfill\blacksquare}}
+
+\makeatletter
+\newcommand{\eqnum}{\leavevmode\textup{\tagform@{\theequation}}}
+\makeatother
+
+\usepackage{dashbox}
+\setlength{\dashlength}{2pt}
+\setlength{\dashdash}{.75pt}
+\usepackage{varwidth}
+\usepackage{environ}
+\NewEnviron{agdalisting}[1][\dbox]{\vspace{\abovedisplayskip}%
+
+  \refstepcounter{equation}%
+  \hfill%
+  {\begin{varwidth}{\linewidth}% Add #1 just before { on this line to make agda
+      % code boxed with dots
+      \BODY%
+    \end{varwidth}%
+    \vspace{\belowdisplayskip}%
+  }%
+  \hfill%
+  \eqnum%
+  \break%
+}
+\NewEnviron{agdalisting*}[1][\dbox]{\vspace{\abovedisplayskip}%
+
+  \hfill%
+  {\begin{varwidth}{\linewidth}% Add #1 just before { on this line to make agda
+      % code boxed with dots
+      \BODY%
+    \end{varwidth}%
+    \vspace{\belowdisplayskip}%
+  }%
+  \hfill%
+  \break%
+}
+
+
+\newtheoremstyle{roman}
+{.6\baselineskip} % Space above
+{.6\baselineskip} % Space below
+{} % Body font
+{} % Indent amount
+{} % Theorem head font
+{} % Punctuation after theorem head
+{0pt} % Space after theorem head
+{%
+\noindent%
+\raisebox{0pt}[0pt][0pt]{%
+\llap{%
+\parbox[t][][t]{.7\marginparwidth}{%
+\raggedleft%
+{\bfseries\thmname{#1}\thmnumber{ #2}.}\thmnote{\\(#3)}}\hspace{\marginparsep}}}}
+
+\theoremstyle{roman}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+% Haskell bind operator >>=
+\newcommand\hbind{%
+  \ensuremath{\gg\mkern-5.5mu=}%
+}
+% Haskell apply operator <*>
+\newcommand\hap{%
+  \ensuremath{\mathbin{<\mkern-9mu*\mkern-9mu>}}%
+}
+% Haskell alternative operator <|>
+\newcommand\halt{%
+  \ensuremath{\mathbin{<\mkern-5mu\vert\mkern-5mu>}}%
+}
+% Haskell fmap operator <$>$
+\newcommand\hfmap{%
+  \ensuremath{\mathbin{<\mkern-6mu\$\mkern-6mu>}}%
+}
+% Haskell mappend operator <>
+\newcommand\hcmb{%
+  \ensuremath{\mathbin{\diamond}}%
+}
+% Haskell fish operator <><
+\newcommand\hcmbin{%
+  \ensuremath{\mathbin{\diamond\mkern-7.4mu\rtimes}}%
+}
+% Haskell Kleisli composition <=<
+\newcommand\hkcomp{%
+  \ensuremath{\mathbin{<\mkern-10mu=\mkern-7mu<}}
+}
+% Haskell forall
+\newcommand\hforall{%
+  \ensuremath{\forall}%
+}
+% Unique membership \in!
+\newcommand\inunique{%
+  \mathrel{\in\mkern-6mu\raisebox{-0.5pt}{!}}
+}
+% Decide membership \in?
+\newcommand\decin{%
+  \mathrel{\in\mkern-6mu\raisebox{-0.5pt}{?}}
+}
+% Dot as wildcard character
+\newcommand\wc{{\mkern 2mu\cdot\mkern 2mu}}
+% Binary operator !
+\newcommand\ind{\mathbin{!}}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{pict2e}
+\usepackage{forest}
+\usepackage{wrapfig}
+% Proper double left paren [( (also ``plano-concave lens'')
+\newcommand{\lbparen}{%
+  \mathopen{%
+    \sbox0{$()$}%
+    \setlength{\unitlength}{\dimexpr\ht0+\dp0}%
+    \raisebox{-\dp0}{%
+      \begin{picture}(.32,1)
+        \linethickness{\fontdimen8\textfont3}
+        \roundcap
+        \put(0,0){\raisebox{\depth}{$($}}
+        \polyline(0.32,0)(0,0)(0,1)(0.32,1)
+      \end{picture}%
+    }%
+  }%
+}
+
+% Proper double right paren [( (also ``plano-concave lens'')
+\newcommand{\rbparen}{%
+  \mathclose{%
+    \sbox0{$()$}%
+    \setlength{\unitlength}{\dimexpr\ht0+\dp0}%
+    \raisebox{-\dp0}{%
+      \begin{picture}(.32,1)
+        \linethickness{\fontdimen8\textfont3}
+        \roundcap
+        \put(-0.08,0){\raisebox{\depth}{$)$}}
+        \polyline(0,0)(0.32,0)(0.32,1)(0,1)
+      \end{picture}%
+    }%
+  }%
+}
+
+\usepackage[square,numbers]{natbib}
+
+\usepackage{cancel}
+
+\PrerenderUnicode{í}
+\newcommand{\proptrunc}[1]{\ensuremath{\AgdaDatatype{\ensuremath{\lVert}}\;#1\;\AgdaDatatype{\ensuremath{\rVert}}}}
+\newcommand{\agdaequiv}[2]{\ensuremath{#1\;\AgdaFunction{\ensuremath{\equiv}}\;#2}}
+\newcommand{\agdanat}{\ensuremath{\AgdaDatatype{\mathbb{N}}}}
+\newcommand{\agdabot}{\ensuremath{\AgdaDatatype{\ensuremath{\bot}}}}
+\newcommand{\agdatop}{\ensuremath{\AgdaDatatype{\ensuremath{\top}}}}
+\newcommand{\agdacal}[1]{\ensuremath{\AgdaFunction{\ensuremath{\mathcal{#1}}}}}
+\newcommand{\agdambb}[1]{\ensuremath{\AgdaFunction{\ensuremath{\mathbb{#1}}}}}
+
+
+% \usepackage{hyperref}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

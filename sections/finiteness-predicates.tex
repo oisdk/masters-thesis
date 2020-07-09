@@ -1,0 +1,1028 @@
+\chapter{Finiteness Predicates} \label{finiteness-predicates}
+In this section, we will define and briefly describe each of the five predicates
+in Figure~\ref{finite-classification}.
+We will also explain \emph{why} there are five separate predicates: how can it
+be the case that so many different things describe ``finiteness''?
+As we will see, some predicates are too informative (they
+tell us more about the underlying type other than it just being finite), or too
+restrictive (they don't allow certain finite types to be classified as finite).
+These diversions won't be dead-ends, however: the final predicate we will land
+on as the ``correct'' (or, more accurately, most useful) notion of finiteness
+will be built out of all of the others.
+\section{Split Enumerability} \label{split-enumerability}
+We will start with a simple notion of finiteness, called split enumerability.
+This predicate is perhaps the first definition of ``finite'' that someone might
+come up with (it's certainly the most common in dependently-typed programming):
+put simply, a split enumerable type is a type for which all of its elements can
+be listed.
+\begin{definition}[Split Enumerable Set] \label{split-enum-def}
+  To say that some type \(A\) is split enumerable is to say that there is a list
+  \(\mathit{support} : \AgdaDatatype{List}(A)\) such that any value \(x : A\) is in
+  \(\mathit{support}\).
+  \begin{agdalisting} \label{split-enum-def-eqn}
+    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Container.tex]{split-enum-def}
+  \end{agdalisting}
+  We call the first component of this pair the ``support'' list, and the second
+  component the ``cover'' proof.
+  An equivalent version of this predicate was called \verb+Listable+ in
+  \cite{firsovDependentlyTypedProgramming2015}.
+\end{definition}
+
+This predicate is simple and useful, but we will see later on how it is perhaps
+a little imprecise.
+Before we dive in to exploring the predicate itself, though, we will need to
+explain some of the terms we used in its definition.
+\subsection{What is a List?}
+In this paper we prefer a slightly unusual definition for the type of lists:
+\begin{agdalisting} \label{list-def}
+  \ExecuteMetaData[agda/Container/List.tex]{list-def}
+\end{agdalisting}
+This is the definition for a \emph{container} (Definition~\ref{container-def}):
+effectively, the above definition says that ``Lists are a datatype whose shape
+is given by the natural numbers, and which can be indexed by numbers smaller
+than its shape''.
+
+\todo{The rest of this section certainly reads a lot better because of the
+  inlined definitions, but I worry it's a little too informal and (possibly) too
+verbose}
+
+% \begin{wrapfigure}[5]{r}{.4\linewidth} \vspace{-1.6\baselineskip}
+%   \ExecuteMetaData[agda/Data/List/Base.tex]{list-def} \vspace{-\baselineskip}
+%   \caption{The Usual Inductive Definition}
+% \end{wrapfigure}
+
+If that seems needlessly complex, don't worry: this definition is precisely
+equivalent to the usual inductive one.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Data/List/Base.tex]{list-def}
+\end{agdalisting}
+And this isn't some kind of hand-waving equivalence, either: since we are
+working in HoTT, we can (and do) prove that the two types are equal, allowing us
+to use one or the other depending on whichever is more convenient, and
+\(\AgdaFunction{subst}\) in the other representation without loss of generality.
+That said, defining lists as containers will reveal several interesting
+connections and proofs about split enumerability and the other predicates, 
+so for the remainder of the paper whenever we say \AgdaDatatype{List} we will
+mean Equation~\ref{list-def}.
+
+Before we get to those interesting proofs, though, there are some other things
+that need defining.
+\AgdaDatatype{Fin}, for instance: \(\AgdaDatatype{Fin}\;n\) is the type of
+natural numbers smaller than \(n\).
+Its definition relies on a type for disjoint union,
+\(\AgdaDatatype{\ensuremath{\uplus}}\).
+\begin{multicols}{2} \null \vfill
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
+  \end{agdalisting} \vfill \null \columnbreak
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{disj-union}
+  \end{agdalisting}%
+  % It is also expressible with only \(\Sigma\):
+  % \begin{agdalisting}
+  %   \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
+  % \end{agdalisting}
+  % Although the inductive type definition is slightly more ergonomic.
+\end{multicols} \noindent
+And containers themselves, of course.
+Containers are a well-studied topic in dependent type theory, with a rich
+theory: we won't dive in to that here.
+\begin{definition}[Containers] \label{container-def}
+  A container \cite{abbottContainersConstructingStrictly2005} is a pair
+  \(S , P\) where \(S\) is a type, the elements of which are called
+  the \emph{shapes} of the container, and \(P\) is a type family on \(S\), where
+  the elements of \(P(s)\) are called the \emph{positions} of a container.
+  We ``interpret'' a container into a functor defined like so:
+  \begin{agdalisting} \label{container-interp}
+    \ExecuteMetaData[agda/Container.tex]{container-interp}
+  \end{agdalisting} \vspace{-\baselineskip}
+\end{definition}
+
+The definition of container is a little abstract: it is instructive to think of
+it more concretely for the case of lists.
+The container representing finite lists is a pair of a natural number \(n\)
+representing the length (or ``shape'') of the list, and a function
+\(\AgdaDatatype{Fin}\;n\to A\), representing the indexing function into the
+list.
+
+One of the nice things about containers is it gives us a generic way to define
+``membership'':
+\begin{multicols}{2}
+  \begin{agdalisting} \label{container-membership}
+    \ExecuteMetaData[agda/Container/Membership.tex]{membership-def}
+  \end{agdalisting} \columnbreak
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{fiber}
+  \end{agdalisting}
+\end{multicols} \vspace{-1\baselineskip}\noindent 
+Here we're using the homotopy-theory notion of a \AgdaDatatype{fiber} to define
+membership: a fiber for some function \(f\) and some point \(y\) in its codomain
+is a value \(x\) and a proof that \(f \; x \;\AgdaDatatype{≡}\;y\).
+Membership also makes more sense when described concretely in terms of lists:
+\(x\;\AgdaDatatype{\ensuremath{\in}}\;\mathit{xs}\) means ``there is an index
+into \(\mathit{xs}\) such that the index points at an item equal to \(x\)''.
+\subsection{Split Surjections}
+Now that we have our terms defined, let's look a little at how split
+enumerability relates to more traditional, classical notions of finiteness.
+In a classical setting we likely wouldn't mention ``lists'' or the like, and
+would instead define finiteness based on the existence of some injection or
+surjection, say a surjection from a finite prefix of the natural numbers.
+In HoTT, surjections (or, more precisely, \emph{split} surjections
+\cite[definition 4.6.1]{hottbook}), are defined like so:
+\begin{multicols}{2}
+  \begin{agdalisting} \label{sp-surj-eqn}
+    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{split-surjective}
+  \end{agdalisting} \columnbreak
+  \begin{agdalisting} \label{sp-surj-arrow-eqn}
+    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{split-surjection}
+  \end{agdalisting} 
+\end{multicols}\vspace{-1\baselineskip}
+As it turns out, our definition of finiteness here is precisely the same as a
+surjection-based one, in quite a deep way!
+\begin{lemma} \label{split-enum-is-split-surj}%
+  A proof of split enumerability is equivalent to a split surjection from a
+  finite prefix of the natural numbers.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj-type}
+  \end{agdalisting}
+\end{lemma}
+\begin{proof} \let\qed\relax \vspace{-1\baselineskip}
+  \begin{minipage}[t]{.7\textwidth}\vspace{-\baselineskip}
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj}
+    \end{agdalisting*}
+  \end{minipage}
+  \begin{minipage}[t]{.19\textwidth}
+
+      Def.~\ref{split-enum-def} (\AgdaDatatype{\ensuremath{\mathcal{E}!}}) \\
+      Eqn.~\ref{container-membership} (\AgdaDatatype{\ensuremath{\in}}) \\
+      Eqn.~\ref{sp-surj-eqn}  \\
+      Eqn.~\ref{list-def} (\(\AgdaDatatype{List}\)) \\
+      Eqn.~\ref{container-interp}  \\
+      Reassociation \\
+      Eqn.~\ref{sp-surj-arrow-eqn}
+  \end{minipage}
+\end{proof}
+In the above proof syntax the
+\(\AgdaDatatype{\ensuremath{\equiv \langle{} \rangle{} }}\) connects lines which
+are definitionally equal, i.e. they are ``obviously'' equal from the type
+checker's perspective.
+Clearly, only one line isn't a definitional equality: 
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Data/Sigma/Properties.tex]{reassoc}
+\end{agdalisting}
+This means that we could have in fact written the whole proof as follows:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-is-split-surj-short}
+\end{agdalisting}
+The simplicity of this proof, by the way, is why we preferred the
+container-based definition of lists over the traditional one.
+\subsection{Instances}
+To actually show that a type \(A\) is finite amounts to constructing a term of
+type \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\;A\).
+For simple types like \AgdaDatatype{Bool}, that is simple:
+\begin{agdalisting} \label{bool-is-split-enumerable}
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
+\end{agdalisting}
+
+As a slightly more complex example, consider the \(\AgdaDatatype{Fin}\) type
+we've been using.
+Remember that split enumerability is in fact the same as a split surjection from
+\(\AgdaDatatype{Fin}\) (Lemma~\ref{split-enum-is-split-surj}): to show that
+\(\AgdaDatatype{Fin}\) is split enumerable, then, we need only show that it has
+a split surjection from itself.
+We'll prove the following slightly more general statement:
+
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{split-surj-ident}
+\end{agdalisting}
+\subsection{Decidable Equality}
+One thing that characterises all split enumerable types is that they are all
+\emph{discrete}, i.e. they have decidable equality.  \todo{All multicol agda code should probably be vertically centred like this}
+\begin{multicols}{2}  \null \vfill
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Relation/Nullary/Discrete/Base.tex]{discrete-def}
+  \end{agdalisting} \vfill \null \columnbreak
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Snippets/Dec.tex]{dec-def}
+  \end{agdalisting}
+\end{multicols} \vspace{-\baselineskip} \noindent
+We will see later that this has implications for the space of types we're
+dealing with, but for now it simply provides a useful function on split
+enumerable types.
+\begin{lemma} \todo{Don't know if this should be a lemma or just prose}
+  Split enumerability implies decidable equality.
+\end{lemma}
+\begin{proof}
+To prove that split enumerability implies decidable equality we'll take a quick
+detour through injections.
+\begin{multicols}{2}
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Function/Injective/Base.tex]{injective}
+  \end{agdalisting} \columnbreak
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Function/Injective/Base.tex]{injection}
+  \end{agdalisting}
+\end{multicols} \vspace{-\baselineskip} \noindent
+These are useful because we know that any type which injects into a discrete
+type is itself discrete:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Function/Injective/Properties.tex]{inj-discrete}
+\end{agdalisting}
+And we can turn a split surjection from \(A\) to \(B\) into an injection from
+\(B\) to \(A\): \todo{make these side-wrapped floats?}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{surj-to-inj}
+\end{agdalisting}
+Yielding a simple proof that any type with a split surjection from a discrete
+type is itself discrete:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{discrete-surj}
+\end{agdalisting}
+Since split enumerability is really just a split surjection from
+\AgdaDatatype{Fin}, and since we know that \AgdaDatatype{Fin} is discrete, the
+overall proof resolves quite simply:
+\begin{agdalisting} \label{split-enum-discrete}
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-is-discrete}
+\end{agdalisting}
+\end{proof}
+\section{Manifest Bishop Finiteness} \label{manifest-bishop-finiteness}
+We mentioned in the introduction that occasionally in constructive mathematics
+proofs will contain ``too much'' information.
+With split enumerability we can see an instance of this.
+Consider the following proof of the finiteness of bool:
+\begin{agdalisting} \label{op-slop}
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop}
+\end{agdalisting}
+There is an extra \AgdaInductiveConstructor{false} at the end of the support
+list.
+There's nothing terribly wrong with that: it is still a valid proof of
+finiteness, after all, but it does mean that this proof has some extra
+information which we didn't necessarily intend to encode.
+
+There is ``slop'' in the type of split enumerability: there are more distinct
+values than there are \emph{usefully} distinct values.
+To reconcile this, we will disallow duplicates in the support list.
+
+This is where manifest Bishop finiteness comes in: this is a definition of
+finiteness quite similar to split enumerability in other regards, except that it
+does not allows for duplicates in the support list.
+
+How exactly to prohibit duplicates is the next question.
+One approach might be to change the definition of \(\AgdaDatatype{List}\), or
+introduce a new type \(\AgdaDatatype{NoDupeList}\), and use it in the predicate
+instead.
+However, this would mean we lose access to the functions we have defined on
+lists, and we have to change the definition of
+\(\AgdaFunction{\ensuremath{\in}}\) as well.
+
+There is a much simpler and more elegant solution: we insist that every
+\emph{membership proof} must be unique.
+This would disallow a definition of \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\;
+\AgdaDatatype{Bool}\) with
+duplicates, as there are multiple values which inhabit the type
+\(\AgdaInductiveConstructor{false}\;\AgdaFunction{\ensuremath{\in}}\;
+\AgdaInductiveConstructor{\ensuremath{\left[ \text{false}, \text{true},
+      \text{false} \right]}}\).
+It also allows us to keep most of the split enumerability definition unchanged,
+just adding a condition to the returned membership proof in the cover proof.
+
+To specify that a value must exist uniquely in HoTT we can use the concept of a
+\emph{contraction} \cite[definition 3.11.1]{hottbook}.
+\begin{agdalisting} \label{isContr}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{isContr}
+\end{agdalisting}
+A contraction is a type with the least possible amount of information: it
+represents the tautologies.
+All contractions are isomorphic to \AgdaDatatype{\ensuremath{\top}}. \todo{We'll
+now need to define propositions and sets later on}
+
+By saying that a proof of membership is a contraction, we are saying that it
+must be \emph{unique}.
+\begin{agdalisting} \label{uniq-memb-def}
+  \ExecuteMetaData[agda/Container/Membership.tex]{uniq-memb-def}
+\end{agdalisting}
+Now a proof of \(x\;\AgdaFunction{\ensuremath{\in}!}\;\mathit{xs}\) means that
+\(x\) is not just in \(\mathit{xs}\), but it appears there \emph{only once}.
+
+% \begin{definition}[Contractions, Propositions and Sets] \label{homotopy-types}
+%   Types in HoTT and CuTT are not necessarily sets, as they are in MLTT.
+%   Some have higher homotopies (paths which aren't unique).
+%   We actually have a hierarchy of complexity of structure of path spaces in
+%   types, starting with the contractions , then
+%   the mere propositions \cite[definition 3.3.1]{hottbook}, and the sets
+%   \cite[definition 3.1.1]{hottbook}.
+%   First we have the contractions: those types equivalent to
+%   \AgdaDatatype{\ensuremath{\top}}.
+%   Then the propositions: those types for which every value is equal to every
+%   other.
+%   Finally the sets: those types for which every \emph{equality} is equal to
+%   every other.
+
+%   Often these types are defined inductively: going from contractions upwards,
+%   every new level has paths in the level before (i.e. the paths of a proposition
+%   are all contractions).
+%   We can also proceed further upwards, into non-set types.
+% \end{definition}
+% \begin{definition}[Unique Membership] \label{uniq-memb-def}
+%   Unique list membership is defined in terms of list membership: it is a
+%   contraction of it.
+% \end{definition}
+
+With this we can define manifest Bishop finiteness:
+\begin{definition}[Manifest Bishop Finiteness]  \label{bish-def}
+  A type is manifest Bishop finite if there exists a list which contains each
+  value in the type once.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop/Container.tex]{bish-def}
+  \end{agdalisting}
+  The only difference between manifest Bishop finiteness and split enumerability
+  is the membership term: here we require unique membership
+  (\AgdaFunction{\ensuremath{\in!}}), rather than simple membership
+  (\AgdaFunction{\(\in\)}).
+\end{definition}
+
+We use the word ``manifest'' here to distinguish from another common
+interpretation of Bishop finiteness, which we have called cardinal finiteness in
+this paper: this version of the proof is ``manifest'' because we have a
+concrete, non-truncated list of the elements in the proof.
+
+\subsection{The Relationship Between Manifest Bishop Finiteness and Split
+  Enumerability}
+While manifest Bishop finiteness might seem stronger than split enumerability,
+it turns out this is not the case.
+Both predicates imply the other.
+
+Going from manifest Bishop finiteness is relatively straightforward:
+to construct a proof of split enumerability from one of manifest Bishop
+finiteness, it suffices to convert a proof of \(x\;\AgdaFunction{\ensuremath{\in!}}\;\mathit{xs}\) to
+one of \(x\;\AgdaFunction{\ensuremath{\in}}\;\mathit{xs}\), for all \(x\) and \(\mathit{xs}\).
+Since \AgdaFunction{\(\in!\)} is defined as a contraction of \AgdaFunction{\(\in\)}, such a conversion
+is simply the \AgdaField{fst} function.
+
+Going the other direction takes significantly more work.
+\begin{lemma} \label{split-enum-to-manifest-bishop}
+  Any split enumerable set is manifest Bishop finite.
+\end{lemma}
+We will only sketch the proof here:
+the ``unique membership'' condition in
+\(\AgdaDatatype{\ensuremath{\mathcal{B}}}\) means that we are not permitted
+duplicates in the support list.
+The first step in the proof, then, is to filter those duplicates out from the
+support list of the \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) proof: we can do this using the decidable
+equality provided by \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) (lemma~\ref{split-enum-discrete}).
+From there, we need to show that the membership proof carries over
+appropriately.
+\todo{Provide more info on this proof?}
+
+We have now proved that every manifestly Bishop finite type is split enumerable,
+and vice versa.
+While the types are not \emph{equivalent} (there are more split enumerable
+proofs than there are manifest Bishop finite proofs), they are of equal power.
+\subsection{From Manifest Bishop Finiteness to Equivalence}
+We have seen that split enumerability was in fact a split-surjection in
+disguise.
+We will now see that manifest Bishop finiteness is in fact an \emph{equivalence}
+in disguise.
+We define equivalences as contractible maps \cite[definition 4.4.1]{hottbook}:
+\begin{multicols}{2}
+  \begin{agdalisting} \label{is-equiv-def}
+    \ExecuteMetaData[agda/Snippets/Equivalence.tex]{is-equiv-def}
+  \end{agdalisting} \columnbreak
+  \begin{agdalisting} \label{equiv-def}
+    \ExecuteMetaData[agda/Snippets/Equivalence.tex]{equiv-def}
+  \end{agdalisting}
+\end{multicols}
+\begin{lemma} \label{bishop-equiv}
+  Manifest bishop finiteness is equivalent to an equivalence to a finite prefix
+  of the natural numbers.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv-type}
+  \end{agdalisting}
+\end{lemma}
+\begin{proof} \let\qed\relax \vspace{-1\baselineskip}
+  \begin{minipage}[t]{.7\textwidth}\vspace{-\baselineskip}
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv}
+    \end{agdalisting*}
+  \end{minipage}
+  \begin{minipage}[t]{.19\textwidth}
+
+    Def.~\ref{bish-def} (\AgdaDatatype{\ensuremath{\mathcal{B}}}) \\
+    Eqn.~\ref{uniq-memb-def} (\AgdaDatatype{\ensuremath{\in!}}) \\
+    Eqn.~\ref{container-membership} (\AgdaDatatype{\ensuremath{\in}}) \\
+    Eqn.~\ref{is-equiv-def}  \\
+    Eqn.~\ref{list-def} (\(\AgdaDatatype{List}\)) \\
+    Eqn.~\ref{container-interp}  \\
+    Reassociation \\
+    Eqn.~\ref{equiv-def}
+  \end{minipage}
+\end{proof}
+
+This proof is almost identical to the proof for
+lemma~\ref{split-enum-is-split-surj}: it reveals that
+enumeration-based finiteness predicates are simply another perspective on
+relation-based ones.
+
+As we are working in CuTT, a proof of equivalence between two types gives us the
+ability to \emph{transport} proofs from one type to the other.
+This is extremely powerful, as we will see.
+\section{Cardinal Finiteness} \label{cardinal-finiteness}
+While we have removed some of the unnecessary information from our finiteness
+predicates, one piece still remains.
+The two following proofs are both valid proofs of the finiteness of
+\(\AgdaDatatype{Bool}\), and both do not include any duplicates:
+
+\begin{minipage}{\textwidth}
+\begin{multicols}{2}
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-rev}
+  \end{agdalisting*}
+\end{multicols}
+\end{minipage}
+Clearly they're not the same though: the order of their support lists differs.
+Each finiteness predicate so far has contained an \emph{ordering} of the
+underlying type.
+For our purposes, this is too much information: it means that when constructing
+the ``category of finite sets'' later on, instead of each type having one
+canonical representative, it will have \(n!\), where \(n\) is the cardinality of
+the type\footnotemark.
+
+\footnotetext{
+  We actually do get a category (a groupoid, even) from manifest Bishop
+  finiteness \cite{yorgeyCombinatorialSpeciesLabelled2014}: it's the groupoid of
+  finite sets equipped with a linear order, whose morphisms are order-preserving
+  bijections.
+  We do not explore this particular construction in any detail.
+}
+
+What we want is a proof of finiteness that is a proposition.
+\begin{agdalisting} \label{isProp}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{isProp}
+\end{agdalisting}
+The mere propositions are one homotopy level higher than the contractions
+(Equation~\ref{isContr}), the types for which all values are equal to some value.
+They represent the types for which all values are equal, or, the types
+isomorphic to \agdabot\;or \agdatop.
+You can also define propositions in terms of the contractions: propositions are
+the types whose paths are contractions.
+Soon (Equation~\ref{isSet}) we will see the next homotopy level, which are
+defined in terms of the propositions.
+
+Despite now knowing the precise property we want our finiteness predicate to
+have, we're not much closer to achieving it.
+To remedy the problem, we will use the following type:
+\begin{agdalisting} \label{prop-trunc}
+  \ExecuteMetaData[agda/Snippets/PropTrunc.tex]{prop-trunc-def}
+\end{agdalisting}
+This is a \emph{higher inductive type}.
+Normal inductive types have \emph{point} constructors: constructors which
+construct values of the type.
+The first constructor here (\AgdaInductiveConstructor{\ensuremath{\lvert \_
+    \rvert}}), or the constructor \AgdaInductiveConstructor{true} for
+\AgdaDatatype{Bool}, are both ``point'' constructors.
+
+What makes this type higher inductive is that it also has \emph{path}
+constructors: constructors which add new equalities to the type. 
+The \AgdaInductiveConstructor{squash} constructor here says that all elements of
+\proptrunc{A}
+are equal, regardless of what \(A\) is.
+In this way it allows us to propositionally truncate types, turning
+information-containing proofs into mere propositions.
+Put another way, a proof of type \proptrunc{A}
+is a proof that some \(A\) exists, without revealing \emph{which} \(A\).
+
+To actually use values of this type we have the following eliminator:
+\begin{agdalisting} \label{elim-prop}
+  \ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc}
+\end{agdalisting}
+This says that we can eliminate into any proposition: interestingly, this allows
+us to define a monad instance for \AgdaDatatype{\(\lVert \_ \rVert\)}, meaning
+we can use things like do-notation. \todo{Bit more on do-notation etc?}
+
+With this, we can define cardinal finiteness:
+\begin{definition}[Cardinal Finiteness]
+  A type \(A\) is cardinally finite if there exists a propositionally truncated
+  proof that \(A\) is manifest Bishop finite or equivalent to a finite prefix of
+  the natural numbers.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
+  \end{agdalisting}
+\end{definition}
+\subsection{Deriving Uniquely-Determined Quantities}
+At first glance, it might seem that we lose any useful properties we could
+derive from \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\).
+Luckily, this is not the case: we will show here how to derive decidable
+equality (Lemma~\ref{cardinal-finite-discrete}) and cardinality
+(Lemma~\ref{card-finite-cardinality}) out from under the
+truncation.\todo{Rephrase?}
+Those two lemmas are proven in
+\cite{yorgeyCombinatorialSpeciesLabelled2014} (Proposition 2.4.9 and 2.4.10,
+respectively), in much the same way as we have done here.
+Our contribution for this section is simply the formalisation.
+
+First we'll show that decidable equality carries over from manifest Bishop
+finiteness.
+Before we do, note that the fact that we can do this says something interesting
+about propositional truncation: it has computational, or algorithmic, content.
+That is in contrast to other ways to ``truncate'' types: \(\neg \neg P\), for
+instance, is a way to provide a ``proof'' of \(P\) without revealing anything
+about \(P\) in MLTT.
+No matter how much we prove that a function from \(P\) doesn't care about which
+\(P\) it got, though, we can never extract any kind of algorithm or computation
+from \(\neg \neg P\). \todo{Is this true? It certainly seems true...}
+\begin{lemma} \label{cardinal-finite-discrete}
+  Any cardinal-finite set has decidable equality.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{card-discrete}
+  \end{agdalisting}
+\end{lemma}
+\begin{proof}
+We already know that manifest Bishop finiteness implies decidable equality
+\todo{ref here}; to apply that proof to cardinal finiteness we'll use the
+eliminator in Equation~\ref{elim-prop}.
+Our task, in other words, is to prove the following:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{is-prop-discrete}
+\end{agdalisting}
+
+To show that this type is a proposition we must show that any two given members
+of the type are equal, i.e. we are given two proofs of decidable equality on
+\(A\) and we must show that they are equal.
+Remember that \(\AgdaFunction{Discrete}\;A\) is a function of two arguments
+returning a \AgdaDatatype{Dec} of whether those two arguments are equal or not.
+\todo{ref for wherever this definition was}
+By function extensionality, to prove that that is a proposition we have to prove
+that \(\AgdaDatatype{Dec}\;(\agdaequiv{x}{y})\) is a proposition.
+This proof requires that we show that the payload of each of the constructors
+(\AgdaInductiveConstructor{yes} and \AgdaInductiveConstructor{no}) are
+propositions.
+\AgdaInductiveConstructor{no}'s payload is
+\(\agdaequiv{x}{y}\rightarrow\agdabot\), which is a
+proposition because \agdabot\; is a proposition.
+
+\AgdaInductiveConstructor{yes} is a little more interesting: its payload is
+\agdaequiv{x}{y}.
+How can we prove that the path between \(x\) and \(y\) is a proposition?
+It turns out that there is a class of types for which all paths are
+propositions: the \emph{sets}.
+\begin{agdalisting} \label{isSet}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{isSet}
+\end{agdalisting}
+This is the next homotopy level up from the propositions (Equation~\ref{isProp}).
+More importantly, there is an important theorem relating to sets which
+\emph{also} relates to decidable equality: Hedberg's theorem
+\cite{hedbergCoherenceTheoremMartinLof1998}.
+This tells us that any type with decidable equality is a set.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{discrete-isset}
+\end{agdalisting}
+And of course we know that \(A\) here has decidable equality: we were just given
+two proofs of that fact at the beginning of this proof!
+
+This suffices to prove that decidable equality is itself a proposition, and
+therefore that we can apply Equation~\ref{elim-prop} and the proof that bishop
+finiteness implies decidable equality to cardinal finiteness, proving our goal.
+\end{proof}
+
+The next thing we can derive from underneath the truncation in cardinal
+finiteness is a natural number representing the actual cardinality of the finite
+type.
+Of course \agdambb{N} isn't a proposition, so the eliminator in
+equation~\ref{elim-prop} won't work for us here.
+Instead we will use the following:
+\begin{agdalisting} \label{elim-prop-coh}
+  \ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc-set}
+\end{agdalisting}
+This says that we can eliminate into a set as long as the function we use
+doesn't care about which value it's given: formally, \(f\) in this example has
+to be ``coherently constant'' \cite{krausGeneralUniversalProperty2015}.
+
+With that, we can move on to the proof:
+\begin{lemma} \label{card-finite-cardinality}
+  Given a cardinally finite type, we can derive the type's cardinality, as well
+  as a propositionally truncated proof of equivalence with \AgdaDatatype{Fin}s of
+  the same cardinality.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinality-is-unique}
+  \end{agdalisting}
+\end{lemma}
+\begin{proof}
+  The high-level overview of our proof is as follows:
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinality-is-unique-impl}
+  \end{agdalisting}
+  It is the composition of two operations: first, with
+  \AgdaFunction{\ensuremath{\lVert \text{map} \rVert}}, we change the truncated
+  proof of manifest bishop finiteness to a proof of equivalence with fin.
+
+  Then we use the eliminator from Equation~\ref{elim-prop-coh} with three
+  parameters.
+  The first simply proves that that the output is a set:
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{card-isSet}
+  \end{agdalisting}
+  The second is the function we apply to the truncated value:
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{alg}
+  \end{agdalisting}
+  And the third is a proof that that function is itself coherently constant:
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{const-alg}
+  \end{agdalisting}
+
+  The tricky part of the proof is \AgdaFunction{const-alg}: here we need to show
+  that \AgdaFunction{alg} returns the same value no matter its input.
+  That output is a pair, the first component of which is the cardinality, and
+  the second the truncated equivalence proof.
+  The truncated proofs in the output are trivially equal by the truncation, so
+  our obligation now has been reduced to:
+  \begin{equation}
+    \frac{(n :\;\AgdaDatatype{\ensuremath{\mathbb{N}}}) \; \; \; (p : \AgdaDatatype{Fin}\;n\;\AgdaFunction{\ensuremath{\simeq}}\;A) \; \; \;
+      (m :\;\AgdaDatatype{\ensuremath{\mathbb{N}}}) \; \; \; (q : \AgdaDatatype{Fin}\;m\;\AgdaFunction{\ensuremath{\simeq}}\;A)
+    }{
+      \agdaequiv{n}{m}
+    }
+  \end{equation}
+  Given univalence we have \(\AgdaDatatype{Fin}\;n \;\AgdaFunction{\ensuremath{\equiv}}\; \AgdaDatatype{Fin}\;m\),
+  and the rest of our task is to prove:
+  \begin{equation}
+    \frac{\agdaequiv{\AgdaDatatype{Fin}\;n}{\AgdaDatatype{Fin}\;m}}{\agdaequiv{n}{m}}
+  \end{equation}
+
+  This is a well-known puzzle in dependently-typed programming, and one that
+  has a surprisingly tricky and complex proof.
+  We do not include it here, since it has already been explored elsewhere, but
+  it is present in our formalisation.
+\end{proof}
+
+\subsection{Going from Cardinal Finiteness to Manifest Bishop Finiteness}
+We know of course that we can convert any proof of manifest Bishop finiteness to
+a proof of Cardinal finiteness: it's just the truncation function
+\AgdaInductiveConstructor{\(\lvert \_ \rvert\)}.
+It's the other direction which presents a difficulty:
+\begin{theorem} \label{cardinal-to-manifest-bishop}
+  Any cardinal finite type with a total order is Bishop finite. \todo{Figure out
+    how to put a type here}
+\end{theorem}
+\begin{proof}
+The proof for this particular theorem is quite involved in the formalisation, so
+we only give its sketch here \todo{ref to formalisation}.
+
+Our strategy will be to \emph{sort} the support list of the proof for Bishop
+finiteness, and then prove that the sorting function is coherently constant,
+thereby satisfying the eliminator in Equation~\ref{elim-prop-coh}.
+We need to show, in other words, that sorting two support lists from proofs of
+manifest Bishop finiteness on the same type with the same order always returns
+the same result.
+For simplicity's sake we will use insertion sort:
+
+\begin{minipage}{\linewidth}
+\begin{multicols}{2}
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Data/List/Sort.tex]{insert}
+  \end{agdalisting} \columnbreak \vfill \null \vfill
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Data/List/Sort.tex]{insertion-sort}
+  \end{agdalisting} \vfill \null
+\end{multicols}
+\end{minipage} \noindent
+And we prove that \AgdaFunction{sort} produces a list which is sorted, and a
+permutation of its input.
+\begin{multicols}{2}
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-sorts}
+  \end{agdalisting} \columnbreak
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-perm}
+  \end{agdalisting}
+\end{multicols} \vspace{-\baselineskip}
+We've introduced two new types here: \AgdaFunction{Sorted} is a predicate
+enforcing that the given list is sorted, and
+\AgdaFunction{\(\leftrightsquigarrow\)} is a permutation relation between two
+lists.
+We take the definition of permutations from
+\cite{danielssonBagEquivalenceProofRelevant2012}: two lists are permutations of
+each other if their membership proofs are all equivalent.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Data/List/Relation/Binary/Permutation.tex]{perm-def}
+\end{agdalisting}
+This definition fits particularly well for two reasons: first, it is defined on
+containers generically, which fits well with our finiteness predicates.
+Secondly, it is extremely straightforward to show that the support lists of any
+two proofs of manifest Bishop finiteness must be permutations of each other:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{perm-bish}
+\end{agdalisting}
+
+Almost all of the pieces are in place now: we know that the support lists of all
+proofs of \(\agdacal{B}\;A\) are permutations of each other, and we know that
+\AgdaFunction{sort} returns a sorted permutation of its input.
+The final piece of the puzzle is the following:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Data/List/Sort.tex]{sorted-perm-eq}
+\end{agdalisting}
+If two sorted lists are both permutations of each other they must be equal.
+Connecting up all the pieces we get the following:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Data/List/Sort.tex]{perm-invar}
+\end{agdalisting}
+Because we know that all support lists of \(\agdacal{B}\;A\) are permutations of
+each other this is enough to prove that \AgdaFunction{sort} is coherently
+constant, and therefore can eliminate from within a truncation.
+The second component of the output pair (the cover proof) follows quite
+naturally from the definition of permutations.
+\end{proof}
+\subsection{Restrictiveness}
+So far our explorations into finiteness predicates have pushed us in the
+direction of ``less informative'': however, as mentioned in the introduction, we
+can \emph{also} ask how \emph{restrictive} certain predicates are.
+Since split enumerability and manifest Bishop finiteness imply each other we
+know that there can be no type which satisfies one but not the other.
+We also know that manifest Bishop finiteness implies cardinal finiteness, but we
+do \emph{not} have a function in the other direction:
+\begin{equation} \label{c-to-b}
+  \agdacal{C}\;A\rightarrow\agdacal{B}\;A
+\end{equation} \todo{Solve the mystery of the mathcal difference for C and B}
+So the question arises naturally: is there a cardinally finite type which is
+\emph{not} manifest Bishop finite?
+
+It turns out the answer is no!
+The proof of this fact is relatively short:
+\begin{agdalisting} \label{no-gap-card-bishop}
+  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{no-gap-card-bishop}
+\end{agdalisting}
+We can apply the function of type \(\agdacal{B}\;A\rightarrow\agdabot\)
+(i.e. \(\AgdaFunction{\(\neg\)}\;\agdacal{B}\;A\)) to the value of type
+\(\AgdaDatatype{\(\lVert\)}\;\agdacal{B}\;A\;\AgdaDatatype{\(\rVert\)}\) (i.e.
+\(\agdacal{C}\;A\)) using Equation~\ref{elim-prop}, since \agdabot\;is itself a
+proposition.
+This tells us that manifest bishop finiteness, cardinal finiteness, and split
+enumerability all refer to the same class of types.
+
+Interestingly, while we cannot construct a function with the type in
+Equation~\ref{c-to-b}, it does exist \emph{classically}.
+In fact we can derive it from Equation~\ref{no-gap-card-bishop} using
+straightforward applications of De Morgan's laws:
+\begin{align*}
+   &\; \neg (\agdacal{C}\;A \times \neg\; \agdacal{B}\;A) \\
+  =&\; \neg\; \agdacal{C}\;A + \neg \neg\; \agdacal{B}\;A \\
+  =&\; \neg\; \agdacal{C}\;A + \agdacal{B}\;A \\
+  =&\; \agdacal{C}\;A \rightarrow \agdacal{B}\;A
+\end{align*}
+\section{Manifest Enumerability} \label{manifest-enumerability}
+Given that we have just proven that all of our finiteness predicates apply to
+the same types, the natural next step is to try find a predicate which applies
+to a different class of types.
+Let's first talk about what this new class of types might look like:
+what we're looking for is a type which is in some sense finite, but doesn't
+conform to any of the predicates we've seen so far.
+The \emph{circle} is such a type:
+\begin{agdalisting}\label{circle-def}
+  \ExecuteMetaData[agda/Snippets/Circle.tex]{circle-def}
+\end{agdalisting}
+The thing that this type has which precludes it from being, say, split
+enumerable, is its \emph{higher homotopy structure}. \todo{is this the right phrase?}
+
+So far we have seen three levels of homotopy structure: the contractions
+(Equation~\ref{isContr}), the propositions (Equation~\ref{isProp}), and the sets
+(Equation~\ref{isSet}).
+You may have noticed the pattern that each new level is generated by saying its
+paths are members of the previous level; if we apply that pattern again, we get
+to the next homotopy level: the groupoids.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{isGroupoid}
+\end{agdalisting}
+These types do not necessarily have unique identity proofs: there is more than
+one value which can inhabit the type \agdaequiv{x}{y}.
+The circle is one of the simplest examples of non-set groupoids: the constructor
+\AgdaInductiveConstructor{loop} is the extra path in the type which isn't the
+identity path.
+
+We now need to recall two facts: first, Hedberg's theorem tells us that every
+discrete type is a set.
+Second, every finiteness predicate we've seen thus far implies decidable
+equality.
+From this it's clear that all of the previous predicates are restricted to sets,
+and can't include types like the circle.
+
+But the type certainly \emph{seems} finite!
+It has finitely many points, for instance.
+In order to explore the ``restrictiveness'' axis in
+Figure~\ref{finite-classification}, then, we'll need to construct a predicate
+which admits the circle.
+Manifest enumerability is one such predicate.
+\begin{definition}[Manifest Enumerability]
+  Manifest enumerability is an enumeration predicate like Bishop finiteness or
+  split enumerability with the only difference being a propositionally truncated
+  membership proof.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable/Container.tex]{manifest-enum-def}
+  \end{agdalisting}
+\end{definition}
+
+It might not be immediately clear why this definition of enumerability allows
+the circle to conform while the others do not.
+The crux of the issue was that the cover proofs of the previous definitions
+didn't just tell us that some element was in the support list, they told us
+\emph{where} it was in the support list.
+From the position we were able to derive decidable equality: that position is
+precisely what's hidden in manifest enumerability.
+
+And indeed this means that the circle is manifestly enumerable.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{circle-is-manifest-enum}
+\end{agdalisting}
+We use a lemma here, proven in the Cubical Agda library, that
+\AgdaDatatype{S\(^1\)} is \emph{connected}:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{s1-connected}
+\end{agdalisting}
+\subsection{Surjections}
+We already saw that split enumerability was the listed form of a split
+surjection: what we didn't explain was why the word ``split'' was placed before
+surjection.
+In the presence of higher homotopies than sets, split surjections are actually
+\emph{not} a satisfactory definition of surjection.
+And we are most certainly in the presence of higher homotopies: just moments ago
+we were introduced to the circle.
+In these cases, the following definition of surjections is
+preferred~\cite[definition 4.6.1]{hottbook}:
+\begin{multicols}{2}
+  \begin{agdalisting} \label{surj-eqn}
+    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective}
+  \end{agdalisting} \columnbreak
+  \begin{agdalisting} \label{surj-arrow-eqn}
+    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjection}
+  \end{agdalisting}
+\end{multicols}
+
+Much in the same way that split enumerability were split surjections, our new
+predicate of manifest enumerability corresponds to the proper surjections.
+\begin{lemma} \todo{to agda}
+  Manifest enumerability is equivalent to a surjection from a finite prefix of
+  the natural numbers.
+  \begin{equation}
+    \mathcal{E}(A) \simeq \Sigma(n : \mathbb{N}) , (\AgdaDatatype{Fin}\;n \twoheadrightarrow A)
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  \begin{align*}
+     \mathcal{E}(A) &
+    \simeq \Sigma (\mathit{xs} : \textbf{List}(A)) , \Pi {(x : A)} , \lVert x \in \mathit{xs} \rVert
+    && \text{def.~\ref{split-enum-def} }(\mathcal{E})
+    \\
+    & \simeq \Sigma (\mathit{xs} : \textbf{List}(A)) , \Pi {(x : A)} , \lVert \text{fib}_{\text{snd}(\mathit{xs})}(x) \rVert
+    && \text{eqn.~\ref{container-membership} } (\in)
+    \\
+    & \simeq \Sigma (\mathit{xs} : \textbf{List}(A)) , \text{surj}(\text{snd}(\mathit{xs}))
+    && \text{eqn.~\ref{surj-eqn} (surj)}
+    \\
+    & \simeq \Sigma (\mathit{xs} : \llbracket \mathbb{N} , \AgdaDatatype{Fin} \rrbracket (A)) , \text{surj}(\text{snd}(\mathit{xs}))
+    && \text{def.~\ref{list-def} } (\AgdaDatatype{List})
+    \\
+    & \simeq \Sigma (\mathit{xs} : \Sigma (n : \mathbb{N}) , \Pi (i : \AgdaDatatype{Fin}\;n) , A) , \text{surj}(\text{snd}(\mathit{xs}))
+    && \text{eqn.~\ref{container-interp} } (\llbracket \wc \rrbracket)
+    \\
+    & \simeq \Sigma (n : \mathbb{N}) , \Sigma (f : \AgdaDatatype{Fin}\;n \rightarrow A) , \text{surj}(f)
+    && \text{Reassociation of } \Sigma
+    \\
+    & \simeq \Sigma (n : \mathbb{N}) , ( \AgdaDatatype{Fin}\;n \twoheadrightarrow A )
+    && \text{eqn.~\ref{surj-arrow-eqn} } (\twoheadrightarrow) \; \qedhere
+  \end{align*}
+\end{proof}
+\subsection{Relation To Split Enumerability}
+It is trivially easy to construct a proof that any split enumerable type is
+manifest enumerable: we simply truncate the membership proof.
+Going the other way is more difficult, as we need to extract the membership
+proof from under a truncation.
+We do know what we need, however: the key difference between manifest
+enumerability and split enumerability is that the latter implied decidable
+equality.
+So that's the missing piece we should require in order to go from one to the
+other:
+\begin{lemma} \label{manifest-enum-to-split-enum}
+  A manifestly enumerable type with decidable equality is split enumerable.
+\end{lemma}
+
+Now that we know what extra bit of information we are allowed use in this proof,
+the path forward becomes a little more clear.
+In terms of the actual conversion function, the support list will stay the same,
+and only the return type of the cover proof needs to change: from
+\(\AgdaDatatype{\(\lVert\)}\;x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\;\AgdaDatatype{\(\rVert\)}\)
+to \(x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\).
+
+That can be accomplished with the help of the following function:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/HITs/PropositionalTruncation/Properties.tex]{recompute}
+\end{agdalisting}
+Given a decision procedure for some type, and a propositionally truncated value
+of that type, we can construct an element of the type.
+
+In the case of \(x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\) we can construct a
+decision procedure for membership of a list, since we already have decidable
+equality on the elements of the list, proving our obligation.
+\section{Kuratowski Finiteness} \label{kuratowski}
+We now finally arrive at the most important definition of finiteness: Kuratowski
+finiteness.
+As a definition, it is quite different from the predicates we've seen (it
+doesn't involve lists, for instance), but it plays a much larger role in the
+literature on finiteness predicates than, say, manifest enumerability.
+
+We start with the definition of Kuratowski-finite subsets.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Definition.tex]{kuratowski-def}
+\end{agdalisting}
+The first two constructors are point constructors, giving ways to create
+values of type \(\agdacal{K}\;A\).
+They are also recognisable as the two constructors for finite lists, a type
+which represents the free monoid.
+The next two constructors add extra paths to the type: equations that usage of
+the type must obey.
+These extra paths turn the free monoid into the free \emph{commutative}
+(\AgdaInductiveConstructor{com}) \emph{idempotent}
+(\AgdaInductiveConstructor{dup}) monoid.
+The final constructor truncates the type \(\agdacal{K}\;A\) to a set.
+
+The Kuratowski finite subset is a free join semilattice (or, equivalently, a
+free commutative idempotent monoid).
+More prosaically, \(\agdacal{K}\) is the abstract data type for finite sets, as
+defined in the Boom hierarchy \cite{boomFurtherThoughtsAbstracto1981,
+  bunkenburgBoomHierarchy1994}.
+However, rather than just being a specification, \(\agdacal{K}\) is fully usable
+as a data type in its own right, thanks to HITs.
+
+Other definitions of \(\agdacal{K}\) exist (such as the one in
+\cite{fruminFiniteSetsHomotopy2018}) which make the fact that \(\agdacal{K}\) is
+the free join semilattice more obvious.
+We have included such a definition in our formalisation, and proven it
+equivalent to the one above.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Direct.tex]{direct-def}
+\end{agdalisting}
+
+Next, we need a way to say that an entire type is Kuratowski finite.
+For that, we will need to define membership of \(\agdacal{K}\).
+\begin{equation}
+  \begin{alignedat}{2}
+    x\;\AgdaFunction{\ensuremath{\in}}& \; \AgdaInductiveConstructor{[]}                      &&= \agdabot \\
+    x\;\AgdaFunction{\ensuremath{\in}}& \; y \;\AgdaInductiveConstructor{\ensuremath{\dblcolon}}\; \mathit{ys} &&= \AgdaDatatype{\ensuremath{\lVert}}\;\agdaequiv{x}{y}\;\AgdaDatatype{\ensuremath{\uplus}}\;x\;\AgdaFunction{\ensuremath{\in}}\;\mathit{ys}\;\AgdaDatatype{\ensuremath{\rVert}}
+  \end{alignedat}
+\end{equation}
+The \AgdaInductiveConstructor{com} and \AgdaInductiveConstructor{dup}
+constructors are handled by proving that the truncated form of \AgdaDatatype{\ensuremath{\uplus}}
+itself commutative and idempotent.
+The type of propositions is itself a set, satisfying the \AgdaInductiveConstructor{trunc}
+constructor.
+This gives us enough to define Kuratowski finiteness.
+\begin{definition}[Kuratowski Finiteness]
+  A type is Kuratowski finite if there exists a Kuratowski-finite subset of that
+  type which contains every element of the type.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-finite-def}
+  \end{agdalisting}
+\end{definition}
+
+While Kuratowski finiteness is something of the standard formal definition of
+finiteness, it is quite separated from the enumeration-based definitions we have
+presented so far.
+It's difficult to relate to surjections and equivalences, and requires a
+different style of proof to reason about.
+As such, we want to get \emph{away} from Kuratowski finiteness as quickly as
+possible.
+To do so we use the following lemma:
+\begin{lemma}  \label{manifest-enum-kuratowski}
+  Kuratowski finiteness is equivalent to truncated manifest enumerability.
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{manifest-enum-kuratowski}
+  \end{agdalisting}
+\end{lemma}
+\begin{proof} \todo{Does this need to be fleshed out?}
+  This proof is constructed by providing a pair of functions, to and from each
+  side of the equivalence.
+  This pair implies an equivalence, because both source and target are
+  propositions.
+  This proof, as well as its auxiliary lemmas, are also provided in
+  \citet{fruminFiniteSetsHomotopy2018}, although there the setting is HoTT
+  rather than CuTT. \todo{Make the relationship here more clear}
+\end{proof}
+By relating Kuratowski finiteness---with a full equivalence, no less---to an
+enumerated predicate, we have made it possible to talk about Kuratowski
+finiteness without interacting with the type at all.
+
+In the next section, we will explore the category of discrete Kuratowski finite
+sets.
+Under the hood, however, we will really be working with cardinal finite sets.
+We can do this in a fully rigorous way because
+Lemma~\ref{manifest-enum-kuratowski} allows us to prove the following:
+\begin{agdalisting} \label{cardinal-kuratowski}
+  \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{card-iso-kuratowski}
+\end{agdalisting}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../paper"
+%%% End:
