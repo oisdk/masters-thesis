@@ -36,32 +36,22 @@
 \setlength{\dashdash}{.75pt}
 \usepackage{varwidth}
 \usepackage{environ}
-\NewEnviron{agdalisting}[1][\dbox]{\vspace{\abovedisplayskip}%
+\newenvironment{agdalisting}
+{
 
-  \refstepcounter{equation}%
-  \hfill%
-  {\begin{varwidth}{\linewidth}% Add #1 just before { on this line to make agda
-      % code boxed with dots
-      \BODY%
-    \end{varwidth}%
-    \vspace{\belowdisplayskip}%
-  }%
-  \hfill%
-  \eqnum%
-  \break%
+\refstepcounter{equation}\noindent\raisebox{0pt}[0pt][0pt]{%
+\llap{%
+\parbox[t][][t]{.7\marginparwidth}{%
+\raggedleft%
+{\eqnum}}\hspace{\marginparsep}}}%
+\begin{minipage}{\linewidth}\centering
 }
-\NewEnviron{agdalisting*}[1][\dbox]{\vspace{\abovedisplayskip}%
+{\end{minipage}}
 
-  \hfill%
-  {\begin{varwidth}{\linewidth}% Add #1 just before { on this line to make agda
-      % code boxed with dots
-      \BODY%
-    \end{varwidth}%
-    \vspace{\belowdisplayskip}%
-  }%
-  \hfill%
-  \break%
-}
+\newenvironment{agdalisting*}
+{
+
+\begin{minipage}{\linewidth}\centering}{\end{minipage}}
 
 
 \newtheoremstyle{roman}

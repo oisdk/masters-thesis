@@ -126,30 +126,28 @@ Here we'll define the basic type formers used in MLTT.\@
   denoted with their more common names: \(\bot\), \(\top\), and
   \(\mathbf{Bool}\), respectively.
   \begin{multicols}{3}
-    \begin{agdalisting}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{bot}
-    \end{agdalisting}
+    \end{agdalisting*}
 
 
-    \begin{agdalisting}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{top}
-    \end{agdalisting}
+    \end{agdalisting*}
 
 
-    \begin{agdalisting}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{bool}
-    \end{agdalisting}
+    \end{agdalisting*}
   \end{multicols}
 \end{definition}
 \begin{definition}[The Dependent Sum]
   Dependent sums are denoted with the usual \(\Sigma\) symbol, and has the
   following definition in Agda:
 
-  \begin{center}
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma}
-    \end{agdalisting}
-  \end{center}
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma}
+  \end{agdalisting}
   We will use different notations to refer to this type depending on the
   setting.
   The following four expressions all denote the same type:
