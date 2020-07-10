@@ -128,14 +128,10 @@ Here we'll define the basic type formers used in MLTT.\@
   \begin{multicols}{3}
     \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{bot}
-    \end{agdalisting*}
-
-
+    \end{agdalisting*} \columnbreak
     \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{top}
-    \end{agdalisting*}
-
-
+    \end{agdalisting*} \columnbreak
     \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{bool}
     \end{agdalisting*}
@@ -145,26 +141,26 @@ Here we'll define the basic type formers used in MLTT.\@
   Dependent sums are denoted with the usual \(\Sigma\) symbol, and has the
   following definition in Agda:
 
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma}
-  \end{agdalisting}
+  \end{agdalisting*}
   We will use different notations to refer to this type depending on the
   setting.
   The following four expressions all denote the same type:
   \begin{multicols}{4}
-    \begin{agdalisting}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-3}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-4}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-2}
-    \end{agdalisting}
-  \end{multicols}\vspace{-1.5\baselineskip}%
+    \end{agdalisting*}
+  \end{multicols} \vspace{-1\baselineskip} \noindent
   The non-dependent product is a special instance of the dependent.
   We denote a simple pair of types \(A\) and \(B\) as \(A \times B\).
 \end{definition}
@@ -172,16 +168,16 @@ Here we'll define the basic type formers used in MLTT.\@
   Dependent products (dependent functions) use the \(\Pi\) symbol.
   The three following expressions all denote the same type:
   \begin{multicols}{3}
-    \begin{agdalisting}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-1}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-2}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-3}
-    \end{agdalisting}
-  \end{multicols}\vspace{-1.5\baselineskip}
+    \end{agdalisting*}
+  \end{multicols}\vspace{-1.5\baselineskip}\noindent
   Non-dependent functions are denoted with the arrow (\(\rightarrow\)).
 \end{definition}
 
@@ -190,9 +186,9 @@ the countdown transformation: the vector of Booleans for selection.
 A vector is relatively simple to define: a vector of zero elements is simply a
 unit, a vector of \(n+1\) elements is the product of an element and a vector of
 \(n\) elements.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Data/Vec/Iterated.tex]{vec-def}
-\end{agdalisting}
+\end{agdalisting*}
 From this we can see that a vector of \(n\) Booleans has the type
 \(\AgdaDatatype{Vec} \; \AgdaDatatype{Bool} \; n\)
 

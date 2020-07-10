@@ -19,9 +19,9 @@ be listed.
   To say that some type \(A\) is split enumerable is to say that there is a list
   \(\mathit{support} : \AgdaDatatype{List}(A)\) such that any value \(x : A\) is in
   \(\mathit{support}\).
-  \begin{agdalisting} \label{split-enum-def-eqn}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Container.tex]{split-enum-def}
-  \end{agdalisting}
+  \end{agdalisting*}
   We call the first component of this pair the ``support'' list, and the second
   component the ``cover'' proof.
   An equivalent version of this predicate was called \verb+Listable+ in
@@ -53,9 +53,9 @@ verbose}
 
 If that seems needlessly complex, don't worry: this definition is precisely
 equivalent to the usual inductive one.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Data/List/Base.tex]{list-def}
-\end{agdalisting}
+\end{agdalisting*}
 And this isn't some kind of hand-waving equivalence, either: since we are
 working in HoTT, we can (and do) prove that the two types are equal, allowing us
 to use one or the other depending on whichever is more convenient, and
@@ -71,17 +71,17 @@ that need defining.
 natural numbers smaller than \(n\).
 Its definition relies on a type for disjoint union,
 \(\AgdaDatatype{\ensuremath{\uplus}}\).
-\begin{multicols}{2} \null \vfill
-  \begin{agdalisting}
+\begin{multicols}{2}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
-  \end{agdalisting} \vfill \null \columnbreak
-  \begin{agdalisting}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Snippets/Introduction.tex]{disj-union}
-  \end{agdalisting}%
+  \end{agdalisting*}%
   % It is also expressible with only \(\Sigma\):
-  % \begin{agdalisting}
+  % \begin{agdalisting*}
   %   \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
-  % \end{agdalisting}
+  % \end{agdalisting*}
   % Although the inductive type definition is slightly more ergonomic.
 \end{multicols} \noindent
 And containers themselves, of course.
@@ -129,14 +129,12 @@ would instead define finiteness based on the existence of some injection or
 surjection, say a surjection from a finite prefix of the natural numbers.
 In HoTT, surjections (or, more precisely, \emph{split} surjections
 \cite[definition 4.6.1]{hottbook}), are defined like so:
-\begin{multicols}{2}
   \begin{agdalisting} \label{sp-surj-eqn}
     \ExecuteMetaData[agda/Function/Surjective/Base.tex]{split-surjective}
-  \end{agdalisting} \columnbreak
+  \end{agdalisting}
   \begin{agdalisting} \label{sp-surj-arrow-eqn}
     \ExecuteMetaData[agda/Function/Surjective/Base.tex]{split-surjection}
   \end{agdalisting} 
-\end{multicols}\vspace{-1\baselineskip}
 As it turns out, our definition of finiteness here is precisely the same as a
 surjection-based one, in quite a deep way!
 \begin{lemma} \label{split-enum-is-split-surj}%
