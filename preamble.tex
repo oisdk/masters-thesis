@@ -1,14 +1,22 @@
 \PassOptionsToPackage{dvipsnames}{xcolor}
 \documentclass[draft]{memoir}
-
 \usepackage{graphicx}
 \chapterstyle{veelo}
 \hangsecnum
 
 \usepackage{url}
+\usepackage{dashbox}
 
 \ifdraftdoc
-\newcommand{\todo}[1]{\sidepar{TODO: \\ #1}}
+\newcommand{\todo}[1]{%
+  \marginpar{%
+    \dbox{%
+      \begin{minipage}{.9\marginparwidth}%
+        \footnotesize#1%
+      \end{minipage}%
+    }%
+  }%
+}%
 \else
 \newcommand{\todo}[1]{}
 \fi
@@ -31,11 +39,6 @@
 \newcommand{\eqnum}{\leavevmode\textup{\tagform@{\theequation}}}
 \makeatother
 
-\usepackage{dashbox}
-\setlength{\dashlength}{2pt}
-\setlength{\dashdash}{.75pt}
-\usepackage{varwidth}
-\usepackage{environ}
 \newenvironment{agdalisting}
 {
 
@@ -53,6 +56,16 @@
 
 \noindent\begin{minipage}{\linewidth}\centering}{\end{minipage}}
 
+\usepackage{environ}
+\NewEnviron{marginagdalisting}[1]{%
+  \refstepcounter{equation}
+  \marginpar{%
+    \BODY\vspace{-0.8\baselineskip}\\%
+    Listing {\theequation}: #1%
+  }%
+}
+
+
 
 \newtheoremstyle{roman}
 {.6\baselineskip} % Space above
@@ -68,12 +81,14 @@
 \llap{%
 \parbox[t][][t]{.7\marginparwidth}{%
 \raggedleft%
-{\bfseries\thmname{#1}\thmnumber{ #2}.}\thmnote{\\(#3)}}\hspace{\marginparsep}}}}
+{\bfseries\thmname{#1}\thmnumber{ #2}}\thmnote{\\(#3)}}\hspace{\marginparsep}}}}
 
 \theoremstyle{roman}
-\newtheorem{definition}{Definition}
-\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
+
+\numberwithin{figure}{chapter}
 
 
 % Haskell bind operator >>=

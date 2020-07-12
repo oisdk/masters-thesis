@@ -13,11 +13,14 @@ private
 \end{code}
 %<*vec-def>
 \begin{code}
-Vec : Type a → ℕ → Type a
+Vec :  Type a →
+       ℕ →
+       Type a
 Vec A zero     = ⊤
 Vec A (suc n)  = A × Vec A n
 \end{code}
 %</vec-def>
+
 \begin{code}
 
 foldr : ∀ {p} (P : ℕ → Type p) →
