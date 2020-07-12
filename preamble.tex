@@ -59,7 +59,7 @@
 \usepackage{environ}
 \NewEnviron{marginagdalisting}[1]{%
   \refstepcounter{equation}
-  \marginpar{%
+  \marginpar{\centering%
     \BODY\vspace{-0.8\baselineskip}\\%
     Listing {\theequation}: #1%
   }%

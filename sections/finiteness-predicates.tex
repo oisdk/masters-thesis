@@ -42,14 +42,13 @@ effectively, the above definition says that ``Lists are a datatype whose shape
 is given by the natural numbers, and which can be indexed by numbers smaller
 than its shape''.
 
-\todo{The rest of this section certainly reads a lot better because of the
-  inlined definitions, but I worry it's a little too informal and (possibly) too
-verbose}
+\begin{marginagdalisting}{Finite Prefixes of \agdambb{N}}
+  \ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
+\end{marginagdalisting}
 
-% \begin{wrapfigure}[5]{r}{.4\linewidth} \vspace{-1.6\baselineskip}
-%   \ExecuteMetaData[agda/Data/List/Base.tex]{list-def} \vspace{-\baselineskip}
-%   \caption{The Usual Inductive Definition}
-% \end{wrapfigure}
+\begin{marginagdalisting}{Disjoint Union}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{disj-union}
+\end{marginagdalisting}
 
 If that seems needlessly complex, don't worry: this definition is precisely
 equivalent to the usual inductive one.
@@ -65,26 +64,7 @@ connections and proofs about split enumerability and the other predicates,
 so for the remainder of the paper whenever we say \AgdaDatatype{List} we will
 mean Equation~\ref{list-def}.
 
-Before we get to those interesting proofs, though, there are some other things
-that need defining.
-\AgdaDatatype{Fin}, for instance: \(\AgdaDatatype{Fin}\;n\) is the type of
-natural numbers smaller than \(n\).
-Its definition relies on a type for disjoint union,
-\(\AgdaDatatype{\ensuremath{\uplus}}\).
-\begin{multicols}{2}
-  \begin{agdalisting*}
-    \ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
-  \end{agdalisting*} \columnbreak
-  \begin{agdalisting*}
-    \ExecuteMetaData[agda/Snippets/Introduction.tex]{disj-union}
-  \end{agdalisting*}%
-  % It is also expressible with only \(\Sigma\):
-  % \begin{agdalisting*}
-  %   \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
-  % \end{agdalisting*}
-  % Although the inductive type definition is slightly more ergonomic.
-\end{multicols} \noindent
-And containers themselves, of course.
+We still must define containers themselves, of course.
 Containers are a well-studied topic in dependent type theory, with a rich
 theory: we won't dive in to that here.
 \begin{definition}[Containers] \label{container-def}
@@ -107,14 +87,12 @@ list.
 
 One of the nice things about containers is it gives us a generic way to define
 ``membership'':
-\begin{multicols}{2}
-  \begin{agdalisting} \label{container-membership}
-    \ExecuteMetaData[agda/Container/Membership.tex]{membership-def}
-  \end{agdalisting} \columnbreak
-  \begin{agdalisting}
-    \ExecuteMetaData[agda/Snippets/Introduction.tex]{fiber}
-  \end{agdalisting}
-\end{multicols} \vspace{-1\baselineskip}\noindent 
+\begin{agdalisting} \label{container-membership}
+  \ExecuteMetaData[agda/Container/Membership.tex]{membership-def}
+\end{agdalisting}
+\begin{marginagdalisting}{A Fiber}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{fiber}
+\end{marginagdalisting}
 Here we're using the homotopy-theory notion of a \AgdaDatatype{fiber} to define
 membership: a fiber for some function \(f\) and some point \(y\) in its codomain
 is a value \(x\) and a proof that \(f \; x \;\AgdaDatatype{≡}\;y\).
@@ -129,28 +107,28 @@ would instead define finiteness based on the existence of some injection or
 surjection, say a surjection from a finite prefix of the natural numbers.
 In HoTT, surjections (or, more precisely, \emph{split} surjections
 \cite[definition 4.6.1]{hottbook}), are defined like so:
-  \begin{agdalisting} \label{sp-surj-eqn}
+\begin{agdalisting} \label{sp-surj-eqn}
+  \begin{multicols}{2}
     \ExecuteMetaData[agda/Function/Surjective/Base.tex]{split-surjective}
-  \end{agdalisting}
-  \begin{agdalisting} \label{sp-surj-arrow-eqn}
     \ExecuteMetaData[agda/Function/Surjective/Base.tex]{split-surjection}
-  \end{agdalisting} 
+  \end{multicols}
+\end{agdalisting} 
 As it turns out, our definition of finiteness here is precisely the same as a
 surjection-based one, in quite a deep way!
 \begin{lemma} \label{split-enum-is-split-surj}%
   A proof of split enumerability is equivalent to a split surjection from a
   finite prefix of the natural numbers.
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj-type}
-  \end{agdalisting}
+  \end{agdalisting*}
 \end{lemma}
-\begin{proof} \let\qed\relax \vspace{-1\baselineskip}
-  \begin{minipage}[t]{.7\textwidth}\vspace{-\baselineskip}
+\begin{proof} \let\qed\relax \vspace{-\baselineskip}\phantom{Proof.} \\
+  \begin{minipage}[t]{.83\textwidth} \vspace{-.7\baselineskip}
     \begin{agdalisting*}
       \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj}
     \end{agdalisting*}
   \end{minipage}
-  \begin{minipage}[t]{.19\textwidth}
+  \begin{minipage}[t]{.165\textwidth}
 
       Def.~\ref{split-enum-def} (\AgdaDatatype{\ensuremath{\mathcal{E}!}}) \\
       Eqn.~\ref{container-membership} (\AgdaDatatype{\ensuremath{\in}}) \\
@@ -158,7 +136,7 @@ surjection-based one, in quite a deep way!
       Eqn.~\ref{list-def} (\(\AgdaDatatype{List}\)) \\
       Eqn.~\ref{container-interp}  \\
       Reassociation \\
-      Eqn.~\ref{sp-surj-arrow-eqn}
+      Eqn.~\ref{sp-surj-eqn}
   \end{minipage}
 \end{proof}
 In the above proof syntax the
@@ -166,23 +144,23 @@ In the above proof syntax the
 are definitionally equal, i.e. they are ``obviously'' equal from the type
 checker's perspective.
 Clearly, only one line isn't a definitional equality: 
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Data/Sigma/Properties.tex]{reassoc}
-\end{agdalisting}
+\end{agdalisting*}
 This means that we could have in fact written the whole proof as follows:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-is-split-surj-short}
-\end{agdalisting}
+\end{agdalisting*}
 The simplicity of this proof, by the way, is why we preferred the
 container-based definition of lists over the traditional one.
 \subsection{Instances}
+\begin{marginagdalisting}{Proof of \(\AgdaFunction{\(\mathcal{E}!\)\;\AgdaDatatype{Bool}}\)} \label{bool-is-split-enumerable}
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
+\end{marginagdalisting}
 To actually show that a type \(A\) is finite amounts to constructing a term of
 type \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\;A\).
-For simple types like \AgdaDatatype{Bool}, that is simple:
-\begin{agdalisting} \label{bool-is-split-enumerable}
-  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
-\end{agdalisting}
-
+For simple types like \AgdaDatatype{Bool}, that is simple: it just amounts to
+basically listing the constructors.
 As a slightly more complex example, consider the \(\AgdaDatatype{Fin}\) type
 we've been using.
 Remember that split enumerability is in fact the same as a split surjection from
@@ -196,53 +174,49 @@ We'll prove the following slightly more general statement:
 \end{agdalisting}
 \subsection{Decidable Equality}
 One thing that characterises all split enumerable types is that they are all
-\emph{discrete}, i.e. they have decidable equality.  \todo{All multicol agda code should probably be vertically centred like this}
-\begin{multicols}{2}  \null \vfill
-  \begin{agdalisting}
-    \ExecuteMetaData[agda/Relation/Nullary/Discrete/Base.tex]{discrete-def}
-  \end{agdalisting} \vfill \null \columnbreak
-  \begin{agdalisting}
+\emph{discrete}, i.e. they have decidable equality. 
+\begin{agdalisting}
+  \begin{multicols}{2} \null \vfill
+    \ExecuteMetaData[agda/Relation/Nullary/Discrete/Base.tex]{discrete-def} \vfill \null \columnbreak
     \ExecuteMetaData[agda/Snippets/Dec.tex]{dec-def}
-  \end{agdalisting}
-\end{multicols} \vspace{-\baselineskip} \noindent
+  \end{multicols}
+\end{agdalisting}
 We will see later that this has implications for the space of types we're
 dealing with, but for now it simply provides a useful function on split
 enumerable types.
-\begin{lemma} \todo{Don't know if this should be a lemma or just prose}
+\begin{lemma} \label{split-enum-discrete}
   Split enumerability implies decidable equality.
 \end{lemma}
 \begin{proof}
 To prove that split enumerability implies decidable equality we'll take a quick
 detour through injections.
-\begin{multicols}{2}
-  \begin{agdalisting}
-    \ExecuteMetaData[agda/Function/Injective/Base.tex]{injective}
-  \end{agdalisting} \columnbreak
-  \begin{agdalisting}
+\begin{agdalisting}
+  \begin{multicols}{2}
+    \ExecuteMetaData[agda/Function/Injective/Base.tex]{injective} \columnbreak
     \ExecuteMetaData[agda/Function/Injective/Base.tex]{injection}
-  \end{agdalisting}
-\end{multicols} \vspace{-\baselineskip} \noindent
+  \end{multicols}
+\end{agdalisting}
 These are useful because we know that any type which injects into a discrete
 type is itself discrete:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Function/Injective/Properties.tex]{inj-discrete}
-\end{agdalisting}
+\end{agdalisting*}
 And we can turn a split surjection from \(A\) to \(B\) into an injection from
-\(B\) to \(A\): \todo{make these side-wrapped floats?}
-\begin{agdalisting}
+\(B\) to \(A\):
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{surj-to-inj}
-\end{agdalisting}
+\end{agdalisting*}
 Yielding a simple proof that any type with a split surjection from a discrete
 type is itself discrete:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{discrete-surj}
-\end{agdalisting}
+\end{agdalisting*}
 Since split enumerability is really just a split surjection from
 \AgdaDatatype{Fin}, and since we know that \AgdaDatatype{Fin} is discrete, the
 overall proof resolves quite simply:
-\begin{agdalisting} \label{split-enum-discrete}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-is-discrete}
-\end{agdalisting}
+\end{agdalisting*}
 \end{proof}
 \section{Manifest Bishop Finiteness} \label{manifest-bishop-finiteness}
 We mentioned in the introduction that occasionally in constructive mathematics

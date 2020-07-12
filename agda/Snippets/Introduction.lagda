@@ -151,8 +151,9 @@ module SigmaDisjUnion where
 %</sigma-disj-union>
 %<*disj-union>
 \begin{code}
-data _⊎_ (A : Type a) (B : Type b)
-         : Type (a ℓ⊔ b) where
+data _⊎_
+    (A : Type a) (B : Type b)
+    : Type (a ℓ⊔ b) where
   inl  : A  → A ⊎ B
   inr  : B  → A ⊎ B
 \end{code}
