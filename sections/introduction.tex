@@ -1,4 +1,30 @@
 \chapter{Introduction}
+
+
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Interactive.tex]{step1}
+\end{agdalisting}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Interactive.tex]{step2}
+\end{agdalisting}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Interactive.tex]{step3}
+\end{agdalisting}
+
+\begin{equation}
+  \frac{
+    \mathit{zs}:\AgdaDatatype{List}\;A \;\;\;\;
+    \mathit{ys}:\AgdaDatatype{List}\;A \;\;\;\;
+    A :\AgdaDatatype{Type}\;a\;\text{(not in scope)} \;\;\;\;
+    a :\AgdaDatatype{Level}\;\text{(not in scope)}
+    }{
+    \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
+    \;\AgdaFunction{≡}\;
+    \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
+  }
+\end{equation} 
+
+
 \todo{regroup into old structure}
 We are interested in constructive notions of finiteness, formalised in Cubical
 Type Theory~\cite{cohenCubicalTypeTheory2016}.
@@ -147,6 +173,7 @@ Here we'll define the basic type formers used in MLTT.\@
   We will use different notations to refer to this type depending on the
   setting.
   The following four expressions all denote the same type:
+
   \begin{multicols}{4}
     \begin{agdalisting*}
       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
