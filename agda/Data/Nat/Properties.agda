@@ -41,9 +41,14 @@ infix 4 _<_
 _<_ : ℕ → ℕ → Type₀
 n < m = T (n <ᴮ m)
 
+infix 4 _≤ᴮ_
 _≤ᴮ_ : ℕ → ℕ → Bool
 zero  ≤ᴮ m = true
 suc n ≤ᴮ m = n <ᴮ m
+
+infix 4 _≥ᴮ_
+_≥ᴮ_ : ℕ → ℕ → Bool
+_≥ᴮ_ = flip _≤ᴮ_
 
 +-assoc : ∀ x y z → (x + y) + z ≡ x + (y + z)
 +-assoc zero y z = refl

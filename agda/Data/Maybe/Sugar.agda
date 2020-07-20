@@ -16,3 +16,11 @@ _<*>_ : Maybe (A → B) → Maybe A → Maybe B
 nothing <*> xs = nothing
 just f <*> nothing = nothing
 just f <*> just x = just (f x)
+
+_>>_ : Maybe A → Maybe B → Maybe B
+nothing >> _ = nothing
+just _  >> y = y
+
+guard : Bool → Maybe ⊤
+guard false = nothing
+guard true  = just tt
