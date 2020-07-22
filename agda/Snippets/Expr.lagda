@@ -45,7 +45,4 @@ from-just (just x) = x
 
 ⟦_⟧! : (e : Expr) → { _ : Valid e } → ℕ
 ⟦ e ⟧! { valid } = from-just ⟦ e ⟧ { valid }
-
-
-
 \end{code}
