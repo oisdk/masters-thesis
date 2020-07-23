@@ -1,6 +1,6 @@
 \chapter{Programming and Proving in Cubical Agda}
 
-Agda \cite{stumpVerifiedFunctionalProgramming2016} is a dependently-typed
+% Agda \cite{norellDependentlyTypedProgramming2008} is a dependently-typed
 functional programming language.
 A recent extension to the language, Cubical Agda
 \cite{vezzosiCubicalAgdaDependently2019}, allows us to do Cubical Type Theory
@@ -9,13 +9,65 @@ directly in Agda.
 In this chapter we will go through a basic example to explain the fundamentals
 of programming in Agda, and we will begin to explain some cubical type theory
 features.
-\section{Basic Agda}
+\section{Basic Functional Programming in Agda}
 The basic unit of functionality in Agda is the \emph{type}.
 We can define types like so:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def}
 \end{agdalisting}
+Here we've defined the type of booleans.
+The first line of this definition states the same of the type, and also tells us
+that \AgdaDatatype{Bool} is a \AgdaDatatype{\(\text{Type}_0\)}.
+The subscripted index is the universe level of the type: we won't go into the
+details of universe levels now (and in fact almost all types we will work with
+have level 0, so it won't come up very much), but we will mention that they are
+related to Girard's paradox.
+% \cite{girardInterpretationFonctionelleElimination1972}.
 
+This type has two inhabitants: \AgdaInductiveConstructor{false}, and
+\AgdaInductiveConstructor{true}.
+We can construct values of the type by referring to one of these two
+inhabitants:
+\begin{marginagdalisting}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-val}
+\end{marginagdalisting}
+And we can further define functions by \emph{pattern-matching} on these
+inhabitants:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{not-def}
+\end{agdalisting}
+\section{An Expression Evaluator}
+Later we will builder a verified solver for the Countdown problem
+\cite{huttonCountdownProblem2002} \todo{Find original reference for this}, for
+now we will look at building a small part of the solution: an expression
+evaluator.
+Along the way, we will see how to implement some common functional programming
+idioms in Agda (with some small improvements over Haskell when it comes to
+syntax), and we will see how dependent types can give us a slightly nicer
+interface than normal.
+
+First, we'll need to define the natural numbers:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{nat-def}
+\end{agdalisting}
+In contrast to \AgdaDatatype{Bool}, we haven't simply listed the inhabitants of
+this type, as that would somewhat bloat the page count of this thesis.
+Instead, we list the \emph{ways} to construct elements of the type.
+First, we say that you can create a natural number called
+\AgdaInductiveConstructor{zero}.
+Then, we say if you already have a natural number, than you can create its
+successor, using \AgdaDatatype{suc}.
+For now, we can think of inductive type definitions in Agda as being:
+\begin{enumerate}
+  \item A type name.
+  \item A kind (i.e. \AgdaFunction{\(\text{Type}_0\)}).
+  \item A list of constructors, which are functions whose return types are the
+    type being defined.
+\end{enumerate}
+We will see later that this isn't the entire story, but it is a good enough
+intuition for now.
+
+Of course we can also define functions on
 
 %%% Local Variables:
 %%% mode: latex

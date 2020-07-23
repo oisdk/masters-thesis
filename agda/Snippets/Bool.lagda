@@ -17,9 +17,26 @@ private
 %</bool-def>
 \begin{code}
 
-open import Data.Bool
-open import Prelude hiding (_∧_)
+open import Data.Bool hiding (not)
+open import Prelude hiding (_∧_; not)
 
+private
+  module BoolVal where
+\end{code}
+%<*bool-val>
+\begin{code}
+    a-boolean : Bool
+    a-boolean = true
+\end{code}
+%</bool-val>
+%<*not-def>
+\begin{code}
+not : Bool → Bool
+not false  = true
+not true   = false
+\end{code}
+%</not-def>
+\begin{code}
 infixl 6 _∧_
 \end{code}
 %<*and-def>
