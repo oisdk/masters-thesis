@@ -1,5 +1,22 @@
 \chapter{Programming and Proving in Cubical Agda}
 
+Agda \cite{stumpVerifiedFunctionalProgramming2016} is a dependently-typed
+functional programming language.
+A recent extension to the language, Cubical Agda
+\cite{vezzosiCubicalAgdaDependently2019}, allows us to do Cubical Type Theory
+directly in Agda.
+
+In this chapter we will go through a basic example to explain the fundamentals
+of programming in Agda, and we will begin to explain some cubical type theory
+features.
+\section{Basic Agda}
+The basic unit of functionality in Agda is the \emph{type}.
+We can define types like so:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def}
+\end{agdalisting}
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../paper"

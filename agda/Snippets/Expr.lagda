@@ -16,7 +16,6 @@ data Expr : Type₀ where
   lit : ℕ → Expr
   _⟨_⟩_ : Expr → Op → Expr → Expr
 
-
 ⟦_⟧ : Expr → Maybe ℕ
 ⟦ lit x ⟧ = just x
 ⟦ x ⟨ +′ ⟩ y ⟧ = ⦇ ⟦ x ⟧ + ⟦ y ⟧ ⦈

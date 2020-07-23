@@ -3,6 +3,20 @@
 
 module Snippets.Bool where
 
+open import Level
+
+private
+  module BoolDefn where
+\end{code}
+%<*bool-def>
+\begin{code}
+    data Bool : Type₀ where
+      false  : Bool
+      true   : Bool
+\end{code}
+%</bool-def>
+\begin{code}
+
 open import Data.Bool
 open import Prelude hiding (_∧_)
 
