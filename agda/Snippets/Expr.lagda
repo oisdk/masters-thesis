@@ -3,7 +3,19 @@
 
 module Snippets.Expr where
 
-open import Prelude hiding (_⟨_⟩_; T)
+open import Prelude hiding (_⟨_⟩_; T; ⊤; tt)
+
+module DataTop where
+\end{code}
+%<*data-top>
+\begin{code}
+  data ⊤ : Type₀ where
+    tt : ⊤
+\end{code}
+%</data-top>
+\begin{code}
+
+open import Data.Unit
 open import Data.Maybe
 open import Data.Maybe.Sugar
 open import Data.Nat renaming (_∸_ to _-_)
@@ -53,11 +65,11 @@ _ =
 %</appl-cases>
 %<*sub-case>
 \begin{code}
-⟦ x ⟨ -′ ⟩ y ⟧ = do
-  x′ ← ⟦ x ⟧
-  y′ ← ⟦ y ⟧
-  guard (y′ ≤ x′)
-  just (x′ - y′)
+⟦ x ⟨ -′ ⟩ y ⟧ =
+  do  x′ ← ⟦ x ⟧
+      y′ ← ⟦ y ⟧
+      guard (y′ ≤ x′)
+      just (x′ - y′)
 \end{code}
 %</sub-case>
 %<*div-case>
@@ -108,3 +120,11 @@ example-eval : Maybe ℕ
 example-eval = ⟦ lit 4 ⟨ ×′ ⟩ lit 2 ⟧
 \end{code}
 %</example-eval>
+%<*pair>
+\begin{code}
+record Pair (A : Type a) (B : Type b) : Type (a ℓ⊔ b) where
+  field
+    fst  : A
+    snd  : B
+\end{code}
+%</pair>

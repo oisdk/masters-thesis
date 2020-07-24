@@ -195,8 +195,42 @@ As such, we can use \agdabot to define a notion of ``not'' for types:
 \end{agdalisting}
 
 The second type, \agdatop, is a \AgdaKeyword{record}.
+Types defined using \AgdaKeyword{record} are much more like classes or structs
+in imperative programming language: instead of listing the constructors, we list
+the \emph{fields} of these types.
 
+Of course, in this case, our type doesn't have any fields.
+Perhaps a more instructive example of a record is the following:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{pair}
+\end{agdalisting}
+Here we've defined the type of \emph{pairs}.
 
+Types defined with \AgdaKeyword{data} and types defined with
+\AgdaKeyword{record} are in some sense duals of each other: to \emph{consume} a
+\AgdaKeyword{data} type, we have to handle each of the constructors; to \emph{construct}
+a \AgdaKeyword{record} type, we have to handle each of the fields.
+Another way to say this same thing is that \AgdaKeyword{data} types are sum
+types, and \AgdaKeyword{record} types are products.
+What we have in \agdabot and \agdatop is the identity for sums and products,
+respectively.
+
+Now, to be completely clear, we could absolutely have defined \agdatop as a
+\AgdaKeyword{data} type with one constructor:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{data-top}
+\end{agdalisting}
+We use the \AgdaKeyword{record} definition simply because it tends to work a
+little better in terms of ergonomics: basically, to construct a
+\AgdaKeyword{record} type automatically, Agda attempts to construct all of its
+\emph{fields} one by one.
+Since \agdatop has no fields, this is an easy task, and hence Agda will be able
+to automatically construct a value of type \agdatop in many situations
+(We can ask Agda to construct something for us automatically by supplying an
+underscore in place of where the value should go).
+Agda is more conservative about automatically constructing \AgdaKeyword{data}
+types, so there are fewer situations where it will do it automatically.
+\todo{expand on this?}
 
 
 \begin{agdalisting}
