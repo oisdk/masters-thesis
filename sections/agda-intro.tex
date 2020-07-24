@@ -123,17 +123,43 @@ The first case is relatively simple:
 
 The second two cases are slightly more complex: because we need to recursively
 evaluate the subtrees of the expression in each case, we will need to check that
-each of those returns a \AgdaInductiveConstructor{just} value.
+each of those returns a \AgdaInductiveConstructor{just} value before applying
+the operator.
+Luckily, we can use Agda's built-in idiom brackets to make this definition
+a little cleaner: \todo{More explanation here}
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{appl-cases}
 \end{agdalisting}
+
+Next, we will define subtraction.
+As pointed out already, in this case we have to check to make sure that the
+subtraction is valid.
+Like Haskell, Agda supports do notation for this case:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{sub-case}
 \end{agdalisting}
+
+Finally, we will handle the division case.
+Here, we want to pattern-match on the returned value of the recursive call.
+Agda also provides syntax for that:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{div-case}
 \end{agdalisting}
-
+\todo{expand on monads applicatives etc in this section}
+\section{Statically Proving the Evaluation is Safe}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{is-just}
+\end{agdalisting}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{valid}
+\end{agdalisting}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{from-just}
+\end{agdalisting}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval}
+\end{agdalisting}
+\section{Quotienting the Expression}
 
 %%% Local Variables:
 %%% mode: latex

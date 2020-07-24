@@ -70,18 +70,28 @@ _ =
   just (x′ ÷ suc y′)
 \end{code}
 %</div-case>
+%<*is-just>
 \begin{code}
-
 IsJust : Maybe A → Type₀
 IsJust nothing  = ⊥
 IsJust (just _) = ⊤
-
+\end{code}
+%</is-just>
+%<*valid>
+\begin{code}
 Valid : Expr → Type₀
 Valid e = IsJust ⟦ e ⟧
-
+\end{code}
+%</valid>
+%<*from-just>
+\begin{code}
 from-just : (j : Maybe A) → { _ : IsJust j } → A
 from-just (just x) = x
-
+\end{code}
+%</from-just>
+%<*static-eval>
+\begin{code}
 ⟦_⟧! : (e : Expr) → { _ : Valid e } → ℕ
 ⟦ e ⟧! { valid } = from-just ⟦ e ⟧ { valid }
 \end{code}
+%</static-eval>
