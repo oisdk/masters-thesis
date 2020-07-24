@@ -102,16 +102,11 @@ Valid : Expr → Type₀
 Valid e = T (is-just ⟦ e ⟧)
 \end{code}
 %</valid>
-%<*from-just>
-\begin{code}
-from-just : (j : Maybe A) → { _ : T (is-just j) } → A
-from-just (just x) = x
-\end{code}
-%</from-just>
 %<*static-eval>
 \begin{code}
 ⟦_⟧! : (e : Expr) → { _ : Valid e } → ℕ
-⟦ e ⟧! { valid } = from-just ⟦ e ⟧ { valid }
+⟦ e ⟧! with ⟦ e ⟧
+⟦ e ⟧! | just x = x
 \end{code}
 %</static-eval>
 %<*example-eval>
@@ -128,3 +123,9 @@ record Pair (A : Type a) (B : Type b) : Type (a ℓ⊔ b) where
     snd  : B
 \end{code}
 %</pair>
+%<*example-static-eval>
+\begin{code}
+example-static-eval : ℕ
+example-static-eval = ⟦ lit 4 ⟨ ×′ ⟩ lit 2 ⟧!
+\end{code}
+%</example-static-eval>

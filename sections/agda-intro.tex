@@ -232,16 +232,30 @@ Agda is more conservative about automatically constructing \AgdaKeyword{data}
 types, so there are fewer situations where it will do it automatically.
 \todo{expand on this?}
 
-
+So, now that we have a way of turning booleans into their logical equivalents
+\todo{express this better} we can define a type for proofs that a given
+expression is valid:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{valid}
 \end{agdalisting}
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Expr.tex]{from-just}
-\end{agdalisting}
+A value of type \(\AgdaFunction{Valid}\;e\), for some expression \(e\), is a
+proof that \(e\) doesn't have (for example) any divisions by zero, or
+arithmetic underflows.
+
+With this we can define a function which uses the statically provided proof in
+order to rule out certain cases in a pattern-match, thereby giving us a function
+which statically evaluates expressions without using a \AgdaDatatype{Maybe}:
+\todo{still have to explain here implicit arguments, ``with'', etc}
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval}
 \end{agdalisting}
+
+And with that we can statically evaluate expressions like so:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{example-static-eval}
+\end{agdalisting}
+
+
 \section{Quotienting the Expression}
 
 %%% Local Variables:
