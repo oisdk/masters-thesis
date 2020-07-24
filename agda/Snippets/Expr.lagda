@@ -3,7 +3,7 @@
 
 module Snippets.Expr where
 
-open import Prelude hiding (_⟨_⟩_)
+open import Prelude hiding (_⟨_⟩_; T)
 open import Data.Maybe
 open import Data.Maybe.Sugar
 open import Data.Nat renaming (_∸_ to _-_)
@@ -72,20 +72,27 @@ _ =
 %</div-case>
 %<*is-just>
 \begin{code}
-IsJust : Maybe A → Type₀
-IsJust nothing  = ⊥
-IsJust (just _) = ⊤
+is-just : Maybe A → Bool
+is-just nothing   = false
+is-just (just _)  = true
 \end{code}
 %</is-just>
+%<*tee>
+\begin{code}
+T : Bool → Type₀
+T true   = ⊤
+T false  = ⊥
+\end{code}
+%</tee>
 %<*valid>
 \begin{code}
 Valid : Expr → Type₀
-Valid e = IsJust ⟦ e ⟧
+Valid e = T (is-just ⟦ e ⟧)
 \end{code}
 %</valid>
 %<*from-just>
 \begin{code}
-from-just : (j : Maybe A) → { _ : IsJust j } → A
+from-just : (j : Maybe A) → { _ : T (is-just j) } → A
 from-just (just x) = x
 \end{code}
 %</from-just>
@@ -95,3 +102,9 @@ from-just (just x) = x
 ⟦ e ⟧! { valid } = from-just ⟦ e ⟧ { valid }
 \end{code}
 %</static-eval>
+%<*example-eval>
+\begin{code}
+example-eval : Maybe ℕ
+example-eval = ⟦ lit 4 ⟨ ×′ ⟩ lit 2 ⟧
+\end{code}
+%</example-eval>

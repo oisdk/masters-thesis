@@ -190,3 +190,9 @@ fiber : (A → B) → B → Type _
 fiber f y = ∃[ x ] (f x ≡ y)
 \end{code}
 %</fiber>
+%<*not>
+\begin{code}
+¬_ : Type a → Type a
+¬ A = A → ⊥
+\end{code}
+%</not>
