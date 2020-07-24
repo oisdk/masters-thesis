@@ -9,12 +9,34 @@ open import Data.Maybe.Sugar
 open import Data.Nat renaming (_∸_ to _-_)
 open import Data.Nat.Properties using () renaming (_≤ᴮ_ to _≤_; _≡ᴮ_ to _≟_)
 
+\end{code}
+%<*op-def>
+\begin{code}
 data Op : Type₀ where
-  +′ ×′ -′ ÷′ : Op
-
+  +′  : Op
+  ×′  : Op
+  -′  : Op
+  ÷′  : Op
+\end{code}
+%</op-def>
+%<*expr-def>
+\begin{code}
 data Expr : Type₀ where
   lit : ℕ → Expr
   _⟨_⟩_ : Expr → Op → Expr → Expr
+\end{code}
+%</expr-def>
+\begin{code}
+_ : Expr
+_ =
+\end{code}
+%<*example-expr>
+\begin{code}
+  lit 4 ⟨ +′ ⟩ lit 5
+\end{code}
+%</example-expr>
+\begin{code}
+
 
 ⟦_⟧ : Expr → Maybe ℕ
 ⟦ lit x ⟧ = just x

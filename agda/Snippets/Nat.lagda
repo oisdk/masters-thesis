@@ -10,9 +10,11 @@ data ℕ : Type₀ where
   suc   : ℕ → ℕ
 \end{code}
 %</nat-def>
+%<*sub-def>
 \begin{code}
 _-_ : ℕ → ℕ → ℕ
-n     - zero  = zero
-zero  - suc m = zero
-suc n - suc m = n - m
+n      - zero   = zero
+zero   - suc m  = zero
+suc n  - suc m  = n - m
 \end{code}
+%</sub-def>

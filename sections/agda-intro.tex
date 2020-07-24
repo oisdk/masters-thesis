@@ -1,5 +1,4 @@
 \chapter{Programming and Proving in Cubical Agda}
-
 Agda \cite{norellDependentlyTypedProgramming2008} is a dependently-typed
 functional programming language.
 A recent extension to the language, Cubical Agda
@@ -67,7 +66,40 @@ For now, we can think of inductive type definitions in Agda as being:
 We will see later that this isn't the entire story, but it is a good enough
 intuition for now.
 
-Of course we can also define functions on
+Of course we can also define functions on the natural numbers, in much the same
+way as we did on the booleans:
+\begin{agdalisting} \label{sub-def}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-def}
+\end{agdalisting}
+Here we've defined subtraction.
+
+We want to define a language of arithmetic expressions.
+With countdown in mind, we'll only need to support four operators, which we can
+define in a simple data type:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{op-def}
+\end{agdalisting}
+
+Next, we'll define the actual type of expressions.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{expr-def}
+\end{agdalisting}
+What we've defined here is actually a simple leafy binary tree.
+The syntax for the second constructor is not so simple, however: it defines a
+\emph{mixfix} operator.
+Each underscore in \AgdaInductiveConstructor{\(\_\langle \_ \rangle\_\)}
+represents a hole which expressions can be put into.
+This allows us to use the constructor like so:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{example-expr}
+\end{agdalisting}
+\section{Safe Evaluation With Monads}
+The next step is to write the evaluator for the type we have defined above.
+There is a slight complication, however: some definable expressions don't have
+defined evaluations.
+Take the subtraction as defined on natural numbers, for instance
+(Listing~\ref{sub-def}).
+
 
 %%% Local Variables:
 %%% mode: latex
