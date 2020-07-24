@@ -249,6 +249,8 @@ which statically evaluates expressions without using a \AgdaDatatype{Maybe}:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval}
 \end{agdalisting}
+Notice here that the \AgdaFunction{Valid} proof is provided automatically,
+enabled by the fact that we defined \agdatop as a record.
 
 And with that we can statically evaluate expressions like so:
 \begin{agdalisting}
