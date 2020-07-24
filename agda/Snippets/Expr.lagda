@@ -35,24 +35,42 @@ _ =
   lit 4 ⟨ +′ ⟩ lit 5
 \end{code}
 %</example-expr>
+%<*eval-ty>
 \begin{code}
-
-
 ⟦_⟧ : Expr → Maybe ℕ
+\end{code}
+%</eval-ty>
+%<*lit-case>
+\begin{code}
 ⟦ lit x ⟧ = just x
-⟦ x ⟨ +′ ⟩ y ⟧ = ⦇ ⟦ x ⟧ + ⟦ y ⟧ ⦈
-⟦ x ⟨ ×′ ⟩ y ⟧ = ⦇ ⟦ x ⟧ * ⟦ y ⟧ ⦈
+\end{code}
+%</lit-case>
+%<*appl-cases>
+\begin{code}
+⟦ x ⟨ +′  ⟩ y ⟧ = ⦇ ⟦ x ⟧ +  ⟦ y ⟧ ⦈
+⟦ x ⟨ ×′  ⟩ y ⟧ = ⦇ ⟦ x ⟧ *  ⟦ y ⟧ ⦈
+\end{code}
+%</appl-cases>
+%<*sub-case>
+\begin{code}
 ⟦ x ⟨ -′ ⟩ y ⟧ = do
   x′ ← ⟦ x ⟧
   y′ ← ⟦ y ⟧
   guard (y′ ≤ x′)
   just (x′ - y′)
+\end{code}
+%</sub-case>
+%<*div-case>
+\begin{code}
 ⟦ x ⟨ ÷′ ⟩ y ⟧ = do
   suc y′ ← ⟦ y ⟧
     where zero → nothing
   x′ ← ⟦ x ⟧
   guard (rem x′ (suc y′) ≟ 0)
   just (x′ ÷ suc y′)
+\end{code}
+%</div-case>
+\begin{code}
 
 IsJust : Maybe A → Type₀
 IsJust nothing  = ⊥

@@ -99,6 +99,40 @@ There is a slight complication, however: some definable expressions don't have
 defined evaluations.
 Take the subtraction as defined on natural numbers, for instance
 (Listing~\ref{sub-def}).
+We really shouldn't be able to subtract a larger number from a smaller one, and
+we would like to use the type system to prevent us from doing this.
+
+The most common technique to solve this problem uses \AgdaDatatype{Maybe}:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Data/Maybe/Base.tex]{maybe-def}
+\end{agdalisting}
+This is the first \emph{parameterised} type we have seen: \AgdaDatatype{Maybe}
+is a container with one or zero elements, but we haven't specified which type
+can inhabit it.
+It can actually be specialised to any type when we use it.
+For our use, we will specialise it to \agdambb{N}:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{eval-ty}
+\end{agdalisting}
+
+We will define this function by pattern-matching.
+The first case is relatively simple:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{lit-case}
+\end{agdalisting}
+
+The second two cases are slightly more complex: because we need to recursively
+evaluate the subtrees of the expression in each case, we will need to check that
+each of those returns a \AgdaInductiveConstructor{just} value.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{appl-cases}
+\end{agdalisting}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{sub-case}
+\end{agdalisting}
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{div-case}
+\end{agdalisting}
 
 
 %%% Local Variables:
