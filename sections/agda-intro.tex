@@ -256,9 +256,40 @@ And with that we can statically evaluate expressions like so:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{example-static-eval}
 \end{agdalisting}
+\section{Equalities}
+We actually have encountered our first ``proof'' with dependent types: we have
+proven that a given expression is valid or not.
+Now we're going to look at another kind of proof: one that shows that an
+expression is \emph{equal} to something.
+To do so we'll first have to explore path types in Cubical Agda.
+\begin{definition}[Path Types]
+  A proof that two values are equal in Cubical Agda is represented by a
+  \emph{path}.
+  This path will be denoted with the symbol \AgdaFunction{\(\equiv\)}.
+  In other words, a value of type \(x\;\AgdaFunction{\(\equiv\)}\;y\) is a proof
+  that \(x\) equals \(y\).
+\end{definition}
 
+Equalities as paths is the first topic we have reached where Cubical Type Theory
+begins to differ from traditional Martin-Löf Type Theory.
+There, we would usually define the type of proofs of equality like so:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Equality.tex]{equality-def}
+\end{agdalisting}
+This is an inductive \AgdaKeyword{data} type, with one constructor: the
+constructor can only be used when the two parameters to the type are the same,
+meaning a value of this type contains a proof that they are the same.
+We can retrieve this proof by pattern-matching on that constructor.
 
-\section{Quotienting the Expression}
+This is actually a perfectly usable equality type in CuTT: although the
+elimination rule is a little complex and we won't look into it just yet.
+However we prefer to represent equalities in a slightly more primitive way, as
+it turns out to be a little more flexible.
+This is the \emph{path} representation.
+
+When represented as a path, an equality between two values of type \(A\)
+actually behaves more like a function from \AgdaDatatype{I} to \(A\).
+
 
 %%% Local Variables:
 %%% mode: latex
