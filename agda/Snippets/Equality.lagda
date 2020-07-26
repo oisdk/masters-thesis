@@ -14,3 +14,16 @@ private
       refl : x ≡ x
 \end{code}
 %</equality-def>
+\begin{code}
+open import Prelude hiding (sym)
+
+private
+  variable
+    x y : A
+\end{code}
+%<*sym-def>
+\begin{code}
+sym : x ≡ y → y ≡ x
+sym x≡y i = x≡y (~ i)
+\end{code}
+%</sym-def>

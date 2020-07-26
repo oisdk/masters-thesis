@@ -289,7 +289,22 @@ This is the \emph{path} representation.
 
 When represented as a path, an equality between two values of type \(A\)
 actually behaves more like a function from \AgdaDatatype{I} to \(A\).
+\AgdaDatatype{I} here is the type of the interval: it ranges from
+\AgdaInductiveConstructor{i0} to \AgdaInductiveConstructor{i1}.
+So, as a function then, when the path \(x\;\AgdaFunction{\(\equiv\)}\;y\) is
+applied to \AgdaInductiveConstructor{i0}, it returns \(x\), and when it is
+applied to \AgdaInductiveConstructor{i1}, it returns \(y\).
 
+Already we can manipulate paths in some interesting ways.
+First, we can manipulate values in the interval: we can take the inverse of a
+point in the interval, for instance.
+It's worth thinking about what this ``inverse'' corresponds to in the equality:
+we will name it in the next listing.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Equality.tex]{sym-def}
+\end{agdalisting}
+We will see some more intricate ways to manipulate paths later on, but for now
+the ``function from an interval'' intuition is enough to understand the basics.
 
 %%% Local Variables:
 %%% mode: latex
