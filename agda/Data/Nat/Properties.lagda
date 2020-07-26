@@ -1,3 +1,4 @@
+\begin{code}
 {-# OPTIONS --cubical --safe #-}
 
 module Data.Nat.Properties where
@@ -53,7 +54,11 @@ n ≤ m = T (n ≤ᴮ m)
 infix 4 _≥ᴮ_
 _≥ᴮ_ : ℕ → ℕ → Bool
 _≥ᴮ_ = flip _≤ᴮ_
-
+\end{code}
+%<*plus-assoc>
+\begin{code}
 +-assoc : ∀ x y z → (x + y) + z ≡ x + (y + z)
-+-assoc zero y z = refl
-+-assoc (suc x) y z = cong suc (+-assoc x y z)
++-assoc zero     y z i = y + z
++-assoc (suc x)  y z i = suc (+-assoc x y z i)
+\end{code}
+%</plus-assoc>

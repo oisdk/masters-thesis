@@ -15,7 +15,7 @@ private
 \end{code}
 %</equality-def>
 \begin{code}
-open import Prelude hiding (sym)
+open import Prelude hiding (sym; refl)
 
 private
   variable
@@ -27,3 +27,9 @@ sym : x ≡ y → y ≡ x
 sym x≡y i = x≡y (~ i)
 \end{code}
 %</sym-def>
+%<*refl-def>
+\begin{code}
+refl : x ≡ x
+refl {x = x} i = x
+\end{code}
+%</refl-def>

@@ -129,3 +129,9 @@ example-static-eval : ℕ
 example-static-eval = ⟦ lit 4 ⟨ ×′ ⟩ lit 2 ⟧!
 \end{code}
 %</example-static-eval>
+%<*example-static-proof>
+\begin{code}
+example-static-proof : ⟦ lit 4 ⟨ ×′ ⟩ lit 2 ⟧! ≡ 8
+example-static-proof = refl
+\end{code}
+%</example-static-proof>

@@ -253,7 +253,7 @@ Notice here that the \AgdaFunction{Valid} proof is provided automatically,
 enabled by the fact that we defined \agdatop as a record.
 
 And with that we can statically evaluate expressions like so:
-\begin{agdalisting}
+\begin{agdalisting} \label{example-static-eval}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{example-static-eval}
 \end{agdalisting}
 \section{Equalities}
@@ -305,6 +305,31 @@ we will name it in the next listing.
 \end{agdalisting}
 We will see some more intricate ways to manipulate paths later on, but for now
 the ``function from an interval'' intuition is enough to understand the basics.
+\section{Some Proofs of Equality}
+So now that we know something about the equality type, let's put it to some use.
+We can construct equality proofs of things which are ``obviously equal'' with
+the following function:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Equality.tex]{refl-def}
+\end{agdalisting}
+With this we can prove that the output from Equation.~\ref{example-static-eval}
+is 8:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{example-static-proof}
+\end{agdalisting}
+
+Of course, these proofs aren't very interesting.
+Something a little more complex might be the following:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Data/Nat/Properties.tex]{plus-assoc}
+\end{agdalisting}
+Unfortunately we can't look at much more complex proofs without building up some
+more machinery around path types: we can't currently compose paths, for
+instance.
+% \section{Quotients}
+% We've seen that data types can be defined by listing their constructors, where
+% each constructor is just a function whose return type is the type being defined.
+% However, we've also seen that 
 
 %%% Local Variables:
 %%% mode: latex
