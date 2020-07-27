@@ -384,7 +384,13 @@ HoTT internals: without this constructor, the type would have a lot of
 interesting structure which is far too interesting for us at this point.
 \todo{introduce explanation now or later?}
 
-
+We are going to define a type similar to the one above, but for expressions.
+It will quotient out common arithmetic identities:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{quot-expr}
+\end{agdalisting}
+To evaluate this expression, we have to actually prove that the evaluation
+function respects the given equality.
 
 
 %%% Local Variables:

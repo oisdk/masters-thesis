@@ -135,3 +135,42 @@ example-static-proof : ⟦ lit 4 ⟨ ×′ ⟩ lit 2 ⟧! ≡ 8
 example-static-proof = refl
 \end{code}
 %</example-static-proof>
+%<*quot-expr>
+\begin{code}
+data Expr/ : Type₀ where
+  lit/ : ℕ → Expr/
+  _⟪_⟫_ : Expr/ → Op → Expr/ → Expr/
+  +-comm : ∀ x y → x ⟪ +′ ⟫ y ≡ y ⟪ +′ ⟫ x
+  trunc/ : (x y : Expr/) → (p q : x ≡ y) → p ≡ q
+\end{code}
+%</quot-expr>
+\begin{code}
+
+
+
+m-+-comm : (x y : Maybe ℕ) → ⦇ x + y ⦈ ≡ ⦇ y + x ⦈
+m-+-comm nothing nothing = refl
+m-+-comm nothing (just x) = refl
+m-+-comm (just x) nothing = refl
+m-+-comm (just x) (just y) i = just (Data.Nat.Properties.+-comm x y i)
+
+open import Data.Maybe.Properties
+
+eval/ : Expr/ → Maybe ℕ
+eval/ (lit/ x) = just x
+eval/ (xs ⟪ +′ ⟫ ys) = ⦇ eval/ xs + eval/ ys ⦈
+eval/ (xs ⟪ ×′ ⟫ ys) = ⦇ eval/ xs * eval/ ys ⦈
+eval/ (xs ⟪ -′ ⟫ ys) =
+  do  x′ ← eval/ xs
+      y′ ← eval/ ys
+      guard (y′ ≤ x′)
+      just (x′ - y′)
+eval/ (xs ⟪ ÷′ ⟫ ys) = do
+  suc y′ ← eval/ ys
+    where zero → nothing
+  x′ ← eval/ xs
+  guard (rem x′ (suc y′) ≟ 0)
+  just (x′ ÷ suc y′)
+eval/ (+-comm xs ys i) = m-+-comm (eval/ xs) (eval/ ys) i
+eval/ (trunc/ x y p q i j) = Discrete→isSet (discreteMaybe Data.Nat.Properties.discreteℕ) (eval/ x) (eval/ y) (cong eval/ p) (cong eval/ q) i j
+\end{code}
