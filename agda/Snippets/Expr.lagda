@@ -47,6 +47,22 @@ _ =
   lit 4 ⟨ +′ ⟩ lit 5
 \end{code}
 %</example-expr>
+\begin{code}
+private
+ module IncorrectEval where
+\end{code}
+%<*incorrect-eval>
+\begin{code}
+  ⟦_⟧ : Expr → ℕ
+  ⟦ lit x ⟧ = x
+  ⟦ xs ⟨ +′  ⟩ ys ⟧ = ⟦ xs ⟧ + ⟦ ys ⟧
+  ⟦ xs ⟨ ×′  ⟩ ys ⟧ = ⟦ xs ⟧ * ⟦ ys ⟧
+  ⟦ xs ⟨ -′  ⟩ ys ⟧ = ⟦ xs ⟧ - ⟦ ys ⟧
+  ⟦ xs ⟨ ÷′  ⟩ ys ⟧ with ⟦ ys ⟧
+  ⟦ xs ⟨ ÷′  ⟩ ys ⟧ | zero     = zero
+  ⟦ xs ⟨ ÷′  ⟩ ys ⟧ | suc ys′  = ⟦ xs ⟧ ÷ suc ys′
+\end{code}
+%</incorrect-eval>
 %<*eval-ty>
 \begin{code}
 ⟦_⟧ : Expr → Maybe ℕ

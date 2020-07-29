@@ -235,9 +235,18 @@ The syntax for the second constructor is not so simple, however: it defines a
 Each underscore in \AgdaInductiveConstructor{\(\_\langle \_ \rangle\_\)}
 represents a hole which expressions can be put into.
 This allows us to use the constructor like so:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{example-expr}
+\end{agdalisting*}
+
+Evaluation of an expression is done by the following function:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{incorrect-eval}
 \end{agdalisting}
+We've introduced the \AgdaKeyword{with} syntax here: it functions somewhat like
+a case expression in Haskell.
+Basically, it allows us to pattern-match on the result of applying a function to
+one of the input arguments without defining a new function.
 \section{Safe Evaluation With Monads}
 The next step is to write the evaluator for the type we have defined above.
 There is a slight complication, however: some definable expressions don't have
