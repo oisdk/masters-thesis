@@ -16,9 +16,9 @@ them in the real Agda files in the source.
 \section{Basic Functional Programming in Agda}
 The basic unit of functionality in Agda is the \emph{type}.
 Let's define a type: the type of booleans.
-\begin{agdalisting*}
+\begin{agdalisting} \label{bool-def}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def}
-\end{agdalisting*}
+\end{agdalisting}
 There's a lot of syntax wrapped up in this small snippet.
 In prose, it provides four basic pieces of information:
 \begin{enumerate}
@@ -111,47 +111,95 @@ For that reason, and also because the current system of universe polymorphism in
 Agda is quite under flux and likely to be changed soon, we won't spend too much
 time on the topic.
 Every code example provided is as universe-polymorphic as possible, though.
-
-\section{An Expression Evaluator}
-\begin{agdalisting}
+\section{Some Functions}
+That's quite a lot of information on how to define things in Agda: let's look a
+little about how to do computation.
+What we need is a function:
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{not-def}
-\end{agdalisting}
-Later we will builder a verified solver for the Countdown problem
-\cite{huttonCountdownProblem2002} \todo{Find original reference for this}, for
-now we will look at building a small part of the solution: an expression
-evaluator.
-Along the way, we will see how to implement some common functional programming
-idioms in Agda (with some small improvements over Haskell when it comes to
-syntax), and we will see how dependent types can give us a slightly nicer
-interface than normal.
+\end{agdalisting*}
+This function is defined by pattern-matching: when the clause on the
+left-hand-side of the equals sign is seen, the right-hand-side is what's
+computed.
 
-First, we'll need to define the natural numbers:
+For a more complex example, we're going to need a more complex type:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{nat-def}
 \end{agdalisting}
-In contrast to \AgdaDatatype{Bool}, we haven't simply listed the inhabitants of
-this type, as that would somewhat bloat the page count of this thesis.
-Instead, we list the \emph{ways} to construct elements of the type.
-First, we say that you can create a natural number called
-\AgdaInductiveConstructor{zero}.
-Then, we say if you already have a natural number, than you can create its
-successor, using \AgdaDatatype{suc}.
-For now, we can think of inductive type definitions in Agda as being:
-\begin{enumerate}
-  \item A type name.
-  \item A kind (i.e. \AgdaFunction{\(\text{Type}_0\)}).
-  \item A list of constructors, which are functions whose return types are the
-    type being defined.
-\end{enumerate}
-We will see later that this isn't the entire story, but it is a good enough
-intuition for now.
+This is the type of the natural numbers.
+With \AgdaDatatype{Bool} (Equation~\ref{bool-def}) we were able to list all the
+actual values in the type: doing so for the natural numbers would somewhat bloat
+the page count of this thesis.
+Instead, we list the two ways to construct natural numbers: first,
+\AgdaInductiveConstructor{zero} is a natural number.
+Next, if you have a natural number, its successor
+(\AgdaInductiveConstructor{suc}) is a natural number.
 
-Of course we can also define functions on the natural numbers, in much the same
-way as we did on the booleans:
+Here's a function on the natural numbers:
 \begin{agdalisting} \label{sub-def}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-def}
 \end{agdalisting}
-Here we've defined subtraction.
+We've defined subtraction.
+
+Notice that this function is defined as an operator: for the function
+declaration (the line with the type signature), we put underscores where we
+expect the arguments to the operator to go.
+
+In the introduction, we described Agda as a ``total'' programming language.
+This means that if we give a function the type \(A \rightarrow B\), then we have
+also \emph{proven} that, given an \(A\), it will produce a \(B\) (in finite
+time).
+
+Practically speaking, this means that Agda will perform some checks on our
+code to ensure that every function is indeed total.
+Our definition of subtraction above (Equation~\ref{sub-def}), for instance,
+truncates to zero when there's arithmetic underflow.
+In other words \(5 - 6 = 0\), according to our definition.
+We could have removed the clause which allows for this:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{bad-sub}
+\end{agdalisting*}
+But now the expression \(5 - 6\) is undefined.
+
+The other major check that Agda will preform on our function definitions is for
+\emph{termination} (or productivity, which we will see later).
+This checks that no function we write accidentally contains an infinite loop.
+Most of the time, we won't but \todo{is it but or butt?} heads with the
+termination checker, but it does happen occasionally, so it's helpful to
+understand a little how it works. When we define the following function
+(addition on the natural numbers):
+\begin{agdalisting} \label{add-def}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{add-def}
+\end{agdalisting}
+Agda checks that the argument to the recursive call is \emph{structurally
+  smaller} than the argument given to the outer function.
+``Structurally smaller'' effectively means that the smaller thing must be a
+smaller structure contained entirely within the larger: in this case, \(n\) is
+literally contained within the structure of the argument
+\(\AgdaInductiveConstructor{suc}\;n\). \todo{express this better?}
+
+Structural recursion is actually surprisingly powerful: a great many algorithms
+can be converted to forms where the recursive calls recurse on some substructure
+of their arguments.
+It does require careful definitions, though.
+For instance, the following will \emph{not} pass the termination checker:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{bad-add}
+\end{agdalisting*}
+Though it defines the same function as Equation~\ref{add-def}, it doesn't make
+it absolutely obvious to the termination checker that the first argument to the
+recursive call (\(n - 1\)) is structurally smaller than the outer argument
+(\(n\)).
+
+Occasionally a function can't be refactored to the extent where it will be
+obviously structurally terminating to Agda.
+In those cases, there are facilities to describe more complex termination
+conditions (although we should stress that these facilities are not
+built in to the compiler or anything: they're actually just extremely clever
+ways to express structural recursion), but if you have to reach for those
+facilities it's usually a sign you've gone wrong.
+We won't use them here.
+\section{An Expression Evaluator}
 
 We want to define a language of arithmetic expressions.
 With countdown in mind, we'll only need to support four operators, which we can
