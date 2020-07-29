@@ -91,7 +91,7 @@ private
 \begin{code}
     ⟦ _ ⟧ = nothing
 private
- module ApplOpEval where
+ module ExplicitApplMonEval where
     ⟦_⟧ : Expr → Maybe ℕ
 \end{code}
 %<*add-helper-app>
@@ -99,6 +99,14 @@ private
     ⟦ x ⟨ +′ ⟩ y ⟧ = pure _+_ <*> ⟦ x ⟧ <*> ⟦ y ⟧
 \end{code}
 %</add-helper-app>
+%<*sub-bind>
+\begin{code}
+    ⟦ x ⟨ -′ ⟩ y ⟧ =
+      ⟦ x  ⟧ >>= λ x′  →
+      ⟦ y  ⟧ >>= λ y′  →
+      x′ - y′
+\end{code}
+%</sub-bind>
 \begin{code}
     ⟦ _ ⟧ = nothing
 \end{code}

@@ -338,21 +338,38 @@ addition and multiplication cases the following:
   \ExecuteMetaData[agda/Snippets/Expr.tex]{appl-cases}
 \end{agdalisting*}
 
-Next, we will define subtraction.
-As pointed out already, in this case we have to check to make sure that the
-subtraction is valid.
-Like Haskell, Agda supports do notation for this case:
+Next, we have to handle subtraction.
+In contrast to addition and multiplication, subtraction itself can produce a
+\AgdaInductiveConstructor{nothing}: instead of having type
+\(\agdambb{N}\rightarrow\agdambb{N}\rightarrow\agdambb{N}\), it has type 
+\(\agdambb{N}\rightarrow\agdambb{N}\rightarrow\AgdaDatatype{Maybe}\;\agdambb{N}\).
+To construct multi-argument functions of this particular type, we'll need
+another function:
 \begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Expr.tex]{sub-case}
+  \ExecuteMetaData[agda/Data/Maybe/Sugar.tex]{bind}
 \end{agdalisting}
+Types which implement this function (along with \AgdaFunction{pure}), modulo
+some laws, are called Monads \cite{moggiNotionsComputationMonads1991a}.
+This function will allow us to easily chain together several maybes even with
+functions that return \AgdaDatatype{Maybe}.
+It's used like this:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{sub-bind}
+\end{agdalisting*}
+And of course Agda also provides a syntax (do notation, just like Haskell) to
+express the same:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{sub-case}
+\end{agdalisting*}
 
 Finally, we will handle the division case.
 Here, we want to pattern-match on the returned value of the recursive call.
 Agda also provides syntax for that:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{div-case}
-\end{agdalisting}
-\todo{expand on monads applicatives etc in this section}
+\end{agdalisting*}
+The \AgdaKeyword{where} keyword here lets us match on zero within the
+\AgdaKeyword{do}-notation.
 \section{Statically Proving the Evaluation is Safe}
 Using this evaluator in practice can be a little annoying:
 because it always returns a \AgdaDatatype{Maybe}, simple expressions which are

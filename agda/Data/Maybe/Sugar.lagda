@@ -7,10 +7,15 @@ open import Prelude
 open import Data.Maybe
 
 infixl 4 _<*>_
-
+\end{code}
+%<*bind>
+\begin{code}
 _>>=_ : Maybe A → (A → Maybe B) → Maybe B
-nothing >>= f = nothing
-just x >>= f = f x
+nothing  >>= f = nothing
+just x   >>= f = f x
+\end{code}
+%</bind>
+\begin{code}
 
 \end{code}
 %<*pure>
