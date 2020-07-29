@@ -164,6 +164,26 @@ Valid : Expr → Type₀
 Valid e = T (is-just ⟦ e ⟧)
 \end{code}
 %</valid>
+\begin{code}
+module StaticEvalExplicit where
+\end{code}
+%<*static-eval-explicit>
+\begin{code}
+  ⟦_⟧! : (e : Expr) → Valid e → ℕ
+  ⟦ e ⟧! v with ⟦ e ⟧
+  ⟦ e ⟧! v | just x = x
+\end{code}
+%</static-eval-explicit>
+\begin{code}
+module StaticEvalRetrieve where
+\end{code}
+%<*retrieve-implicit>
+\begin{code}
+  ⟦_⟧! : (e : Expr) → { _ : Valid e } → ℕ
+  ⟦ e ⟧! { valid } with ⟦ e ⟧
+  ⟦ e ⟧! { valid } | just x = x
+\end{code}
+%</retrieve-implicit>
 %<*static-eval>
 \begin{code}
 ⟦_⟧! : (e : Expr) → { _ : Valid e } → ℕ
@@ -207,9 +227,6 @@ data Expr/ : Type₀ where
 \end{code}
 %</quot-expr>
 \begin{code}
-
-
-
 m-+-comm : (x y : Maybe ℕ) → ⦇ x + y ⦈ ≡ ⦇ y + x ⦈
 m-+-comm nothing nothing = refl
 m-+-comm nothing (just x) = refl

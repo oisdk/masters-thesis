@@ -374,29 +374,29 @@ The \AgdaKeyword{where} keyword here lets us match on zero within the
 Using this evaluator in practice can be a little annoying:
 because it always returns a \AgdaDatatype{Maybe}, simple expressions which are
 obviously valid still need to be checked at run-time.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{example-eval}
-\end{agdalisting}
+\end{agdalisting*}
 This is where Agda can add a little to the usual example for monads of an
 expression evaluator: using dependent types, we can actually statically (and
 automatically) prove that a given expression is valid, and evaluate it without
 checking for \AgdaInductiveConstructor{nothing} safely.
 
 First, we will need the following function:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{is-just}
-\end{agdalisting}
+\end{agdalisting*}
 This simple function can tell us if the result of evaluating an expression is
 successful or not.
 In other words, it can test if an expression is valid.
 
 To use this statically, however, we will need to employ the following
 \emph{dependent} function:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{tee}
-\end{agdalisting}
-This function turns our boolean values into types: \agdatop (tautology), or
-\agdabot (impossibility).
+\end{agdalisting*}
+This function turns our boolean values into types: \agdatop\;(tautology), or
+\agdabot\;(impossibility).
 These types are defined like so:
 \begin{multicols}{2}
   \begin{agdalisting*}
@@ -413,10 +413,10 @@ It is quite useful in practice: any function of type \(A \rightarrow \agdabot\)
 we know can never return, so we know that it must be impossible to call such a
 function.
 In other words, the type \(A\) must not have any values which inhabit it.
-As such, we can use \agdabot to define a notion of ``not'' for types:
-\begin{agdalisting}
+As such, we can use \agdabot\;to define a notion of ``not'' for types:
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{not}
-\end{agdalisting}
+\end{agdalisting*}
 
 The second type, \agdatop, is a \AgdaKeyword{record}.
 Types defined using \AgdaKeyword{record} are much more like classes or structs
@@ -425,31 +425,32 @@ the \emph{fields} of these types.
 
 Of course, in this case, our type doesn't have any fields.
 Perhaps a more instructive example of a record is the following:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{pair}
-\end{agdalisting}
+\end{agdalisting*}
 Here we've defined the type of \emph{pairs}.
 
 Types defined with \AgdaKeyword{data} and types defined with
 \AgdaKeyword{record} are in some sense duals of each other: to \emph{consume} a
-\AgdaKeyword{data} type, we have to handle each of the constructors; to \emph{construct}
-a \AgdaKeyword{record} type, we have to handle each of the fields.
+\AgdaKeyword{data} type, we have to handle each of the constructors; to
+\emph{construct} a \AgdaKeyword{record} type, we have to handle each of the
+fields.
 Another way to say this same thing is that \AgdaKeyword{data} types are sum
 types, and \AgdaKeyword{record} types are products.
-What we have in \agdabot and \agdatop is the identity for sums and products,
+What we have in \agdabot\;and \agdatop\;is the identity for sums and products,
 respectively.
 
-Now, to be completely clear, we could absolutely have defined \agdatop as a
+Now, to be completely clear, we could absolutely have defined \agdatop\;as a
 \AgdaKeyword{data} type with one constructor:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{data-top}
-\end{agdalisting}
+\end{agdalisting*}
 We use the \AgdaKeyword{record} definition simply because it tends to work a
 little better in terms of ergonomics: basically, to construct a
 \AgdaKeyword{record} type automatically, Agda attempts to construct all of its
 \emph{fields} one by one.
-Since \agdatop has no fields, this is an easy task, and hence Agda will be able
-to automatically construct a value of type \agdatop in many situations
+Since \agdatop\;has no fields, this is an easy task, and hence Agda will be able
+to automatically construct a value of type \agdatop\;in many situations
 (We can ask Agda to construct something for us automatically by supplying an
 underscore in place of where the value should go).
 Agda is more conservative about automatically constructing \AgdaKeyword{data}
@@ -466,20 +467,65 @@ A value of type \(\AgdaFunction{Valid}\;e\), for some expression \(e\), is a
 proof that \(e\) doesn't have (for example) any divisions by zero, or
 arithmetic underflows.
 
-With this we can define a function which uses the statically provided proof in
-order to rule out certain cases in a pattern-match, thereby giving us a function
-which statically evaluates expressions without using a \AgdaDatatype{Maybe}:
-\todo{still have to explain here implicit arguments, ``with'', etc}
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval}
-\end{agdalisting}
-Notice here that the \AgdaFunction{Valid} proof is provided automatically,
-enabled by the fact that we defined \agdatop as a record.
+Now we can write a function that takes an expression \(e\) and a proof that that
+expression is valid; then, when we pattern-match on evaluating the expression
+Agda will automatically rule out the case where it evaluates to
+\AgdaInductiveConstructor{nothing}.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval-explicit}
+\end{agdalisting*}
 
-And with that we can statically evaluate expressions like so:
+A way to make calling this function a little cleaner (syntactically speaking) is
+to use an implicit argument: 
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval}
+\end{agdalisting*}
+By surrounding the argument here in braces we are basically going to pass around
+the argument invisibly and automatically (as much as is possible).
+Though it's invisible, it's clearly still usable as a variable: in this case the
+proof still rules out the clause where the evaluation returns
+\AgdaInductiveConstructor{nothing}.
+The real use of this feature, however, is that the argument is \emph{passed}
+invisibly.
 \begin{agdalisting} \label{example-static-eval}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{example-static-eval}
 \end{agdalisting}
+What's happened here is that the type of \(\AgdaFunction{Valid}\;e\) uniquely
+determines one value: Agda can derive this, and it can also derive the value
+determined.
+As a result, it provides it automatically.
+The precise rules for when Agda can ``provide something automatically'' are
+actually a little tricky (it's quite important that we defined \agdatop\;as a
+\AgdaKeyword{record}, for instance): a fuller explanation is available in the
+Agda manual.
+\todo{links to Agda manual etc}
+
+Two more things about implicit arguments: first, it is possible to retrieve an
+argument even when it's supplied implicitly, with the following syntax:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{retrieve-implicit}
+\end{agdalisting*}
+Here we have bound the proof that the expression is valid to the variable
+\AgdaBound{valid}.
+
+Secondly, we have actually been using implicit arguments throughout the paper,
+in combination with automatically generalised variables.
+These two features are quite natural to most programmers (especially to
+Haskellers), so it might come as a surprise that we've been using them, but it's
+true.
+Take the following definition of the identity function:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-def}
+\end{agdalisting*}
+This is the same function with all implicit arguments made explicit:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-expl}
+\end{agdalisting*}
+
+
+
+
+
 \section{Equalities}
 We actually have encountered our first ``proof'' with dependent types: we have
 proven that a given expression is valid or not.
