@@ -18,7 +18,7 @@ module DataTop where
 open import Data.Unit
 open import Data.Maybe
 open import Data.Maybe.Sugar
-open import Data.Nat renaming (_∸_ to _-_)
+open import Data.Nat hiding (_∸_)
 open import Data.Nat.Properties using () renaming (_≤ᴮ_ to _≤_; _≡ᴮ_ to _≟_)
 
 \end{code}
@@ -50,6 +50,7 @@ _ =
 \begin{code}
 private
  module IncorrectEval where
+  open import Data.Nat renaming (_∸_ to _-_)
 \end{code}
 %<*incorrect-eval>
 \begin{code}
@@ -63,6 +64,44 @@ private
   ⟦ xs ⟨ ÷′  ⟩ ys ⟧ | suc ys′  = ⟦ xs ⟧ ÷ suc ys′
 \end{code}
 %</incorrect-eval>
+%<*safe-sub>
+\begin{code}
+_-_ : ℕ → ℕ → Maybe ℕ
+n      - zero   = just n
+suc n  - suc m  = n - m
+zero   - suc m  = nothing
+\end{code}
+%</safe-sub>
+\begin{code}
+private
+ module NoApplEval where
+    ⟦_⟧ : Expr → Maybe ℕ
+\end{code}
+%<*add-helper>
+\begin{code}
+    ⟦ x ⟨ +′ ⟩ y ⟧ = add-helper ⟦ x ⟧ ⟦ y ⟧
+      where
+      add-helper : Maybe ℕ → Maybe ℕ → Maybe ℕ
+      add-helper nothing   nothing   = nothing
+      add-helper nothing   (just x)  = nothing
+      add-helper (just x)  nothing   = nothing
+      add-helper (just x)  (just y)  = just (x + y)
+\end{code}
+%</add-helper>
+\begin{code}
+    ⟦ _ ⟧ = nothing
+private
+ module ApplOpEval where
+    ⟦_⟧ : Expr → Maybe ℕ
+\end{code}
+%<*add-helper-app>
+\begin{code}
+    ⟦ x ⟨ +′ ⟩ y ⟧ = pure _+_ <*> ⟦ x ⟧ <*> ⟦ y ⟧
+\end{code}
+%</add-helper-app>
+\begin{code}
+    ⟦ _ ⟧ = nothing
+\end{code}
 %<*eval-ty>
 \begin{code}
 ⟦_⟧ : Expr → Maybe ℕ
@@ -84,8 +123,7 @@ private
 ⟦ x ⟨ -′ ⟩ y ⟧ =
   do  x′ ← ⟦ x ⟧
       y′ ← ⟦ y ⟧
-      guard (y′ ≤ x′)
-      just (x′ - y′)
+      x′ - y′
 \end{code}
 %</sub-case>
 %<*div-case>
@@ -179,8 +217,7 @@ eval/ (xs ⟪ ×′ ⟫ ys) = ⦇ eval/ xs * eval/ ys ⦈
 eval/ (xs ⟪ -′ ⟫ ys) =
   do  x′ ← eval/ xs
       y′ ← eval/ ys
-      guard (y′ ≤ x′)
-      just (x′ - y′)
+      x′ - y′
 eval/ (xs ⟪ ÷′ ⟫ ys) = do
   suc y′ ← eval/ ys
     where zero → nothing

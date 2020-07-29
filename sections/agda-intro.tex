@@ -135,6 +135,10 @@ Instead, we list the two ways to construct natural numbers: first,
 Next, if you have a natural number, its successor
 (\AgdaInductiveConstructor{suc}) is a natural number.
 
+Agda has special syntax for constructing natural numbers: we can write
+\AgdaNumber{3} instead of
+\(\AgdaInductiveConstructor{suc}\;(\AgdaInductiveConstructor{suc}\;(\AgdaInductiveConstructor{suc}\;\AgdaInductiveConstructor{zero}))\).
+
 Here's a function on the natural numbers:
 \begin{agdalisting} \label{sub-def}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-def}
@@ -247,43 +251,92 @@ We've introduced the \AgdaKeyword{with} syntax here: it functions somewhat like
 a case expression in Haskell.
 Basically, it allows us to pattern-match on the result of applying a function to
 one of the input arguments without defining a new function.
-\section{Safe Evaluation With Monads}
-The next step is to write the evaluator for the type we have defined above.
-There is a slight complication, however: some definable expressions don't have
-defined evaluations.
-Take the subtraction as defined on natural numbers, for instance
-(Listing~\ref{sub-def}).
-We really shouldn't be able to subtract a larger number from a smaller one, and
-we would like to use the type system to prevent us from doing this.
+\section{Safe Evaluation With Maybe}
+The evaluator we have written isn't exactly correct.
+It implies things like \(4 - 5 = 0\), or \(10 \div 3 = 3\), or \(2 \div 0 = 0\);
+this doesn't make the function ``wrong'' per se, but it might be more desirable
+to have expressions like \(2 \div 0\) be undefined.
+It's especially important for countdown, as division by zero (or any of the
+other equations) isn't permitted.
 
-The most common technique to solve this problem uses \AgdaDatatype{Maybe}:
+To remedy the problem we're going to introduce a new type.
 \begin{agdalisting}
   \ExecuteMetaData[agda/Data/Maybe/Base.tex]{maybe-def}
 \end{agdalisting}
-This is the first \emph{parameterised} type we have seen: \AgdaDatatype{Maybe}
-is a container with one or zero elements, but we haven't specified which type
-can inhabit it.
-It can actually be specialised to any type when we use it.
-For our use, we will specialise it to \agdambb{N}:
+\AgdaDatatype{Maybe} is a container that can contain at most one item.
+It's the first \emph{parameterised} type we have seen: \AgdaDatatype{Maybe} can
+contain an item of any type.
+Here, for instance, is a \AgdaDatatype{Maybe} which contains the number 2:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Maybe.tex]{maybe-two}
+\end{agdalisting*}
+Or here is a \AgdaDatatype{Maybe} which doesn't contain anything, but whose type
+says it could contain a function from \agdambb{N} to \agdambb{N}:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Maybe.tex]{maybe-nat-to-nat}
+\end{agdalisting*}
+
+Maybe is used often in functional programming to represent partiality: if you
+have a function which is undefined for certain inputs, you can wrap
+\AgdaDatatype{Maybe} around its return type, and return
+\AgdaInductiveConstructor{nothing} for the cases where those inputs are given.
+We can use it here, for instance, to define a version of subtraction which
+doesn't truncate arithmetic underflow:
 \begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{safe-sub}
+\end{agdalisting}
+It's often also used for similar purposes as \verb+null+ is in imperative
+programming, although it is of course far safer since it's impossible to forget
+to check for \AgdaInductiveConstructor{nothing} by definition.
+
+We can use \AgdaDatatype{Maybe} in our evaluator for expressions, so that we
+return \AgdaInductiveConstructor{nothing} on expressions which evaluate to
+undefined values.
+That changes the type to the following:
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{eval-ty}
-\end{agdalisting}
-
-We will define this function by pattern-matching.
+\end{agdalisting*}
 The first case is relatively simple:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{lit-case}
-\end{agdalisting}
+\end{agdalisting*}
 
-The second two cases are slightly more complex: because we need to recursively
-evaluate the subtrees of the expression in each case, we will need to check that
-each of those returns a \AgdaInductiveConstructor{just} value before applying
-the operator.
-Luckily, we can use Agda's built-in idiom brackets to make this definition
-a little cleaner: \todo{More explanation here}
-\begin{agdalisting}
+The second two cases are slightly more complex: the result of evaluating each
+sub-tree is \(\AgdaDatatype{Maybe}\;\agdambb{N}\), not \agdambb{N}, so we will
+have to pattern-match on the outputs to check for
+\AgdaInductiveConstructor{nothing}.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{add-helper}
+\end{agdalisting*}
+Code like this is quite tedious.
+Luckily, there's a common pattern we can abstract out: whenever we have a
+multi-argument function, we can apply it to arguments wrapped in
+\AgdaDatatype{Maybe} using the following two functions.
+\begin{multicols}{2} \null \vfill
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Data/Maybe/Sugar.tex]{pure}
+  \end{agdalisting} \vfill \null \columnbreak
+  \begin{agdalisting}
+    \ExecuteMetaData[agda/Data/Maybe/Sugar.tex]{ap}
+  \end{agdalisting}
+\end{multicols} \noindent
+Any type which implements these functions (in a certain law-abiding way) is said
+to be an ``Applicative Functor''
+\cite{mcbrideApplicativeProgrammingEffects2008}, a full explanation of which is
+beyond the scope of this thesis.
+
+It might not be immediately clear how those two functions can help us.
+Basically, we can replace the \AgdaFunction{add-helper} function with the
+following:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{add-helper-app}
+\end{agdalisting*}
+And, as it happens, Agda has special syntax which will automatically insert the
+\AgdaFunction{pure} and \AgdaFunction{\_<*>\_} operators for us, making both the
+addition and multiplication cases the following:
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{appl-cases}
-\end{agdalisting}
+\end{agdalisting*}
 
 Next, we will define subtraction.
 As pointed out already, in this case we have to check to make sure that the
