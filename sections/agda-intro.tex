@@ -1,41 +1,121 @@
 \chapter{Programming and Proving in Cubical Agda}
-Agda \cite{norellDependentlyTypedProgramming2008} is a dependently-typed
-functional programming language.
-A recent extension to the language, Cubical Agda
-\cite{vezzosiCubicalAgdaDependently2019}, allows us to do Cubical Type Theory
-directly in Agda.
+Agda \cite{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
+functional programming language and proof assistant.
+In this thesis, we will use it to explore and prove things about finite and
+countable types.
+Along the way, we will learn about proofs in a dependent setting, functional
+programming, and Homotopy Type Theory.
 
-In this chapter we will go through a basic example to explain the fundamentals
-of programming in Agda, and we will begin to explain some cubical type theory
-features.
+In this chapter we will introduce the language with some basic examples, and
+explain a little about how to program and prove in Agda.
+Some Haskell knowledge will help, as much of the syntax (any many concepts) are
+similar, but it is possible to struggle through without it.
+It is recommended to try out the code examples in your own editor, or to look at
+them in the real Agda files in the source.
+\todo{Set this up: organise code examples better?}
 \section{Basic Functional Programming in Agda}
 The basic unit of functionality in Agda is the \emph{type}.
-We can define types like so:
-\begin{agdalisting}
+Let's define a type: the type of booleans.
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def}
-\end{agdalisting}
-Here we've defined the type of booleans.
-The first line of this definition states the name of the type, and also tells us
-that \AgdaDatatype{Bool} is a \AgdaDatatype{\(\text{Type}_0\)}.
-The subscripted index is the universe level of the type: we won't go into the
-details of universe levels now (and in fact almost all types we will work with
-have level 0, so it won't come up very much), but we will mention that they are
-related to Girard's paradox.
-\cite{girardInterpretationFonctionelleElimination1972}.
+\end{agdalisting*}
+There's a lot of syntax wrapped up in this small snippet.
+In prose, it provides four basic pieces of information:
+\begin{enumerate}
+  \item We are defining a new \AgdaKeyword{data} type.
+  \item Its name is \AgdaDatatype{Bool}.
+  \item \AgdaDatatype{Bool} is a \AgdaFunction{\(\text{Type}_0\)} kind of thing.
+  \item There are two ways to construct values of type \AgdaDatatype{Bool}:
+    \AgdaInductiveConstructor{false} and \AgdaInductiveConstructor{true}.
+\end{enumerate}
+Let's explain each piece one by one.
 
-\begin{marginagdalisting}{A Boolean Value}
+The last point is the simplest: we have listed the ways to construct values of
+type \AgdaDatatype{Bool}.
+Two ways, in fact, \AgdaInductiveConstructor{true} and
+\AgdaInductiveConstructor{false}, and they're called the constructors.
+We can use these constructors in programs by (for instance) assigning them to
+variables.
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-val}
-\end{marginagdalisting} \todo{Better as inline/margin?}
-This type has two inhabitants: \AgdaInductiveConstructor{false}, and
+\end{agdalisting*}
+Here we've declared a variable\footnotemark called \AgdaFunction{a-boolean} with
+the type \AgdaDatatype{Bool}, and said it is equal to the value
 \AgdaInductiveConstructor{true}.
-We can construct values of the type by referring to one of these two
-inhabitants.
-And we can further define functions by \emph{pattern-matching} on these
-inhabitants:
+
+\footnotetext{Note that although we use the term ``variable'', the value of the
+  variable \AgdaFunction{a-boolean} can not change.
+  We couldn't reassign it on the following line.}
+
+Now back to the first point: we say that we're defining a new \AgdaKeyword{data}
+type.
+Using the ``\AgdaKeyword{data}'' keyword is just one of the many ways of
+defining types: it basically means that we are going to define the type by
+listing all of its constructors.
+Another way to define types is with \AgdaKeyword{record}, which we'll see later,
+and yet another way is to define a type by referring to other already-defined types.
+Here, for instance, we can define the type \AgdaFunction{Boolean}:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{boolean}
+\end{agdalisting*}
+This snippet says ``I am defining a new thing called \AgdaFunction{Boolean}, it
+is a \AgdaFunction{\(\text{Type}_0\)}, and it is equal to \AgdaDatatype{Bool}''.
+Of course this isn't a very interesting declaration: as the equals sign implies,
+\AgdaFunction{Boolean} is the same as \AgdaFunction{Bool} (other than the
+spelling).
+We've basically defined a synonym for the old type.
+
+The third point is the most interesting: we say that \AgdaDatatype{Bool} is a
+``\AgdaFunction{\(\text{Type}_0\)}'' kind of thing.
+What does this mean?
+
+Well, we've seen that we can assign types to variables just as easily as we
+might assign values to variables: this is what was happening in the
+\AgdaFunction{Boolean} example.
+In fact, in Agda, there is no real distinction between ``types'' and ``values'':
+types like \AgdaDatatype{Bool} \emph{are} values, just as much as
+\AgdaInductiveConstructor{true} or \AgdaInductiveConstructor{false}!
+This means that our types must themselves have types: hence we say that
+\AgdaFunction{Boolean} has type \AgdaFunction{\(\text{Type}_0\)}.
+
+But why the subscript 0?
+Well we know that types are values in Agda, and so they themselves have types.
+We know that the type of \AgdaDatatype{Bool} is
+\AgdaFunction{\(\text{Type}_0\)}.
+But what's the type of \AgdaFunction{\(\text{Type}_0\)}?
+It turns out that if we say:
+\begin{agdalisting*}
+  \(\AgdaFunction{\(\text{Type}_0\)} :  \AgdaFunction{\(\text{Type}_0\)}\)
+\end{agdalisting*}
+We actually introduce a paradox into the language: Girard's paradox
+\cite{girardInterpretationFonctionelleElimination1972}.
+This is the type-theoretic analogue of Russell's paradox, and, if present, it
+would allow us to prove things that are not true.
+So we disallow it.
+
+Dependently-types programming languages have many different ways of resolving
+the issue: Agda's approach is called \emph{universe polymorphism}.
+Basically, we say that the type of \AgdaInductiveConstructor{true} is
+\AgdaDatatype{Bool}, the type of \AgdaDatatype{Bool} is
+\AgdaFunction{\(\text{Type}_0\)}, the type of \AgdaFunction{\(\text{Type}_0\)}
+is \AgdaFunction{\(\text{Type}_1\)}, the type of \AgdaFunction{\(\text{Type}_1\)}
+is \AgdaFunction{\(\text{Type}_2\)}, and so on.
+
+To be honest, avoiding Girard's paradox is one of things that isn't done
+especially well in dependently-typed languages: most approaches require quite a
+bit of tedious busywork from the programmer, and it's quite rare that a
+programmer would run into a genuine universe size issue that exposes a deep
+logical impossibility (we will run into one of the few cases in this thesis).
+Most of the time, managing universe levels amounts to bookkeeping.
+For that reason, and also because the current system of universe polymorphism in
+Agda is quite under flux and likely to be changed soon, we won't spend too much
+time on the topic.
+Every code example provided is as universe-polymorphic as possible, though.
+
+\section{An Expression Evaluator}
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{not-def}
 \end{agdalisting}
-\section{An Expression Evaluator}
 Later we will builder a verified solver for the Countdown problem
 \cite{huttonCountdownProblem2002} \todo{Find original reference for this}, for
 now we will look at building a small part of the solution: an expression

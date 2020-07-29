@@ -152,3 +152,10 @@ _ = it
 ∧-comm = ∀↯ⁿ 2 λ x y → x ∧ y ≟ y ∧ x
 \end{code}
 %</and-comm-auto>
+
+%<*boolean>
+\begin{code}
+Boolean : Type₀
+Boolean = Bool
+\end{code}
+%</boolean>
