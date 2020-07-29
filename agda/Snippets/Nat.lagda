@@ -51,3 +51,15 @@ zero   + m = m
 suc n  + m = suc (n + m)
 \end{code}
 %</add-def>
+\begin{code}
+RiemannIsTrue : Type₀
+RiemannIsTrue = ℕ
+
+{-# NON_TERMINATING #-}
+\end{code}
+%<*riemann-proof>
+\begin{code}
+riemann-proof : RiemannIsTrue
+riemann-proof = riemann-proof
+\end{code}
+%</riemann-proof>

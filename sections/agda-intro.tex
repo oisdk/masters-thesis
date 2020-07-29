@@ -199,7 +199,25 @@ built in to the compiler or anything: they're actually just extremely clever
 ways to express structural recursion), but if you have to reach for those
 facilities it's usually a sign you've gone wrong.
 We won't use them here.
+
+One thing we haven't answered is \emph{why} we bother checking for termination
+or totality.
+The answer is that it's necessary for Agda to be a valid proof assistant.
+Imagine if we could construct a type for ``proofs of the Riemann hypothesis''.
+We might call it \AgdaFunction{RiemannIsTrue}.
+In a language like Haskell, the following is a completely valid program:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{riemann-proof}
+\end{agdalisting*}
+But of course we \emph{haven't} provided a proof of the Riemann hypothesis (and
+if we had we certainly wouldn't have buried the lead to this extent).
+The termination checker is vital to rule out these kinds of ``proofs'': that's
+why it's an integral part of Agda.
 \section{An Expression Evaluator}
+Let's put all of the different things we've learned into a more complex example.
+Later, we'll define a full solver for the Countdown problem
+\cite{huttonCountdownProblem2002} \todo{find original cite for this}, at this
+point we'll define a small part of it: the expression evaluator.
 
 We want to define a language of arithmetic expressions.
 With countdown in mind, we'll only need to support four operators, which we can
@@ -207,7 +225,6 @@ define in a simple data type:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{op-def}
 \end{agdalisting}
-
 Next, we'll define the actual type of expressions.
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{expr-def}
