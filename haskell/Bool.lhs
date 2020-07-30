@@ -11,3 +11,9 @@ data Bool :: Type where
   True   :: Bool
 \end{code}
 %</bool-def>
+%<*bool-val>
+\begin{code}
+aBoolean :: Bool
+aBoolean = True
+\end{code}
+%</bool-val>

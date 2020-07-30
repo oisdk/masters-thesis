@@ -16,15 +16,15 @@ them in the real Agda files in the source.
 
 \section{Basic Functional Programming in Agda}
 The basic unit of functionality in Agda is the \emph{type}.
-Let's define a type: the type of booleans.
+Let's define a type: the type of booleans (we include the equivalent code in
+Haskell on the right).
 \begin{agdalisting} \label{bool-def}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def}
+  \begin{multicols}{2} \centering
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def} \columnbreak
+    \ExecuteMetaData[haskell/Bool.tex]{bool-def}
+  \end{multicols}\vspace{-2\baselineskip}
 \end{agdalisting}
 There's a lot of syntax wrapped up in this small snippet.
-Here it is in Haskell:
-\begin{agdalisting*}
-  \ExecuteMetaData[haskell/Bool.tex]{bool-def}
-\end{agdalisting*}
 In prose, it provides four basic pieces of information:
 \begin{enumerate}
   \item We are defining a new \AgdaKeyword{data} type.
@@ -41,10 +41,11 @@ Two ways, in fact, \AgdaInductiveConstructor{true} and
 \AgdaInductiveConstructor{false}, and they're called the constructors.
 We can use these constructors in programs by (for instance) assigning them to
 variables.
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-val}
-\end{agdalisting*}
-Here we've declared a variable\footnotemark called \AgdaFunction{a-boolean} with
+\begin{multicols}{2}\centering
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-val}\columnbreak
+  \ExecuteMetaData[haskell/Bool.tex]{bool-val}
+\end{multicols}\vspace{-2\baselineskip}\noindent
+Here we've declared a variable\footnotemark\;called \AgdaFunction{a-boolean} with
 the type \AgdaDatatype{Bool}, and said it is equal to the value
 \AgdaInductiveConstructor{true}.
 
