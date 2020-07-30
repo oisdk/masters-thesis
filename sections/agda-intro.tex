@@ -524,14 +524,21 @@ Take the following definition of the identity function:
   \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-def}
 \end{agdalisting*}
 This is the same function with all implicit arguments made explicit:
-\begin{agdalisting*}
+\begin{agdalisting} \label{id-expl}
   \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-expl}
+\end{agdalisting}
+We have hidden the universe level of the type (\(a\)) and the type itself
+(\(A\)).
+
+Furthermore, not only have we made these things implicit, we haven't actually
+specified them in the type at all!
+We're able to do this because at the top of our Agda file we say the following:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Level.tex]{level-var-decl}
 \end{agdalisting*}
-
-
-
-
-
+This \AgdaKeyword{variable} declaration means that if we ever refer to  \(A\) in
+a function signature without defining it beforehand, Agda will automatically
+insert the implicit arguments present in Equation~\ref{id-expl}.
 \section{Equalities}
 We actually have encountered our first ``proof'' with dependent types: we have
 proven that a given expression is valid or not.

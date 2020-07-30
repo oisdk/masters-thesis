@@ -1,3 +1,4 @@
+\begin{code}
 {-# OPTIONS --safe --without-K #-}
 
 module Level where
@@ -17,9 +18,13 @@ Type₁ = Type (ℓsuc ℓzero)
 Type₂ = Type (ℓsuc (ℓsuc ℓzero))
 Type₃ = Type (ℓsuc (ℓsuc (ℓsuc ℓzero)))
 
+\end{code}
+%<*level-var-decl>
+\begin{code}
 variable
   a b c : Level
-  A : Type a
-  B : Type b
-  C : Type c
-
+  A  : Type a
+  B  : Type b
+  C  : Type c
+\end{code}
+%</level-var-decl>
