@@ -553,18 +553,6 @@ To do so we'll first have to explore path types in Cubical Agda.
   that \(x\) equals \(y\).
 \end{definition}
 
-\begin{marginfigure}
-  \begin{tikzpicture}
-    \draw (-1,0) node[above] {$x$} node[below] {\AgdaFunction{i0}} --
-          ( 0,0) node[above] {\AgdaFunction{\(\equiv\)}} --
-          ( 1,0) node[above] {$y$} node[below] {\AgdaFunction{i1}};
-    \filldraw[black] (-1,0) circle (2pt);
-    \filldraw[black] (1,0) circle (2pt);
-  \end{tikzpicture}
-  \caption{Diagram of the Path Between \(x\) and \(y\)}
-  \label{path-diagram}
-\end{marginfigure}
-
 Equalities as paths is the first topic we have reached where Cubical Type Theory
 begins to differ from traditional Martin-Löf Type Theory.
 There, we would usually define the type of proofs of equality like so:
@@ -576,7 +564,23 @@ constructor can only be used when the two parameters to the type are the same,
 meaning a value of this type contains a proof that they are the same.
 We can retrieve this proof by pattern-matching on that constructor.
 
-This is actually a perfectly usable equality type in CuTT: although the
+\begin{marginfigure}
+  \begin{tikzpicture}
+    \node [anchor=base] at (-1.5 , 0.2) {$p :$};
+    \node [anchor=base] at (-1   , 0.2) {$x$};
+    \node [anchor=base] at ( 0   , 0.2) {\AgdaFunction{\(\equiv\)}};
+    \node [anchor=base] at ( 1   , 0.2) {$y$};
+    \node [anchor=base] at (-1.15,-0.4) {$p\;\AgdaFunction{i0} = x$};
+    \node [anchor=base] at ( 0.85,-0.4) {$p\;\AgdaFunction{i1} = y$};
+    \draw (-1  ,0) -- ( 1,0);
+    \filldraw[black] (-1,0) circle (2pt);
+    \filldraw[black] (1,0) circle (2pt);
+  \end{tikzpicture}
+  \caption{Diagram of the Path \(p\) Between \(x\) and \(y\)}
+  \label{path-diagram}
+\end{marginfigure}
+
+This is actually a perfectly usable equality type in CuTT, although the
 elimination rule is a little complex and we won't look into it just yet.
 However we prefer to represent equalities in a slightly more primitive way, as
 it turns out to be a little more flexible.
@@ -590,6 +594,34 @@ So, as a function then, when the path \(x\;\AgdaFunction{\(\equiv\)}\;y\) is
 applied to \AgdaInductiveConstructor{i0}, it returns \(x\), and when it is
 applied to \AgdaInductiveConstructor{i1}, it returns \(y\).
 
+\begin{marginfigure}
+  \begin{tikzpicture}
+    \node [anchor=base] at (-1.8, 0.2) {$\AgdaFunction{sym}\;p :$};
+    \node [anchor=base] at (-1  , 0.2) {$y$};
+    \node [anchor=base] at ( 0  , 0.2) {\AgdaFunction{\(\equiv\)}};
+    \node [anchor=base] at ( 1  , 0.2) {$x$};
+    \node [anchor=base] at (-1.53,-1  ) {
+      $\begin{aligned}
+        \AgdaFunction{sym}\;p\;\AgdaFunction{i0} &= \\
+        p\;(\AgdaOperator{\AgdaPrimitive{\textasciitilde{}}}\;\AgdaFunction{i0}) &= \\
+        p\;\AgdaFunction{i1} &= y
+      \end{aligned}$
+    };
+    \node [anchor=base] at ( 0.48,-1  ) {
+      $\begin{aligned}
+        \AgdaFunction{sym}\;p\;\AgdaFunction{i1} &= \\
+        p\;(\AgdaOperator{\AgdaPrimitive{\textasciitilde{}}}\;\AgdaFunction{i1}) &= \\
+        p\;\AgdaFunction{i0} &= x
+      \end{aligned}$
+    };
+    \draw (-1  ,0) -- ( 1,0);
+    \filldraw[black] (-1,0) circle (2pt);
+    \filldraw[black] (1,0) circle (2pt);
+  \end{tikzpicture}
+  \caption{Diagram of \(\AgdaFunction{sym}\;p\)}
+  \label{sym-diagram}
+\end{marginfigure}
+
 Already we can manipulate paths in some interesting ways.
 First, we can manipulate values in the interval: we can take the inverse of a
 point in the interval, for instance.
@@ -600,6 +632,7 @@ we will name it in the next listing.
 \end{agdalisting}
 We will see some more intricate ways to manipulate paths later on, but for now
 the ``function from an interval'' intuition is enough to understand the basics.
+
 \section{Some Proofs of Equality}
 So now that we know something about the equality type, let's put it to some use.
 We can construct equality proofs of things which are ``obviously equal'' with
