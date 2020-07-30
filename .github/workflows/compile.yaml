@@ -166,8 +166,6 @@ jobs:
 
         cd main/haskell
 
-        cabal install --lib --overwrite-policy=always
-
         find . -type f -name '*.lhs' | while read -r code ; do
             lhs2TeX -o ${code%.lhs}.tex "$code"
         done
