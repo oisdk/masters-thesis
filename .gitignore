@@ -259,3 +259,5 @@ _region_.tex
 agda/Everything.agda
 paper.pdf
 *.xcp
+locallhs2TeX.lhs
+locallhs2TeX.sty

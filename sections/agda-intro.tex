@@ -13,6 +13,7 @@ similar, but it is possible to struggle through without it.
 It is recommended to try out the code examples in your own editor, or to look at
 them in the real Agda files in the source.
 \todo{Set this up: organise code examples better?}
+
 \section{Basic Functional Programming in Agda}
 The basic unit of functionality in Agda is the \emph{type}.
 Let's define a type: the type of booleans.
@@ -20,6 +21,10 @@ Let's define a type: the type of booleans.
   \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def}
 \end{agdalisting}
 There's a lot of syntax wrapped up in this small snippet.
+Here it is in Haskell:
+\begin{agdalisting*}
+  \ExecuteMetaData[haskell/Bool.tex]{bool-def}
+\end{agdalisting*}
 In prose, it provides four basic pieces of information:
 \begin{enumerate}
   \item We are defining a new \AgdaKeyword{data} type.

@@ -27,7 +27,7 @@ jobs:
           ~/.cabal/store
           ~/.cabal/bin
           dist-newstyle
-        key: ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-${{ matrix.agda-ref }}
+        key: ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-${{ matrix.agda-ref }}-lhs2TeX
 
     - name: Install cabal
       if: steps.cache-cabal.outputs.cache-hit != 'true'
@@ -57,6 +57,13 @@ jobs:
         mkdir -p doc
         touch doc/user-manual.pdf
         cabal install --overwrite-policy=always --ghc-options='-O1 +RTS -M6G -RTS'
+
+# Install lhs2tex
+    - name: Install lhs2tex
+      if: steps.cache-cabal.outputs.cache-hit != 'true'
+      run: |
+        cabal update
+        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS' lhs2tex-1.24
 
 # Download and compile cubical library
     - name: Checkout cubical library
@@ -130,6 +137,47 @@ jobs:
         agda --html --html-dir=docs README.agda
         cd ..
         cp -f -R agda/ ~/main-build/
+
+# Compile Local Haskell
+    - uses: actions/cache@v2
+      name: Cache literate Haskell
+      id: cache-lhs
+      with:
+        path: ~/lhs-build
+        key: ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ hashFiles('main/haskell/**') }}
+        restore-keys: ${{ runner.os }}-${{ matrix.ghc-ver }}-
+
+    - name: Add literate haskell sty files
+      run: |
+        cd main
+        if [ ! -f "locallhs2TeX.lhs" ]; then
+            echo "%include polycode.fmt" > "locallhs2TeX.lhs"
+        fi
+        if [ ! -f "locallhs2TeX.sty" ]; then
+            lhs2TeX -o "locallhs2TeX.sty" "locallhs2TeX.lhs"
+        fi
+        
+    - name: Cache miss (local Haskell); compile local Haskell
+      if: steps.cache-lhs.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p ~/lhs-build/dist-newstyle
+        cp -f -R ~/lhs-build/dist-newstyle main/haskell/dist-newstyle
+        rm -r ~/lhs-build
+
+        cd main/haskell
+
+        cabal install --lib --overwrite-policy=always
+
+        find . -type f -name '*.lhs' | while read -r code ; do
+            lhs2TeX -o ${code%.lhs}.tex "$code"
+        done
+
+        cd ..
+        cp -f -r haskell/ ~/lhs-build
+      
+    - name: Cache hit (local Haskell); retrieve local Haskell
+      if: steps.cache-lhs.outputs.cache-hit == 'true'
+      run: cp -f -R ~/lhs-build/* main/haskell
 
 # Compile pdf
     - name: Remove .latexmkrc

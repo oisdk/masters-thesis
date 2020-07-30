@@ -23,8 +23,16 @@
 
 \usepackage[mono=false]{libertine}
 \usepackage{catchfilebetweentags}
+
 \input{agda}
 \AgdaNoSpaceAroundCode{}
+
+\setlength\mathindent{0cm}
+
+\usepackage{locallhs2TeX}
+\renewcommand{\Varid}[1]{\AgdaBound{#1}}
+\renewcommand{\Conid}[1]{\AgdaDatatype{#1}}
+
 
 \usepackage{tikz-cd}
 \tikzcdset{

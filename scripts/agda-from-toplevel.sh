@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-withcode=$1
-nocode=${withcode#"agda/"}
+
+# Agda needs to be run in the source directory of the project to work
+# correctly.
+# Run this script with a path (like agda/Example.lagda) from the
+# directory *above* agda/
+
 cd agda || exit
-agda --latex --latex-dir=. "$nocode"
+agda --latex --latex-dir=. "${1#agda/}"
