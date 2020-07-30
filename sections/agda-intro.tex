@@ -553,6 +553,18 @@ To do so we'll first have to explore path types in Cubical Agda.
   that \(x\) equals \(y\).
 \end{definition}
 
+\begin{marginfigure}
+  \begin{tikzpicture}
+    \draw (-1,0) node[above] {$x$} node[below] {\AgdaFunction{i0}} --
+          ( 0,0) node[above] {\AgdaFunction{\(\equiv\)}} --
+          ( 1,0) node[above] {$y$} node[below] {\AgdaFunction{i1}};
+    \filldraw[black] (-1,0) circle (2pt);
+    \filldraw[black] (1,0) circle (2pt);
+  \end{tikzpicture}
+  \caption{Diagram of the Path Between \(x\) and \(y\)}
+  \label{path-diagram}
+\end{marginfigure}
+
 Equalities as paths is the first topic we have reached where Cubical Type Theory
 begins to differ from traditional Martin-Löf Type Theory.
 There, we would usually define the type of proofs of equality like so:
