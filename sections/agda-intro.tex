@@ -685,40 +685,42 @@ We won't examine its more interesting properties all that much: however it is a
 good example of the simplest type with complex homotopy, so we will use it to
 demonstrate several HoTT principles.
 
-A different HIT that we \emph{will} examine in depth, however, is the following:
-\begin{definition}[Set Quotient]
-  In CuTT we can define the type of sets quotiented by a relation \(R\) as
-  follows:
-  \begin{agdalisting*}
-    \ExecuteMetaData[agda/Snippets/Quotient.tex]{quot-def}
-  \end{agdalisting*}
-\end{definition}
+\section{Basic Type Formers}
 
-So we have three constructors for our set quotient type: first, a constructor
-that takes a value of the underlying type (\(A\)), and constructs a value in the
-quotiented type.
-Second, we see a \emph{path} constructor: this constructor does the actual
-quotienting in the type.
-It says that if there exists a relation \(R\) between two elements \(x\) and
-\(y\) then there is also a path between the elements
-\(\AgdaInductiveConstructor{\([\)}\;x\;\AgdaInductiveConstructor{\(]\)}\)
-and
-\(\AgdaInductiveConstructor{\([\)}\;y\;\AgdaInductiveConstructor{\(]\)}\).
+% A different HIT that we \emph{will} examine in depth, however, is the following:
+% \begin{definition}[Set Quotient]
+%   In CuTT we can define the type of sets quotiented by a relation \(R\) as
+%   follows:
+%   \begin{agdalisting*}
+%     \ExecuteMetaData[agda/Snippets/Quotient.tex]{quot-def}
+%   \end{agdalisting*}
+% \end{definition}
 
-The third constructor is a little bit beyond what we can explain at this point:
-it \emph{truncates} the higher homotopy out of the type.
-Effectively, it makes the type slightly more ``well-behaved'' with regards to
-HoTT internals: without this constructor, the type would have a lot of
-interesting structure which is far too interesting for us at this point.
-\todo{introduce explanation now or later?}
+% So we have three constructors for our set quotient type: first, a constructor
+% that takes a value of the underlying type (\(A\)), and constructs a value in the
+% quotiented type.
+% Second, we see a \emph{path} constructor: this constructor does the actual
+% quotienting in the type.
+% It says that if there exists a relation \(R\) between two elements \(x\) and
+% \(y\) then there is also a path between the elements
+% \(\AgdaInductiveConstructor{\([\)}\;x\;\AgdaInductiveConstructor{\(]\)}\)
+% and
+% \(\AgdaInductiveConstructor{\([\)}\;y\;\AgdaInductiveConstructor{\(]\)}\).
 
-We are going to define a type similar to the one above, but for expressions.
-It will quotient out common arithmetic identities:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Expr.tex]{quot-expr}
-\end{agdalisting}
-To evaluate this expression, we have to actually prove that the evaluation
-function respects the given equality.
+% The third constructor is a little bit beyond what we can explain at this point:
+% it \emph{truncates} the higher homotopy out of the type.
+% Effectively, it makes the type slightly more ``well-behaved'' with regards to
+% HoTT internals: without this constructor, the type would have a lot of
+% interesting structure which is far too interesting for us at this point.
+% \todo{introduce explanation now or later?}
+
+% We are going to define a type similar to the one above, but for expressions.
+% It will quotient out common arithmetic identities:
+% \begin{agdalisting}
+%   \ExecuteMetaData[agda/Snippets/Expr.tex]{quot-expr}
+% \end{agdalisting}
+% To evaluate this expression, we have to actually prove that the evaluation
+% function respects the given equality.
 
 
 %%% Local Variables:
