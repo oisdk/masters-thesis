@@ -564,22 +564,6 @@ constructor can only be used when the two parameters to the type are the same,
 meaning a value of this type contains a proof that they are the same.
 We can retrieve this proof by pattern-matching on that constructor.
 
-\begin{marginfigure}
-  \begin{tikzpicture}
-    \node [anchor=base] at (-1.5 , 0.2) {$p :$};
-    \node [anchor=base] at (-1   , 0.2) {$x$};
-    \node [anchor=base] at ( 0   , 0.2) {\AgdaFunction{\(\equiv\)}};
-    \node [anchor=base] at ( 1   , 0.2) {$y$};
-    \node [anchor=base] at (-1.15,-0.4) {$p\;\AgdaFunction{i0} = x$};
-    \node [anchor=base] at ( 0.85,-0.4) {$p\;\AgdaFunction{i1} = y$};
-    \draw (-1  ,0) -- ( 1,0);
-    \filldraw[black] (-1,0) circle (2pt);
-    \filldraw[black] (1,0) circle (2pt);
-  \end{tikzpicture}
-  \caption{Diagram of the Path \(p\) Between \(x\) and \(y\)}
-  \label{path-diagram}
-\end{marginfigure}
-
 This is actually a perfectly usable equality type in CuTT, although the
 elimination rule is a little complex and we won't look into it just yet.
 However we prefer to represent equalities in a slightly more primitive way, as
@@ -596,18 +580,28 @@ applied to \AgdaInductiveConstructor{i1}, it returns \(y\).
 
 \begin{marginfigure}
   \begin{tikzpicture}
+    \node [anchor=base] at (-1.5 , 2.7) {$p :$};
+    \node [anchor=base] at (-1   , 2.7) {$x$};
+    \node [anchor=base] at ( 0   , 2.7) {\AgdaFunction{\(\equiv\)}};
+    \node [anchor=base] at ( 1   , 2.7) {$y$};
+    \node [anchor=base] at (-1.15, 2.1) {\footnotesize$p\;\AgdaFunction{i0} = x$};
+    \node [anchor=base] at ( 0.85, 2.1) {\footnotesize$p\;\AgdaFunction{i1} = y$};
+    \draw (-1,2.5) -- (1,2.5);
+    \filldraw[black] (-1,2.5) circle (2pt);
+    \filldraw[black] ( 1,2.5) circle (2pt);
+
     \node [anchor=base] at (-1.8, 0.2) {$\AgdaFunction{sym}\;p :$};
     \node [anchor=base] at (-1  , 0.2) {$y$};
     \node [anchor=base] at ( 0  , 0.2) {\AgdaFunction{\(\equiv\)}};
     \node [anchor=base] at ( 1  , 0.2) {$x$};
-    \node [anchor=base] at (-1.53,-1  ) {
+    \node [anchor=base] at (-1.4,-0.8) {\linespread{0}\footnotesize
       $\begin{aligned}
         \AgdaFunction{sym}\;p\;\AgdaFunction{i0} &= \\
         p\;(\AgdaOperator{\AgdaPrimitive{\textasciitilde{}}}\;\AgdaFunction{i0}) &= \\
         p\;\AgdaFunction{i1} &= y
       \end{aligned}$
     };
-    \node [anchor=base] at ( 0.48,-1  ) {
+    \node [anchor=base] at ( 0.6,-0.8) {\linespread{0}\footnotesize
       $\begin{aligned}
         \AgdaFunction{sym}\;p\;\AgdaFunction{i1} &= \\
         p\;(\AgdaOperator{\AgdaPrimitive{\textasciitilde{}}}\;\AgdaFunction{i1}) &= \\
@@ -617,6 +611,9 @@ applied to \AgdaInductiveConstructor{i1}, it returns \(y\).
     \draw (-1  ,0) -- ( 1,0);
     \filldraw[black] (-1,0) circle (2pt);
     \filldraw[black] (1,0) circle (2pt);
+
+    \draw[-stealth] ( 1,2) to[out=-90, in=90] (-1,0.5);
+    \draw[-stealth] (-1,2) to[out=-90, in=90] ( 1,0.5);
   \end{tikzpicture}
   \caption{Diagram of \(\AgdaFunction{sym}\;p\)}
   \label{sym-diagram}
@@ -627,9 +624,9 @@ First, we can manipulate values in the interval: we can take the inverse of a
 point in the interval, for instance.
 It's worth thinking about what this ``inverse'' corresponds to in the equality:
 we will name it in the next listing.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Equality.tex]{sym-def}
-\end{agdalisting}
+\end{agdalisting*}
 We will see some more intricate ways to manipulate paths later on, but for now
 the ``function from an interval'' intuition is enough to understand the basics.
 
