@@ -431,9 +431,9 @@ the \emph{fields} of these types.
 
 Of course, in this case, our type doesn't have any fields.
 Perhaps a more instructive example of a record is the following:
-\begin{agdalisting*}
+\begin{agdalisting} \label{pair-def}
   \ExecuteMetaData[agda/Snippets/Expr.tex]{pair}
-\end{agdalisting*}
+\end{agdalisting}
 Here we've defined the type of \emph{pairs}.
 
 Types defined with \AgdaKeyword{data} and types defined with
@@ -681,8 +681,35 @@ HoTT representation of the \emph{circle}.
 We won't examine its more interesting properties all that much: however it is a
 good example of the simplest type with complex homotopy, so we will use it to
 demonstrate several HoTT principles.
-
 \section{Basic Type Formers}
+So far a lot of our descriptions of Agda have mixed Agda's type theory with its
+syntax.
+If this were a paper presenting the core type theory of Agda to an audience of
+type theorists we probably would describe things in a slightly different way,
+which has a lot less fancy syntax: we would instead present the core \emph{type
+  formers} in Agda, and describe their semantics.
+These type formers are basic types from which all other types can be built
+(although it's usually much more ergonomic to use the syntax that we have been
+using up until now: working with these type formers exclusively can feel a
+little low-level at times).
+
+We're going to explore them a little here: as the kind of basic subatomic
+particles that make up every other type, they reveal a lot about the way types
+work in general in Agda.
+Also they can be useful in their own right: we've actually used all but one of
+these types already.
+
+The types \agdabot, \agdatop, and \AgdaDatatype{Bool} are three of the basic
+type formers in MLTT.
+Often they're called 0, 1, and 2; they're named for the number of elements which
+inhabit them.
+
+The next basic type is \(\Pi\).
+We have seen this type already: it's the type of \emph{dependent functions}.
+It's also known as the dependent product type.
+This might seem strange at first: a product type is usually denoted by a tuple,
+i.e. the pair type we saw in Equation~\ref{pair-def}.
+
 
 % A different HIT that we \emph{will} examine in depth, however, is the following:
 % \begin{definition}[Set Quotient]
