@@ -704,11 +704,93 @@ type formers in MLTT.
 Often they're called 0, 1, and 2; they're named for the number of elements which
 inhabit them.
 
-The next basic type is \(\Pi\).
-We have seen this type already: it's the type of \emph{dependent functions}.
-It's also known as the dependent product type.
-This might seem strange at first: a product type is usually denoted by a tuple,
+The next basic type is usually called \(\Pi\): it's the type of \emph{dependent
+  functions}.
+We've seen this type already, but here we should define it in a little more
+depth.
+\begin{definition}[Dependent Functions]
+  A dependent function is one where the return type \emph{depends} on the value
+  of the input.
+  Here's a silly example:
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{nat-or-string}
+  \end{agdalisting*}
+  When supplied with \AgdaInductiveConstructor{true}, the return type of this
+  function is \agdambb{N}; when given \AgdaInductiveConstructor{false}, the
+  return type is \AgdaDatatype{String}.
+\end{definition}
+
+Dependent functions are a built-in type in Agda, and they get the built-in
+syntax that looks like the following:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-2}
+\end{agdalisting*}
+If the \(A\) can be inferred, we could alternatively use the following syntax:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-3}
+\end{agdalisting*}
+Finally, if we wanted to avoid syntactic sugar altogether, we can use the
+\(\Pi\) symbol:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-1}
+\end{agdalisting*}
+All three of these expressions denote the same type.
+
+As the symbol suggests, \AgdaFunction{\(\Pi\)} types are \emph{product} types.
+This might seem strange at first: a product type is usually a tuple,
 i.e. the pair type we saw in Equation~\ref{pair-def}.
+As it happens, given the basic type formers we've defined so far, we can
+actually make the pair type:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Formers.tex]{pair-def}
+\end{agdalisting*}
+This type has all the functions we might need on a standard pair:
+\begin{multicols}{3}
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{fst-def}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{snd-def}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{mk-pair}
+  \end{agdalisting*}
+\end{multicols}
+
+Now that we have the type of dependent products, it's natural to ask if we have
+a type for dependent sums.
+This is a type we \emph{haven't} seen before, although we have all the pieces
+needed to define it.
+\begin{definition}[The Dependent Sum]
+  Dependent sums are denoted with the usual \(\Sigma\) symbol, and has the
+  following definition in Agda:
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma}
+  \end{agdalisting*}
+  The dependent sum is like the constructive version of the existential
+  quantifier: the expression \(\AgdaDatatype{\(\Sigma\)}\;A\;B\) can be
+  interpreted as ``there exists an \(A\) such that \(B\)''.
+\end{definition}
+  % We will use different notations to refer to this type depending on the
+  % setting.
+  % The following four expressions all denote the same type:
+
+  % \begin{multicols}{4}
+  %   \begin{agdalisting*}
+  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
+  %   \end{agdalisting*} \columnbreak
+  %   \begin{agdalisting*}
+  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-3}
+  %   \end{agdalisting*} \columnbreak
+  %   \begin{agdalisting*}
+  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-4}
+  %   \end{agdalisting*} \columnbreak
+  %   \begin{agdalisting*}
+  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-2}
+  %   \end{agdalisting*}
+  % \end{multicols} \vspace{-1\baselineskip} \noindent
+  % The non-dependent product is a special instance of the dependent.
+  % We denote a simple pair of types \(A\) and \(B\) as \(A \times B\).
 
 
 % A different HIT that we \emph{will} examine in depth, however, is the following:
