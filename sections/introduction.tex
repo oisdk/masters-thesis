@@ -1,242 +1,298 @@
 \chapter{Introduction}
 
 
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Interactive.tex]{step1}
-\end{agdalisting}
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Interactive.tex]{step2}
-\end{agdalisting}
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Interactive.tex]{step3}
-\end{agdalisting}
+% \begin{agdalisting}
+%   \ExecuteMetaData[agda/Snippets/Interactive.tex]{step1}
+% \end{agdalisting}
+% \begin{agdalisting}
+%   \ExecuteMetaData[agda/Snippets/Interactive.tex]{step2}
+% \end{agdalisting}
+% \begin{agdalisting}
+%   \ExecuteMetaData[agda/Snippets/Interactive.tex]{step3}
+% \end{agdalisting}
 
-\begin{equation}
-  \frac{
-    \mathit{zs}:\AgdaDatatype{List}\;A \;\;\;\;
-    \mathit{ys}:\AgdaDatatype{List}\;A \;\;\;\;
-    A :\AgdaDatatype{Type}\;a\;\text{(not in scope)} \;\;\;\;
-    a :\AgdaDatatype{Level}\;\text{(not in scope)}
-    }{
-    \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
-    \;\AgdaFunction{≡}\;
-    \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
-  }
-\end{equation} 
+% \begin{equation}
+%   \frac{
+%     \mathit{zs}:\AgdaDatatype{List}\;A \;\;\;\;
+%     \mathit{ys}:\AgdaDatatype{List}\;A \;\;\;\;
+%     A :\AgdaDatatype{Type}\;a\;\text{(not in scope)} \;\;\;\;
+%     a :\AgdaDatatype{Level}\;\text{(not in scope)}
+%     }{
+%     \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
+%     \;\AgdaFunction{≡}\;
+%     \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
+%   }
+% \end{equation} 
 
 
-\todo{regroup into old structure}
-We are interested in constructive notions of finiteness, formalised in Cubical
-Type Theory~\cite{cohenCubicalTypeTheory2016}.
-In this paper we will explore five such notions of finiteness, including their
-categorical interpretation, and use them to build a simple proof-search library
-facilitated in a fundamental way by univalence.
-Along the way we will use the Countdown
-problem~\cite{huttonCountdownProblem2002} as an example, and provide a program
-which produces verified solutions to the puzzle.
-We will also briefly examine countability, and demonstrate its parallels and
-differences with finiteness.
-\section{The Varieties of Finiteness}
-\todo{Make all references parenthetical}
-In Section~\ref{finiteness-predicates} we will explore a number of different
-predicates for finiteness.
-In contrast to classical finiteness, in a constructive setting there are many
-predicates which all have some claim to being the formal interpretation of
-``finiteness''~\cite{coquandConstructivelyFinite2010}.
-The particular predicates we are interested in are organised in
-Figure~\ref{finite-classification}: each arrow in the diagram represents a proof
-that one predicate can be derived from another.
-Each arrow in Figure~\ref{finite-classification} corresponds to a proof of
-implication: cardinal finiteness, for instance, with a strict total order,
-implies split enumerability (Theorem~\ref{cardinal-to-manifest-bishop}).
+This thesis will explore and explain the notion of finiteness in the setting
+of Cubical Type Theory~\cite{cohenCubicalTypeTheory2016}.
+Finiteness is one of the classic examples of a topic for which the constructive
+interpretation is far more complex and involved than the classical.
+It also provides ample opportunity to demonstrate the computational properties
+of constructive proofs: in developing a theory for finiteness we will also
+develop a program which can search for verified solutions to the countdown
+problem~\cite{huttonCountdownProblem2002}. \todo{find proper cite for this}
+In fact we will prove that, given a particular numbers puzzle, there are only
+finitely many candidate solutions: this proof is precisely the program which can
+search for and list these solutions.
 
-\input{figures/finite-classification}
+This thesis is aimed at individuals with some knowledge of Haskell (although
+extensive knowledge of Haskell is not an absolute necessity) and a curiosity
+about dependent types.
+We will explain the basics of dependently-typed programming in Agda, how to
+write programs and how to write proofs, and we will explain something of the
+internals of dependent type theory along the way.
+One way we depart from the usual introduction to dependent types is that we will
+use Cubical Type Theory from the very beginning: this rather new type theory has
+an implementation in the form of Cubical Agda
+\cite{vezzosiCubicalAgdaDependently2019}, which is what we will use for the
+actual code throughout.
+CuTT provides a setting for Homotopy Type Theory \cite{hottbook}, a new
+foundational approach to mathematics.
+No knowledge of either of these topics is assumed:
+as it happens, finiteness touches upon many of the basics of HoTT quite
+naturally, so we will have opportunities to explain much of the topic as we go.
 
-These finiteness predicates differ along two main axes: informativeness, and
-restrictiveness.
-More ``informative'' predicates have proofs which contain extraneous information
-other than the finiteness of the underlying type: a proof of split enumerability
-(Section~\ref{split-enumerability}), for instance, comes with a strict total
-order on the underlying type.
+\section{Overview}
+This thesis is structured as follows: in Chapter~\ref{agda-intro} we will
+introduce Agda, its syntax, and quickly bring reader up to speed with how to
+write programs in it.
+We will also begin to talk about some more foundational type-theory concepts,
+and we will explain a little about Agda's particular interpretation of HoTT and
+CuTT.
 
-The ``restrictiveness'' of a predicate refers to how many types it admits into
-its notion of ``finite''.
-There are strictly more Kuratowski finite (Section~\ref{kuratowski}) types than
-there are Cardinally finite (Section~\ref{cardinal-finiteness}).
+In Chapter~\ref{finiteness-predicates} we will look in-depth at the focus of
+this thesis: finiteness.
+We will see that there is no one ``true'' notion of ``finite'', and we will
+delineate and compare the competing definitions.
+Along the way we will learn a little more about HoTT and univalence, and we'll
+see some practical and direct uses of the univalence axiom.
 
-Proofs coming with extra information is a common theme in constructive
-mathematics: often this extra information is in the form of an algorithm which
-can do something useful related to the proof itself.
-Indeed, our proofs of finiteness here will provide an algorithm to solve the
-countdown puzzle.
-Occasionally, however, the extra information is undesirable: we may want to
-assert the existence of some value \(x : A\) which satisfies a predicate \(P\)
-without revealing \emph{which} \(A\) we're referring to.
-More concretely, we will need in this paper to prove that two types are in
-bijection without specifying a particular bijection.
-This facility is provided by Homotopy Type Theory~\cite{hottbook} in the form of
-propositional truncation, and it is what allows us to prove the bulk of
-propositions in this paper.
+In Chapter~\ref{topos} we will look a little at a slightly more advanced
+application of HoTT: topos theory.
+Here we will see some of the strengths of HoTT and CuTT, as they allow us to
+work in certain mathematical settings inaccessible to MLTT.
 
-For each predicate we will also prove its closure properties (i.e.\ that the
-product of two finite sets is finite).
-The most significant of these closure proofs is that of closure under \(\Pi\)
-(dependent functions) (Theorem~\ref{split-enum-pi}).
-\section{Toposes and Finite Sets}
-In Section~\ref{topos}, we will explore the categorical interpretation of
-decidable Kuratowski finite sets.
-The motivation here is partially a practical one: by the end of this work we
-will have provided a library for proof search over finite types, and the
-``language'' of a topos is a reasonable choice for a principled language for
-constructing proofs of finiteness in the style of
-QuickCheck~\cite{claessenQuickCheckLightweightTool2011} generators.
+In Chapter~\ref{search} we will combine everything from the previous chapters
+into a (somewhat) practical program for proof search.
+Here is where we will develop the countdown solver.
 
-Theoretically speaking, showing that sets in Homotopy Type Theory form a topos
-(with some caveats) is an important step in characterising the categorical
-implications of Homotopy Type Theory, first proven
-in~\cite{rijkeSetsHomotopyType2015}. \todo{This reference should be citet not citep}
-Our work is a formalisation of this result (and the first such formalisation
-that we are aware of).
-The proof that decidable Kuratowski finite sets form a \(\Pi\)-pretopos is
-additional to that.
-\section{Countability Predicates}
-After the finite predicates, we will briefly look at the infinite countable
-types, and classify them in a parallel way to the finite predicates
-(Section~\ref{infinite}).
-We will see that we lose closure under function arrows, but we gain it under the
-Kleene star (Theorem~\ref{split-countability-sigma}).
-\section{Search}
-All of our work is formalised in Cubical
-Agda~\cite{vezzosiCubicalAgdaDependently2019}: as a result, the constructive
-interpretation of each proof is actually a program which can be run on a
-computer.
-In finiteness in particular, these programs are particularly useful for
-exhaustive search.
+Finally, in Chapter~\ref{infinite} we will see how we can adapt the work of
+previous chapters to the setting of countably infinite types.
+\section{What is a Proof?}
+\section{Homotopy Type Theory}
 
-We will use the countdown problem as a running example throughout the paper: we
-will show how to prove that any given puzzle has a finite number of solutions,
-and from that we will show how to enumerate those solutions, thereby solving the
-puzzle in a verified way.
+% We are interested in constructive notions of finiteness, formalised in Cubical
+% Type Theory
+% In this paper we will explore five such notions of finiteness, including their
+% categorical interpretation, and use them to build a simple proof-search library
+% facilitated in a fundamental way by univalence.
+% Along the way we will use the Countdown
+% problem as an example, and provide a program
+% which produces verified solutions to the puzzle.
+% We will also briefly examine countability, and demonstrate its parallels and
+% differences with finiteness.
+% \section{The Varieties of Finiteness}
+% \todo{Make all references parenthetical}
+% In Section~\ref{finiteness-predicates} we will explore a number of different
+% predicates for finiteness.
+% In contrast to classical finiteness, in a constructive setting there are many
+% predicates which all have some claim to being the formal interpretation of
+% ``finiteness''~\cite{coquandConstructivelyFinite2010}.
+% The particular predicates we are interested in are organised in
+% Figure~\ref{finite-classification}: each arrow in the diagram represents a proof
+% that one predicate can be derived from another.
+% Each arrow in Figure~\ref{finite-classification} corresponds to a proof of
+% implication: cardinal finiteness, for instance, with a strict total order,
+% implies split enumerability (Theorem~\ref{cardinal-to-manifest-bishop}).
 
-In Section~\ref{search} we will package up the ``search'' aspect of finiteness
-into a library for proof search: similar libraries have been built
-in~\cite{fruminFiniteSetsHomotopy2018}
-and~\cite{firsovDependentlyTypedProgramming2015}.
-Our library differs from those in three important ways: firstly, it is strictly
-more powerful, as it allows for search over function types.
-Secondly, finiteness proofs also provide equivalence proofs to any other finite
-type: this allows transport of proofs between types of the same cardinality.
-Finally, through generic programming we provide a simple syntax for stating
-properties which mimics that of QuickCheck.
-We also ground the library in the theoretical notions of omniscience.
-\section{Notation and Background}
-We work in Cubical Type Theory~\cite{cohenCubicalTypeTheory2016}, specifically
-Cubical Agda~\cite{vezzosiCubicalAgdaDependently2019}.
-Cubical Agda is a dependently-typed functional programming language, based on
-Martin-Löf Intuitionistic Type Theory, with a Haskell-like syntax.
 
-Being a dependently-typed language, we'll have to be clear about what we mean
-when we say ``type'' in Agda.
-\begin{definition}[Type]
-  We use \(\AgdaDatatype{Type}\) to denote the universe of (small) types.
-  The universe level is denoted with a subscript number, starting at 0.
-  ``Type families'' are functions into \(\AgdaDatatype{Type}\).
-\end{definition}
+% These finiteness predicates differ along two main axes: informativeness, and
+% restrictiveness.
+% More ``informative'' predicates have proofs which contain extraneous information
+% other than the finiteness of the underlying type: a proof of split enumerability
+% (Section~\ref{split-enumerability}), for instance, comes with a strict total
+% order on the underlying type.
 
-The are two broad ways to define types in Agda: as an inductive
-\(\AgdaKeyword{data}\) type, similar to data type definitions in Haskell, or as
-a \(\AgdaKeyword{record}\).
-Here we'll define the basic type formers used in MLTT.\@
-\begin{definition}[Basic Types]
-  The three basic types---often called 0, 1, and 2 in MLTT---here will be
-  denoted with their more common names: \(\bot\), \(\top\), and
-  \(\mathbf{Bool}\), respectively.
-  \begin{multicols}{3}
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{bot}
-    \end{agdalisting*} \columnbreak
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{top}
-    \end{agdalisting*} \columnbreak
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{bool}
-    \end{agdalisting*}
-  \end{multicols}
-\end{definition}
-\begin{definition}[The Dependent Sum]
-  Dependent sums are denoted with the usual \(\Sigma\) symbol, and has the
-  following definition in Agda:
+% The ``restrictiveness'' of a predicate refers to how many types it admits into
+% its notion of ``finite''.
+% There are strictly more Kuratowski finite (Section~\ref{kuratowski}) types than
+% there are Cardinally finite (Section~\ref{cardinal-finiteness}).
 
-  \begin{agdalisting*}
-    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma}
-  \end{agdalisting*}
-  We will use different notations to refer to this type depending on the
-  setting.
-  The following four expressions all denote the same type:
+% Proofs coming with extra information is a common theme in constructive
+% mathematics: often this extra information is in the form of an algorithm which
+% can do something useful related to the proof itself.
+% Indeed, our proofs of finiteness here will provide an algorithm to solve the
+% countdown puzzle.
+% Occasionally, however, the extra information is undesirable: we may want to
+% assert the existence of some value \(x : A\) which satisfies a predicate \(P\)
+% without revealing \emph{which} \(A\) we're referring to.
+% More concretely, we will need in this paper to prove that two types are in
+% bijection without specifying a particular bijection.
+% This facility is provided by Homotopy Type Theory~\cite{hottbook} in the form of
+% propositional truncation, and it is what allows us to prove the bulk of
+% propositions in this paper.
 
-  \begin{multicols}{4}
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
-    \end{agdalisting*} \columnbreak
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-3}
-    \end{agdalisting*} \columnbreak
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-4}
-    \end{agdalisting*} \columnbreak
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-2}
-    \end{agdalisting*}
-  \end{multicols} \vspace{-1\baselineskip} \noindent
-  The non-dependent product is a special instance of the dependent.
-  We denote a simple pair of types \(A\) and \(B\) as \(A \times B\).
-\end{definition}
-\begin{definition}[Dependent Product]
-  Dependent products (dependent functions) use the \(\Pi\) symbol.
-  The three following expressions all denote the same type:
-  \begin{multicols}{3}
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-1}
-    \end{agdalisting*} \columnbreak
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-2}
-    \end{agdalisting*} \columnbreak
-    \begin{agdalisting*}
-      \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-3}
-    \end{agdalisting*}
-  \end{multicols}\vspace{-1.5\baselineskip}\noindent
-  Non-dependent functions are denoted with the arrow (\(\rightarrow\)).
-\end{definition}
+% For each predicate we will also prove its closure properties (i.e.\ that the
+% product of two finite sets is finite).
+% The most significant of these closure proofs is that of closure under \(\Pi\)
+% (dependent functions) (Theorem~\ref{split-enum-pi}).
+% \section{Toposes and Finite Sets}
+% In Section~\ref{topos}, we will explore the categorical interpretation of
+% decidable Kuratowski finite sets.
+% The motivation here is partially a practical one: by the end of this work we
+% will have provided a library for proof search over finite types, and the
+% ``language'' of a topos is a reasonable choice for a principled language for
+% constructing proofs of finiteness in the style of
+% QuickCheck~\cite{claessenQuickCheckLightweightTool2011} generators.
 
-At this point, as a quick example, we can define the first of our objects for
-the countdown transformation: the vector of Booleans for selection.
-A vector is relatively simple to define: a vector of zero elements is simply a
-unit, a vector of \(n+1\) elements is the product of an element and a vector of
-\(n\) elements.
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Data/Vec/Iterated.tex]{vec-def}
-\end{agdalisting*}
-From this we can see that a vector of \(n\) Booleans has the type
-\(\AgdaDatatype{Vec} \; \AgdaDatatype{Bool} \; n\)
+% Theoretically speaking, showing that sets in Homotopy Type Theory form a topos
+% (with some caveats) is an important step in characterising the categorical
+% implications of Homotopy Type Theory, first proven
+% in~\cite{rijkeSetsHomotopyType2015}. \todo{This reference should be citet not citep}
+% Our work is a formalisation of this result (and the first such formalisation
+% that we are aware of).
+% The proof that decidable Kuratowski finite sets form a \(\Pi\)-pretopos is
+% additional to that.
+% \section{Countability Predicates}
+% After the finite predicates, we will briefly look at the infinite countable
+% types, and classify them in a parallel way to the finite predicates
+% (Section~\ref{infinite}).
+% We will see that we lose closure under function arrows, but we gain it under the
+% Kleene star (Theorem~\ref{split-countability-sigma}).
+% \section{Search}
+% All of our work is formalised in Cubical
+% Agda~\cite{vezzosiCubicalAgdaDependently2019}: as a result, the constructive
+% interpretation of each proof is actually a program which can be run on a
+% computer.
+% In finiteness in particular, these programs are particularly useful for
+% exhaustive search.
 
-Finally, there is one last thing we must define before moving on to the
-finiteness predicates: paths.
-\begin{definition}[Path Types]\label{path-types}
-  The equality type (which we denote with \(\equiv\)) in CuTT is the type of
-  Paths\footnotemark.
-  The nature and internal structure of Paths is complex and central to how
-  Cubical Type Theory ``implements'' Homotopy Type Theory, but those details are
-  not relevant to us here.
-  Instead, we only need to know that univalence holds for paths, and path types
-  do indeed compute in Cubical Agda.
-\end{definition}
+% We will use the countdown problem as a running example throughout the paper: we
+% will show how to prove that any given puzzle has a finite number of solutions,
+% and from that we will show how to enumerate those solutions, thereby solving the
+% puzzle in a verified way.
 
-\footnotetext{%
-  Actually, CuTT does have an identity type with similar semantics to the
-  identity type in MLTT.\@
-  We do not use this type anywhere in our work, however, so we will not consider
-  it here.
-}
+% In Section~\ref{search} we will package up the ``search'' aspect of finiteness
+% into a library for proof search: similar libraries have been built
+% in~\cite{fruminFiniteSetsHomotopy2018}
+% and~\cite{firsovDependentlyTypedProgramming2015}.
+% Our library differs from those in three important ways: firstly, it is strictly
+% more powerful, as it allows for search over function types.
+% Secondly, finiteness proofs also provide equivalence proofs to any other finite
+% type: this allows transport of proofs between types of the same cardinality.
+% Finally, through generic programming we provide a simple syntax for stating
+% properties which mimics that of QuickCheck.
+% We also ground the library in the theoretical notions of omniscience.
+% \section{Notation and Background}
+% We work in Cubical Type Theory~\cite{cohenCubicalTypeTheory2016}, specifically
+% Cubical Agda~\cite{vezzosiCubicalAgdaDependently2019}.
+% Cubical Agda is a dependently-typed functional programming language, based on
+% Martin-Löf Intuitionistic Type Theory, with a Haskell-like syntax.
+
+% Being a dependently-typed language, we'll have to be clear about what we mean
+% when we say ``type'' in Agda.
+% \begin{definition}[Type]
+%   We use \(\AgdaDatatype{Type}\) to denote the universe of (small) types.
+%   The universe level is denoted with a subscript number, starting at 0.
+%   ``Type families'' are functions into \(\AgdaDatatype{Type}\).
+% \end{definition}
+
+% The are two broad ways to define types in Agda: as an inductive
+% \(\AgdaKeyword{data}\) type, similar to data type definitions in Haskell, or as
+% a \(\AgdaKeyword{record}\).
+% Here we'll define the basic type formers used in MLTT.\@
+% \begin{definition}[Basic Types]
+%   The three basic types---often called 0, 1, and 2 in MLTT---here will be
+%   denoted with their more common names: \(\bot\), \(\top\), and
+%   \(\mathbf{Bool}\), respectively.
+%   \begin{multicols}{3}
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{bot}
+%     \end{agdalisting*} \columnbreak
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{top}
+%     \end{agdalisting*} \columnbreak
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{bool}
+%     \end{agdalisting*}
+%   \end{multicols}
+% \end{definition}
+% \begin{definition}[The Dependent Sum]
+%   Dependent sums are denoted with the usual \(\Sigma\) symbol, and has the
+%   following definition in Agda:
+
+%   \begin{agdalisting*}
+%     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma}
+%   \end{agdalisting*}
+%   We will use different notations to refer to this type depending on the
+%   setting.
+%   The following four expressions all denote the same type:
+
+%   \begin{multicols}{4}
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
+%     \end{agdalisting*} \columnbreak
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-3}
+%     \end{agdalisting*} \columnbreak
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-4}
+%     \end{agdalisting*} \columnbreak
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-2}
+%     \end{agdalisting*}
+%   \end{multicols} \vspace{-1\baselineskip} \noindent
+%   The non-dependent product is a special instance of the dependent.
+%   We denote a simple pair of types \(A\) and \(B\) as \(A \times B\).
+% \end{definition}
+% \begin{definition}[Dependent Product]
+%   Dependent products (dependent functions) use the \(\Pi\) symbol.
+%   The three following expressions all denote the same type:
+%   \begin{multicols}{3}
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-1}
+%     \end{agdalisting*} \columnbreak
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-2}
+%     \end{agdalisting*} \columnbreak
+%     \begin{agdalisting*}
+%       \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-3}
+%     \end{agdalisting*}
+%   \end{multicols}\vspace{-1.5\baselineskip}\noindent
+%   Non-dependent functions are denoted with the arrow (\(\rightarrow\)).
+% \end{definition}
+
+% At this point, as a quick example, we can define the first of our objects for
+% the countdown transformation: the vector of Booleans for selection.
+% A vector is relatively simple to define: a vector of zero elements is simply a
+% unit, a vector of \(n+1\) elements is the product of an element and a vector of
+% \(n\) elements.
+% \begin{agdalisting*}
+%   \ExecuteMetaData[agda/Data/Vec/Iterated.tex]{vec-def}
+% \end{agdalisting*}
+% From this we can see that a vector of \(n\) Booleans has the type
+% \(\AgdaDatatype{Vec} \; \AgdaDatatype{Bool} \; n\)
+
+% Finally, there is one last thing we must define before moving on to the
+% finiteness predicates: paths.
+% \begin{definition}[Path Types]\label{path-types}
+%   The equality type (which we denote with \(\equiv\)) in CuTT is the type of
+%   Paths\footnotemark.
+%   The nature and internal structure of Paths is complex and central to how
+%   Cubical Type Theory ``implements'' Homotopy Type Theory, but those details are
+%   not relevant to us here.
+%   Instead, we only need to know that univalence holds for paths, and path types
+%   do indeed compute in Cubical Agda.
+% \end{definition}
+
+% \footnotetext{%
+%   Actually, CuTT does have an identity type with similar semantics to the
+%   identity type in MLTT.\@
+%   We do not use this type anywhere in our work, however, so we will not consider
+%   it here.
+% }
 
 %%% Local Variables:
 %%% mode: latex
