@@ -4,7 +4,7 @@
 
 module Snippets.Formers where
 
-open import Prelude hiding (fst; snd)
+open import Prelude hiding (fst; snd; _×_)
 open import Agda.Builtin.String
 \end{code}
 %<*pair-def>
@@ -39,3 +39,9 @@ pair x y false  = y
 ℕ-or-String false  = "It was false!"
 \end{code}
 %</nat-or-string>
+%<*pair-sigma>
+\begin{code}
+_×_ : Type a → Type b → Type (a ℓ⊔ b)
+A × B = Σ A λ _ → B
+\end{code}
+%</pair-sigma>

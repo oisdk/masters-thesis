@@ -771,63 +771,41 @@ needed to define it.
   quantifier: the expression \(\AgdaDatatype{\(\Sigma\)}\;A\;B\) can be
   interpreted as ``there exists an \(A\) such that \(B\)''.
 \end{definition}
-  % We will use different notations to refer to this type depending on the
-  % setting.
-  % The following four expressions all denote the same type:
 
-  % \begin{multicols}{4}
-  %   \begin{agdalisting*}
-  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
-  %   \end{agdalisting*} \columnbreak
-  %   \begin{agdalisting*}
-  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-3}
-  %   \end{agdalisting*} \columnbreak
-  %   \begin{agdalisting*}
-  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-4}
-  %   \end{agdalisting*} \columnbreak
-  %   \begin{agdalisting*}
-  %     \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-2}
-  %   \end{agdalisting*}
-  % \end{multicols} \vspace{-1\baselineskip} \noindent
-  % The non-dependent product is a special instance of the dependent.
-  % We denote a simple pair of types \(A\) and \(B\) as \(A \times B\).
+There are a number of different syntactic ways to express
+\(\AgdaDatatype{\(\Sigma\)}\;A\;B\).
+The following are all equivalent:
+\begin{multicols}{4}
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-3}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-4}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-2}
+  \end{agdalisting*}
+\end{multicols} \vspace{-1\baselineskip}
 
-
-% A different HIT that we \emph{will} examine in depth, however, is the following:
-% \begin{definition}[Set Quotient]
-%   In CuTT we can define the type of sets quotiented by a relation \(R\) as
-%   follows:
-%   \begin{agdalisting*}
-%     \ExecuteMetaData[agda/Snippets/Quotient.tex]{quot-def}
-%   \end{agdalisting*}
-% \end{definition}
-
-% So we have three constructors for our set quotient type: first, a constructor
-% that takes a value of the underlying type (\(A\)), and constructs a value in the
-% quotiented type.
-% Second, we see a \emph{path} constructor: this constructor does the actual
-% quotienting in the type.
-% It says that if there exists a relation \(R\) between two elements \(x\) and
-% \(y\) then there is also a path between the elements
-% \(\AgdaInductiveConstructor{\([\)}\;x\;\AgdaInductiveConstructor{\(]\)}\)
-% and
-% \(\AgdaInductiveConstructor{\([\)}\;y\;\AgdaInductiveConstructor{\(]\)}\).
-
-% The third constructor is a little bit beyond what we can explain at this point:
-% it \emph{truncates} the higher homotopy out of the type.
-% Effectively, it makes the type slightly more ``well-behaved'' with regards to
-% HoTT internals: without this constructor, the type would have a lot of
-% interesting structure which is far too interesting for us at this point.
-% \todo{introduce explanation now or later?}
-
-% We are going to define a type similar to the one above, but for expressions.
-% It will quotient out common arithmetic identities:
-% \begin{agdalisting}
-%   \ExecuteMetaData[agda/Snippets/Expr.tex]{quot-expr}
-% \end{agdalisting}
-% To evaluate this expression, we have to actually prove that the evaluation
-% function respects the given equality.
-
+Though we have shown that the dependent function type is suitable as a pair
+type, \AgdaDatatype{\(\Sigma\)} is actually a little easier to use as our basic
+pair type.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Formers.tex]{pair-sigma}
+\end{agdalisting}
+So how, then, is \AgdaDatatype{\(\Sigma\)} a sum type?
+Sum types in non-dependent type theory are the disjoint unions:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{disj-union}
+\end{agdalisting}
+It turns out that we can actually use a quite similar trick to how we got the
+pair from \AgdaDatatype{\(\Pi\)}:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
+\end{agdalisting}
 
 %%% Local Variables:
 %%% mode: latex
