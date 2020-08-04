@@ -24,7 +24,7 @@
 %   }
 % \end{equation} 
 
-This thesis will explore and explain the notion of finiteness in constructive
+This thesis will explore and explain finiteness in constructive
 mathematics: using this setting, it will also serve as an introduction to
 constructive mathematics in Cubical Agda
 \cite{vezzosiCubicalAgdaDependently2019}, and some related topics.
@@ -35,32 +35,45 @@ A constructive proof is a mathematical object that can be manipulated in the
 same way that an integer or an algorithm can: indeed, some of the ``proofs'' we
 will see in this thesis will emerge to be useful programs in disguise.
 
-Finiteness is one of the clearest examples of a topic for which the constructive
-interpretation is far more complex and involved than the classical.
+Finiteness is one of the clearest examples which demonstrates this difference
+between classical and constructive proofs.
 There are several different ways to prove that something is finite: you could
 show that it's in bijection with another finite type, or that there's a
 surjection from the same, etc.
 Classically speaking, all of these different proofs end up proving the same
 thing: that the type in question is finite.
-Constructively, however, some of these proofs are fundamentally different, as
-they contain more information: if we provide a bijection, for instance, we will
-also have to specify some order on the underlying type. \todo{clean up phrasing here}
-In fact, in a constructive setting there are many predicates which all have some
-claim to being the formal interpretation of ``finiteness''
-\cite{coquandConstructivelyFinite2010}.
+Constructively, however, these proofs are different: while we know that a type
+with a surjection from a finite type must also have a bijection from that type
+there's no way to \emph{provide} such a bijection, so constructively these
+proofs are not equivalent.
+As it happens there's a wide assortment of predicates which all have some claim
+to being the formal interpretation of ``finiteness'', and they're all different
+in a constructive setting \cite{coquandConstructivelyFinite2010}.
 
-The specific constructive setting this thesis will operate in is Cubical Type
-Theory \cite{cohenCubicalTypeTheory2016}: this is a type theory which allows for
-constructive interpretation of the univalence axiom \cite{hottbook} \todo{should
-this be the hottbook or something else?}, an axiom which allows us to treat
-isomorphic types as fully equal.
+An exploration of finiteness also provides ample opportunity to explain much of
+the fundamentals of Homotopy Type Theory \cite{hottbook}: this theory is a
+foundational system for mathematics, which has at its core the \emph{univalence
+  axiom}.
+We will dive much more into this axiom later on, but for now know that it gives
+a formal grounding to say ``if two types are isomorphic, it is possible to treat
+them as the same.''
+We could, for instance, have two different representations for the natural
+numbers (binary and unary possibly): the univalence axiom allows us to say ``all
+of the things we have proven about the unary numbers are also true about the
+binary numbers''.
+This is an essential technique in most areas of mathematics, which
+had no useful analogue in type theory until recently.
 
 All of our work will be formalised in Agda
-\cite{norellDependentlyTypedProgramming2008}.
-Agda is a dependently typed, pure, functional programming language which can be
+\cite{norellDependentlyTypedProgramming2008}, a
+dependently typed, pure, functional programming language which can be
 used as a proof assistant.
 Proofs in Agda are programs which can be run: its syntax is quite similar to
 Haskell's.
+A recent extension to Agda, Cubical Agda
+\cite{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
+programs written in Cubical Type Theory \cite{cohenCubicalTypeTheory2016}: this
+type theory gives a \emph{computational} interpretation of the univalence axiom.
 
 This thesis is aimed at individuals with some knowledge of Haskell (although
 extensive knowledge of Haskell is not an absolute necessity) and a curiosity
@@ -68,25 +81,6 @@ about dependent types.
 We will explain the basics of dependently-typed programming in Agda, how to
 write programs and how to write proofs, and we will explain something of the
 internals of dependent type theory along the way.
-
-% It also provides ample opportunity to demonstrate the computational properties
-% of constructive proofs: in developing a theory for finiteness we will also
-% develop a program which can search for verified solutions to the countdown
-% problem~\cite{huttonCountdownProblem2002}. \todo{find proper cite for this}
-% In fact we will prove that, given a particular numbers puzzle, there are only
-% finitely many candidate solutions: this proof is precisely the program which can
-% search for and list these solutions.
-
-% One way we depart from the usual introduction to dependent types is that we will
-% use Cubical Type Theory from the very beginning: this rather new type theory has
-% an implementation in the form of Cubical Agda
-% \cite{vezzosiCubicalAgdaDependently2019}, which is what we will use for the
-% actual code throughout.
-% CuTT provides a setting for Homotopy Type Theory \cite{hottbook}, a new
-% foundational approach to mathematics.
-% No knowledge of either of these topics is assumed:
-% as it happens, finiteness touches upon many of the basics of HoTT quite
-% naturally, so we will have opportunities to explain much of the topic as we go.
 
 \section{Overview}
 This thesis is structured as follows: in Chapter~\ref{agda-intro} we will
