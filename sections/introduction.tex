@@ -1,6 +1,4 @@
 \chapter{Introduction}
-
-
 % \begin{agdalisting}
 %   \ExecuteMetaData[agda/Snippets/Interactive.tex]{step1}
 % \end{agdalisting}
@@ -81,7 +79,6 @@ about dependent types.
 We will explain the basics of dependently-typed programming in Agda, how to
 write programs and how to write proofs, and we will explain something of the
 internals of dependent type theory along the way.
-
 \section{Overview}
 This thesis is structured as follows: in Chapter~\ref{agda-intro} we will
 introduce Agda, its syntax, and quickly bring reader up to speed with how to
@@ -127,8 +124,45 @@ Countably infinite are those types that have a bijection with the natural
 numbers: we will see that we can develop a similar framework of proofs for them
 as we did for the finite types (with some important differences).
 \section{What is a Proof?}
-\section{Homotopy Type Theory}
+Constructive mathematics is, fundamentally, a different way of thinking about
+proofs.
+Classically we have two fundamentally different universes of things: we have
+objects, like the natural numbers, or the rings; and the proofs on those things.
+Constructive mathematics is an effort to join those two worlds together.
 
+Practically speaking this means that in constructive mathematics we can't
+always ``prove the existence of'' some thing; instead we simply provide that
+thing.
+We mentioned an example where this comes into play: to prove that something is
+finite we might want to prove that it is in bijection with some other finite
+type.
+Constructively, this proof \emph{is} a bijection.
+
+Constructive mathematics is also deeply tied to computers.
+Dependently-typed programming languages, like Agda
+\cite{norellDependentlyTypedProgramming2008}, Coq
+\cite{thecoqdevelopmentteamCoqProofAssistant2020}, or Idris
+\cite{bradyIdrisGeneralpurposeDependently2013}, allow us to compile and
+\emph{run} our proofs.
+If we provide a bijection between two types in Agda we also provide a function
+to and from each type.
+Agda is therefore both a formal language for constructive proofs and a
+programming language which can run those proofs.
+
+All of the extra capabilities of constructive mathematics do not come for free,
+of course.
+Occasionally we don't want to provide the extra information that
+constructiveness demands: later, for instance, we will begin to work with the
+category of finite sets.
+The objects of this category are (of course) finite sets: however, if our notion
+of ``finite'' is tied to an explicit bijection, that means that the type of
+``things which are finite'' is pairs of types and bijections between those
+types. 
+Since there are \(n!\) bijections between a type of cardinality \(n\) and any
+other, this means that for every such type we have \(n!\) different objects,
+instead of just 1.
+We'll see a way to fix this problem with Homotopy Type Theory.
+\section{Homotopy Type Theory}
 % We are interested in constructive notions of finiteness, formalised in Cubical
 % Type Theory
 % In this paper we will explore five such notions of finiteness, including their
