@@ -169,8 +169,67 @@ Constructive mathematics is a subset of classical, after all.
 When we say ``constructive'' we really just mean that these proofs avoid
 reliance on certain axioms like the law of the excluded middle, or the axiom of
 choice.
-
 \section{Homotopy Type Theory}
+While this thesis can serve as an introduction to proofs in dependent type
+theory generally, it can also serve as an introduction to Homotopy Type Theory
+\citep{hottbook}.
+HoTT is a type theory and foundational theory for mathematics: it is designed to
+stand in for ZFC in mathematical terms, and things like Martin-Löf type theory
+computer science terms.
+
+Central to the theory is the univalence axiom.
+This axiom states that isomorphism implies equality: more precisely, that
+``equivalence'' is equivalent to equality.
+We haven't defined equivalence yet (and we haven't defined equality rigorously
+yet), but the core thrust of the axiom is that it gives proofs of isomorphism
+all the power of proofs of equality.
+
+From a proof perspective, this is quite useful for transporting proofs from one
+domain to another: for instance, a proof that some type \(A\) is finite can be
+transported to a proof that any type isomorphic to \(A\) is finite.
+From a programming perspective, this is quite useful for transporting
+\emph{programs}: an API defined on some type can suddenly be reused, without
+change, on another type as long as the latter is isomorphic to the former.
+It's worth noting that the mathematical technique mentioned here is used quite
+pervasively in everyday mathematics: it's just that foundational systems could
+not justify its use.
+
+The other addition that HoTT gives to traditional type theory is that of Higher
+Inductive Types.
+Traditional inductive types are defined by listing their constructors: with HITs
+we can also list the equalities they must satisfy.
+The most obvious immediate use of this is quotient types: another concept which
+is regarded as standard in normal mathematics, but somewhat embarrassingly
+missing from most constructive theories.
+However HITs are far more general than just quotients: they can be used to
+define the standard constructions of homotopy theory, like the circle, torus,
+etc.
+This thesis isn't very interested in these homotopy-focused topics, however it
+is worth mentioning as it is one of HoTT's great strengths.
+
+Finally, we have to explain where Cubical Type Theory
+\citep{cohenCubicalTypeTheory2016} fits in.
+Strictly speaking in this thesis we will not work directly in HoTT: we work
+instead in CuTT, which in some sense ``implements'' HoTT\footnotemark.
+There is one crucial difference between the two theories: in CuTT the
+univalence ``axiom'' is in fact a theorem, with computational content.
+As we're using CuTT as a programming language (in the form of Cubical Agda
+\citep{vezzosiCubicalAgdaDependently2019}), this is an essential feature.
+It means that the proofs we write using univalence still correspond to tprograms
+which can be run.
+
+\footnotetext{
+  To be absolutely correct we should not say that CuTT implements HoTT, as the
+  two are in fact incompatible theories.
+  It is not the case that one is a strict subset of the other.
+  CuTT has many of the same features of HoTT, like HITs and univalence, so
+  almost all of the theory of HoTT applies to both (and indeed almost all of the
+  univalent foundations program applies to both), but there are some slight
+  differences between the theories which mean that some proofs which are valid
+  HoTT are not valid in CuTT.
+}
+
+
 % We are interested in constructive notions of finiteness, formalised in Cubical
 % Type Theory
 % In this paper we will explore five such notions of finiteness, including their
