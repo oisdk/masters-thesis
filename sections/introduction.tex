@@ -149,6 +149,28 @@ to and from each type.
 Agda is therefore both a formal language for constructive proofs and a
 programming language which can run those proofs.
 
+This relation between proofs and programs is often called the Curry-Howard
+correspondence.
+Under this framework, propositions in the logical sense correspond to types in
+the programming sense \citep{wadlerPropositionsTypes2015}; proofs of those
+propositions then correspond to programs which inhabit those proofs.
+As an example we have from propositional logic the following:
+\begin{equation*}
+  \frac{A \wedge B}{A}
+\end{equation*}
+This is conjunction elimination: if we know \(A\) and \(B\), we also know \(A\).
+
+Via Curry-Howard, the type corresponding to conjunction is in fact the pair (or
+tuple).
+\(A\) and \(B\) are also types.
+So, the above proposition, as a type, is the following:
+\begin{equation*}
+  A \times B \rightarrow A
+\end{equation*}
+And the proof which inhabits this type?
+It is the function often called \verb+fst+: the selector for the first component
+of the pair.
+
 All of the extra capabilities of constructive mathematics do not come for free,
 of course.
 Occasionally we don't want to provide the extra information that
