@@ -25,7 +25,7 @@
 This thesis will explore and explain finiteness in constructive
 mathematics: using this setting, it will also serve as an introduction to
 constructive mathematics in Cubical Agda
-\cite{vezzosiCubicalAgdaDependently2019}, and some related topics.
+\citep{vezzosiCubicalAgdaDependently2019}, and some related topics.
 
 In constructive mathematics proofs are much more substantial things than their
 classical counterparts.
@@ -46,10 +46,10 @@ there's no way to \emph{provide} such a bijection, so constructively these
 proofs are not equivalent.
 As it happens there's a wide assortment of predicates which all have some claim
 to being the formal interpretation of ``finiteness'', and they're all different
-in a constructive setting \cite{coquandConstructivelyFinite2010}.
+in a constructive setting \citep{coquandConstructivelyFinite2010}.
 
 An exploration of finiteness also provides ample opportunity to explain much of
-the fundamentals of Homotopy Type Theory \cite{hottbook}: this theory is a
+the fundamentals of Homotopy Type Theory \citep{hottbook}: this theory is a
 foundational system for mathematics, which has at its core the \emph{univalence
   axiom}.
 We will dive much more into this axiom later on, but for now know that it gives
@@ -63,14 +63,14 @@ This is an essential technique in most areas of mathematics, which
 had no useful analogue in type theory until recently.
 
 All of our work will be formalised in Agda
-\cite{norellDependentlyTypedProgramming2008}, a
+\citep{norellDependentlyTypedProgramming2008}, a
 dependently typed, pure, functional programming language which can be
 used as a proof assistant.
 Proofs in Agda are programs which can be run: its syntax is quite similar to
 Haskell's.
 A recent extension to Agda, Cubical Agda
-\cite{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
-programs written in Cubical Type Theory \cite{cohenCubicalTypeTheory2016}: this
+\citep{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
+programs written in Cubical Type Theory \citep{cohenCubicalTypeTheory2016}: this
 type theory gives a \emph{computational} interpretation of the univalence axiom.
 
 This thesis is aimed at individuals with some knowledge of Haskell (although
@@ -114,7 +114,7 @@ into a (somewhat) practical program for proof search.
 This program will automatically search for, and attempt to prove, a simple
 proposition.
 We will demonstrate the program with the countdown problem
-\cite{huttonCountdownProblem2002}: this is a somewhat famous puzzle where
+\citep{huttonCountdownProblem2002}: this is a somewhat famous puzzle where
 players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
 
@@ -140,9 +140,9 @@ Constructively, this proof \emph{is} a bijection.
 
 Constructive mathematics is also deeply tied to computers.
 Dependently-typed programming languages, like Agda
-\cite{norellDependentlyTypedProgramming2008}, Coq
-\cite{thecoqdevelopmentteamCoqProofAssistant2020}, or Idris
-\cite{bradyIdrisGeneralpurposeDependently2013}, allow us to compile and
+\citep{norellDependentlyTypedProgramming2008}, Coq
+\citep{thecoqdevelopmentteamCoqProofAssistant2020}, or Idris
+\citep{bradyIdrisGeneralpurposeDependently2013}, allow us to compile and
 \emph{run} our proofs.
 If we provide a bijection between two types in Agda we also provide a function
 to and from each type.
@@ -187,7 +187,7 @@ choice.
 % predicates for finiteness.
 % In contrast to classical finiteness, in a constructive setting there are many
 % predicates which all have some claim to being the formal interpretation of
-% ``finiteness''~\cite{coquandConstructivelyFinite2010}.
+% ``finiteness''~\citep{coquandConstructivelyFinite2010}.
 % The particular predicates we are interested in are organised in
 % Figure~\ref{finite-classification}: each arrow in the diagram represents a proof
 % that one predicate can be derived from another.
@@ -218,7 +218,7 @@ choice.
 % without revealing \emph{which} \(A\) we're referring to.
 % More concretely, we will need in this paper to prove that two types are in
 % bijection without specifying a particular bijection.
-% This facility is provided by Homotopy Type Theory~\cite{hottbook} in the form of
+% This facility is provided by Homotopy Type Theory~\citep{hottbook} in the form of
 % propositional truncation, and it is what allows us to prove the bulk of
 % propositions in this paper.
 
@@ -233,12 +233,12 @@ choice.
 % will have provided a library for proof search over finite types, and the
 % ``language'' of a topos is a reasonable choice for a principled language for
 % constructing proofs of finiteness in the style of
-% QuickCheck~\cite{claessenQuickCheckLightweightTool2011} generators.
+% QuickCheck~\citep{claessenQuickCheckLightweightTool2011} generators.
 
 % Theoretically speaking, showing that sets in Homotopy Type Theory form a topos
 % (with some caveats) is an important step in characterising the categorical
 % implications of Homotopy Type Theory, first proven
-% in~\cite{rijkeSetsHomotopyType2015}. \todo{This reference should be citet not citep}
+% in~\citep{rijkeSetsHomotopyType2015}. \todo{This reference should be citet not citep}
 % Our work is a formalisation of this result (and the first such formalisation
 % that we are aware of).
 % The proof that decidable Kuratowski finite sets form a \(\Pi\)-pretopos is
@@ -251,7 +251,7 @@ choice.
 % Kleene star (Theorem~\ref{split-countability-sigma}).
 % \section{Search}
 % All of our work is formalised in Cubical
-% Agda~\cite{vezzosiCubicalAgdaDependently2019}: as a result, the constructive
+% Agda~\citep{vezzosiCubicalAgdaDependently2019}: as a result, the constructive
 % interpretation of each proof is actually a program which can be run on a
 % computer.
 % In finiteness in particular, these programs are particularly useful for
@@ -264,8 +264,8 @@ choice.
 
 % In Section~\ref{search} we will package up the ``search'' aspect of finiteness
 % into a library for proof search: similar libraries have been built
-% in~\cite{fruminFiniteSetsHomotopy2018}
-% and~\cite{firsovDependentlyTypedProgramming2015}.
+% in~\citep{fruminFiniteSetsHomotopy2018}
+% and~\citep{firsovDependentlyTypedProgramming2015}.
 % Our library differs from those in three important ways: firstly, it is strictly
 % more powerful, as it allows for search over function types.
 % Secondly, finiteness proofs also provide equivalence proofs to any other finite
@@ -274,8 +274,8 @@ choice.
 % properties which mimics that of QuickCheck.
 % We also ground the library in the theoretical notions of omniscience.
 % \section{Notation and Background}
-% We work in Cubical Type Theory~\cite{cohenCubicalTypeTheory2016}, specifically
-% Cubical Agda~\cite{vezzosiCubicalAgdaDependently2019}.
+% We work in Cubical Type Theory~\citep{cohenCubicalTypeTheory2016}, specifically
+% Cubical Agda~\citep{vezzosiCubicalAgdaDependently2019}.
 % Cubical Agda is a dependently-typed functional programming language, based on
 % Martin-Löf Intuitionistic Type Theory, with a Haskell-like syntax.
 

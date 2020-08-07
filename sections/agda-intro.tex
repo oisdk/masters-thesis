@@ -1,5 +1,5 @@
 \chapter{Programming and Proving in Cubical Agda} \label{agda-intro}
-Agda \cite{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
+Agda \citep{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
 functional programming language and proof assistant.
 In this thesis, we will use it to explore and prove things about finite and
 countable types.
@@ -94,7 +94,7 @@ It turns out that if we say:
   \(\AgdaFunction{\(\text{Type}_0\)} :  \AgdaFunction{\(\text{Type}_0\)}\)
 \end{agdalisting*}
 We actually introduce a paradox into the language: Girard's paradox
-\cite{girardInterpretationFonctionelleElimination1972}.
+\citep{girardInterpretationFonctionelleElimination1972}.
 This is the type-theoretic analogue of Russell's paradox, and, if present, it
 would allow us to prove things that are not true.
 So we disallow it.
@@ -226,7 +226,7 @@ why it's an integral part of Agda.
 \section{An Expression Evaluator}
 Let's put all of the different things we've learned into a more complex example.
 Later, we'll define a full solver for the Countdown problem
-\cite{huttonCountdownProblem2002} \todo{find original cite for this}, at this
+\citep{huttonCountdownProblem2002} \todo{find original cite for this}, at this
 point we'll define a small part of it: the expression evaluator.
 
 We want to define a language of arithmetic expressions.
@@ -328,7 +328,7 @@ multi-argument function, we can apply it to arguments wrapped in
 \end{multicols} \noindent
 Any type which implements these functions (in a certain law-abiding way) is said
 to be an ``Applicative Functor''
-\cite{mcbrideApplicativeProgrammingEffects2008}, a full explanation of which is
+\citep{mcbrideApplicativeProgrammingEffects2008}, a full explanation of which is
 beyond the scope of this thesis.
 
 It might not be immediately clear how those two functions can help us.
@@ -355,7 +355,7 @@ another function:
   \ExecuteMetaData[agda/Data/Maybe/Sugar.tex]{bind}
 \end{agdalisting}
 Types which implement this function (along with \AgdaFunction{pure}), modulo
-some laws, are called Monads \cite{moggiNotionsComputationMonads1991a}.
+some laws, are called Monads \citep{moggiNotionsComputationMonads1991a}.
 This function will allow us to easily chain together several maybes even with
 functions that return \AgdaDatatype{Maybe}.
 It's used like this:

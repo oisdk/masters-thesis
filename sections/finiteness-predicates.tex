@@ -26,7 +26,7 @@ be listed.
   We call the first component of this pair the ``support'' list, and the second
   component the ``cover'' proof.
   An equivalent version of this predicate was called \verb+Listable+ in
-  \cite{firsovDependentlyTypedProgramming2015}.
+  \citep{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
 This predicate is simple and useful, but we will see later on how it is perhaps
@@ -69,7 +69,7 @@ We still must define containers themselves, of course.
 Containers are a well-studied topic in dependent type theory, with a rich
 theory: we won't dive in to that here.
 \begin{definition}[Containers] \label{container-def}
-  A container \cite{abbottContainersConstructingStrictly2005} is a pair
+  A container \citep{abbottContainersConstructingStrictly2005} is a pair
   \(S , P\) where \(S\) is a type, the elements of which are called
   the \emph{shapes} of the container, and \(P\) is a type family on \(S\), where
   the elements of \(P(s)\) are called the \emph{positions} of a container.
@@ -426,7 +426,7 @@ the type\footnotemark.
 
 \footnotetext{
   We actually do get a category (a groupoid, even) from manifest Bishop
-  finiteness \cite{yorgeyCombinatorialSpeciesLabelled2014}: it's the groupoid of
+  finiteness \citep{yorgeyCombinatorialSpeciesLabelled2014}: it's the groupoid of
   finite sets equipped with a linear order, whose morphisms are order-preserving
   bijections.
   We do not explore this particular construction in any detail.
@@ -493,7 +493,7 @@ equality (Lemma~\ref{cardinal-finite-discrete}) and cardinality
 (Lemma~\ref{card-finite-cardinality}) out from under the
 truncation.\todo{Rephrase?}
 Those two lemmas are proven in
-\cite{yorgeyCombinatorialSpeciesLabelled2014} (Proposition 2.4.9 and 2.4.10,
+\citep{yorgeyCombinatorialSpeciesLabelled2014} (Proposition 2.4.9 and 2.4.10,
 respectively), in much the same way as we have done here.
 Our contribution for this section is simply the formalisation.
 
@@ -548,7 +548,7 @@ propositions: the \emph{sets}.
 This is the next homotopy level up from the propositions (Equation~\ref{isProp}).
 More importantly, there is an important theorem relating to sets which
 \emph{also} relates to decidable equality: Hedberg's theorem
-\cite{hedbergCoherenceTheoremMartinLof1998}.
+\citep{hedbergCoherenceTheoremMartinLof1998}.
 This tells us that any type with decidable equality is a set.
 \begin{agdalisting}
   \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{discrete-isset}
@@ -572,7 +572,7 @@ Instead we will use the following:
 \end{agdalisting}
 This says that we can eliminate into a set as long as the function we use
 doesn't care about which value it's given: formally, \(f\) in this example has
-to be ``coherently constant'' \cite{krausGeneralUniversalProperty2015}.
+to be ``coherently constant'' \citep{krausGeneralUniversalProperty2015}.
 
 With that, we can move on to the proof:
 \begin{lemma} \label{card-finite-cardinality}
@@ -678,7 +678,7 @@ enforcing that the given list is sorted, and
 \AgdaFunction{\(\leftrightsquigarrow\)} is a permutation relation between two
 lists.
 We take the definition of permutations from
-\cite{danielssonBagEquivalenceProofRelevant2012}: two lists are permutations of
+\citep{danielssonBagEquivalenceProofRelevant2012}: two lists are permutations of
 each other if their membership proofs are all equivalent.
 \begin{agdalisting}
   \ExecuteMetaData[agda/Data/List/Relation/Binary/Permutation.tex]{perm-def}
@@ -925,13 +925,13 @@ The final constructor truncates the type \(\agdacal{K}\;A\) to a set.
 The Kuratowski finite subset is a free join semilattice (or, equivalently, a
 free commutative idempotent monoid).
 More prosaically, \(\agdacal{K}\) is the abstract data type for finite sets, as
-defined in the Boom hierarchy \cite{boomFurtherThoughtsAbstracto1981,
+defined in the Boom hierarchy \citep{boomFurtherThoughtsAbstracto1981,
   bunkenburgBoomHierarchy1994}.
 However, rather than just being a specification, \(\agdacal{K}\) is fully usable
 as a data type in its own right, thanks to HITs.
 
 Other definitions of \(\agdacal{K}\) exist (such as the one in
-\cite{fruminFiniteSetsHomotopy2018}) which make the fact that \(\agdacal{K}\) is
+\citep{fruminFiniteSetsHomotopy2018}) which make the fact that \(\agdacal{K}\) is
 the free join semilattice more obvious.
 We have included such a definition in our formalisation, and proven it
 equivalent to the one above.
