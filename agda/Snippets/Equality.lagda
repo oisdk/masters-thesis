@@ -33,3 +33,8 @@ refl : x ≡ x
 refl {x = x} i = x
 \end{code}
 %</refl-def>
+\begin{code}
+-- J : ∀ {a} {A : Type a} (P : (x y : A) → x ≡ y → Type b) →
+--     ((x : A) → P x x refl) → (x y : A) (x≡y : x ≡ y) → P x y x≡y
+-- J = {!!}
+\end{code}

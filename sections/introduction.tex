@@ -171,6 +171,7 @@ And the proof which inhabits this type?
 It is the function often called \verb+fst+: the selector for the first component
 of the pair.
 
+
 All of the extra capabilities of constructive mathematics do not come for free,
 of course.
 Occasionally we don't want to provide the extra information that
@@ -232,17 +233,30 @@ is worth mentioning as it is one of HoTT's great strengths.
 Finally, we have to explain where Cubical Type Theory
 \citep{cohenCubicalTypeTheory2016} fits in.
 Strictly speaking in this thesis we will not work directly in HoTT: we work
-instead in CuTT, which in some sense ``implements'' HoTT\footnotemark.
+instead in CuTT, which is very closely related, but not quite the same, as HoTT.
+CuTT introduces the interval type for its paths, whereas in HoTT (and MLTT)
+\todo{describe MTLL} paths are an inductive type.
+This different ``implementation'' of paths is central to how CuTT can give
+computational content to univalence, but it also slightly changes the way paths
+function.
+
+
 There is one crucial difference between the two theories: in CuTT the
 univalence ``axiom'' is in fact a theorem, with computational content.
+This means that univalence is not a built-in, assumed to be true, but instead
+it's actually derived from other axioms in the system.
+Practically speaking it means that univalence has computational content: i.e. if
+we see that two types are equal then we can actually derive the isomorphism that
+that equality implies.
 As we're using CuTT as a programming language (in the form of Cubical Agda
 \citep{vezzosiCubicalAgdaDependently2019}), this is an essential feature.
-It means that the proofs we write using univalence still correspond to tprograms
+It means that the proofs we write using univalence still correspond to programs
 which can be run.
 
 \footnotetext{
   To be absolutely correct we should not say that CuTT implements HoTT, as the
-  two are in fact incompatible theories.
+  two have some subtle differences.
+  While everything we can prove in HoTT can also be proven in CuTT
   It is not the case that one is a strict subset of the other.
   CuTT has many of the same features of HoTT, like HITs and univalence, so
   almost all of the theory of HoTT applies to both (and indeed almost all of the
