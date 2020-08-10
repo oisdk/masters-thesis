@@ -1,3 +1,4 @@
+\begin{code}
 {-# OPTIONS --cubical --safe #-}
 
 module Cardinality.Infinite.Split where
@@ -19,12 +20,17 @@ private
     U : A → Type u
     s : Level
     S : ℕ → Type s
+ℵ! : Type a → Type a
+\end{code}
+%<*split-count>
+\begin{code}
+ℵ! A = Σ[ xs ⦂ Stream A ] ((x : A) → x ∈ xs)
+\end{code}
+%</split-count>
+\begin{code}
 
-ℰ! : Type a → Type a
-ℰ! A = Σ[ xs ⦂ Stream A ] Π[ x ⦂ A ] x ∈ xs
-
-ℰ!⇔ℕ↠! : ℰ! A ≡ (ℕ ↠! A)
-ℰ!⇔ℕ↠! = refl
+ℵ!⇔ℕ↠! : ℵ! A ≡ (ℕ ↠! A)
+ℵ!⇔ℕ↠! = refl
 
 infixl 6 _*_ _*⋆_[_]
 _*_ : Stream A → (∀ x → Stream (U x)) → Stream (Σ A U ⁺)
@@ -47,7 +53,7 @@ xs *⋆ ys [ suc n  ] = ∹ (xs * ys) n
   lemma xs zero    x∈xs .snd i .snd = J (λ z z≡ → PathP (λ j → U (sym z≡ j)) (ys z m) y) y∈ys (sym x∈xs) i
   lemma xs (suc n) x∈xs = let i , p = lemma (xs ∘ suc) n x∈xs in fs i , p
 
-_|Σ|_ : ℰ! A → (∀ x → ℰ! (U x)) → ℰ! (Σ A U)
+_|Σ|_ : ℵ! A → (∀ x → ℵ! (U x)) → ℵ! (Σ A U)
 (xs |Σ| ys) .fst = cantor (xs .fst) (fst ∘ ys)
 (xs |Σ| ys) .snd (x , y) =
   concat-∈
@@ -124,11 +130,11 @@ module _ (xs : Stream A) where
     plus-cover : ∀ x → x ∈ plus
     plus-cover x = concat-∈ x (plus⁺ zero id []) (cover (head x) .fst + dist (tail x) , plus⁺-cover id [] x)
 
-|star| : ℰ! A → ℰ! (A ⋆)
+|star| : ℵ! A → ℵ! (A ⋆)
 |star| xs .fst = star (xs .fst)
 |star| xs .snd = star-cover (xs .fst) (xs .snd)
 
-|plus| : ℰ! A → ℰ! (A ⁺)
+|plus| : ℵ! A → ℵ! (A ⁺)
 |plus| xs .fst = plus (xs .fst)
 |plus| xs .snd = plus-cover (xs .fst) (xs .snd)
 
@@ -138,19 +144,20 @@ x≢¬x : ∀ x → x ≢ not x
 x≢¬x false p = subst (bool ⊤ ⊥) p tt
 x≢¬x true  p = subst (bool ⊥ ⊤) p tt
 
-cantor-diag : ¬ (ℰ! (Stream Bool))
+cantor-diag : ¬ (ℵ! (Stream Bool))
 cantor-diag (sup , cov) = let n , p = cov (λ n → not (sup n n)) in x≢¬x _ (cong (_$ n) p)
 
-ℰ : Type a → Type a
-ℰ A = ∥ ℰ! A ∥
+ℵ : Type a → Type a
+ℵ A = ∥ ℵ! A ∥
 
 open import Function.Surjective.Properties
 open import Data.Nat.Properties using (discreteℕ)
 open import HITs.PropositionalTruncation
 open import Relation.Nullary.Discrete.Properties
 
-ℰ!⇒Discrete : ℰ! A → Discrete A
-ℰ!⇒Discrete xs = Discrete-distrib-surj xs discreteℕ
+ℵ!⇒Discrete : ℵ! A → Discrete A
+ℵ!⇒Discrete xs = Discrete-distrib-surj xs discreteℕ
 
-ℰ⇒Discrete : ℰ A → Discrete A
-ℰ⇒Discrete = rec isPropDiscrete ℰ!⇒Discrete
+ℰ⇒Discrete : ℵ A → Discrete A
+ℰ⇒Discrete = rec isPropDiscrete ℵ!⇒Discrete
+\end{code}

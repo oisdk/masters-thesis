@@ -1,4 +1,26 @@
 \chapter{Countably Infinite Types} \label{infinite}
+We have now built up a substantial amount of theory relating to finite types.
+In this chapter, we will look at the \emph{countable} types: we will see that
+there is a parallel kind of classification of predicates to the finiteness
+predicates, with some notable differences.
+\section{Countability}
+For our first countability predicate, we will mirror split enumerability:
+\begin{definition}[Split Countability]
+  A type is ``split countable'' if there is a \emph{stream} which contains all
+  of its elements.
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{split-count}
+  \end{agdalisting*}
+\end{definition}
+The similarity to split enumerability should be clear: the only difference
+between the two definitions, in fact, is the type of the container.
+
+For countability we use \emph{streams}: these are basically infinite lists.
+To a Haskeller, normal lists themselves often fulfil this purpose, but in a
+total language like Agda, we need a totally different type.
+Lists, as an inductive type, are not permitted to be infinitely large.
+
+
 In the previous sections we saw different flavours of finiteness which were
 really just different flavours of relations to \(\mathbf{Fin}\).
 In this section we will see that we can construct a similar classification of
