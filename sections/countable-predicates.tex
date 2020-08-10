@@ -106,7 +106,16 @@ search two streams.
   \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{sigma-sup}
 \end{agdalisting*}
 \subsection{Closure Under Kleene}
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{dot-plus-def}
+\end{agdalisting*}
+\begin{equation*}
+  \mathcal{KV}_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} \in \mathbf{List}(\mathbb{N}) ; \text{sum}(\mathit{js}) = i ; 0 \notin \mathit{js}  \right]
+\end{equation*}
 \subsection{No Closure Under \AgdaDatatype{\(\Pi\)}}
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{cantor-diag}
+\end{agdalisting*}
 
 
 % \section{Closure}
@@ -140,9 +149,6 @@ search two streams.
 % The pattern here builds an intermediate stream \(\mathcal{KV}\) of non-empty
 % lists from the input support stream \(\mathit{xs}\), which is subsequently
 % flattened.
-% \begin{equation}
-%   \mathcal{KV}_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} \in \mathbf{List}(\mathbb{N}) ; \text{sum}(\mathit{js}) = i ; 0 \notin \mathit{js}  \right]
-% \end{equation}
 
 %%% Local Variables:
 %%% mode: latex

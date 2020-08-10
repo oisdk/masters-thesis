@@ -82,9 +82,15 @@ _|Σ|_ : ℵ! A → (∀ x → ℵ! (U x)) → ℵ! (Σ A U)
 open import Data.Nat using (_+_)
 
 infixl 6 _∔_
+\end{code}
+%<*dot-plus-def>
+\begin{code}
 _∔_ : ℕ → ℕ → ℕ
-zero ∔ m = m
-suc n ∔ m = n ∔ suc m
+zero   ∔ m = m
+suc n  ∔ m = n ∔ suc m
+\end{code}
+%</dot-plus-def>
+\begin{code}
 
 ∔-suc : ∀ n m → suc n ∔ m ≡ suc (n ∔ m)
 ∔-suc zero    m = refl
@@ -161,9 +167,14 @@ open import Data.Bool using (not; bool)
 x≢¬x : ∀ x → x ≢ not x
 x≢¬x false p = subst (bool ⊤ ⊥) p tt
 x≢¬x true  p = subst (bool ⊥ ⊤) p tt
-
+\end{code}
+%<*cantor-diag>
+\begin{code}
 cantor-diag : ¬ (ℵ! (Stream Bool))
 cantor-diag (sup , cov) = let n , p = cov (λ n → not (sup n n)) in x≢¬x _ (cong (_$ n) p)
+\end{code}
+%</cantor-diag>
+\begin{code}
 
 ℵ : Type a → Type a
 ℵ A = ∥ ℵ! A ∥
