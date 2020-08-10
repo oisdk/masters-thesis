@@ -1,5 +1,5 @@
 \begin{code}
-{-# OPTIONS --cubical --safe #-}
+{-# OPTIONS --cubical --safe --postfix-projections #-}
 
 module Cardinality.Infinite.Split where
 
@@ -27,22 +27,40 @@ private
 ℵ! A = Σ[ xs ⦂ Stream A ] ((x : A) → x ∈ xs)
 \end{code}
 %</split-count>
+%<*split-surj>
 \begin{code}
-
 ℵ!⇔ℕ↠! : ℵ! A ≡ (ℕ ↠! A)
 ℵ!⇔ℕ↠! = refl
+\end{code}
+%</split-surj>
+\begin{code}
+
+-- module _ where
+--   open import Cardinality.Finite.SplitEnumerable.Inductive
+
+
+
+--   ℰ!⇒ℵ! : ℰ! A → ℵ! A
+--   ℰ!⇒ℵ! ℰ!⟨A⟩ .fst x = {!!}
+--   ℰ!⇒ℵ! ℰ!⟨A⟩ .snd = {!!}
 
 infixl 6 _*_ _*⋆_[_]
-_*_ : Stream A → (∀ x → Stream (U x)) → Stream (Σ A U ⁺)
-_*⋆_[_] : Stream A → (∀ x → Stream (U x)) → Stream (Σ A U ⋆)
+mutual
+\end{code}
+%<*sigma-sup>
+\begin{code}
+  _*⋆_[_] : Stream A → (∀ x → Stream (U x)) → Stream (Σ A U ⋆)
+  xs *⋆ ys [ zero   ] = []
+  xs *⋆ ys [ suc n  ] = ∹ (xs * ys) n
+
+  _*_ : Stream A → (∀ x → Stream (U x)) → Stream (Σ A U ⁺)
+  (xs * ys) n .head  = x , ys x n where x = xs 0
+  (xs * ys) n .tail  = (xs ∘ suc) *⋆ ys [ n ]
+\end{code}
+%</sigma-sup>
+\begin{code}
 cantor : Stream A → (∀ x → Stream (U x)) → Stream (Σ A U)
 cantor xs ys = concat (xs * ys)
-
-xs *⋆ ys [ zero   ] = []
-xs *⋆ ys [ suc n  ] = ∹ (xs * ys) n
-
-(xs * ys) n .head  = x , ys x n where x = xs 0
-(xs * ys) n .tail  = (xs ∘ suc) *⋆ ys [ n ]
 
 *-cover : ∀ (x : A) xs (y : U x) (ys : ∀ x → Stream (U x)) → x ∈ xs → y ∈ ys x → (x , y) ∈² xs * ys
 *-cover {U = U} x xs y ys (n , x∈xs) (m , y∈ys) = (n + m) , lemma xs n x∈xs

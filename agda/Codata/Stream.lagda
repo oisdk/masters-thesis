@@ -1,3 +1,4 @@
+\begin{code}
 {-# OPTIONS --cubical --safe #-}
 
 module Codata.Stream where
@@ -8,8 +9,29 @@ open import Data.List.Kleene
 import Data.List.Kleene.Membership as Kleene
 open import Data.Fin
 
+private
+  module AsCodata where
+\end{code}
+%<*codata-stream>
+\begin{code}
+    record Stream {a} (A : Type a) : Type a where
+      coinductive
+      field
+        head  : A
+        tail  : Stream A
+\end{code}
+%</codata-stream>
+\begin{code}
+
 Stream : Type a → Type a
+\end{code}
+%<*stream-def>
+\begin{code}
 Stream A = ℕ → A
+\end{code}
+%</stream-def>
+\begin{code}
+
 
 infixr 5 _∈_
 _∈_ : A → Stream A → Type _
@@ -54,3 +76,4 @@ mutual
 concat-∈ : ∀ (x : A) xs → x ∈² xs → x ∈ concat xs
 concat-∈ x xs (zero  , x∈xs) = ◇++⁺ x (xs zero) (xs ∘ suc) x∈xs
 concat-∈ x xs (suc n , x∈xs) = ++◇⁺ x (xs zero) (xs ∘ suc) (concat-∈ x (xs ∘ suc) (n , x∈xs))
+\end{code}

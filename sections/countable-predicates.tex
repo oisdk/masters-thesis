@@ -19,76 +19,130 @@ For countability we use \emph{streams}: these are basically infinite lists.
 To a Haskeller, normal lists themselves often fulfil this purpose, but in a
 total language like Agda, we need a totally different type.
 Lists, as an inductive type, are not permitted to be infinitely large.
-
+\begin{definition}[Streams]
+  In Agda the type of streams can be given as a container:
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Container/Stream.tex]{stream-def}
+  \end{agdalisting*}
+  Although this definition is so simple it is more common to define it without
+  reference to the usual container machinery:
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Codata/Stream.tex]{stream-def}
+  \end{agdalisting*}
+  By inlining the definition of the container primitives it's clear that the two
+  types are isomorphic, but by defining streams in these terms we're able to
+  use things like the membership function on containers.
+\end{definition}
 
 In the previous sections we saw different flavours of finiteness which were
-really just different flavours of relations to \(\mathbf{Fin}\).
-In this section we will see that we can construct a similar classification of
-relations to \(\mathbb{N}\), in the form of the countably infinite types.
-\section{Two Countable Types}
-The two types for countability we will consider are analogous to split
-enumerability and cardinal finiteness.
-The change will be a simple one: we will swap out lists for streams.
-\begin{definition}[Streams]
-  \begin{equation}
-    \mathbf{Stream}(A) \coloneqq (\mathbb{N} \rightarrow A)
-    \simeq \llbracket \top , \text{const}(\mathbb{N}) \rrbracket
-  \end{equation}
-\end{definition}
-\begin{definition}[Split Countability]
-  \begin{equation}
-    \aleph_0!(A) \coloneqq \Sigma {(\mathit{xs} : \mathbf{Stream}(A))} , \Pi {(x : A)} , x \in \mathit{xs}
-  \end{equation}
-\end{definition}
-This type is definitionally equal to it surjection equivalent (\(\mathbb{N}
-\twoheadrightarrow ! \; A\)).
-We construct the unordered, propositional version of the predicate in much the
-same way as we constructed cardinal finiteness.
-\begin{definition}[Countability]
-  \begin{equation}
-    \aleph_0(A) \coloneqq \lVert \aleph_0!(A) \rVert
-  \end{equation}
-\end{definition}
-
-From both of these types we can derive decidable equality.
-\begin{lemma}
-  Any countable type has decidable equality.
-\end{lemma}
+really just different flavours of relations to \AgdaFunction{Fin}.
+Unsurprisingly, given the definition of streams, we will see in this section
+that different flavours of countability are really just different flavours of
+relations to \agdambb{N}.
+Case in point: our definition of split enumerability is definitionally equal to
+a split surjection from \agdambb{N}.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{split-surj}
+\end{agdalisting*}
+From this we can derive decidable equality, just like we could with split
+enumerability. \todo{Explain better?}
 \section{Closure}
-\input{figures/pairing-functions}
-We know that countable infinity is not closed under the exponential (function
-arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
-what's left.
-\begin{theorem} \label{split-countability-sigma}
-  Split countability is closed under \(\Sigma\).
-\end{theorem}
-We know that countable infinity is not closed under the exponential (function
-arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
-what's left.
-To do this we have to take a slightly different approach to the functions we
-defined before.
-Figure~\ref{pairings} illustrates the reason why: previously, we used the
-depth-first product pairing for each support list.
-This diverges if the first list is infinite, never exploring anything other than
-the first element in the second list.
-Instead, we use here the cantor pairing function, which performs a breadth-first
-search of the pairings of both lists.
+The closure proofs are where countability begins to differ from split
+enumerability.
+We will see one closure proof that stays the same, one that is absent, and one
+that is additional.
+\subsection{Instances for Finite Types}
+Before we move on to the proper closure proofs, it is worth pointing out that
+all (non-empty) finite types are also countable.
+Split countability, like split enumerability, does not disallow duplicates.
+\todo{Include Proof}
+\subsection{Closure Under \AgdaDatatype{\(\Sigma\)}}
+The proof that split enumerability was closed under \AgdaDatatype{\(\Sigma\)}
+was quite straightforward:
+we were able to use the ``normal'' pattern of taking the Cartesian product of
+two lists in order to generate the finite support list for
+\AgdaDatatype{\(\Sigma\)}.
+Unfortunately this doesn't work for infinite types: the reason for which can be
+seen in Figure~\ref{pairings}.
 
-Finally, while we have lost certain closure proofs by allowing for infinite
-types, we also \emph{gain} some: in particular the Kleene star.
-\begin{theorem}
-  Split countability is closed under Kleene star.
-  \begin{equation}
-    \aleph_0!(A) \rightarrow \aleph_0!(\mathbf{List}(A))
-  \end{equation}
-\end{theorem}
-Again, this proof requires a particular pattern to ensure productivity.
-The pattern here builds an intermediate stream \(\mathcal{KV}\) of non-empty
-lists from the input support stream \(\mathit{xs}\), which is subsequently
-flattened.
-\begin{equation}
-  \mathcal{KV}_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} \in \mathbf{List}(\mathbb{N}) ; \text{sum}(\mathit{js}) = i ; 0 \notin \mathit{js}  \right]
-\end{equation}
+\input{figures/pairing-functions}
+
+The depth-first pattern is what we used previously: this explores the first list
+exhaustively before exploring anything other than the first element of the
+second list.
+This clearly won't work for streams, as it would mean that nothing other than
+the first element of the second type could be found in the entire support
+stream.
+
+So instead we use the second pattern: breadth-first search.
+The way we actually code this pattern up is a little complex: we treat the
+search space as having several ``levels''.
+Each item in each input list has a level (its position in that input list); the
+output level for two items is the \emph{sum} of those levels.
+In pseudo-set-builder notation: 
+\begin{equation*}
+  (\mathit{xs}\times\mathit{ys})_n =
+    \left[ (\mathit{xs}_i , \mathit{ys}_j) \vert i \leftarrow \left[ 0 \ldots n \right] ; j \leftarrow \left[ 0 \ldots n \right] ; i + j = n  \right]
+\end{equation*}
+And then this is flattened to give the output support list.
+
+One last detail of this function before we actually provide it: we use yet
+another definition of lists in its implementation, instead of the normal lists,
+as it is useful for termination proofs.
+\begin{agdalisting*}
+  \begin{multicols}{2} \centering
+    \ExecuteMetaData[agda/Data/List/Kleene.tex]{plus-def} \columnbreak
+    \ExecuteMetaData[agda/Data/List/Kleene.tex]{star-def}
+  \end{multicols}
+\end{agdalisting*}
+This definition of lists interleaves the definition of non-empty lists with the
+definition of possibly-empty lists.
+This makes it much easier to switch between the two without conversion
+functions.
+
+Finally, we can provide the function which actually performs the breadth-first
+search two streams.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{sigma-sup}
+\end{agdalisting*}
+\subsection{Closure Under Kleene}
+\subsection{No Closure Under \AgdaDatatype{\(\Pi\)}}
+
+
+% \section{Closure}
+% We know that countable infinity is not closed under the exponential (function
+% arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
+% what's left.
+% \begin{theorem} \label{split-countability-sigma}
+%   Split countability is closed under \(\Sigma\).
+% \end{theorem}
+% We know that countable infinity is not closed under the exponential (function
+% arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
+% what's left.
+% To do this we have to take a slightly different approach to the functions we
+% defined before.
+% Figure~\ref{pairings} illustrates the reason why: previously, we used the
+% depth-first product pairing for each support list.
+% This diverges if the first list is infinite, never exploring anything other than
+% the first element in the second list.
+% Instead, we use here the cantor pairing function, which performs a breadth-first
+% search of the pairings of both lists.
+
+% Finally, while we have lost certain closure proofs by allowing for infinite
+% types, we also \emph{gain} some: in particular the Kleene star.
+% \begin{theorem}
+%   Split countability is closed under Kleene star.
+%   \begin{equation}
+%     \aleph_0!(A) \rightarrow \aleph_0!(\mathbf{List}(A))
+%   \end{equation}
+% \end{theorem}
+% Again, this proof requires a particular pattern to ensure productivity.
+% The pattern here builds an intermediate stream \(\mathcal{KV}\) of non-empty
+% lists from the input support stream \(\mathit{xs}\), which is subsequently
+% flattened.
+% \begin{equation}
+%   \mathcal{KV}_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} \in \mathbf{List}(\mathbb{N}) ; \text{sum}(\mathit{js}) = i ; 0 \notin \mathit{js}  \right]
+% \end{equation}
 
 %%% Local Variables:
 %%% mode: latex

@@ -1,3 +1,4 @@
+\begin{code}
 {-# OPTIONS --safe --cubical #-}
 
 module Data.List.Kleene where
@@ -8,16 +9,25 @@ open import Data.Fin
 mutual
   infixr 5 _&_ ∹_
   infixl 5 _⁺ _⋆
-  record _⁺ {a} (A : Set a) : Set a where
+\end{code}
+%<*plus-def>
+\begin{code}
+  record _⁺ (A : Type a) : Type a where
     inductive
     constructor _&_
     field
       head : A
       tail : A ⋆
-
-  data _⋆ {a} (A : Set a) : Set a where
+\end{code}
+%</plus-def>
+%<*star-def>
+\begin{code}
+  data _⋆ (A : Type a) : Type a where
     [] : A ⋆
     ∹_ : A ⁺ → A ⋆
+\end{code}
+%</star-def>
+\begin{code}
 open _⁺ public
 
 mutual
@@ -56,3 +66,4 @@ mutual
   _⁺++⋆_ : A ⁺ → A ⋆ → A ⁺
   head (xs ⁺++⋆ ys) = head xs
   tail (xs ⁺++⋆ ys) = tail xs ⋆++⋆ ys
+\end{code}
