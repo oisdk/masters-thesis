@@ -56,7 +56,7 @@ Before we move on to the proper closure proofs, it is worth pointing out that
 all (non-empty) finite types are also countable.
 Split countability, like split enumerability, does not disallow duplicates.
 \todo{Include Proof}
-\subsection{Closure Under \AgdaDatatype{\(\Sigma\)}}
+\subsection{Closure Under \(\Sigma\)}
 The proof that split enumerability was closed under \AgdaDatatype{\(\Sigma\)}
 was quite straightforward:
 we were able to use the ``normal'' pattern of taking the Cartesian product of
@@ -64,6 +64,18 @@ two lists in order to generate the finite support list for
 \AgdaDatatype{\(\Sigma\)}.
 Unfortunately this doesn't work for infinite types: the reason for which can be
 seen in Figure~\ref{pairings}.
+
+\todo{Explain this notion of exploration better:
+  \begin{itemize}
+    \item Talk about how we have to figure out a surjection from the natural
+      numbers.
+    \item This is like trying to figure out a pattern which hits every number.
+    \item Or like a way to map some type to the numbers.
+    \item When doing this in some kind of closure-like proof, we can pretend
+      that the input types (i.e. \(A\) and \(B\) in \(A \times B\)) are simply
+      \(\mathbb{N}\).
+  \end{itemize}
+}
 
 \input{figures/pairing-functions}
 
@@ -105,18 +117,36 @@ search two streams.
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{sigma-sup}
 \end{agdalisting*}
-\subsection{Closure Under Kleene}
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{dot-plus-def}
-\end{agdalisting*}
+The corresponding cover proof is relatively straightforward, so we don't include
+it here.
+\subsection{Closure Under The Kleene Star}
+One of the more useful types we can prove to be countably infinite is the
+\emph{list}.
+This proof is significantly more complex than the previous, however: we need to
+find a pattern which eventually covers any given element of type
+\AgdaDatatype{List}\;\(A\), given \AgdaFunction{\(\aleph\)!}\;\(A\).
+Again we will tackle this pattern by first treating the exploration space as a
+series of finite \emph{levels}: we can then concatenate all of these levels
+together to a final exploration pattern.
+The next trick is to figure out how to define those levels: we'll do it by
+saying the lists of a given level \(n\) each must sum (after incrementing the
+indices of each element) to \(n\).
+That means that the 0th level consists only of the empty list, the 1st level
+consists of the list \(\left[ 0 \right]\), the 2nd of \(\left[ 0 , 0
+\right]\) and \(\left[ 1 \right]\), and so on.
+Again, in pseudo set-builder notation:
 \begin{equation*}
-  \mathcal{KV}_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} \in \mathbf{List}(\mathbb{N}) ; \text{sum}(\mathit{js}) = i ; 0 \notin \mathit{js}  \right]
+  \agdambb{N}\star_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} : \AgdaDatatype{List}\;\agdambb{N} ; \AgdaFunction{sum}\;\mathit{js} = i ; 0 \notin \mathit{js}  \right]
 \end{equation*}
-\subsection{No Closure Under \AgdaDatatype{\(\Pi\)}}
+\todo{Include code?}
+\subsection{No Closure Under \(\Pi\)}
+One closure proof that is certainly not possible is closure under \(\Pi\):
+it is not the case that functions from countable types are themselves countable.
+While this is a pretty basic fact in computer science, we include it here to
+show how simple its proof in Agda can be:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{cantor-diag}
 \end{agdalisting*}
-
 
 % \section{Closure}
 % We know that countable infinity is not closed under the exponential (function
