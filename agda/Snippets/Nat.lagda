@@ -14,6 +14,17 @@ data ℕ : Type₀ where
 {-# BUILTIN NATURAL ℕ #-}
 
 private
+  module TextAdd where
+\end{code}
+%<*text-add>
+\begin{code}
+    add : ℕ → ℕ → ℕ
+    add zero     m = m
+    add (suc n)  m = suc (add n m)
+\end{code}
+%</text-add>
+\begin{code}
+private
  module BadSub where
   {-# NON_COVERING #-}
 \end{code}

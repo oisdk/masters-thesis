@@ -22,3 +22,12 @@ module ImplicitType where
   id {a} {A} x = x
 \end{code}
 %</id-expl>
+\begin{code}
+module Lambdafied where
+\end{code}
+%<*id-lambda>
+\begin{code}
+  id : A → A
+  id = λ x → x
+\end{code}
+%</id-lambda>

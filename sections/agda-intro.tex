@@ -1,11 +1,6 @@
 \chapter{Programming and Proving in Cubical Agda} \label{agda-intro}
 Agda \citep{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
 functional programming language and proof assistant.
-In this thesis, we will use it to explore and prove things about finite and
-countable types.
-Along the way, we will learn about proofs in a dependent setting, functional
-programming, and Homotopy Type Theory.
-
 In this chapter we will introduce the language with some basic examples, and
 explain a little about how to program and prove in Agda.
 Some Haskell knowledge will help, as much of the syntax (any many concepts) are
@@ -26,6 +21,7 @@ Haskell on the right).
 \end{agdalisting}
 There's a lot of syntax wrapped up in this small snippet.
 In prose, it provides four basic pieces of information:
+\begin{samepage}
 \begin{enumerate}
   \item We are defining a new \AgdaKeyword{data} type.
   \item Its name is \AgdaDatatype{Bool}.
@@ -33,34 +29,19 @@ In prose, it provides four basic pieces of information:
   \item There are two ways to construct values of type \AgdaDatatype{Bool}:
     \AgdaInductiveConstructor{false} and \AgdaInductiveConstructor{true}.
 \end{enumerate}
-Let's explain each piece one by one.
+\end{samepage}
+Let's explain each piece one by one. \todo{Maybe number the paragraphs in the margin?}
 
-The last point is the simplest: we have listed the ways to construct values of
-type \AgdaDatatype{Bool}.
-Two ways, in fact, \AgdaInductiveConstructor{true} and
-\AgdaInductiveConstructor{false}, and they're called the constructors.
-We can use these constructors in programs by (for instance) assigning them to
-variables.
-\begin{multicols}{2}\centering
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-val}\columnbreak
-  \ExecuteMetaData[haskell/Bool.tex]{bool-val}
-\end{multicols}\vspace{-2\baselineskip}\noindent
-Here we've declared a variable\footnotemark\;called \AgdaFunction{a-boolean} with
-the type \AgdaDatatype{Bool}, and said it is equal to the value
-\AgdaInductiveConstructor{true}.
-
-\footnotetext{Note that although we use the term ``variable'', the value of the
-  variable \AgdaFunction{a-boolean} can not change.
-  We couldn't reassign it on the following line.}
-
-Now back to the first point: we say that we're defining a new \AgdaKeyword{data}
-type.
+\subsection{Data Types}
+We first say that we're defining a new \AgdaKeyword{data} type.
 Using the ``\AgdaKeyword{data}'' keyword is just one of the many ways of
 defining types: it basically means that we are going to define the type by
-listing all of its constructors.
-Another way to define types is with \AgdaKeyword{record}, which we'll see later,
-and yet another way is to define a type by referring to other already-defined types.
-Here, for instance, we can define the type \AgdaFunction{Boolean}:
+listing all of its constructors (all of the ways to construct values of the
+type).
+There are other ways to define types: with the \AgdaKeyword{record} keyword, for
+instance, which we'll see later; or we can define types by referencing other
+types, creating a synonym.
+Here, for instance, we define the \AgdaFunction{Boolean} type:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{boolean}
 \end{agdalisting*}
@@ -71,6 +52,15 @@ Of course this isn't a very interesting declaration: as the equals sign implies,
 spelling).
 We've basically defined a synonym for the old type.
 
+\subsection{Type Names}
+The second point is pretty straightforward: the name of the type we've defined
+is \AgdaDatatype{Bool}.
+The only thing to watch out for here is that Agda has relatively few
+restrictions on type names, unlike, say, Haskell.
+This type could have included Unicode symbols (Agda supports roughly 50 Unicode
+mathematical symbols), it could have started with a lowercase letter, etc.
+
+\subsection{Type\textsubscript{0}}
 The third point is the most interesting: we say that \AgdaDatatype{Bool} is a
 ``\AgdaFunction{\(\text{Type}_0\)}'' kind of thing.
 What does this mean?
@@ -117,16 +107,43 @@ For that reason, and also because the current system of universe polymorphism in
 Agda is quite under flux and likely to be changed soon, we won't spend too much
 time on the topic.
 Every code example provided is as universe-polymorphic as possible, though.
+
+\subsection{Constructors}
+The last point is the simplest: we have listed the ways to construct values of
+type \AgdaDatatype{Bool}.
+Two ways, in fact, \AgdaInductiveConstructor{true} and
+\AgdaInductiveConstructor{false}, and they're called the constructors.
+We can use these constructors in programs by (for instance) assigning them to
+variables.
+\begin{multicols}{2}\centering
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-val}\columnbreak
+  \ExecuteMetaData[haskell/Bool.tex]{bool-val}
+\end{multicols}\vspace{-2\baselineskip}\noindent
+Here we've declared a variable\footnotemark\;called \AgdaFunction{a-boolean} with
+the type \AgdaDatatype{Bool}, and said it is equal to the value
+\AgdaInductiveConstructor{true}.
+
+\footnotetext{Note that although we use the term ``variable'', the value of the
+  variable \AgdaFunction{a-boolean} can not change.
+  We couldn't reassign it on the following line.}
+
 \section{Some Functions}
 That's quite a lot of information on how to define things in Agda: let's look a
 little about how to do computation.
 What we need is a function:
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{not-def}
-\end{agdalisting*}
+\begin{multicols}{2}\centering
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{not-def}\columnbreak
+  \ExecuteMetaData[haskell/Bool.tex]{not-func}
+\end{multicols}\vspace{-2\baselineskip}\noindent
 This function is defined by pattern-matching: when the clause on the
 left-hand-side of the equals sign is seen, the right-hand-side is what's
 computed.
+
+This syntax with the equals sign is actually just syntactic sugar for a \lambda:
+the identity function, for instance, could be written as follows:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-lambda}
+\end{agdalisting*}
 
 For a more complex example, we're going to need a more complex type:
 \begin{agdalisting}
@@ -145,6 +162,17 @@ Agda has special syntax for constructing natural numbers: we can write
 \AgdaNumber{3} instead of
 \(\AgdaInductiveConstructor{suc}\;(\AgdaInductiveConstructor{suc}\;(\AgdaInductiveConstructor{suc}\;\AgdaInductiveConstructor{zero}))\).
 
+There are several small pieces of information we'll need to understand in order
+to write functions in Agda.
+We'll go through them one by one.
+\subsection{Multi-Argument Functions}
+Agda, like Haskell, doesn't really have a built-in notion of ``multi-argument''
+functions.
+Instead, multiple arguments are kind of simulated with \emph{currying}.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{text-add}
+\end{agdalisting*}
+
 Here's a function on the natural numbers:
 \begin{agdalisting} \label{sub-def}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-def}
@@ -154,6 +182,14 @@ We've defined subtraction.
 Notice that this function is defined as an operator: for the function
 declaration (the line with the type signature), we put underscores where we
 expect the arguments to the operator to go.
+
+Another thing to note is that this is the first \emph{multi-argument} function
+we have defined.
+Multiple arguments in Agda are represented using currying: this is why the type
+signature is \(\agdambb{N} \to \agdambb{N} \to \agdambb{N}\).
+Instead of writing a function which ``takes two \agdambb{N}s and returns one'',
+we write a function which ``takes an \agdambb{N} and returns a function which
+takes ''
 
 In the introduction, we described Agda as a ``total'' programming language.
 This means that if we give a function the type \(A \rightarrow B\), then we have

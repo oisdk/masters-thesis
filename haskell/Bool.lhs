@@ -1,5 +1,6 @@
 %include polycode.fmt
 %subst keyword a = "\AgdaKeyword{" a "}"
+%format not = "\Varid{not} "
 
 \begin{code}
 module Bool where
@@ -17,3 +18,10 @@ aBoolean :: Bool
 aBoolean = True
 \end{code}
 %</bool-val>
+%<*not-func>
+\begin{code}
+not :: Bool -> Bool
+not True   = False
+not False  = True
+\end{code}
+%</not-func>
