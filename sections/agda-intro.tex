@@ -139,11 +139,16 @@ This function is defined by pattern-matching: when the clause on the
 left-hand-side of the equals sign is seen, the right-hand-side is what's
 computed.
 
-This syntax with the equals sign is actually just syntactic sugar for a \lambda:
-the identity function, for instance, could be written as follows:
+This syntax with the equals sign is actually just syntactic sugar for a \(\lambda\).
+The identity function, for instance, could be written as follows:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-lambda}
 \end{agdalisting*}
+The \AgdaFunction{not} function could also have been written with a \(\lambda\).
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{lambda-not}
+\end{agdalisting*}
+
 
 For a more complex example, we're going to need a more complex type:
 \begin{agdalisting}
@@ -169,10 +174,16 @@ We'll go through them one by one.
 Agda, like Haskell, doesn't really have a built-in notion of ``multi-argument''
 functions.
 Instead, multiple arguments are kind of simulated with \emph{currying}.
+
+Here's how we define the addition of two natural numbers:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{text-add}
 \end{agdalisting*}
-
+Instead of taking two \agdambb{N}s and returning a third, this function takes a
+\agdambb{N}, and returns a function which takes a \agdambb{N} and returns a
+\agdambb{N}.
+\todo{flesh out more}
+\subsection{Operators}
 Here's a function on the natural numbers:
 \begin{agdalisting} \label{sub-def}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-def}
@@ -183,14 +194,7 @@ Notice that this function is defined as an operator: for the function
 declaration (the line with the type signature), we put underscores where we
 expect the arguments to the operator to go.
 
-Another thing to note is that this is the first \emph{multi-argument} function
-we have defined.
-Multiple arguments in Agda are represented using currying: this is why the type
-signature is \(\agdambb{N} \to \agdambb{N} \to \agdambb{N}\).
-Instead of writing a function which ``takes two \agdambb{N}s and returns one'',
-we write a function which ``takes an \agdambb{N} and returns a function which
-takes ''
-
+\subsection{Total Functions}
 In the introduction, we described Agda as a ``total'' programming language.
 This means that if we give a function the type \(A \rightarrow B\), then we have
 also \emph{proven} that, given an \(A\), it will produce a \(B\) (in finite

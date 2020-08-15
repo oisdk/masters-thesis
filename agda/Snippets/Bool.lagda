@@ -29,6 +29,18 @@ private
     a-boolean = true
 \end{code}
 %</bool-val>
+\begin{code}
+private
+  module LambdaNot where
+\end{code}
+%<*lambda-not>
+\begin{code}
+    not : Bool → Bool
+    not = λ  { false  → true
+             ; true   → false
+             }
+\end{code}
+%</lambda-not>
 %<*not-def>
 \begin{code}
 not : Bool → Bool
