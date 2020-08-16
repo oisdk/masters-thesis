@@ -182,7 +182,9 @@ Here's how we define the addition of two natural numbers:
 Instead of taking two \agdambb{N}s and returning a third, this function takes a
 \agdambb{N}, and returns a function which takes a \agdambb{N} and returns a
 \agdambb{N}.
-\todo{flesh out more}
+\AgdaFunction{add}\;\AgdaNumber{0} returns a function which
+adds \AgdaNumber{0} to a number; \AgdaFunction{add}\;\AgdaNumber{2} returns a
+function which adds \AgdaNumber{2} to a number.
 \subsection{Operators}
 Here's a function on the natural numbers:
 \begin{agdalisting} \label{sub-def}
@@ -194,6 +196,10 @@ Notice that this function is defined as an operator: for the function
 declaration (the line with the type signature), we put underscores where we
 expect the arguments to the operator to go.
 
+We can also specify the precedence and fixity of the operator:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-fix}
+\end{agdalisting*}
 \subsection{Total Functions}
 In the introduction, we described Agda as a ``total'' programming language.
 This means that if we give a function the type \(A \rightarrow B\), then we have
@@ -202,6 +208,13 @@ time).
 
 Practically speaking, this means that Agda will perform some checks on our
 code to ensure that every function is indeed total.
+There are three checks that Agda performs that we will run into in this thesis:
+coverage, termination, and productivity.
+\subsubsection{Coverage}
+This is the simplest check that Agda performs: it's also performed by GHC (if
+\verb+-Wall+ is turned on).
+This check ensures that functions are defined for all inputs.
+
 Our definition of subtraction above (Equation~\ref{sub-def}), for instance,
 truncates to zero when there's arithmetic underflow.
 In other words \(5 - 6 = 0\), according to our definition.
@@ -210,7 +223,7 @@ We could have removed the clause which allows for this:
   \ExecuteMetaData[agda/Snippets/Nat.tex]{bad-sub}
 \end{agdalisting*}
 But now the expression \(5 - 6\) is undefined.
-
+\subsubsection{Termination}
 The other major check that Agda will preform on our function definitions is for
 \emph{termination} (or productivity, which we will see later).
 This checks that no function we write accidentally contains an infinite loop.
@@ -224,9 +237,8 @@ understand a little how it works. When we define the following function
 Agda checks that the argument to the recursive call is \emph{structurally
   smaller} than the argument given to the outer function.
 ``Structurally smaller'' effectively means that the smaller thing must be a
-smaller structure contained entirely within the larger: in this case, \(n\) is
-literally contained within the structure of the argument
-\(\AgdaInductiveConstructor{suc}\;n\). \todo{express this better?}
+subexpression of the larger: here, \(n\) is subexpression of
+\(\AgdaInductiveConstructor{suc}\;n\).
 
 Structural recursion is actually surprisingly powerful: a great many algorithms
 can be converted to forms where the recursive calls recurse on some substructure
@@ -249,7 +261,24 @@ built in to the compiler or anything: they're actually just extremely clever
 ways to express structural recursion), but if you have to reach for those
 facilities it's usually a sign you've gone wrong.
 We won't use them here.
+\subsubsection{Productivity}
+Productivity isn't something we'll describe just yet, but we will give a hint as
+to its purpose.
+Often when describing total programming languages like Agda people make the
+mistake of saying that they are ``not Turing complete''.
+This is in fact not true, partly because Agda has the ability to describe non
+terminating (and infinite) computations.
+This allows us to implement, for instance, a Turing machine or
+\(\lambda\)-calculus interpreter
+\citep{mcbrideTuringCompletenessTotallyFree2015}, or more prosaic things like a
+web server or repl.
 
+While these things don't ``terminate'', Agda still needs to check that they are
+valid with regards to computation in another sense.
+This sense is \emph{productivity}: they need to always be able to produce
+another piece of information in finite time, even if they never ``finish''
+producing pieces of information.
+\subsubsection{What's it all For?}
 One thing we haven't answered is \emph{why} we bother checking for termination
 or totality.
 The answer is that it's necessary for Agda to be a valid proof assistant.

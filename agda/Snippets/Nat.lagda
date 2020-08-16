@@ -35,6 +35,11 @@ private
   suc n  - suc m = n - m
 \end{code}
 %</bad-sub>
+%<*sub-fix>
+\begin{code}
+infixl 6 _-_
+\end{code}
+%</sub-fix>
 %<*sub-def>
 \begin{code}
 _-_ : ℕ → ℕ → ℕ
@@ -74,3 +79,4 @@ riemann-proof : RiemannIsTrue
 riemann-proof = riemann-proof
 \end{code}
 %</riemann-proof>
+
