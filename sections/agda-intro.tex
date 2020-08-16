@@ -294,9 +294,9 @@ The termination checker is vital to rule out these kinds of ``proofs'': that's
 why it's an integral part of Agda.
 \section{An Expression Evaluator}
 Let's put all of the different things we've learned into a more complex example.
-Later, we'll define a full solver for the Countdown problem
-\citep{huttonCountdownProblem2002} \todo{find original cite for this}, at this
-point we'll define a small part of it: the expression evaluator.
+We're going to write a small evaluator for arithmetic expressions.
+Later, we'll use this to help us solve the Countdown problem
+\citep{huttonCountdownProblem2002}.
 
 We want to define a language of arithmetic expressions.
 With countdown in mind, we'll only need to support four operators, which we can
@@ -875,6 +875,63 @@ pair from \AgdaDatatype{\(\Pi\)}:
 \begin{agdalisting}
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
 \end{agdalisting}
+\section{Comparing Classical And Constructive Proofs in Agda}
+The dependent sum is a great example of the difference between ``classical'' and
+``constructive'' mathematics: the closest analogue in classical mathematics to
+\AgdaDatatype{\(\Sigma\)} is \(\exists\), but the semantics of the two
+constructs are subtly different.
+If I say ``there exists an integer larger than 10'' I'm making a rather
+trivially true statement; to provide a proof that
+\(\AgdaDatatype{\(\Sigma\)}\;\agdambb{N}\;\lambda\;\AgdaBound{n}\rightarrow
+\AgdaNumber{10}\;\AgdaFunction{<}\;\AgdaBound{n}\) is more akin to providing a
+natural number, and proving that it's bigger than 10.
+
+More formally speaking, there are a number of axioms which we don't have access
+to constructively.
+One such axiom is double negation elimination:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{doubleneg-elim}
+\end{agdalisting*}
+One way to ``do'' classical mathematics within Agda, then, would be to write all
+of the proofs assuming these axioms.
+We don't have to break the guarantees Agda provides, either: we could say
+``given the axiom of choice, law of the excluded middle, etc., the following is
+true\textellipsis'', although this is a little clunky.
+
+Instead, using this axiom of double negation, we can actually provide a type for
+classical computation.
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{classical-def}
+\end{agdalisting}
+In the ``propositions-as-types'' sense, a value of type
+\(\AgdaFunction{Classical}\;A\) is a classical proof of the proposition \(A\).
+This translation between classical and constructive proofs using double negation
+is sometimes called the double-negation translation. \todo{reference?}
+
+We can prove, inside this type, things like the law of the excluded middle:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{lem-proof}
+\end{agdalisting*}
+This type forms a monad, meaning that it implements the following functions:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{monad}
+\end{agdalisting*}
+This gives us a convenient syntax to work with classical proofs.
+
+Finally, in HoTT we have a notion of \emph{stability}.
+Certain types do support double-negation elimination:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Relation/Nullary/Stable.tex]{stable-def}
+\end{agdalisting*}
+We will see a use for this notion later on, but we mention it here to point out
+that we do have a way of describing types which can be pulled out of classical
+proofs.
+
+The purpose of this last section was to demonstrate that constructive
+mathematics, far from being constrained in comparison to classical, are
+technically \emph{more} capable.
+We can actually use systems to Agda to check and verify classical proofs just as
+much as we can constructive.
 
 %%% Local Variables:
 %%% mode: latex
