@@ -292,78 +292,106 @@ natural numbers smaller than 10 we would write
 In general, however, this type holds too many elements to properly classify the
 subsets of the larger set: there may be more than one inhabitant of \(P\;x\) for
 any given \(x\).
-For \emph{propositions}, however,
+For \emph{propositions}, however, (i.e. where \(P\) is a proposition),
+\AgdaDatatype{\(\Sigma\)} represents a perfectly valid encoding of subsets.
+
+The subobject classifier is an object within the topos (which must be a
+contraction) which classifies monomorphisms (injections).
+We can actually show that the ``subset'' notion we just defined does in fact
+classify monomorphisms in sets in HoTT (in fact directly through univalence),
+but at this point we run into our one and only size problem in this thesis.
+The actual object corresponding to the subobject classifier is the following:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Topos.tex]{prop-univ}
+\end{agdalisting*}
+The problem here, crucially, is that the universe level of this type is one
+higher than the universe level of the types it bounds.
+In other words, this is \emph{not} an object in our \(\Pi\)-pretopos of sets,
+where the types are all of universe level 0.
+
+Remember that the purpose of universe levels was to prevent Girard's paradox.
+However, there is an axiom which removes universe levels to a certain extent
+which does \emph{not} imply the paradox: propositional resizing.
+\begin{definition}[Propositional Resizing]
+  The axiom of propositional resizing states that the following two types, for
+  any universe level \(u\), are equivalent:
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Topos.tex]{prop-resize}
+  \end{agdalisting*}
+\end{definition}
+If propositional resizing holds, then we \emph{can} in fact construct a
+subobject classifier, for both sets and finite sets. \todo{Mention lem?}
 
 
-\begin{agdalisting} \label{filter-subobject}
-  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{subobject}
-\end{agdalisting}
+% \begin{agdalisting} \label{filter-subobject}
+%   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{subobject}
+% \end{agdalisting}
 
 
-\section{Closure}
-For the first three closure proofs, we only consider split enumerability:
-as it is the strongest of the finiteness predicates, we can derive the other
-closure proofs from it.
+% \section{Closure}
+% For the first three closure proofs, we only consider split enumerability:
+% as it is the strongest of the finiteness predicates, we can derive the other
+% closure proofs from it.
 
-\section{The Category of Finite Sets}
-HoTT and CuTT seem to be especially suitable settings for formalisations of
-category theory.
-The univalence axiom in particular allows us to treat categorical isomorphisms
-as equalities, saving us from the dreaded ``setoid hell''.
+% \section{The Category of Finite Sets}
+% HoTT and CuTT seem to be especially suitable settings for formalisations of
+% category theory.
+% The univalence axiom in particular allows us to treat categorical isomorphisms
+% as equalities, saving us from the dreaded ``setoid hell''.
 
-We follow \cite[chapter 9]{hottbook} in its treatment of
-categories in HoTT, and in its proof that sets do indeed form a category.
-We will first briefly go through the construction of the category
-\(\mathit{Set}\), as it differs slightly from the usual method in type theory.
+% We follow \cite[chapter 9]{hottbook} in its treatment of
+% categories in HoTT, and in its proof that sets do indeed form a category.
+% We will first briefly go through the construction of the category
+% \(\mathit{Set}\), as it differs slightly from the usual method in type theory.
 
-First, the type of objects and arrows:
-\begin{alignat}{3}
-  &\text{Obj}_\mathit{Set}      &&\coloneqq \Sigma(x : \mathbf{Type}) , \text{isSet}(x) \\
-  &\text{Hom}_\mathit{Set}(x , y) &&\coloneqq  \text{fst}(x) \rightarrow \text{fst}(y)
-\end{alignat}
-As the type of objects makes clear, we have already departed slightly from the
-simpler \(\text{Obj}_\mathit{Set} \coloneqq \mathbf{Type}\) way of doing things:
-of course we have to, as HoTT allows non-set types.
-Furthermore, after proving the usual associativity and identity laws for
-composition (which are definitionally true in this case), we must further show
-\(\text{isSet}(\text{Hom}_\mathit{Set}(x,y))\); even then we only have a
-precategory.
+% First, the type of objects and arrows:
+% \begin{alignat}{3}
+%   &\text{Obj}_\mathit{Set}      &&\coloneqq \Sigma(x : \mathbf{Type}) , \text{isSet}(x) \\
+%   &\text{Hom}_\mathit{Set}(x , y) &&\coloneqq  \text{fst}(x) \rightarrow \text{fst}(y)
+% \end{alignat}
+% As the type of objects makes clear, we have already departed slightly from the
+% simpler \(\text{Obj}_\mathit{Set} \coloneqq \mathbf{Type}\) way of doing things:
+% of course we have to, as HoTT allows non-set types.
+% Furthermore, after proving the usual associativity and identity laws for
+% composition (which are definitionally true in this case), we must further show
+% \(\text{isSet}(\text{Hom}_\mathit{Set}(x,y))\); even then we only have a
+% precategory.
 
-To show that \(\mathit{Set}\) is a category, we must show that categorical
-isomorphisms are equivalent to equivalences.
-In a sense, we must give a univalence rule for the category we are working in.
+% To show that \(\mathit{Set}\) is a category, we must show that categorical
+% isomorphisms are equivalent to equivalences.
+% In a sense, we must give a univalence rule for the category we are working in.
 
-We have provided formal proofs that \(\mathit{Set}\) does indeed form a
-category, and the following:
-\begin{theorem}[The Category of Finite Sets]
-  Finite sets form a category in HoTT when defined like so:
-  \begin{equation}
-    \begin{alignedat}{3}
-      &\text{Obj}_\mathit{FinSet}      &&\coloneqq \Sigma(x : \mathbf{Type}) , \mathcal{C}(x) \\
-      &\text{Hom}_\mathit{FinSet}(x , y) &&\coloneqq  \text{fst}(x) \rightarrow \text{fst}(y)
-    \end{alignedat}
-  \end{equation}
-\end{theorem}
-\section{The \(\Pi\)-pretopos of Finite Sets}
-For this proof, we follow again the proof that \(\mathit{Set}\) forms a \(\Pi
-W\)-pretopos from \cite[chapter 10]{hottbook} and
-\citep{rijkeSetsHomotopyType2015}.
-The difference here is that clearly we do not have access to \(W\)-types, as
-they would permit infinitary structures.
+% We have provided formal proofs that \(\mathit{Set}\) does indeed form a
+% category, and the following:
+% \begin{theorem}[The Category of Finite Sets]
+%   Finite sets form a category in HoTT when defined like so:
+%   \begin{equation}
+%     \begin{alignedat}{3}
+%       &\text{Obj}_\mathit{FinSet}      &&\coloneqq \Sigma(x : \mathbf{Type}) , \mathcal{C}(x) \\
+%       &\text{Hom}_\mathit{FinSet}(x , y) &&\coloneqq  \text{fst}(x) \rightarrow \text{fst}(y)
+%     \end{alignedat}
+%   \end{equation}
+% \end{theorem}
+% \section{The \(\Pi\)-pretopos of Finite Sets}
+% For this proof, we follow again the proof that \(\mathit{Set}\) forms a \(\Pi
+% W\)-pretopos from \cite[chapter 10]{hottbook} and
+% \citep{rijkeSetsHomotopyType2015}.
+% The difference here is that clearly we do not have access to \(W\)-types, as
+% they would permit infinitary structures.
 
-We first must show that \(\mathit{Set}\) has an initial object and finite,
-disjoint sums, which are stable under pullback.
-We also must show that \(\mathit{Set}\) is a regular category with effective
-quotients.
-We now have a pretopos: the presence of \(\Pi\) types make it a
-\(\Pi\)-pretopos.
+% We first must show that \(\mathit{Set}\) has an initial object and finite,
+% disjoint sums, which are stable under pullback.
+% We also must show that \(\mathit{Set}\) is a regular category with effective
+% quotients.
+% We now have a pretopos: the presence of \(\Pi\) types make it a
+% \(\Pi\)-pretopos.
 
-We have proven the above statements for both \(\mathit{Set}\) and
-\(\mathit{FinSet}\).
-As far as we know, this is the first formalisation of either.
-\begin{theorem} \label{finite-topos}
-  The category of finite sets, \(\mathit{FinSet}\), forms a \(\Pi\)-pretopos.
-\end{theorem}
+% We have proven the above statements for both \(\mathit{Set}\) and
+% \(\mathit{FinSet}\).
+% As far as we know, this is the first formalisation of either.
+% \begin{theorem} \label{finite-topos}
+%   The category of finite sets, \(\mathit{FinSet}\), forms a \(\Pi\)-pretopos.
+% \end{theorem}
 
 
 %%% Local Variables:
