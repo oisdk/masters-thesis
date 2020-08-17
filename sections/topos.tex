@@ -265,6 +265,36 @@ allowing us to prove the following:
 
 This gets us all of the necessary closure proofs on \(\mathcal{C}\).
 \section{The Absence of the Subobject Classifier}
+It's a little unsatisfying that our topos construction has so many caveats: we
+have to prove a lot of small, uninteresting lemmas just to get to a
+\(\Pi\)-pretopos, all because we can't prove the one or two larger, simple
+lemmas which would show that sets form a topos. 
+So what exactly are we missing?
+
+Well, one of the characteristic features of topos theory is that there are a
+wide variety of equivalent ways to show that something is a topos (a natural
+consequence of their being a wide variety of things which qualify as toposes).
+For the direction we have been going, though, the big missing feature is the
+\emph{subobject classifier}.
+
+A subobject in this context refers to a subset.
+In set theory, we can often describe a subset of some set \(A\) with the
+following notation:
+\begin{equation*}
+  \left\{ x \;\vert\; x \in A ; P(x) \right\}
+\end{equation*}
+This is the subset of elements in \(A\) which satisfy some predicate \(P\).
+
+Type theoretically, the way to express the same would be
+\(\AgdaDatatype{\(\Sigma\)}\;A\;P\): if we wanted to describe the subset of the
+natural numbers smaller than 10 we would write
+\(\AgdaDatatype{\(\Sigma\)}\;\agdambb{N}\;\lambda\;\AgdaBound{n}\rightarrow\AgdaBound{n}\;\AgdaFunction{\(<\)}\;\AgdaNumber{10}\).
+In general, however, this type holds too many elements to properly classify the
+subsets of the larger set: there may be more than one inhabitant of \(P\;x\) for
+any given \(x\).
+For \emph{propositions}, however,
+
+
 \begin{agdalisting} \label{filter-subobject}
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{subobject}
 \end{agdalisting}
