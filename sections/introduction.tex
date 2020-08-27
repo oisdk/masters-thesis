@@ -1,27 +1,4 @@
 \chapter{Introduction}
-% \begin{agdalisting}
-%   \ExecuteMetaData[agda/Snippets/Interactive.tex]{step1}
-% \end{agdalisting}
-% \begin{agdalisting}
-%   \ExecuteMetaData[agda/Snippets/Interactive.tex]{step2}
-% \end{agdalisting}
-% \begin{agdalisting}
-%   \ExecuteMetaData[agda/Snippets/Interactive.tex]{step3}
-% \end{agdalisting}
-
-% \begin{equation}
-%   \frac{
-%     \mathit{zs}:\AgdaDatatype{List}\;A \;\;\;\;
-%     \mathit{ys}:\AgdaDatatype{List}\;A \;\;\;\;
-%     A :\AgdaDatatype{Type}\;a\;\text{(not in scope)} \;\;\;\;
-%     a :\AgdaDatatype{Level}\;\text{(not in scope)}
-%     }{
-%     \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
-%     \;\AgdaFunction{≡}\;
-%     \mathit{ys}\;\AgdaFunction{++}\;\mathit{zs}
-%   }
-% \end{equation} 
-
 This thesis will explore and explain finiteness in constructive
 mathematics: using this setting, it will also serve as an introduction to
 constructive mathematics in Cubical Agda
@@ -66,12 +43,16 @@ All of our work will be formalised in Agda
 \citep{norellDependentlyTypedProgramming2008}, a
 dependently typed, pure, functional programming language which can be
 used as a proof assistant.
+Proof assistants are computer programs which verify the correctness of formal
+proofs.
 Proofs in Agda are programs which can be run: its syntax is quite similar to
 Haskell's.
 A recent extension to Agda, Cubical Agda
 \citep{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
 programs written in Cubical Type Theory \citep{cohenCubicalTypeTheory2016}: this
 type theory gives a \emph{computational} interpretation of the univalence axiom.
+By ``computational interpretation'' here we mean that we will be able to run the
+programs we write which rely on this axiom.
 
 This thesis is aimed at individuals with some knowledge of Haskell (although
 extensive knowledge of Haskell is not an absolute necessity) and a curiosity
