@@ -1,29 +1,49 @@
 \chapter{Introduction}
+Finiteness in classical mathematics is a simple, almost uninteresting subject.
+There are many interesting finite things, mind you, and many of those things are
+finite for interesting reasons; finiteness itself, though, is downright boring.
+
+Part of the reason for the simplicity of finiteness is that there's really only
+one notion of finiteness: we say that some set is finite if it has a cardinality
+equal to some natural number.
+If we want to \emph{prove} that something is finite we have at our disposal a
+rich array of techniques and insights: we could show that it has a surjection
+from another finite set, or that it's equivalent to another finite set.
+We could show that any infinite list of its elements must contain duplicates
+(this is called ``streamless''), or that there is a finite list which contains
+all of its elements.
+Once proven, though, all of that complexity collapses.
+
+In constructive mathematics the story is a little different.
+When we prove something constructively, often the thing proven retains
+components of the proof itself.
+Take the proposition \(P\) ``there is a prime number greater than 100''.
+To prove it, we might take a number that's bigger than 100, say 127, and then
+show that it's prime.
+Classically, this proof would show that there is (at least one) prime number
+bigger than 100.
+Constructively, though, proofs themselves are mathematical objects, just like
+numbers or functions.
+As such, our proof of \(P\) actually \emph{contains} the number 127, and it proves
+something formally different from a proof which used another number.
+In fact, modulo some caveats we will explain soon, there is no way to provide a
+proof of \(P\) which \emph{doesn't} reveal the particular prime number we had in
+mind while proving.
+
+This phenomenon is what makes finiteness in constructive mathematics so much
+richer and more complex than classical finiteness.
+Proving that something is ``streamless'' proves something fundamentally
+different to showing a bijection with a finite set.
+The other sense in which proofs in constructive mathematics are objects which
+can be manipulated is that, when these proofs are written on a computer, they
+often can be \emph{executed} as computer programs.
+The program ``there is a prime number greater than 100'' isn't a terribly useful
+one, but we will see some examples which are later on.
+
 This thesis will explore and explain finiteness in constructive
 mathematics: using this setting, it will also serve as an introduction to
 constructive mathematics in Cubical Agda
 \citep{vezzosiCubicalAgdaDependently2019}, and some related topics.
-
-In constructive mathematics proofs are much more substantial things than their
-classical counterparts.
-A constructive proof is a mathematical object that can be manipulated in the
-same way that an integer or an algorithm can: indeed, some of the ``proofs'' we
-will see in this thesis will emerge to be useful programs in disguise.
-
-Finiteness is one of the clearest examples which demonstrates this difference
-between classical and constructive proofs.
-There are several different ways to prove that something is finite: you could
-show that it's in bijection with another finite type, or that there's a
-surjection from the same, etc.
-Classically speaking, all of these different proofs end up proving the same
-thing: that the type in question is finite.
-Constructively, however, these proofs are different: while we know that a type
-with a surjection from a finite type must also have a bijection from that type
-there's no way to \emph{provide} such a bijection, so constructively these
-proofs are not equivalent.
-As it happens there's a wide assortment of predicates which all have some claim
-to being the formal interpretation of ``finiteness'', and they're all different
-in a constructive setting \citep{coquandConstructivelyFinite2010}.
 
 An exploration of finiteness also provides ample opportunity to explain much of
 the fundamentals of Homotopy Type Theory \citep{hottbook}: this theory is a
