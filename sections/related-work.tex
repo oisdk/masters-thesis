@@ -1,65 +1,89 @@
 \chapter{Related Work}
-\paragraph{Homotopy Type Theory} \citep{hottbook}
-\paragraph{Cubical Type Theory} \citep{cohenCubicalTypeTheory2016}
-\paragraph{Cubical Agda} \citep{vezzosiCubicalAgdaDependently2019} 
-\paragraph{Constructive Finiteness}
-\begin{itemize}
-  \item First paper on the topic, defines 4 notions of finiteness (split
-    enumerability, there called enumerated, bounded, Noetherian, streamless):
-    \citep{coquandConstructivelyFinite2010}
-  \item More exploration of Noetherianness
-    \citep{firsovVariationsNoetherianness2016}
-  \item More exploration of streamless sets
-    \citep{parmannInvestigatingStreamlessSets2015} (in particular closure under
-    product).
-  \item Paper exploring programming with finite sets for e.g. proof search
-    \citep{firsovDependentlyTypedProgramming2015} (basically only enumerable sets
-    though, only in MLTT)
-  \item Finite sets in Homotopy Type Theory, especially Kuratowski
-    \citep{fruminFiniteSetsHomotopy2018} (but no finite function arrows).
-  \item Kuratowski's original paper on finiteness
-    \citep{kuratowskiNotionEnsembleFini1920}.
-  \item \citep{smolkaHereditarilyFiniteSets2016}.
-\end{itemize}
-\paragraph{Sets/Toposes}
-\begin{itemize}
-  \item Paper that sets in HoTT form a topos (under certain conditions
-    etc) \citep{rijkeSetsHomotopyType2015}.
-    This paper is adapted into a chapter in the HoTT book.
-  \item Category theory in cubical Agda
-    \citep{iversenUnivalentCategoriesFormalization2018}.
-  \item Topos from cardinal finite \citep{henryToposesGeneratedCardinal2018}.
-  \item Category of finite sets \citep{solovevCategoryFiniteSets1983}.
-\end{itemize}
-\paragraph{Species}
-\begin{itemize}
-  \item Brent Yorgey's thesis \citep{yorgeyCombinatorialSpeciesLabelled2014}.
-  \item \citep{uszkaySpeciesMakingAnalytic2008} 
-\end{itemize}
-\paragraph{Exhaustability}
-\begin{itemize}
-  \item Definition of limited principle of omniscience:
-    \citep{bishopFoundationsConstructiveAnalysis1967}.
-  \item \citep{escardoExhaustibleSetsHighertype2008} 
-  \item \citep{escardoInfiniteSetsThat2007} 
-  \item \citep{escardoInfiniteSetsThat2013} 
-\end{itemize}
-\paragraph{Propositional Truncation algo}
-\citep{krausGeneralUniversalProperty2015}
-\paragraph{Countdown}
-\begin{itemize}
-  \item \citep{huttonCountdownProblem2002}
-  \item \citep{birdCountdownCaseStudy2005}
-  \item \citep{birdFunctionalPearlTrouble2003}
-\end{itemize}
-\paragraph{Generate and Test}
-\begin{itemize}
-  \item \citep{claessenQuickCheckLightweightTool2011} 
-  \item \citep{runcimanSmallCheckLazySmallCheck2008}
-  \item \citep{oconnorApplicationsApplicativeProof2016}
-  \item (for the generator syntax) \citep{allaisGenericLevelPolymorphic2019}.
-\end{itemize}
+\paragraph{Homotopy Type Theory}
+To understand the background and subject area behind this thesis, the most
+important piece of work is the \citet{hottbook}, often simply called ``the HoTT
+Book''.
 
+One particular paper we relied on is \citet{krausGeneralUniversalProperty2015}:
+this gave a proof (which we use) that one can eliminate out of a propositional
+truncation into a set provided the elimination is coherently constant.
+\paragraph{Agda and Cubical Type Theory}
+The programming language we use in this thesis is Cubical Agda
+\citep{vezzosiCubicalAgdaDependently2019}.
+This is an implementation of Cubical Type Theory
+\citep{cohenCubicalTypeTheory2016}, built as an extension to the programming
+language Agda \citep{norellDependentlyTypedProgramming2008}.
+\paragraph{Constructive Finiteness}
+An excellent introduction to the topic of finiteness in a constructive setting
+is \citet{coquandConstructivelyFinite2010}: this paper introduced 4 notions of
+finiteness, called enumerated, bounded, Noetherian, and streamless.
+We have only looked at the first of these (enumerated, which we called ``split
+enumerable'').
+The other three are interesting definitions, though: Noetherianness in
+particular is explored more in \citet{firsovVariationsNoetherianness2016}, and
+streamlessness in \citet{parmannInvestigatingStreamlessSets2015}.
+
+Finite sets have long been used for proof automation in dependently typed
+programming languages: the most relevant example is
+\citet{firsovDependentlyTypedProgramming2015}, where they are used to automate
+proofs in Agda.
+Manifest Bishop finiteness and split enumerability are the only predicates
+explored, however, and and the setting is MLTT rather than CuTT.
+
+Finite sets in Homotopy Type Theory in particular are explored in
+\citet{fruminFiniteSetsHomotopy2018}: that paper is quite close in subject
+matter to this thesis, and some of the theorems proven in this thesis are
+explicitly called for there.
+They do focus slightly more, however, on Kuratowski finite sets: these were
+first defined in \citet{kuratowskiNotionEnsembleFini1920}.
+\paragraph{Set and Topos Theory}
+Our proof that finite sets form a topos follows quite closely along with the
+structure of chapter 10 of the HoTT book.
+This chapter itself is adapted from \citet{rijkeSetsHomotopyType2015}.
+
+The category of finite sets in HoTT is also explored quite a bit in
+\citet{yorgeyCombinatorialSpeciesLabelled2014}: we have formalised several of
+the proofs there in this thesis.
+
+The paper \citet{iversenUnivalentCategoriesFormalization2018} was essential in
+explaining the techniques and tricks needed to formalise category-theoretic
+concepts in Cubical Agda.
+
+More generally the category of finite sets is explored in
+\citet{solovevCategoryFiniteSets1983}, and the topic of toposes from cardinally
+finite sets in \citet{henryToposesGeneratedCardinal2018}.
+\paragraph{Exhaustibility}
+The twin notions of and omniscience were first defined in
+\citet{bishopFoundationsConstructiveAnalysis1967}.
+There, they were studied as to how they applied to ``constructiveness''.
+In functional programming, perhaps their most famous usage was in
+\citet{escardoInfiniteSetsThat2013}: there,
+\citeauthor{escardoInfiniteSetsThat2013} shows that there are in fact sets which
+satisfy this principle of omniscience (or exhaustibility), \emph{without} being
+finite.
+\paragraph{Countdown}
+The countdown problem is well-known in functional programming: its first
+description was in \citet{huttonCountdownProblem2002}, but subsequent papers
+\citep{birdCountdownCaseStudy2005, birdFunctionalPearlTrouble2003}
+explored its different aspects.
+As far as we know, ours is the first paper to look at countdown from the
+dependently-typed, proof perspective.
+\paragraph{Generate and Test}
+While the formal grounding for the API for our proof search library comes from
+topos theory, the less formal inspiration is from QuickCheck
+\citep{claessenQuickCheckLightweightTool2011}.
+This more general pattern of using generators in a principled way to generate
+data for tests is also explored in \citet{runcimanSmallCheckLazySmallCheck2008},
+which is perhaps closer in spirit to our work than QuickCheck (it's especially
+close to chapter~\ref{infinite}).
+In the setting of dependently-typed programming (and Agda in particular),
+\citet{oconnorApplicationsApplicativeProof2016} looks into the generate-and-test
+technique but for proofs, much like we do here.
+There, also, partial proof search is examined.
+
+Finally, in order to present a usable interface to the proof search library, we
+used (and expanded on) some of the techniques in
+\citet{allaisGenericLevelPolymorphic2019}, for generic currying.
 
 %%% Local Variables:
 %%% mode: latex
