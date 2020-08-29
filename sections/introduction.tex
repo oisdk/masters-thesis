@@ -57,7 +57,7 @@ numbers (binary and unary possibly): the univalence axiom allows us to say ``all
 of the things we have proven about the unary numbers are also true about the
 binary numbers''.
 This is an essential technique in most areas of mathematics, which
-had no useful analogue in type theory until recently.
+had no formal basis in type theory until recently.
 
 All of our work will be formalised in Agda
 \citep{norellDependentlyTypedProgramming2008}, a
@@ -112,8 +112,8 @@ will give us access to the general language of toposes.
 
 In Chapter~\ref{search} we will combine everything from the previous chapters
 into a (somewhat) practical program for proof search.
-This program will automatically search for, and attempt to prove, a simple
-proposition.
+This program will automatically construct proofs of predicates over finite
+domains.
 We will demonstrate the program with the countdown problem
 \citep{huttonCountdownProblem2002}: this is a somewhat famous puzzle where
 players are given five numbers and a target, and have to construct an expression
@@ -127,9 +127,9 @@ as we did for the finite types (with some important differences).
 \section{What is a Proof?}
 Constructive mathematics is, fundamentally, a different way of thinking about
 proofs.
-Classically we have two fundamentally different universes of things: we have
+Classically we have two different universes of things: we have
 objects, like the natural numbers, or the rings; and the proofs on those things.
-Constructive mathematics is an effort to join those two worlds together.
+Constructive mathematics joins those two worlds together.
 
 Practically speaking this means that in constructive mathematics we can't
 always ``prove the existence of'' some thing; instead we simply provide that
@@ -154,7 +154,7 @@ This relation between proofs and programs is often called the Curry-Howard
 correspondence.
 Under this framework, propositions in the logical sense correspond to types in
 the programming sense \citep{wadlerPropositionsTypes2015}; proofs of those
-propositions then correspond to programs which inhabit those proofs.
+propositions then correspond to programs which inhabit those types.
 As an example we have from propositional logic the following:
 \begin{equation*}
   \frac{A \wedge B}{A}
@@ -165,16 +165,17 @@ Via Curry-Howard, the type corresponding to conjunction is in fact the pair (or
 tuple).
 \(A\) and \(B\) are also types.
 So, the above proposition, as a type, is the following:
-\begin{equation*}
-  A \times B \rightarrow A
-\end{equation*}
+\begin{agdalisting*}
+  \ExecuteMetaData[haskell/Pair.tex]{fst-ty} \vspace{-\baselineskip}
+\end{agdalisting*}
 And the proof which inhabits this type?
 It is the function often called \verb+fst+: the selector for the first component
 of the pair.
+\begin{agdalisting*}
+  \ExecuteMetaData[haskell/Pair.tex]{fst} \vspace{-\baselineskip}
+\end{agdalisting*}
 
 
-All of the extra capabilities of constructive mathematics do not come for free,
-of course.
 Occasionally we don't want to provide the extra information that
 constructiveness demands: later, for instance, we will begin to work with the
 category of finite sets.
