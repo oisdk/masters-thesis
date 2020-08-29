@@ -1,5 +1,4 @@
-\chapter{Programming and Proving in Cubical Agda} \label{agda-intro}
-Agda \citep{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
+\chapter{Programming and Proving in Cubical Agda} \label{agda-intro} Agda \citep{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
 functional programming language and proof assistant.
 In this chapter we will introduce the language with some basic examples, and
 explain a little about how to program and prove in Agda.
@@ -10,6 +9,28 @@ them in the real Agda files in the source.
 The source is rendered and structured to be read alongside this document: it can
 be found at \mbox{\url{https://oisdk.github.io/masters-thesis/README.html}}.
 
+Agda is first and foremost a functional programming language, similar in syntax
+and design to Haskell.
+It is pure, meaning that it doesn't allow undeclared side effects, and
+\emph{lazy}, meaning that expressions are not evaluated until they are needed
+(although this has no effect on Agda's semantics: since Agda is total, both lazy
+and strict evaluation will result in the same output).
+
+While Agda can be compiled (to Haskell, or to JavaScript), it is usually just
+type-checked: this is because Agda is also a \emph{proof assistant}.
+Programs written in Agda correspond to proofs in the formal language of
+Martin-Löf Type Theory \citep{martin-lofIntuitionisticTypeTheory1980}, in the
+style of ``Propositions as Types'' \citep{wadlerPropositionsTypes2015}.
+Types in Agda correspond to formal propositions; the programs which inhabit
+those types correspond to proofs of those propositions.
+\begin{figure}
+  \centering
+  \begin{tikzcd}
+    \text{Proposition} \ar[r, leftrightsquigarrow] & \text{Type} \\
+    \text{Proof} \ar[r, leftrightsquigarrow] \ar[u, "\text{proves}"
+    description]& \text{Program} \ar[u, "\text{inhabits}" description]
+  \end{tikzcd}
+\end{figure}
 \section{Basic Functional Programming in Agda}
 The basic unit of functionality in Agda is the \emph{type}.
 Let's define a type: the type of booleans (we include the equivalent code in
@@ -31,7 +52,7 @@ In prose, it provides four basic pieces of information:
     \AgdaInductiveConstructor{false} and \AgdaInductiveConstructor{true}.
 \end{enumerate}
 \end{samepage}
-Let's explain each piece one by one. \todo{Maybe number the paragraphs in the margin?}
+Let's explain each piece one by one.
 
 \subsection{Data Types}
 We first say that we're defining a new \AgdaKeyword{data} type.
