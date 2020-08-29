@@ -1,7 +1,11 @@
 \begin{code}
+{-# OPTIONS --without-K #-}
+
 module Snippets.Nat where
 
 open import Level
+open import Literals.Number
+open import Data.Unit
 \end{code}
 %<*nat-def>
 \begin{code}
@@ -11,7 +15,17 @@ data ℕ : Type₀ where
 \end{code}
 %</nat-def>
 \begin{code}
-{-# BUILTIN NATURAL ℕ #-}
+
+import Agda.Builtin.Nat as Builtin
+
+conv : Builtin.Nat → ℕ
+conv Builtin.zero = zero
+conv (Builtin.suc n) = suc (conv n)
+
+instance
+  numberNat : Number ℕ
+  Number.Constraint numberNat = λ _ → ⊤
+  Number.fromNat numberNat n = conv n
 
 private
   module TextAdd where
