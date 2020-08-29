@@ -5,14 +5,13 @@ module Snippets.Bool where
 
 open import Level
 
-private
-  module BoolDefn where
+module BoolDefn where
 \end{code}
 %<*bool-def>
 \begin{code}
-    data Bool : Type₀ where
-      false  : Bool
-      true   : Bool
+  data Bool : Type₀ where
+    false  : Bool
+    true   : Bool
 \end{code}
 %</bool-def>
 \begin{code}
@@ -171,3 +170,6 @@ Boolean : Type₀
 Boolean = Bool
 \end{code}
 %</boolean>
+\begin{code}
+open BoolDefn public
+\end{code}
