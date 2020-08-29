@@ -17,8 +17,14 @@ open import HITs.PropositionalTruncation.Sugar
 
 module _ where
   open ℒ
-
-  ℰ⇔Fin↠ : ℰ A ⇔ Σ[ n ⦂ ℕ ] (Fin n ↠ A)
+  ℰ⇔Fin↠ :
+\end{code}
+%<*manifest-enum-surj>
+\begin{code}
+    ℰ A ⇔ Σ[ n ⦂ ℕ ] (Fin n ↠ A)
+\end{code}
+%</manifest-enum-surj>
+\begin{code}
   ℰ⇔Fin↠ = reassoc
 
 module _ where

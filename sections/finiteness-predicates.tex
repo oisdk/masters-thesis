@@ -760,9 +760,9 @@ Manifest enumerability is one such predicate.
   Manifest enumerability is an enumeration predicate like Bishop finiteness or
   split enumerability with the only difference being a propositionally truncated
   membership proof.
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable/Container.tex]{manifest-enum-def}
-  \end{agdalisting}
+  \end{agdalisting*}
 \end{definition}
 
 It might not be immediately clear why this definition of enumerability allows
@@ -774,14 +774,14 @@ From the position we were able to derive decidable equality: that position is
 precisely what's hidden in manifest enumerability.
 
 And indeed this means that the circle is manifestly enumerable.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{circle-is-manifest-enum}
-\end{agdalisting}
+\end{agdalisting*}
 We use a lemma here, proven in the Cubical Agda library, that
 \AgdaDatatype{S\(^1\)} is \emph{connected}:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{s1-connected}
-\end{agdalisting}
+\end{agdalisting*}
 \subsection{Surjections}
 We already saw that split enumerability was the listed form of a split
 surjection: what we didn't explain was why the word ``split'' was placed before
@@ -792,49 +792,22 @@ And we are most certainly in the presence of higher homotopies: just moments ago
 we were introduced to the circle.
 In these cases, the following definition of surjections is
 preferred~\cite[definition 4.6.1]{hottbook}:
-\begin{multicols}{2}
-  \begin{agdalisting} \label{surj-eqn}
-    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective}
-  \end{agdalisting} \columnbreak
-  \begin{agdalisting} \label{surj-arrow-eqn}
+\begin{agdalisting} \label{surj-eqn}
+  \begin{multicols}{2}
+    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective} \columnbreak
     \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjection}
-  \end{agdalisting}
-\end{multicols}
+  \end{multicols}
+\end{agdalisting}
 
 Much in the same way that split enumerability were split surjections, our new
 predicate of manifest enumerability corresponds to the proper surjections.
-\begin{lemma} \todo{to agda}
+\begin{lemma}
   Manifest enumerability is equivalent to a surjection from a finite prefix of
   the natural numbers.
-  \begin{equation}
-    \mathcal{E}(A) \simeq \Sigma(n : \mathbb{N}) , (\AgdaDatatype{Fin}\;n \twoheadrightarrow A)
-  \end{equation}
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{manifest-enum-surj}
+  \end{agdalisting*}
 \end{lemma}
-\begin{proof}
-  \begin{align*}
-     \mathcal{E}(A) &
-    \simeq \Sigma (\mathit{xs} : \textbf{List}(A)) , \Pi {(x : A)} , \lVert x \in \mathit{xs} \rVert
-    && \text{def.~\ref{split-enum-def} }(\mathcal{E})
-    \\
-    & \simeq \Sigma (\mathit{xs} : \textbf{List}(A)) , \Pi {(x : A)} , \lVert \text{fib}_{\text{snd}(\mathit{xs})}(x) \rVert
-    && \text{eqn.~\ref{container-membership} } (\in)
-    \\
-    & \simeq \Sigma (\mathit{xs} : \textbf{List}(A)) , \text{surj}(\text{snd}(\mathit{xs}))
-    && \text{eqn.~\ref{surj-eqn} (surj)}
-    \\
-    & \simeq \Sigma (\mathit{xs} : \llbracket \mathbb{N} , \AgdaDatatype{Fin} \rrbracket (A)) , \text{surj}(\text{snd}(\mathit{xs}))
-    && \text{def.~\ref{list-def} } (\AgdaDatatype{List})
-    \\
-    & \simeq \Sigma (\mathit{xs} : \Sigma (n : \mathbb{N}) , \Pi (i : \AgdaDatatype{Fin}\;n) , A) , \text{surj}(\text{snd}(\mathit{xs}))
-    && \text{eqn.~\ref{container-interp} } (\llbracket \wc \rrbracket)
-    \\
-    & \simeq \Sigma (n : \mathbb{N}) , \Sigma (f : \AgdaDatatype{Fin}\;n \rightarrow A) , \text{surj}(f)
-    && \text{Reassociation of } \Sigma
-    \\
-    & \simeq \Sigma (n : \mathbb{N}) , ( \AgdaDatatype{Fin}\;n \twoheadrightarrow A )
-    && \text{eqn.~\ref{surj-arrow-eqn} } (\twoheadrightarrow) \; \qedhere
-  \end{align*}
-\end{proof}
 \subsection{Relation To Split Enumerability}
 It is trivially easy to construct a proof that any split enumerable type is
 manifest enumerable: we simply truncate the membership proof.
@@ -901,18 +874,18 @@ Other definitions of \(\agdacal{K}\) exist (such as the one in
 the free join semilattice more obvious.
 We have included such a definition in our formalisation, and proven it
 equivalent to the one above.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Direct.tex]{direct-def}
-\end{agdalisting}
+\end{agdalisting*}
 
 Next, we need a way to say that an entire type is Kuratowski finite.
 For that, we will need to define membership of \(\agdacal{K}\).
-\begin{equation}
+\begin{equation*}
   \begin{alignedat}{2}
     x\;\AgdaFunction{\ensuremath{\in}}& \; \AgdaInductiveConstructor{[]}                      &&= \agdabot \\
     x\;\AgdaFunction{\ensuremath{\in}}& \; y \;\AgdaInductiveConstructor{\ensuremath{\dblcolon}}\; \mathit{ys} &&= \AgdaDatatype{\ensuremath{\lVert}}\;\agdaequiv{x}{y}\;\AgdaDatatype{\ensuremath{\uplus}}\;x\;\AgdaFunction{\ensuremath{\in}}\;\mathit{ys}\;\AgdaDatatype{\ensuremath{\rVert}}
   \end{alignedat}
-\end{equation}
+\end{equation*}
 The \AgdaInductiveConstructor{com} and \AgdaInductiveConstructor{dup}
 constructors are handled by proving that the truncated form of \AgdaDatatype{\ensuremath{\uplus}}
 itself commutative and idempotent.
@@ -922,9 +895,9 @@ This gives us enough to define Kuratowski finiteness.
 \begin{definition}[Kuratowski Finiteness]
   A type is Kuratowski finite if there exists a Kuratowski-finite subset of that
   type which contains every element of the type.
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-finite-def}
-  \end{agdalisting}
+  \end{agdalisting*}
 \end{definition}
 
 While Kuratowski finiteness is something of the standard formal definition of
@@ -937,18 +910,18 @@ possible.
 To do so we use the following lemma:
 \begin{lemma}  \label{manifest-enum-kuratowski}
   Kuratowski finiteness is equivalent to truncated manifest enumerability.
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{manifest-enum-kuratowski}
-  \end{agdalisting}
+  \end{agdalisting*}
 \end{lemma}
-\begin{proof} \todo{Does this need to be fleshed out?}
+\begin{proof}
   This proof is constructed by providing a pair of functions, to and from each
   side of the equivalence.
   This pair implies an equivalence, because both source and target are
   propositions.
   This proof, as well as its auxiliary lemmas, are also provided in
   \citet{fruminFiniteSetsHomotopy2018}, although there the setting is HoTT
-  rather than CuTT. \todo{Make the relationship here more clear}
+  rather than CuTT.
 \end{proof}
 By relating Kuratowski finiteness---with a full equivalence, no less---to an
 enumerated predicate, we have made it possible to talk about Kuratowski
