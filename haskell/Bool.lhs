@@ -25,3 +25,8 @@ not True   = False
 not False  = True
 \end{code}
 %</not-func>
+%<*boolean-synonym>
+\begin{code}
+type Boolean = Bool
+\end{code}
+%</boolean-synonym>

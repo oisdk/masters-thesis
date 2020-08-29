@@ -65,7 +65,10 @@ instance, which we'll see later; or we can define types by referencing other
 types, creating a synonym.
 Here, for instance, we define the \AgdaFunction{Boolean} type:
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{boolean}
+  \begin{multicols}{2} \centering
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{boolean} \columnbreak
+    \ExecuteMetaData[haskell/Bool.tex]{boolean-synonym}
+  \end{multicols}\vspace{-\baselineskip}
 \end{agdalisting*}
 This snippet says ``I am defining a new thing called \AgdaFunction{Boolean}, it
 is a \AgdaFunction{\(\text{Type}_0\)}, and it is equal to \AgdaDatatype{Bool}''.
@@ -74,6 +77,11 @@ Of course this isn't a very interesting declaration: as the equals sign implies,
 spelling).
 We've basically defined a synonym for the old type.
 
+Notice that in Haskell we needed a special keyword in order to define this type
+synonym: in Agda, types are first-class values, which we can manipulate just as
+we would functions or numbers.
+As such, defining a type synonym is exactly the same as defining a new variable:
+it doesn't need any special syntax.
 \subsection{Type Names}
 The second point is pretty straightforward: the name of the type we've defined
 is \AgdaDatatype{Bool}.
