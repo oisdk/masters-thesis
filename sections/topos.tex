@@ -1,13 +1,11 @@
 \chapter{Topos} \label{topos}
 In this section we will examine the categorical interpretation of finite sets.
-In particular, we will prove that decidable Kuratowski finite types form a
+In particular, we will prove that discrete Kuratowski finite types form a
 \(\Pi\)-pretopos.
-A lot of the work for this proof has been done already: in
-Theorem~\ref{cardinal-kuratowski} we saw that discrete Kuratowski finite types
-were equivalent to Cardinally finite types.
-We will use the latter definition implementation-wise from now on, as it is
-slightly easier to work with: CuTT's transport means we can do this without loss
-of generality.
+A lot of the work for this proof has been done already: we have already proven
+that discrete Kuratowski finiteness is equivalent to cardinal finiteness
+(Theorem~\ref{cardinal-kuratowski}), meaning that we can work with the latter
+definition which is much simpler to prove things about.
 
 There are two reasons we're interested in the categorical and topos-theoretic
 interpretation of finite sets: first, it's an important theoretical grounding

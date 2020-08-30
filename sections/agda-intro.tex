@@ -903,6 +903,63 @@ pair from \AgdaDatatype{\(\Pi\)}:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
 \end{agdalisting*}
+\section{The Menagerie of Foundational Theories}
+So far we have mentioned four different foundational theories: Martin-Löf Type
+Theory, Homotopy Type Theory, Cubical Type Theory, and Zermelo-Fraenkel set theory.
+We have given some hints as to the differences between these theories, but now
+We have enough background information to give a fuller explanation as to their
+difference and historical context.
+
+Firstly we have Zermelo-Fraenkel set theory, or ZFC, where the C stands for
+``choice'', i.e. the axiom of choice.
+This is the standard foundational system for most mathematics these days: it's a
+set theoretic foundation, and it's \emph{classical}, by which we mean
+non-constructive.
+This means that it has the law of the excluded middle (for any given
+proposition, the proposition is either true or false), and the axiom of choice
+(the product of a collection of non-empty sets is non-empty).
+
+We won't describe ZFC in much detail here, we only mention it to contrast it
+with type theory.
+Type theory is less extensional than set theory: in set theory we construct sets
+by saying which things they contain.
+These things exist ambiently, independent of the set (or sets) which contain
+them.
+To define the set of the natural numbers, for example, we first need there to
+exist objects which represent each of the numbers. 
+Before defining \(\mathbb{N}\), we need to have defined 1 and 2.
+
+Type theory is quite different in this sense.
+The analogous construct to the set (the type) constructs its contents in its
+definition.
+So the type of the natural numbers contains the definition (or construction) of
+its contents.
+It doesn't make sense to define a type which contains items in other types: in
+fact it's not possible.
+
+So that is the difference in mechanics between type theory and set theory: other
+than the non-constructive components of set theory, though, the two theories are
+equivalent.
+
+Within type theory then we have three different systems: MLTT, HoTT, and CuTT
+(of course there are many more type theories than just these three: these are
+only the theories we will study here).
+The first of these was one of the first type theories to be defined: Per
+Martin-Löf's intuitionistic type theory
+\citep{martin-lofIntuitionisticTypeTheory1980} defined the basics of dependent
+types as we use them in Agda today.
+This early theory had the \(\Sigma\) and \(\Pi\) types we have above, as
+well as the boolean types, and \(\top\) and \(\bot\).
+With some changes to the system (the addition of universe levels prompted by
+Girard's paradox), it's basically the core of Agda today.
+
+HoTT \citep{hottbook} is a type theory which stems in many ways from MLTT, but
+mixes it with homotopy theory.
+The fundamental addition of HoTT is the univalence axiom, which allows for
+isomorphic types to be treated as equivalent.
+CuTT \citep{cohenCubicalTypeTheory2016} is closely related to HoTT: it is the
+theory which allows us to use univalence in Agda while retaining the
+computational properties that we would expect in a constructive system.
 \section{Comparing Classical And Constructive Proofs in Agda}
 The dependent sum is a great example of the difference between ``classical'' and
 ``constructive'' mathematics: the closest analogue in classical mathematics to
