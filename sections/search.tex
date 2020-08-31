@@ -61,6 +61,53 @@ associative, and if so return it to us.
 \end{agdalisting*}
 The usefulness of which is dubious, but we will see a more interesting
 application soon.
+\section{How to make the Typechecker do Automation}
+For this prover we will not resort to reflection or similar techniques: instead,
+we will trick the type checker to do our automation for us.
+This is a relatively common technique, although not so much outside of Agda, so
+we will briefly explain it here.
+
+To understand the technique we should first notice that some proof automation
+\emph{already} happens in Agda, like the following:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{obvious}
+\end{agdalisting*}
+The type checker does not require us to manually explain each step of evaluation
+of
+\(\AgdaInductiveConstructor{true}\;\AgdaFunction{∧}\;\AgdaInductiveConstructor{false}\).
+While it's not a particularly impressive example of automation, it does nonetheless
+demonstrate a principle we will exploit: closed terms will compute to a normal
+form if they're needed to type check.
+The type checker will perform \(\beta\)-reduction as much as it can.
+
+So our task is to rewrite proof obligations like the one in
+Equation~\ref{bool-assoc-auto-proof} into ones which can reduce completely. 
+As it turns out, we have already described the type of proofs which can ``reduce
+completely'': \emph{decidable} proofs.
+If we have a decision procedure over some proposition \(P\) we can run that
+decision during type checking, because the decision procedure itself is a proof
+that the decision will terminate.
+In code, we capture this idea with the following pair of functions:
+\begin{multicols}{2}
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{is-true}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{from-true}
+  \end{agdalisting*}
+\end{multicols}
+The first is a function which derives a type from whether a decision is
+successful or not.
+This function is important because if we use the output of this type at any
+point we will effectively force the unifier to run the decision computation.
+The second takes---as an implicit argument---an inhabitant of the type generated
+from the first, and uses it to prove that the decision can only be true, and the
+extracts the resulting proof from that decision.
+All in all, we can use it like this:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{extremely-obvious}
+\end{agdalisting*}
+This technique will allow us to automatically compute any decidable predicate.
 \section{Omniscience}
 So we now know what is needed of us for proof automation: we need to take our
 proofs and make them decidable.
@@ -138,63 +185,19 @@ be pulled out of the Kuratowski finite subset without issue.
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-prop-omniscient}
 \end{agdalisting*}
-\section{Proof Automation}
-So we have shown now how powerful the library is for proof search: it can
-search for functions, subsets of types, products, and so on, completely
-verifiable.
+
+With the knowledge that any Kuratowski finite type implies exhaustibility we
+know that we can do proof search over all of the types we have proven to be
+Kuratowski finite: the 0, 1, and 2 types; (dependent) sums and products; and any
+type proven to be equivalent to these.
+It's still not entirely clear how to actually \emph{use} this automation without
+incurring so much boilerplate as to defeat the point, though.
+\section{An Interface for Proof Automation}
 In this section we will present the more user-friendly interface to the library,
 designed to be used to automate away tedious proofs in an easy way.
-\subsection{How to make the Typechecker do Automation}
-For this prover we will not resort to reflection or similar techniques: instead,
-we will trick the type checker to do our automation for us.
-This is a relatively common technique, although not so much outside of Agda, so
-we will briefly explain it here.
-
-To understand the technique we should first notice that some proof automation
-\emph{already} happens in Agda, like the following:
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{obvious}
-\end{agdalisting*}
-The type checker does not require us to manually explain each step of evaluation
-of
-\(\AgdaInductiveConstructor{true}\;\AgdaFunction{∧}\;\AgdaInductiveConstructor{false}\).
-While it's not a particularly impressive example of automation, it does nonetheless
-demonstrate a principle we will exploit: closed terms will compute to a normal
-form if they're needed to type check.
-The type checker will perform \(\beta\)-reduction as much as it can.
-
-So our task is to rewrite proof obligations like the one in
-Equation~\ref{bool-assoc-auto-proof} into ones which can reduce completely. 
-As it turns out, we have already described the type of proofs which can ``reduce
-completely'': \emph{decidable} proofs.
-If we have a decision procedure over some proposition \(P\) we can run that
-decision during type checking, because the decision procedure itself is a proof
-that the decision will terminate.
-In code, we capture this idea with the following pair of functions:
-\begin{multicols}{2}
-  \begin{agdalisting*}
-    \ExecuteMetaData[agda/Snippets/Bool.tex]{is-true}
-  \end{agdalisting*} \columnbreak
-  \begin{agdalisting*}
-    \ExecuteMetaData[agda/Snippets/Bool.tex]{from-true}
-  \end{agdalisting*}
-\end{multicols}
-The first is a function which derives a type from whether a decision is
-successful or not.
-This function is important because if we use the output of this type at any
-point we will effectively force the unifier to run the decision computation.
-The second takes---as an implicit argument---an inhabitant of the type generated
-from the first, and uses it to prove that the decision can only be true, and the
-extracts the resulting proof from that decision.
-All in all, we can use it like this:
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{extremely-obvious}
-\end{agdalisting*}
-This technique will allow us to automatically compute any decidable predicate.
-\subsection{Building an Interface}
-We will next look at a syntax and interface to this proof technique.
-It starts with the following two functions:
-
+\subsection{The Design of the Interface}
+The central idea of the interface to the proof search library are the following
+two functions:\\
 \begin{minipage}{\linewidth}
   \begin{multicols}{2}
     \begin{agdalisting*}
@@ -206,9 +209,8 @@ It starts with the following two functions:
   \end{multicols}
 \end{minipage}
 Clearly they're just restatements of exhaustibility and omniscience.
-However, we can combine these functions with what we've constructed above to
-create an automation procedure for each:
-
+However, we can combine these functions with the automation technique from above
+to create the following:\\
 \begin{minipage}{\linewidth}
   \begin{multicols}{2}
     \begin{agdalisting*}
@@ -307,7 +309,7 @@ To start, we define a type representing a vector of universe levels:
     \end{agdalisting*} \columnbreak
     \begin{agdalisting*}
       \ExecuteMetaData[agda/Data/Product/NAry.tex]{max-level}
-    \end{agdalisting*}
+    \end{agdalisting*} \vspace{\baselineskip}
   \end{multicols}
 \end{minipage}
 
@@ -397,9 +399,16 @@ Finally, here is how we can automate the proof of commutativity fully:
 
 With that, we now have a simple interface to a proof search library, which can
 be used to automate away certain tedious proofs.
-In the next section we will leverage some parts of this library to solve a
-relatively complex problem: the countdown problem.
-\newpage
+
+Automation of simple proofs like the associativity of conjunction is all well
+and good, but tasks like that are more tedious than they are difficult.
+What about more difficult problems?
+In the next section we will look at a problem which is too complex to be solved
+by the simple instance-search solver we have constructed here.
+Instead, we will have to combine instance search with manual construction of
+finiteness proofs, optimisation of representation, and some other tricks.
+At the end of it, we will have a solver for countdown.
+\pagebreak
 \section{Countdown}
 \input{figures/countdown-transformation}
 The Countdown problem~\citep{huttonCountdownProblem2002} is a well-known puzzle
