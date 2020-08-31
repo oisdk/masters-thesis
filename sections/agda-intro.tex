@@ -1017,6 +1017,47 @@ mathematics, far from being constrained in comparison to classical, are
 technically \emph{more} capable.
 We can actually use systems to Agda to check and verify classical proofs just as
 much as we can constructive.
+\section{Computational Behaviour}
+Up until this point we have been suspiciously quiet on the issue of performance
+or efficiency.
+While everything we're doing is absolutely valid as a purely theoretical
+exercise, it is nonetheless interesting to ask what these proofs and programs
+perform like on a computer.
+
+The first thing to note is that Agda is a \emph{lazy} language.
+This means that expressions are not evaluated until they're needed.
+Take the following function:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Complexity.tex]{f-def}
+\end{agdalisting*}
+Since this function ignores its argument, Agda won't \emph{compute} its
+argument.
+If we called, for instance,
+\(\AgdaFunction{f}\;(\AgdaNumber{1000}\;\AgdaFunction{+}\;\AgdaNumber{1000})\),
+we wouldn't ever have to pay the cost of computing
+\(\AgdaNumber{1000}\;\AgdaFunction{+}\;\AgdaNumber{1000}\).
+
+It's important to note that this difference in performance is usually \emph{not}
+observable in actual computation.
+Unless we are working with coinductive types (which we will not do in this
+thesis), Agda's semantics are agnostic as to evaluation strategy.
+A program that terminates with lazy evaluation will also terminate with strict.
+It's just that one might take a much longer (but still finite!) amount of time
+to do so.
+
+The second thing to note is that, in order to make proofs easier, we often work
+with inefficient forms of certain data types.
+The natural numbers, for instance, we represent as basically a singly-linked
+list; there are no flat arrays to be found anywhere in Agda; and recursion
+(albeit tail-call optimised recursion) is the tool of choice for iterative
+computation.
+There is some help: in certain cases Agda will optimise the natural numbers to
+actual binary numbers (arbitrary precision Haskell integers), and Agda's purity
+allows for a certain degree of optimisation.
+Overall, though, unfortunately Agda is quite slow.
+Computing an expression like \(\AgdaBound{n}\;\AgdaFunction{+}\;\AgdaBound{m}\)
+will usually take \(\mathcal{O}(\AgdaBound{n})\) time, and there's not really a
+great way to get around it.
 
 %%% Local Variables:
 %%% mode: latex

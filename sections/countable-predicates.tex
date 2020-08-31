@@ -46,6 +46,10 @@ a split surjection from \agdambb{N}.
 \end{agdalisting*}
 From this we can derive decidable equality, just like we could with split
 enumerability. \todo{Explain better?}
+
+We also have equivalents to manifest enumerability, or even cardinal finiteness,
+in the countable setting: they are less interesting than split countability,
+however.
 \section{Closure}
 The closure proofs are where countability begins to differ from split
 enumerability.
@@ -54,8 +58,9 @@ that is additional.
 \subsection{Instances for Finite Types}
 Before we move on to the proper closure proofs, it is worth pointing out that
 all (non-empty) finite types are also countable.
-Split countability, like split enumerability, does not disallow duplicates.
-\todo{Include Proof}
+Split countability, like split enumerability, does not disallow duplicates: this
+means that for any non-empty type we can simply repeat one of its elements
+infinitely to produce a countability proof.
 \subsection{Closure Under \(\Sigma\)}
 The proof that split enumerability was closed under \AgdaDatatype{\(\Sigma\)}
 was quite straightforward:
@@ -147,38 +152,6 @@ show how simple its proof in Agda can be:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{cantor-diag}
 \end{agdalisting*}
-
-% \section{Closure}
-% We know that countable infinity is not closed under the exponential (function
-% arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
-% what's left.
-% \begin{theorem} \label{split-countability-sigma}
-%   Split countability is closed under \(\Sigma\).
-% \end{theorem}
-% We know that countable infinity is not closed under the exponential (function
-% arrow), so the only closure we need to prove is \(\Sigma\) to cover all of
-% what's left.
-% To do this we have to take a slightly different approach to the functions we
-% defined before.
-% Figure~\ref{pairings} illustrates the reason why: previously, we used the
-% depth-first product pairing for each support list.
-% This diverges if the first list is infinite, never exploring anything other than
-% the first element in the second list.
-% Instead, we use here the cantor pairing function, which performs a breadth-first
-% search of the pairings of both lists.
-
-% Finally, while we have lost certain closure proofs by allowing for infinite
-% types, we also \emph{gain} some: in particular the Kleene star.
-% \begin{theorem}
-%   Split countability is closed under Kleene star.
-%   \begin{equation}
-%     \aleph_0!(A) \rightarrow \aleph_0!(\mathbf{List}(A))
-%   \end{equation}
-% \end{theorem}
-% Again, this proof requires a particular pattern to ensure productivity.
-% The pattern here builds an intermediate stream \(\mathcal{KV}\) of non-empty
-% lists from the input support stream \(\mathit{xs}\), which is subsequently
-% flattened.
 
 %%% Local Variables:
 %%% mode: latex
