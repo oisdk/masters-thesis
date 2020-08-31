@@ -21,11 +21,8 @@ At first glance, HoTT seems like a perfect setting for category theory: the
 univalence axiom identifies isomorphisms with equality, a useful tool for
 category theory missing from MLTT.
 While this initial impression is broadly true, the construction of categories in
-HoTT is unfortunately quite complex and involved (much of the following is a
-summary of \citet[chapter 9]{hottbook}).
+HoTT is unfortunately quite complex and involved.
 
-\todo{references here are tricky, need to disentangle the contributions quite
-  precisely}
 Much of this section is simply a summary of parts of \citet[chapter
 9]{hottbook}.
 The formal proofs we provide are part translation of those proofs in that
@@ -34,7 +31,7 @@ chapter, part from \citep{iversenFredefoxCat2018}
 
 First, we need to think about the type of objects and arrows.
 We cannot, unfortunately, leave them unrestricted: because of the potential for
-higher homotopy in HoTT types \todo{This sentence is a tongue twister}, we have
+higher homotopy in HoTT types, we have
 to restrict the type of arrows to just the sets.
 This notion: that of a category with all the usual laws such that arrows are a
 set, is called a \emph{precategory}.
@@ -42,9 +39,9 @@ set, is called a \emph{precategory}.
   \ExecuteMetaData[agda/Categories.tex]{precategory}
 \end{agdalisting}
 We will use long arrows to refer to morphisms within a category:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Categories.tex]{morph-arrow}
-\end{agdalisting}
+\end{agdalisting*}
 
 From here, we can define a notion of isomorphisms.
 \begin{agdalisting}
@@ -63,9 +60,9 @@ Much of this work comes directly from \citet[chapter 10]{hottbook} and
 The formalisation, however, is novel, as far as we know.
 
 The objects are represented by a \(\Sigma\):
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Category.tex]{hset}
-\end{agdalisting}
+\end{agdalisting*}
 This will be quite similar to our objects for finite sets.
 
 Since sets in HoTT don't form a topos, there are quite a few smaller lemmas we
@@ -87,27 +84,26 @@ proofs to us.
 By proving that dependent products and sums are finite, we get the non-dependent
 cases for free.
 
-\begin{lemma} \label{split-enum-sigma} \todo{Convert to Agda}
+\begin{lemma} \label{split-enum-sigma}
   Split enumerability is closed under \(\Sigma\).
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-sigma}
-  \end{agdalisting}
+  \end{agdalisting*}
 \end{lemma}
 \begin{proof}
   Our task is to construct the two components of the output pair: the support
   list, and the cover proof.
   We'll start with the support list: this is constructed by taking the Cartesian
   product of the input support lists.
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{sup-sigma}
-  \end{agdalisting}
+  \end{agdalisting*}
   We use do notation here because we're working the list monad: this applies the
   latter function (\(ys\)) to every element of the list \(xs\), and concatenates
   the results.
 
   To show that this does indeed cover every element of the target type is a
-  little intricate, but not necessarily difficult. \todo{Should a proof of this
-    be included?}
+  little intricate, but not necessarily difficult.
 \end{proof}
 
 Next we'll look at closure under \(\Pi\).
@@ -125,43 +121,43 @@ furthermore of all the previous closure proofs.
 \begin{theorem} \label{split-enum-pi}
   Split enumerability is closed under dependent functions
   (\(\Pi\)-types).
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{pi-clos}
-  \end{agdalisting}
+  \end{agdalisting*}
 \end{theorem}
 \begin{proof}
   Let \(A\) be a split enumerable type, and \(U\) be a type family from \(A\),
   which is split enumerable over all points of \(A\).
 
   As \(A\) is split enumerable, we know that it is also manifestly Bishop finite
-  (lemma~\ref{split-enum-to-manifest-bishop}), and consequently we know \(A
-  \simeq \AgdaDatatype{Fin}\;n\), for some \(n\) (lemma~\ref{bishop-equiv}).
+  (Lemma~\ref{split-enum-to-manifest-bishop}), and consequently we know \(A
+  \simeq \AgdaDatatype{Fin}\;n\), for some \(n\) (Lemma~\ref{bishop-equiv}).
   We can therefore replace all occurrences of \(A\) with \(\AgdaDatatype{Fin}\;n\),
   changing our goal to:
-  \begin{equation}
+  \begin{equation*}
     \frac{
       \AgdaDatatype{\ensuremath{\mathcal{E}!}}\;(\AgdaDatatype{Fin}\;n) \; \; \; \left((x : \AgdaDatatype{Fin}\;n) \rightarrow \AgdaDatatype{\ensuremath{\mathcal{E}!}}\;\left( U\;x \right)\right)
     }{
       \AgdaDatatype{\ensuremath{\mathcal{E}!}}\left((x : \AgdaDatatype{Fin}\;n) \rightarrow U\;x\right)
     }
-  \end{equation}
+  \end{equation*}
   
   We then define the type of \(n\)-tuples over some type family.
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-def}
-  \end{agdalisting}
+  \end{agdalisting*}
   We can show that this type is equivalent to functions (proven in our formalisation):
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-iso}
-  \end{agdalisting}
+  \end{agdalisting*}
   And therefore we can simplify again our goal to the following:
-  \begin{equation}
+  \begin{equation*}
     \frac{
       \AgdaDatatype{\ensuremath{\mathcal{E}!}}\;(\AgdaDatatype{Fin}\;n) \; \; \; ((x : \AgdaDatatype{Fin}\;n) \rightarrow \AgdaDatatype{\ensuremath{\mathcal{E}!}}\left( U\;x \right))
     }{
       \AgdaFunction{\ensuremath{\mathcal{E}!}}\;\left(\AgdaFunction{Tuple}\;n\;U\right)
     }
-  \end{equation}
+  \end{equation*}
   
   We can prove this goal by showing that \(\AgdaFunction{Tuple}\;n\;U\) is split
   enumerable: it is made up of finitely many products of points of \(U\), which
@@ -170,58 +166,60 @@ furthermore of all the previous closure proofs.
   enumerable types is itself split enumerable, proving our goal.
 \end{proof}
 \subsection{Closure on Cardinal Finiteness}
-Since we don't have a function of type \(\mathcal{C}(A) \rightarrow
+Since we don't have a function of type \(\agdacal{C}\;A \rightarrow
 \AgdaDatatype{\ensuremath{\mathcal{B}}}\;A\), closure proofs on \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\) do not transfer over to
-\(\mathcal{C}\) trivially (unlike with \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) and \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\)).
-The cases for \(\bot\), \(\top\), and \(\AgdaDatatype{Bool}\) are simple to adapt: we
+\agdacal{C} trivially (unlike with \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) and \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\)).
+The cases for \agdabot, \agdatop, and \(\AgdaDatatype{Bool}\) are simple to adapt: we
 can just propositionally truncate their Bishop finiteness proof.
 
-Non-dependent operators like \(\times\), \(\uplus\), and \(\rightarrow\) are
-also relatively straightforward: since \(\AgdaDatatype{\ensuremath{\lVert\_\rVert}}\) forms a monad, we
-can apply \(n\)-ary functions to values inside it, combining them together.
-\begin{agdalisting}
+Non-dependent operators like \AgdaFunction{\(\times\)},
+\AgdaFunction{\(\uplus\)}, and \(\rightarrow\) are also relatively
+straightforward: since \(\AgdaDatatype{\ensuremath{\lVert\_\rVert}}\) forms a
+monad, we can apply \(n\)-ary functions to values inside it, combining them
+together.
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{times-clos-sig}
-\end{agdalisting}
+\end{agdalisting*}
 Into a truncated context:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{times-clos-impl}
-\end{agdalisting}
+\end{agdalisting*}
 
 
 Unfortunately, for the dependent type formers like \(\Sigma\) and \(\Pi\), the
 same trick does not work.
 We have closure proofs like:
-\begin{equation}
+\begin{equation*}
   \frac{
     \AgdaDatatype{\ensuremath{\mathcal{B}}}\;A \; \; \; ((x : A) \rightarrow \AgdaDatatype{\ensuremath{\mathcal{B}}}\;(U\;x))
   }{
     \AgdaDatatype{\ensuremath{\mathcal{B}}}\;((x : A) \rightarrow U\;x)
   }
-\end{equation}
+\end{equation*}
 If we apply the monadic truncation trick we can derive closure proofs like the
 following:
-\begin{equation}
+\begin{equation*}
   \frac{
     \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;A \;\AgdaDatatype{\ensuremath{\rVert}} \; \; \; \AgdaDatatype{\ensuremath{\lVert}}\; ((x : A) \rightarrow \AgdaDatatype{\ensuremath{\mathcal{B}}}\;(U\;x)) \;\AgdaDatatype{\ensuremath{\rVert}}
   }{
     \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;((x : A) \rightarrow U\;x) \;\AgdaDatatype{\ensuremath{\rVert}}
   }
-\end{equation}
+\end{equation*}
 However our \emph{desired} closure proof is the following:
-\begin{equation}
+\begin{equation*}
   \frac{
     \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;A \;\AgdaDatatype{\ensuremath{\rVert}} \; \; \; ((x : A) \rightarrow \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;(U\;x) \;\AgdaDatatype{\ensuremath{\rVert}})
   }{
     \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;((x : A) \rightarrow U\;x) \;\AgdaDatatype{\ensuremath{\rVert}}
   }
-\end{equation}
+\end{equation*}
 They don't match!
 
 The solution would be to find a function of the following type:
-\begin{equation}
+\begin{equation*}
   ((x : A) \rightarrow \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;(U\;x) \;\AgdaDatatype{\ensuremath{\rVert}}) \rightarrow
   \AgdaDatatype{\ensuremath{\lVert}}\; (x : A) \rightarrow \AgdaDatatype{\ensuremath{\mathcal{B}}}\;(U\;x) \;\AgdaDatatype{\ensuremath{\rVert}}
-\end{equation}
+\end{equation*}
 However we might be disheartened at realising that this is a required goal: the
 above equation is \emph{extremely} similar to the axiom of choice!
 \begin{definition}[Axiom of Choice]
@@ -229,16 +227,17 @@ above equation is \emph{extremely} similar to the axiom of choice!
   3.8.2]{hottbook}.
   For any set \(A\), and a type family \(U\) which is a set at all the points
   of \(A\), the following function exists:
-  \begin{equation}
+  \begin{equation*}
     \left( (x : A) \rightarrow  \AgdaDatatype{\ensuremath{\lVert}}\; U(x) \;\AgdaDatatype{\ensuremath{\rVert}} \right) \rightarrow \AgdaDatatype{\ensuremath{\lVert}}\; (x : A) \rightarrow U(x) \;\AgdaDatatype{\ensuremath{\rVert}}
-  \end{equation}
+  \end{equation*}
 \end{definition}
 Luckily the axiom of choice \emph{does} hold for cardinally finite types,
 allowing us to prove the following:
 \begin{lemma}
-  \begin{equation}
+  The axiom of choice holds for finite sets.
+  \begin{equation*}
     \agdacal{C}\;A \rightarrow ((x : A) \rightarrow \AgdaDatatype{\ensuremath{\lVert}}\; U(x) \;\AgdaDatatype{\ensuremath{\rVert}}) \rightarrow \AgdaDatatype{\ensuremath{\lVert}}\; (x : A) \rightarrow U(x) \;\AgdaDatatype{\ensuremath{\rVert}}
-  \end{equation}
+  \end{equation*}
 \end{lemma}
 \begin{proof}
   Let \(A\) be a cardinally finite type, \(U\) be a type family on \(A\), and
@@ -247,7 +246,7 @@ allowing us to prove the following:
   First, since our goal is itself propositionally truncated, we have access to
   values under truncations: put another way, in the context of proving our goal,
   we can rely on the fact that \(A\) is manifestly Bishop finite.
-  Using the same technique as we did in lemma~\ref{split-enum-pi}, we can switch
+  Using the same technique as we did in Lemma~\ref{split-enum-pi}, we can switch
   from working with dependent functions from \(A\) to \(n\)-tuples, where \(n\)
   is the cardinality of \(A\).
   This changes our goal to the following:
@@ -261,7 +260,7 @@ allowing us to prove the following:
 \end{proof}
 
 
-This gets us all of the necessary closure proofs on \(\mathcal{C}\).
+This gets us all of the necessary closure proofs on \agdacal{C}.
 \section{The Absence of the Subobject Classifier}
 It's a little unsatisfying that our topos construction has so many caveats: we
 have to prove a lot of small, uninteresting lemmas just to get to a
@@ -284,9 +283,9 @@ following notation:
 This is the subset of elements in \(A\) which satisfy some predicate \(P\).
 
 Type theoretically, the way to express the same would be
-\(\AgdaDatatype{\(\Sigma\)}\;A\;P\): if we wanted to describe the subset of the
-natural numbers smaller than 10 we would write
-\(\AgdaDatatype{\(\Sigma\)}\;\agdambb{N}\;\lambda\;\AgdaBound{n}\rightarrow\AgdaBound{n}\;\AgdaFunction{\(<\)}\;\AgdaNumber{10}\).
+\(\AgdaDatatype{\(\Sigma\)}\;A\;P\): if we wanted to describe the subset of \agdambb{N}
+smaller than 10 we would write
+\mbox{\(\AgdaDatatype{\(\Sigma\)[}\;\AgdaBound{n}\;\AgdaDatatype{:}\;\agdambb{N}\;\AgdaDatatype{]}\;\AgdaBound{n}\;\AgdaFunction{\(<\)}\;\AgdaNumber{10}\)}.
 In general, however, this type holds too many elements to properly classify the
 subsets of the larger set: there may be more than one inhabitant of \(P\;x\) for
 any given \(x\).
@@ -319,78 +318,6 @@ which does \emph{not} imply the paradox: propositional resizing.
 \end{definition}
 If propositional resizing holds, then we \emph{can} in fact construct a
 subobject classifier, for both sets and finite sets. \todo{Mention lem?}
-
-
-% \begin{agdalisting} \label{filter-subobject}
-%   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{subobject}
-% \end{agdalisting}
-
-
-% \section{Closure}
-% For the first three closure proofs, we only consider split enumerability:
-% as it is the strongest of the finiteness predicates, we can derive the other
-% closure proofs from it.
-
-% \section{The Category of Finite Sets}
-% HoTT and CuTT seem to be especially suitable settings for formalisations of
-% category theory.
-% The univalence axiom in particular allows us to treat categorical isomorphisms
-% as equalities, saving us from the dreaded ``setoid hell''.
-
-% We follow \cite[chapter 9]{hottbook} in its treatment of
-% categories in HoTT, and in its proof that sets do indeed form a category.
-% We will first briefly go through the construction of the category
-% \(\mathit{Set}\), as it differs slightly from the usual method in type theory.
-
-% First, the type of objects and arrows:
-% \begin{alignat}{3}
-%   &\text{Obj}_\mathit{Set}      &&\coloneqq \Sigma(x : \mathbf{Type}) , \text{isSet}(x) \\
-%   &\text{Hom}_\mathit{Set}(x , y) &&\coloneqq  \text{fst}(x) \rightarrow \text{fst}(y)
-% \end{alignat}
-% As the type of objects makes clear, we have already departed slightly from the
-% simpler \(\text{Obj}_\mathit{Set} \coloneqq \mathbf{Type}\) way of doing things:
-% of course we have to, as HoTT allows non-set types.
-% Furthermore, after proving the usual associativity and identity laws for
-% composition (which are definitionally true in this case), we must further show
-% \(\text{isSet}(\text{Hom}_\mathit{Set}(x,y))\); even then we only have a
-% precategory.
-
-% To show that \(\mathit{Set}\) is a category, we must show that categorical
-% isomorphisms are equivalent to equivalences.
-% In a sense, we must give a univalence rule for the category we are working in.
-
-% We have provided formal proofs that \(\mathit{Set}\) does indeed form a
-% category, and the following:
-% \begin{theorem}[The Category of Finite Sets]
-%   Finite sets form a category in HoTT when defined like so:
-%   \begin{equation}
-%     \begin{alignedat}{3}
-%       &\text{Obj}_\mathit{FinSet}      &&\coloneqq \Sigma(x : \mathbf{Type}) , \mathcal{C}(x) \\
-%       &\text{Hom}_\mathit{FinSet}(x , y) &&\coloneqq  \text{fst}(x) \rightarrow \text{fst}(y)
-%     \end{alignedat}
-%   \end{equation}
-% \end{theorem}
-% \section{The \(\Pi\)-pretopos of Finite Sets}
-% For this proof, we follow again the proof that \(\mathit{Set}\) forms a \(\Pi
-% W\)-pretopos from \cite[chapter 10]{hottbook} and
-% \citep{rijkeSetsHomotopyType2015}.
-% The difference here is that clearly we do not have access to \(W\)-types, as
-% they would permit infinitary structures.
-
-% We first must show that \(\mathit{Set}\) has an initial object and finite,
-% disjoint sums, which are stable under pullback.
-% We also must show that \(\mathit{Set}\) is a regular category with effective
-% quotients.
-% We now have a pretopos: the presence of \(\Pi\) types make it a
-% \(\Pi\)-pretopos.
-
-% We have proven the above statements for both \(\mathit{Set}\) and
-% \(\mathit{FinSet}\).
-% As far as we know, this is the first formalisation of either.
-% \begin{theorem} \label{finite-topos}
-%   The category of finite sets, \(\mathit{FinSet}\), forms a \(\Pi\)-pretopos.
-% \end{theorem}
-
 
 %%% Local Variables:
 %%% mode: latex

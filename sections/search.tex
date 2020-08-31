@@ -9,9 +9,9 @@ systematic, automated way.
 As it happens, this kind of search is a very common method of proof automation
 in dependently-typed languages like Agda.
 Proofs of statements like ``the following function is associative''
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{and-def}
-\end{agdalisting}
+\end{agdalisting*}
 can be tedious: the associativity proof in particular would take \(2^3 = 8\)
 cases.
 This is unacceptable!
@@ -19,12 +19,6 @@ There are only finitely many cases to examine, after all, and we're
 \emph{already} on a computer: why not automate it?
 A proof that \(\AgdaDatatype{Bool}\) is finite can get us much of the way to a
 library to do just that.
-\todo{These examples so far are pretty focused on the bool associativity
-  example.
-  I'm not sure I can think of a good way to put countdown in instead: will we
-  try switch?
-  Or will we keep the bool for this short bit?
-  }
 
 Similar automation machinery can be leveraged to provide search algorithms for
 certain ``logic programming''-esque problems.
@@ -62,9 +56,9 @@ type with the same cardinality.
 Secondly our proof search can range over functions: we could, for instance, have
 asked the prover to find if \emph{any} function over \(\AgdaDatatype{Bool}\) is
 associative, and if so return it to us.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{some-assoc}
-\end{agdalisting}
+\end{agdalisting*}
 The usefulness of which is dubious, but we will see a more interesting
 application soon.
 \section{Omniscience}
@@ -79,9 +73,9 @@ In order to turn this into a proof that \AgdaFunction{∧} is associative we nee
 \(\AgdaDatatype{Dec}\;(\forall \; x \; y \; z \rightarrow (x\;\AgdaFunction{∧}\;y)\;\AgdaFunction{∧}\;z\;\AgdaFunction{≡}\;x\;\AgdaFunction{∧}\;(y\;\AgdaFunction{∧}\;z))\).
 The ability to do this is described formally by the notion of
 ``Exhaustibility''.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Relation/Nullary/Omniscience.tex]{exhaustible}
-\end{agdalisting}
+\end{agdalisting*}
 We say a type \(A\) is exhaustible if, for any decidable predicate \(P\) on
 \(A\), the universal quantification of the predicate is decidable.
 
@@ -90,9 +84,9 @@ associativity, but it is in fact not strong enough to find individual
 representatives of a type which support some property.
 For that we need the more well-known related property of
 \emph{omniscience}.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Relation/Nullary/Omniscience.tex]{omniscient}
-\end{agdalisting}
+\end{agdalisting*}
 The ``limited principle of omniscience''
 \citep{bishopFoundationsConstructiveAnalysis1967} is a classical principle which
 says that omniscience holds for all sets.
@@ -100,19 +94,18 @@ It doesn't hold constructively, of course: it lies a little bit below LEM in
 terms of its non-constructiveness, given that it can be derived from LEM but LEM
 cannot be derived from it.
 
-Omniscience implies exhaustibility: we can use the usual rule of \todo{what is
-  this called/from again?} \(\neg \exists x. P(x) \iff \forall x. \neg P(x) \)
+Omniscience implies exhaustibility: we can use the usual rule of \(\neg \exists x. P(x) \iff \forall x. \neg P(x) \)
 to turn omniscience for some predicate \(P\) into exhaustibility for some
 predicate \(\neg \neg P\).
 Usually we don't have double negation elimination constructively, but since
 \(P\) is decidable it's actually present in this case:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Relation/Nullary/Decidable/Properties.tex]{dec-double-neg-elim}
-\end{agdalisting}
+\end{agdalisting*}
 All together, this gives us the following proof:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Relation/Nullary/Omniscience.tex]{omniscient-to-exhaustible}
-\end{agdalisting}
+\end{agdalisting*}
 
 Our focus here is on those types for which omniscience \emph{does} hold,
 which includes the (ordered) finite types.
@@ -136,15 +129,277 @@ We won't provide these full proofs here, since they are rather tedious and don't
 provide much insight.
 
 Finally, there is a form of omniscience which works with Kuratowski finiteness:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Relation/Nullary/Omniscience.tex]{prop-omniscient}
-\end{agdalisting}
+\end{agdalisting*}
 By truncating the returned \AgdaDatatype{\ensuremath{\Sigma}} we don't reveal
 which \(A\) we've chosen which satisfies the predicate: this means that it can
 be pulled out of the Kuratowski finite subset without issue.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-prop-omniscient}
+\end{agdalisting*}
+\section{Proof Automation}
+So we have shown now how powerful the library is for proof search: it can
+search for functions, subsets of types, products, and so on, completely
+verifiable.
+In this section we will present the more user-friendly interface to the library,
+designed to be used to automate away tedious proofs in an easy way.
+\subsection{How to make the Typechecker do Automation}
+For this prover we will not resort to reflection or similar techniques: instead,
+we will trick the type checker to do our automation for us.
+This is a relatively common technique, although not so much outside of Agda, so
+we will briefly explain it here.
+
+To understand the technique we should first notice that some proof automation
+\emph{already} happens in Agda, like the following:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{obvious}
+\end{agdalisting*}
+The type checker does not require us to manually explain each step of evaluation
+of
+\(\AgdaInductiveConstructor{true}\;\AgdaFunction{∧}\;\AgdaInductiveConstructor{false}\).
+While it's not a particularly impressive example of automation, it does nonetheless
+demonstrate a principle we will exploit: closed terms will compute to a normal
+form if they're needed to type check.
+The type checker will perform \(\beta\)-reduction as much as it can.
+
+So our task is to rewrite proof obligations like the one in
+Equation~\ref{bool-assoc-auto-proof} into ones which can reduce completely. 
+As it turns out, we have already described the type of proofs which can ``reduce
+completely'': \emph{decidable} proofs.
+If we have a decision procedure over some proposition \(P\) we can run that
+decision during type checking, because the decision procedure itself is a proof
+that the decision will terminate.
+In code, we capture this idea with the following pair of functions:
+\begin{multicols}{2}
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{is-true}
+  \end{agdalisting*} \columnbreak
+  \begin{agdalisting*}
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{from-true}
+  \end{agdalisting*}
+\end{multicols}
+The first is a function which derives a type from whether a decision is
+successful or not.
+This function is important because if we use the output of this type at any
+point we will effectively force the unifier to run the decision computation.
+The second takes---as an implicit argument---an inhabitant of the type generated
+from the first, and uses it to prove that the decision can only be true, and the
+extracts the resulting proof from that decision.
+All in all, we can use it like this:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{extremely-obvious}
+\end{agdalisting*}
+This technique will allow us to automatically compute any decidable predicate.
+\subsection{Building an Interface}
+We will next look at a syntax and interface to this proof technique.
+It starts with the following two functions:
+
+\begin{minipage}{\linewidth}
+  \begin{multicols}{2}
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{forall-ask}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-ask}
+    \end{agdalisting*}
+  \end{multicols}
+\end{minipage}
+Clearly they're just restatements of exhaustibility and omniscience.
+However, we can combine these functions with what we've constructed above to
+create an automation procedure for each:
+
+\begin{minipage}{\linewidth}
+  \begin{multicols}{2}
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{forall-zap}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-zap}
+    \end{agdalisting*}
+  \end{multicols}
+\end{minipage}
+
+This automation procedure allows us to state the property succinctly, and have
+the type checker go and run the decision procedure to solve it for us.
+Here's an example of its use:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{pre-inst-proof}
+\end{agdalisting*}
+
+\subsection{Instances}
+One bit of cruft in the above proof is the need to specify the particular
+finiteness proof for bools.
+While this isn't any great burden in this case, it of course becomes more
+difficult in more complex circumstances.
+
+To solve this we can use Agda's instance search.
+This changes the definitions of
+our automation functions to the following:
+
+\begin{minipage}{\linewidth}
+  \begin{multicols}{2}
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{forall-zap-inst}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-zap-inst}
+    \end{agdalisting*}
+  \end{multicols}
+\end{minipage}
+And this also changes the idempotency proof to the following:
+\begin{agdalisting}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{with-inst-proof}
 \end{agdalisting}
+
+Again, there's not any great revelation in ease of use here, but more complex
+examples really benefit.
+Especially when we build the full set of instances: any expression built out of
+products and sums will automatically have an instance.
+This will allow us, for instance, to perform proof search over tuples, which
+gives us some degree of automation for proof search in tuples.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{and-comm}
+\end{agdalisting*}
+
+These instances aren't limited to non-dependent sums and products, either: for
+\(\Sigma\), for instance, we already have a proof that
+\(\AgdaFunction{\(\mathcal{E}!\)}\;A \rightarrow (\forall x \rightarrow
+\AgdaFunction{\(\mathcal{E}!\)}\;(B\;x)) \rightarrow
+\AgdaFunction{\(\mathcal{E}!\)}\;(\AgdaDatatype{\(\Sigma\)}\;A\;B)\).
+Since \(A\) is finite, we can construct a finite constraint that ``\(B\) is
+finite at all points of \(A\)'', and use that to statically build our instance.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{finite-sigma-inst}
+\end{agdalisting*}
+
+The \AgdaFunction{it} function here is a clever helper function.
+It's defined like so:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Instance.tex]{it-def}
+\end{agdalisting*}
+Basically it searches for an instance for the type in the hole that it's put
+into: it's a way of asking Agda to ``find an instance which fits here''.
+\subsection{Generic Currying and Uncurrying}
+While we have arguably removed the bulk of the boilerplate from the automated
+proofs, there is still the case of the ugly noise of currying and uncurrying.
+In this section, we take inspiration from
+\citet{allaisGenericLevelPolymorphic2019} to develop a small interface to generic
+\(n\)-ary functions and properties.
+We will describe it briefly here.
+
+The basic idea of currying and uncurrying generically is to allow ourselves to
+work with a generic and flexible representation of function arguments which can
+be manipulated more easily than a simple function itself.
+Our first task, then, is to define that representation of function arguments.
+As in \citet{allaisGenericLevelPolymorphic2019}, our representation is a tuple
+which is in some sense a ``second order'' indexed type.
+By second order here we mean that it is an indexed type indexed by another
+indexed type.
+The reason for this complexity is that our solution is to be fully
+level-polymorphic.
+To start, we define a type representing a vector of universe levels:
+
+\begin{minipage}{\linewidth}
+  \begin{multicols}{2}
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Data/Product/NAry.tex]{levels}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Data/Product/NAry.tex]{max-level}
+    \end{agdalisting*}
+  \end{multicols}
+\end{minipage}
+
+This will be used to assign our tuple the correct universe level generically.
+Next, we define the list of types (this type is indexed by the list of universe
+levels of each type):
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/NAry.tex]{types}
+\end{agdalisting*}
+And finally, the tuple, indexed by its list of types:
+
+\begin{minipage}{\linewidth}
+  \begin{multicols}{2}
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Data/Product/NAry.tex]{tuple-plus}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
+      \ExecuteMetaData[agda/Data/Product/NAry.tex]{tuple}
+    \end{agdalisting*}
+  \end{multicols}
+\end{minipage}
+The reason for two separate functions here is to avoid the
+\(\AgdaDatatype{\(\top\)}\)-terminated tuples we would need if we just had one.
+This means that, for instance, to represent a tuple of a \AgdaDatatype{Bool} and
+\agdambb{N} we can write
+\((\AgdaInductiveConstructor{true}\;\AgdaInductiveConstructor{,}\;\AgdaNumber{2})\)
+instead of 
+\((\AgdaInductiveConstructor{true}\;\AgdaInductiveConstructor{,}\;\AgdaNumber{2}\;\AgdaInductiveConstructor{,}\;\AgdaInductiveConstructor{tt})\).
+
+Next we turn to how we will represent functions.
+In Agda there are three ways to pass function arguments: explicitly,
+implicitly, and as an instance.
+We will represent these three different versions with a data type:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/NAry.tex]{arg-form}
+\end{agdalisting*}
+And then we can make a type for functions in the general sense: a type which has
+this sum type as a parameter.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/NAry.tex]{generic-function}
+\end{agdalisting*}
+And we can show that this is isomorphic to a normal function:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/Nary.tex]{generic-function-iso}
+\end{agdalisting*}
+
+This of course is only a representation of \emph{non}-dependent functions.
+Dependent functions are defined in a similar way:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/NAry.tex]{pi-iso}
+\end{agdalisting*}
+
+Using both of these things, we can now define a generic type for multi-argument
+functions:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/NAry.tex]{multi-generic}
+\end{agdalisting*}
+We can also define multi-argument dependent functions in a similar way.
+Similarly to how we had to define two tuple types in order to avoid the
+\(\top\)-terminated tuples, we have two definitions for multi-argument dependent
+functions.
+We only include the nonempty version here for brevity.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/NAry.tex]{pi-arrs-plus}
+\end{agdalisting*}
+
+Finally, this all allows us to define an isomorphism between generic
+multi-argument dependent functions and their uncurried forms.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Data/Product/NAry.tex]{full-iso}
+\end{agdalisting*}
+
+The use of all of this is that we can take the user-supplied curried version of
+a function and transform it into a version which takes instance arguments for
+each of the types.
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-q-n}
+\end{agdalisting*}
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-zap-n}
+\end{agdalisting*}
+While the type signatures involved are complex, the usage is not.
+Finally, here is how we can automate the proof of commutativity fully:
+\begin{agdalisting*}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{and-comm-auto}
+\end{agdalisting*}
+
+With that, we now have a simple interface to a proof search library, which can
+be used to automate away certain tedious proofs.
+In the next section we will leverage some parts of this library to solve a
+relatively complex problem: the countdown problem.
+\newpage
 \section{Countdown}
 \input{figures/countdown-transformation}
 The Countdown problem~\citep{huttonCountdownProblem2002} is a well-known puzzle
@@ -225,23 +480,24 @@ Similarly, to pick \(n\) operators requires us only to provide a vector of \(n\)
 operators.
 And we can prove in a straightforward way that a vector of finite things is
 itself finite.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{vec-fin}
-\end{agdalisting}
+\end{agdalisting*}
 We've already shown that there are finitely many booleans, the fact that there
 are finitely many operators is similarly simple to prove:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{op-fin}
-\end{agdalisting}
+\end{agdalisting*}
+
 \subsection{Finite Permutations}
 A more complex, and interesting, step of the transformation is the first step
 (Fig.~\ref{countdown-permutation}), where we need to specify the permutation to
 apply to the chosen numbers.
 
 Our first attempt at representing permutations might look something like this:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{wrong-perm}
-\end{agdalisting}
+\end{agdalisting*}
 the idea is that \(\AgdaDatatype{Perm}\;n\) represents a permutation of \(n\)
 things, as a function from positions to positions.
 Unfortunately such a simple answer won't work: there are no restrictions on the
@@ -251,13 +507,13 @@ position into the same output.
 What we actually need is not just a function between positions, but an
 \emph{isomorphism} between them.
 In types:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{iso-perm}
-\end{agdalisting}
+\end{agdalisting*}
 Where an isomorphism is defined as follows:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{isomorphism}
-\end{agdalisting}
+\end{agdalisting*}
 \todo{Should this isomorphism definition be put earlier in the intro with the
   equivalences etc?}
 While it may look complex, this term is actually composed of individual
@@ -270,9 +526,9 @@ We take a pair of them: pairs of finite things are \emph{also} finite
 To get the next two components we can filter to the subobject: this requires
 these predicates to be decidable. \todo{Need to do filter subobject in topos section}
 We will construct a term of the following type:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{dec-type}
-\end{agdalisting}
+\end{agdalisting*}
 So can we construct such a term? Yes!
 
 We basically need to construct decidable equality for functions between
@@ -281,9 +537,9 @@ the fact that such functions are themselves finite.
 
 All in all we can now prove that the isomorphism, and by extension the
 permutation, is finite:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{iso-finite}
-\end{agdalisting}
+\end{agdalisting*}
 
 Unfortunately this implementation is too slow to be useful.
 As nice and declarative as it is, fundamentally it builds a list of all possible
@@ -294,21 +550,20 @@ We will instead use a factoriadic encoding: this is a relatively simple encoding
 of permutations which will reduce our time to a blazing fast
 \(\mathcal{O}(n!)\).
 It is expressed in Agda as follows:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{perm-def}
-\end{agdalisting}
+\end{agdalisting*}
 It is a vector of positions, each represented with a \(\AgdaDatatype{Fin}\).
 Each position can only refer to the length of the tail of the list at that
 point: this prevents two input positions mapping to the same output point, which
 was the problem with the naive encoding we had previously.
 And it also has a relatively simple proof of finiteness:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{perm-fin}
-\end{agdalisting}
+\end{agdalisting*}
 \subsection{Parenthesising}
 Our next step is figuring out a way to encode the parenthesisation of the
-expression (Fig.~\ref{countdown-parens}). \todo{There's no way
-  ``parenthesisation'' is a real word}
+expression (Fig.~\ref{countdown-parens}).
 At this point of the transformation, we already have our numbers picked out, we
 have ordered them a certain way, and we have also selected the operators we're
 interested in.
@@ -332,31 +587,30 @@ That's what we will figure out in this section, and what we will prove finite.
 One way to approach the problem is with a binary tree.
 A binary tree with \(n\) leaves corresponds in a straightforward way to a
 parenthesisation of \(n\) numbers (Fig.~\ref{countdown-parens}).
-\todo{Tree diagram? Or link to previous tree?}
 This doesn't get us much closer to a finiteness proof, however: for that we will
 need to rely on \emph{Dyck} words.
 \begin{definition}[Dyck words]
   A Dyck word is a string of balanced parentheses.
   In Agda, we can express it as the following:
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Dyck.tex]{dyck-def}
-  \end{agdalisting}
-  A fully balanced string of \(n\) parentheses has the type
+  \end{agdalisting*}
+  A fully balanced string of \(n\) pairs of parentheses has the type
   \(\AgdaDatatype{Dyck}\;\AgdaInductiveConstructor{zero}\;n\).
   Here are some example strings:
   \begin{multicols}{2}
-    \begin{agdalisting}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Dyck.tex]{dyck-0-2}
-    \end{agdalisting}
-    \begin{agdalisting}
+    \end{agdalisting*}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Dyck.tex]{dyck-0-3}
-    \end{agdalisting}
+    \end{agdalisting*}
   \end{multicols}
   The first parameter on the type represents the amount of unbalanced closing
   parens, for instance:
-  \begin{agdalisting}
+  \begin{agdalisting*}
     \ExecuteMetaData[agda/Dyck.tex]{dyck-1-2}
-  \end{agdalisting}
+  \end{agdalisting*}
 \end{definition}
 
 Already Dyck words look easier to prove finite than straight binary trees, but
@@ -366,25 +620,25 @@ As it happens, Dyck words of length \(2n\) are isomorphic to binary trees with
 \(n-1\) leaves, but we only need to show this relation in one direction: from
 Dyck to binary tree.
 To demonstrate the algorithm we'll use a simple tree definition:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Dyck.tex]{tree-simpl-def}
-\end{agdalisting}
+\end{agdalisting*}
 The algorithm itself is quite similar to stack-based parsing algorithms.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Dyck.tex]{from-dyck}
-\end{agdalisting}
+\end{agdalisting*}
 \subsection{Putting It All Together}
 At this point we have each of the four components of the transformation defined.
 From this we can define what an expression is:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{expr-def}
-\end{agdalisting}
+\end{agdalisting*}
 Notice that we don't allow expressions with no numbers.
 
 The proof that this type is finite mirrors its definition closely:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{expr-finite}
-\end{agdalisting}
+\end{agdalisting*}
 \subsection{Filtering to Correct Expressions}
 We now have a way to construct, formally, every expression we can generate from
 a given list of numbers.
@@ -398,286 +652,29 @@ expression like so:
 
 \begin{minipage}{\linewidth}
   \begin{multicols}{2}
-    \begin{agdalisting}
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Countdown.tex]{eval}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
+    \end{agdalisting*} \columnbreak
+    \begin{agdalisting*}
       \ExecuteMetaData[agda/Countdown.tex]{app-op}
-    \end{agdalisting}
-  \end{multicols}
+    \end{agdalisting*}
+  \end{multicols} \vspace{\baselineskip}
 \end{minipage}
 
 With this all together, we can finally write down the type of all solutions to a
 given countdown problem.
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{solution-type}
-\end{agdalisting}
+\end{agdalisting*}
 And, because the predicate here is decidable and a mere proposition, we can
 prove that there are finitely many solutions:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{finite-solution}
-\end{agdalisting}
+\end{agdalisting*}
 And we can apply this to a particular problem like so:
-\begin{agdalisting}
+\begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{example-solution}
-\end{agdalisting}
-\section{Proof Automation}
-So we have shown now how powerful the library is for proof search: it can
-search for functions, subsets of types, products, and so on, completely
-verifiable.
-In this section we will present the more user-friendly interface to the library,
-designed to be used to automate away tedious proofs in an easy way.
-\subsection{How to make the Typechecker do Automation}
-For this prover we will not resort to reflection or similar techniques: instead,
-we will trick the type checker to do our automation for us.
-This is a relatively common technique, although not so much outside of Agda, so
-we will briefly explain it here.
-
-To understand the technique we should first notice that some proof automation
-\emph{already} happens in Agda, like the following:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{obvious}
-\end{agdalisting}
-The type checker does not require us to manually explain each step of evaluation
-of
-\(\AgdaInductiveConstructor{true}\;\AgdaFunction{∧}\;\AgdaInductiveConstructor{false}\).
-While it's not a particularly impressive example of automation, it does nonetheless
-demonstrate a principle we will exploit: closed terms will compute to a normal
-form if they're needed to type check.
-The type checker will perform \(\beta\)-reduction as much as it can.
-
-So our task is to rewrite proof obligations like the one in
-Equation~\ref{bool-assoc-auto-proof} into ones which can reduce completely. 
-As it turns out, we have already described the type of proofs which can ``reduce
-completely'': \emph{decidable} proofs.
-If we have a decision procedure over some proposition \(P\) we can run that
-decision during type checking, because the decision procedure itself is a proof
-that the decision will terminate.
-In code, we capture this idea with the following pair of functions:
-\begin{multicols}{2}
-  \begin{agdalisting}
-    \ExecuteMetaData[agda/Snippets/Bool.tex]{is-true}
-  \end{agdalisting} \columnbreak
-  \begin{agdalisting}
-    \ExecuteMetaData[agda/Snippets/Bool.tex]{from-true}
-  \end{agdalisting}
-\end{multicols}
-The first is a function which derives a type from whether a decision is
-successful or not.
-This function is important because if we use the output of this type at any
-point we will effectively force the unifier to run the decision computation.
-The second takes---as an implicit argument---an inhabitant of the type generated
-from the first, and uses it to prove that the decision can only be true, and the
-extracts the resulting proof from that decision.
-All in all, we can use it like this:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{extremely-obvious}
-\end{agdalisting}
-This technique will allow us to automatically compute any decidable predicate.
-\subsection{Building an Interface}
-We will next look at a syntax and interface to this proof technique.
-It starts with the following two functions:
-
-\begin{minipage}{\linewidth}
-  \begin{multicols}{2}
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{forall-ask}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-ask}
-    \end{agdalisting}
-  \end{multicols}
-\end{minipage}
-Clearly they're just restatements of exhaustibility and omniscience.
-However, we can combine these functions with what we've constructed above to
-create an automation procedure for each:
-
-\begin{minipage}{\linewidth}
-  \begin{multicols}{2}
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{forall-zap}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-zap}
-    \end{agdalisting}
-  \end{multicols}
-\end{minipage}
-
-This automation procedure allows us to state the property succinctly, and have
-the type checker go and run the decision procedure to solve it for us.
-Here's an example of its use:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{pre-inst-proof}
-\end{agdalisting} \todo{Include counterexample stuff?}
-
-\subsection{Instances}
-One bit of cruft in the above proof is the need to specify the particular
-finiteness proof for bools.
-While this isn't any great burden in this case, it of course becomes more
-difficult in more complex circumstances.
-
-To solve this we can use Agda's instance search.
-This changes the definitions of
-our automation functions to the following:
-
-\begin{minipage}{\linewidth}
-  \begin{multicols}{2}
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{forall-zap-inst}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-zap-inst}
-    \end{agdalisting}
-  \end{multicols}
-\end{minipage}
-And this also changes the idempotency proof to the following:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{with-inst-proof}
-\end{agdalisting}
-
-Again, there's not any great revelation in ease of use here, but more complex
-examples really benefit.
-Especially when we build the full set of instances: any expression built out of
-products and sums will automatically have an instance.
-This will allow us, for instance, to perform proof search over tuples, which
-gives us some degree of automation for proof search in tuples.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{and-comm}
-\end{agdalisting}
-
-These instances aren't limited to non-dependent sums and products, either: for
-\(\Sigma\), for instance, we already have a proof that
-\(\AgdaFunction{\(\mathcal{E}!\)}\;A \rightarrow (\forall x \rightarrow
-\AgdaFunction{\(\mathcal{E}!\)}\;(B\;x)) \rightarrow
-\AgdaFunction{\(\mathcal{E}!\)}\;(\AgdaDatatype{\(\Sigma\)}\;A\;B)\)
-\todo{reference here}.
-Since \(A\) is finite, we can construct a finite constraint that ``\(B\) is
-finite at all points of \(A\)'', and use that to statically build our instance.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{finite-sigma-inst}
-\end{agdalisting}
-\todo{Explain ``it'' function}
-\subsection{Generic Currying and Uncurrying}
-While we have arguably removed the bulk of the boilerplate from the automated
-proofs, there is still the case of the ugly noise of currying and uncurrying.
-In this section, we take inspiration from
-\citet{allaisGenericLevelPolymorphic2019} to develop a small interface to generic
-\(n\)-ary functions and properties.
-We will describe it briefly here.
-
-The basic idea of currying and uncurrying generically is to allow ourselves to
-work with a generic and flexible representation of function arguments which can
-be manipulated more easily than a simple function itself.
-Our first task, then, is to define that representation of function arguments.
-As in \citet{allaisGenericLevelPolymorphic2019}, our representation is a tuple
-which is in some sense a ``second order'' indexed type.
-By second order here we mean that it is an indexed type indexed by another
-indexed type.
-The reason for this complexity is that our solution is to be fully
-level-polymorphic.
-To start, we define a type representing a vector of universe levels:
-
-\begin{minipage}{\linewidth}
-  \begin{multicols}{2}
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Data/Product/NAry.tex]{levels}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Data/Product/NAry.tex]{max-level}
-    \end{agdalisting}
-  \end{multicols}
-\end{minipage}
-
-This will be used to assign our tuple the correct universe level generically.
-Next, we define the list of types (this type is indexed by the list of universe
-levels of each type):
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/NAry.tex]{types}
-\end{agdalisting}
-And finally, the tuple, indexed by its list of types:
-
-\begin{minipage}{\linewidth}
-  \begin{multicols}{2}
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Data/Product/NAry.tex]{tuple-plus}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Data/Product/NAry.tex]{tuple}
-    \end{agdalisting}
-  \end{multicols}
-\end{minipage}
-The reason for two separate functions here is to avoid the
-\(\AgdaDatatype{\(\top\)}\)-terminated tuples we would need if we just had one.
-This means that, for instance, to represent a tuple of a \AgdaDatatype{Bool} and
-\agdambb{N} we can write
-\((\AgdaInductiveConstructor{true}\;\AgdaInductiveConstructor{,}\;\AgdaNumber{2})\)
-instead of 
-\((\AgdaInductiveConstructor{true}\;\AgdaInductiveConstructor{,}\;\AgdaNumber{2}\;\AgdaInductiveConstructor{,}\;\AgdaInductiveConstructor{tt})\).
-
-Next we turn to how we will represent functions.
-In Agda there are three ways to pass function arguments: explicitly,
-implicitly, and as an instance.
-We will represent these three different versions with a data type:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/NAry.tex]{arg-form}
-\end{agdalisting}
-And then we can make a type for functions in the general sense: a type which has
-this sum type as a parameter.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/NAry.tex]{generic-function}
-\end{agdalisting}
-And we can show that this is isomorphic to a normal function:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/Nary.tex]{generic-function-iso}
-\end{agdalisting}
-
-This of course is only a representation of \emph{non}-dependent functions.
-Dependent functions are defined in a similar way:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/NAry.tex]{pi-iso}
-\end{agdalisting}
-
-Using both of these things, we can now define a generic type for multi-argument
-functions:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/NAry.tex]{multi-generic}
-\end{agdalisting}
-We can also define multi-argument dependent functions in a similar way.
-Similarly to how we had to define two tuple types in order to avoid the
-\(\top\)-terminated tuples, we have two definitions for multi-argument dependent
-functions.
-We only include the nonempty version here for brevity.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/NAry.tex]{pi-arrs-plus}
-\end{agdalisting}
-
-Finally, this all allows us to define an isomorphism between generic
-multi-argument dependent functions and their uncurried forms.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Data/Product/NAry.tex]{full-iso}
-\end{agdalisting}
-
-The use of all of this is that we can take the user-supplied curried version of
-a function and transform it into a version which takes instance arguments for
-each of the types.
-
-\begin{minipage}{\linewidth}
-  \begin{multicols}{2}
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-q-n}
-    \end{agdalisting} \columnbreak
-    \begin{agdalisting}
-      \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable/Search.tex]{exists-zap-n}
-    \end{agdalisting}
-  \end{multicols} 
-\end{minipage}
-
-While the type signatures involved are complex, the usage is not.
-Finally, here is how we can automate the proof of commutativity fully:
-
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{and-comm-auto}
-\end{agdalisting}
+\end{agdalisting*}
 
 %%% Local Variables:
 %%% mode: latex

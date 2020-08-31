@@ -74,7 +74,10 @@ ExprTree zero     = ⊥
 ExprTree (suc n)  = Dyck 0 n × Vec Op n
 
 Transformation : List ℕ → Type₀
-Transformation ns = Σ[ s ⦂ Subseq (length ns) ] let n = count s in Perm n × ExprTree n
+Transformation ns =
+  Σ[ s ⦂ Subseq (length ns) ]
+    let n = count s
+    in Perm n × ExprTree n
 \end{code}
 %</expr-def>
 \begin{code}
@@ -127,14 +130,19 @@ import Data.Unit.UniversePolymorphic as Poly
 ℰ!⟨Perm⟩ {n = suc n  } = ℰ!⟨Fin⟩ |×| ℰ!⟨Perm⟩
 \end{code}
 %</perm-fin>
+\begin{code}
+module _ where
+  open import Literals.Number
+  open import Data.Fin.Literals
+\end{code}
 %<*op-fin>
 \begin{code}
-ℰ!⟨Op⟩ : ℰ! Op
-ℰ!⟨Op⟩ .fst = +′ ∷ ×′ ∷ -′ ∷ ÷′ ∷ []
-ℰ!⟨Op⟩ .snd +′  = nothing , refl
-ℰ!⟨Op⟩ .snd ×′  = just nothing , refl
-ℰ!⟨Op⟩ .snd -′  = just (just nothing) , refl
-ℰ!⟨Op⟩ .snd ÷′  = just (just (just nothing)) , refl
+  ℰ!⟨Op⟩ : ℰ! Op
+  ℰ!⟨Op⟩ .fst = +′ ∷ ×′ ∷ -′ ∷ ÷′ ∷ []
+  ℰ!⟨Op⟩ .snd +′  = 0 , refl
+  ℰ!⟨Op⟩ .snd ×′  = 1 , refl
+  ℰ!⟨Op⟩ .snd -′  = 2 , refl
+  ℰ!⟨Op⟩ .snd ÷′  = 3 , refl
 \end{code}
 %</op-fin>
 \begin{code}

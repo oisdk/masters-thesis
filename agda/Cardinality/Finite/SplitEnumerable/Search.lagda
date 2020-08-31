@@ -134,10 +134,16 @@ module _ (n : ℕ)
 \end{code}
 %<*exists-zap-n>
 \begin{code}
-  ∃↯ⁿ : insts ⦂⦅ map-types ℰ! Xs ⦆Π[ inst ]→
-      ( (P? : xs ⦂⦅ Xs ⦆Π[ expl ]→ Dec (P xs))
-      → ⦃ _ : True (ℰ!⇒Omniscient (tup-inst n insts) (Π[ n ^ expl $] .fun P?) ) ⦄
+  ∃↯ⁿ :
+    insts ⦂⦅ map-types ℰ! Xs ⦆Π[ inst ]→
+    ((P? : xs ⦂⦅ Xs ⦆Π[ expl ]→ Dec (P xs))
+      → ⦃ _ : True
+        (ℰ!⇒Omniscient
+          (tup-inst n insts)
+          (Π[ n ^ expl $] .fun P?)) ⦄
       → Σ ⦅ Xs ⦆ P)
-  ∃↯ⁿ = Π[ n ^ inst $] .inv (λ fs P? ⦃ p ⦄ → toWitness p)
+  ∃↯ⁿ =
+    Π[ n ^ inst $] .inv
+      λ fs P? ⦃ p ⦄ → toWitness p
 \end{code}
 %</exists-zap-n>

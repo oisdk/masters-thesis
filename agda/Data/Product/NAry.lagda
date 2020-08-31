@@ -8,6 +8,11 @@ open import Prelude hiding (⊤; tt)
 open import Data.Unit.UniversePolymorphic
 open import Path.Reasoning
 
+private
+  variable
+    n : ℕ
+    ℓ : Level
+
 \end{code}
 %<*levels>
 \begin{code}
@@ -16,9 +21,14 @@ Levels zero = ⊤
 Levels (suc n) = Level × Levels n
 \end{code}
 %</levels>
+\begin{code}
+private
+  variable
+    ls : Levels n
+\end{code}
 %<*max-level>
 \begin{code}
-max-level : ∀ {n} → Levels n → Level
+max-level : Levels n → Level
 max-level {zero} _ = ℓzero
 max-level {suc n} (x , xs) =
   x ℓ⊔ max-level xs
@@ -33,14 +43,16 @@ Types (suc n) (l , ls) = Type l × Types n ls
 %</types>
 %<*tuple-plus>
 \begin{code}
-⦅_⦆⁺ : ∀ {n ls} → Types (suc n) ls → Type (max-level ls)
+⦅_⦆⁺ :  Types (suc n) ls →
+        Type (max-level ls)
 ⦅_⦆⁺ {n = zero } (X , Xs) = X
 ⦅_⦆⁺ {n = suc n} (X , Xs) = X × ⦅ Xs ⦆⁺
 \end{code}
 %</tuple-plus>
 %<*tuple>
 \begin{code}
-⦅_⦆ : ∀ {n ls} → Types n ls → Type (max-level ls)
+⦅_⦆ :  Types n ls →
+       Type (max-level ls)
 ⦅_⦆ {n = zero} _ = ⊤
 ⦅_⦆ {n = suc n} = ⦅_⦆⁺ {n = n}
 \end{code}
@@ -117,7 +129,7 @@ infixr 0 ⦅_⦆[_]→_
 \end{code}
 %<*multi-generic>
 \begin{code}
-⦅_⦆[_]→_ : ∀ {n ls ℓ} → Types n ls → ArgForm → Type ℓ → Type (max-level ls ℓ⊔ ℓ)
+⦅_⦆[_]→_ : Types n ls → ArgForm → Type ℓ → Type (max-level ls ℓ⊔ ℓ)
 ⦅_⦆[_]→_ {n = zero}  Xs fr Y = Y
 ⦅_⦆[_]→_ {n = suc n} (X , Xs) fr Y = X [ fr ]→ ⦅ Xs ⦆[ fr ]→ Y
 \end{code}
@@ -129,7 +141,6 @@ infixr 0 pi-arrs-plus
 %<*pi-arrs-plus>
 \begin{code}
 pi-arrs-plus :
-  ∀ {n ls ℓ} →
   (Xs : Types (suc n) ls) →
   ArgForm →
   (y : ⦅ Xs ⦆⁺ → Type ℓ) →
