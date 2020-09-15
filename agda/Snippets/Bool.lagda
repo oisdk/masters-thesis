@@ -19,25 +19,22 @@ module BoolDefn where
 open import Data.Bool hiding (not)
 open import Prelude hiding (_∧_; not)
 
-private
-  module BoolVal where
 \end{code}
 %<*bool-val>
 \begin{code}
-    a-boolean : Bool
-    a-boolean = true
+a-boolean : Bool
+a-boolean = true
 \end{code}
 %</bool-val>
 \begin{code}
-private
-  module LambdaNot where
+module LambdaNot where
 \end{code}
 %<*lambda-not>
 \begin{code}
-    not : Bool → Bool
-    not = λ  { false  → true
-             ; true   → false
-             }
+  not : Bool → Bool
+  not = λ  { false  → true
+            ; true   → false
+            }
 \end{code}
 %</lambda-not>
 %<*not-def>

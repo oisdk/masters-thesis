@@ -18,7 +18,7 @@ flip : ∀ {A : Type a} {B : Type b} {C : A → B → Type c} →
         ((x : A) (y : B) → C x y) → ((y : B) (x : A) → C x y)
 flip f = λ y x → f x y
 
-id : ∀ {A : Type a} → A → A
+id : A → A
 id x = x
 
 const : A → B → A

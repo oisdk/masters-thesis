@@ -27,19 +27,16 @@ instance
   Number.Constraint numberNat = λ _ → ⊤
   Number.fromNat numberNat n = conv n
 
-private
-  module TextAdd where
 \end{code}
 %<*text-add>
 \begin{code}
-    add : ℕ → ℕ → ℕ
-    add zero     m = m
-    add (suc n)  m = suc (add n m)
+add : ℕ → ℕ → ℕ
+add zero     m = m
+add (suc n)  m = suc (add n m)
 \end{code}
 %</text-add>
 \begin{code}
-private
- module BadSub where
+module NonCoveringSub where
   {-# NON_COVERING #-}
 \end{code}
 %<*bad-sub>
