@@ -31,6 +31,65 @@
 <a id="634" class="Keyword">import</a> <a id="641" href="Snippets.Expr.html" class="Module">Snippets.Expr</a> <a id="655" class="Keyword">using</a>
   <a id="663" class="Symbol">(</a> <a id="665" href="Snippets.Expr.html#478" class="Datatype">Op</a> <a id="668" class="Comment">-- 2.5</a>
   <a id="677" class="Symbol">;</a> <a id="679" href="Snippets.Expr.html#592" class="Datatype">Expr</a> <a id="684" class="Comment">-- 2.6</a>
-  <a id="693" class="Symbol">;</a> <a id="695" href="Snippets.Expr.html#2242" class="Function Operator">⟦_⟧</a> <a id="699" class="Comment">-- 2.7</a>
-  <a id="708" class="Symbol">)</a>
+  <a id="693" class="Symbol">;</a> <a id="695" class="Keyword">module</a> <a id="702" href="Snippets.Expr.html#822" class="Module">IncorrectEval</a> <a id="716" class="Comment">-- 2.7</a>
+  <a id="725" class="Symbol">)</a>
+
+
+<a id="729" class="Comment">-- 2.4: Safe Evaluation with Maybe</a>
+<a id="764" class="Keyword">import</a> <a id="771" href="Data.Maybe.html" class="Module">Data.Maybe</a> <a id="782" class="Keyword">using</a>
+  <a id="790" class="Symbol">(</a> <a id="792" href="Data.Maybe.Base.html#139" class="Datatype">Maybe</a> <a id="798" class="Comment">-- 2.8</a>
+  <a id="807" class="Symbol">)</a>
+
+<a id="810" class="Keyword">import</a> <a id="817" href="Snippets.Maybe.html" class="Module">Snippets.Maybe</a> <a id="832" class="Keyword">using</a>
+  <a id="840" class="Symbol">(</a> <a id="842" href="Snippets.Maybe.html#151" class="Function">maybe-two</a>
+  <a id="854" class="Symbol">;</a> <a id="856" href="Snippets.Maybe.html#249" class="Function">maybe-func</a><a id="866" class="Symbol">)</a>
+
+<a id="869" class="Keyword">import</a> <a id="876" href="Snippets.Expr.html" class="Module">Snippets.Expr</a> <a id="890" class="Keyword">using</a>
+  <a id="898" class="Symbol">(</a> <a id="900" href="Snippets.Expr.html#1253" class="Function Operator">_-_</a> <a id="904" class="Comment">-- 2.9</a>
+  <a id="913" class="Symbol">;</a> <a id="915" href="Snippets.Expr.html#2233" class="Function Operator">⟦_⟧</a>
+  <a id="921" class="Symbol">)</a>
+
+<a id="924" class="Keyword">import</a> <a id="931" href="Data.Maybe.Sugar.html" class="Module">Data.Maybe.Sugar</a> <a id="948" class="Keyword">using</a>
+  <a id="956" class="Symbol">(</a> <a id="958" href="Data.Maybe.Sugar.html#326" class="Function">pure</a>
+  <a id="965" class="Symbol">;</a> <a id="967" href="Data.Maybe.Sugar.html#397" class="Function Operator">_&lt;*&gt;_</a>
+  <a id="975" class="Symbol">;</a> <a id="977" href="Data.Maybe.Sugar.html#171" class="Function Operator">_&gt;&gt;=_</a> <a id="983" class="Comment">-- 2.10</a>
+  <a id="993" class="Symbol">)</a>
+
+<a id="996" class="Comment">-- 2.5: Statically Proving the Evaluation is Safe</a>
+
+<a id="1047" class="Keyword">import</a> <a id="1054" href="Snippets.Expr.html" class="Module">Snippets.Expr</a> <a id="1068" class="Keyword">using</a>
+  <a id="1076" class="Symbol">(</a> <a id="1078" href="Snippets.Expr.html#3667" class="Function">example-eval</a>
+  <a id="1093" class="Symbol">;</a> <a id="1095" href="Snippets.Expr.html#2790" class="Function">is-just</a><a id="1102" class="Symbol">)</a>
+
+<a id="1105" class="Keyword">import</a> <a id="1112" href="Data.Bool.html" class="Module">Data.Bool</a> <a id="1122" class="Keyword">using</a>
+  <a id="1130" class="Symbol">(</a><a id="1131" href="Data.Bool.html#640" class="Function">T</a><a id="1132" class="Symbol">)</a>
+
+<a id="1135" class="Keyword">import</a> <a id="1142" href="Data.Empty.html" class="Module">Data.Empty</a> <a id="1153" class="Keyword">using</a>
+  <a id="1161" class="Symbol">(</a><a id="1162" href="Cubical.Data.Empty.Base.html#114" class="Datatype">⊥</a><a id="1163" class="Symbol">)</a>
+
+<a id="1166" class="Keyword">import</a> <a id="1173" href="Snippets.Introduction.html" class="Module">Snippets.Introduction</a> <a id="1195" class="Keyword">using</a>
+  <a id="1203" class="Symbol">(</a><a id="1204" href="Snippets.Introduction.html#219" class="Record">⊤</a><a id="1205" class="Symbol">)</a>
+
+<a id="1208" class="Keyword">import</a> <a id="1215" href="Data.Empty.html" class="Module">Data.Empty</a> <a id="1226" class="Keyword">using</a>
+  <a id="1234" class="Symbol">(</a><a id="1235" href="Data.Empty.Base.html#162" class="Function Operator">¬_</a><a id="1237" class="Symbol">)</a>
+
+<a id="1240" class="Keyword">import</a> <a id="1247" href="Snippets.Expr.html" class="Module">Snippets.Expr</a> <a id="1261" class="Keyword">using</a>
+  <a id="1269" class="Symbol">(</a> <a id="1271" href="Snippets.Expr.html#3785" class="Record">Pair</a> <a id="1276" class="Comment">-- 2.11</a>
+  <a id="1286" class="Symbol">;</a> <a id="1288" href="Snippets.Expr.html#2995" class="Function">Valid</a> <a id="1294" class="Comment">-- 2.12</a>
+  <a id="1304" class="Symbol">;</a> <a id="1306" href="Snippets.Expr.html#3532" class="Function Operator">⟦_⟧!</a>
+  <a id="1313" class="Symbol">;</a> <a id="1315" href="Snippets.Expr.html#3929" class="Function">example-static-eval</a> <a id="1335" class="Comment">-- 2.13</a>
+  <a id="1345" class="Symbol">)</a>
+
+<a id="1348" class="Keyword">import</a> <a id="1355" href="Snippets.Implicits.html" class="Module">Snippets.Implicits</a> <a id="1374" class="Keyword">using</a>
+  <a id="1382" class="Symbol">(</a> <a id="1384" class="Keyword">module</a> <a id="1391" href="Snippets.Implicits.html#107" class="Module">Normal</a>
+  <a id="1400" class="Symbol">;</a> <a id="1402" class="Keyword">module</a> <a id="1409" href="Snippets.Implicits.html#221" class="Module">ImplicitType</a> <a id="1422" class="Comment">-- 2.14</a>
+  <a id="1432" class="Symbol">)</a>
+
+<a id="1435" class="Comment">-- 2.6: Equalities</a>
+
+<a id="1455" class="Keyword">import</a> <a id="1462" href="Snippets.Equality.html" class="Module">Snippets.Equality</a> <a id="1480" class="Keyword">using</a>
+  <a id="1488" class="Symbol">(</a> <a id="1490" class="Keyword">module</a> <a id="1497" href="Snippets.Equality.html#106" class="Module">MLTTEquality</a> <a id="1510" class="Comment">-- 2.15</a>
+  <a id="1520" class="Symbol">;</a> <a id="1522" href="Snippets.Equality.html#386" class="Function">sym</a>
+  <a id="1528" class="Symbol">;</a> <a id="1530" href="Snippets.Equality.html#477" class="Function">refl</a> <a id="1535" class="Comment">-- 2.16</a>
+  <a id="1545" class="Symbol">)</a>
 </pre></body></html>
