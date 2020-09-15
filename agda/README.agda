@@ -30,5 +30,64 @@ import Snippets.Nat using
 import Snippets.Expr using
   ( Op -- 2.5
   ; Expr -- 2.6
-  ; ⟦_⟧ -- 2.7
+  ; module IncorrectEval -- 2.7
+  )
+
+
+-- 2.4: Safe Evaluation with Maybe
+import Data.Maybe using
+  ( Maybe -- 2.8
+  )
+
+import Snippets.Maybe using
+  ( maybe-two
+  ; maybe-func)
+
+import Snippets.Expr using
+  ( _-_ -- 2.9
+  ; ⟦_⟧
+  )
+
+import Data.Maybe.Sugar using
+  ( pure
+  ; _<*>_
+  ; _>>=_ -- 2.10
+  )
+
+-- 2.5: Statically Proving the Evaluation is Safe
+
+import Snippets.Expr using
+  ( example-eval
+  ; is-just)
+
+import Data.Bool using
+  (T)
+
+import Data.Empty using
+  (⊥)
+
+import Snippets.Introduction using
+  (⊤)
+
+import Data.Empty using
+  (¬_)
+
+import Snippets.Expr using
+  ( Pair -- 2.11
+  ; Valid -- 2.12
+  ; ⟦_⟧!
+  ; example-static-eval -- 2.13
+  )
+
+import Snippets.Implicits using
+  ( module Normal
+  ; module ImplicitType -- 2.14
+  )
+
+-- 2.6: Equalities
+
+import Snippets.Equality using
+  ( module MLTTEquality -- 2.15
+  ; sym
+  ; refl -- 2.16
   )

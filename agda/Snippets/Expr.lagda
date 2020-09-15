@@ -48,8 +48,7 @@ _ =
 \end{code}
 %</example-expr>
 \begin{code}
-private
- module IncorrectEval where
+module IncorrectEval where
   open import Data.Nat renaming (_∸_ to _-_)
 \end{code}
 %<*incorrect-eval>
