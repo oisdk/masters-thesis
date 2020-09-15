@@ -89,5 +89,21 @@ import Snippets.Implicits using
 import Snippets.Equality using
   ( module MLTTEquality -- 2.15
   ; sym
-  ; refl -- 2.16
+  )
+
+-- 2.7: Some Proofs of Equality
+import Snippets.Equality using
+  ( refl -- 2.16
+  )
+
+import Snippets.Expr using
+  (example-static-proof)
+
+import Data.Nat.Properties using
+  (+-assoc)
+
+-- 2.8: Quotients
+
+import Cubical.HITs.S1 using
+  ( S¹ -- 2.17
   )
