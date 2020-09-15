@@ -60,8 +60,7 @@ zero   - suc m  = zero
 \end{code}
 %</sub-def>
 \begin{code}
-private
- module BadAdd where
+module NonTermAdd where
   {-# TERMINATING #-}
 \end{code}
 %<*bad-add>
