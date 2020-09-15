@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Snippets.Nat</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Markup">\begin{code}</a>
+<a id="14" class="Symbol">{-#</a> <a id="18" class="Keyword">OPTIONS</a> <a id="26" class="Pragma">--without-K</a> <a id="38" class="Symbol">#-}</a>
+
+<a id="43" class="Keyword">module</a> <a id="50" href="Snippets.Nat.html" class="Module">Snippets.Nat</a> <a id="63" class="Keyword">where</a>
+
+<a id="70" class="Keyword">open</a> <a id="75" class="Keyword">import</a> <a id="82" href="Level.html" class="Module">Level</a>
+<a id="88" class="Keyword">open</a> <a id="93" class="Keyword">import</a> <a id="100" href="Literals.Number.html" class="Module">Literals.Number</a>
+<a id="116" class="Keyword">open</a> <a id="121" class="Keyword">import</a> <a id="128" href="Data.Unit.html" class="Module">Data.Unit</a>
+<a id="138" class="Markup">\end{code}</a><a id="148" class="Background">
+%&lt;*nat-def&gt;
+</a><a id="161" class="Markup">\begin{code}</a>
+<a id="174" class="Keyword">data</a> <a id="ℕ"></a><a id="179" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="181" class="Symbol">:</a> <a id="183" href="Level.html#255" class="Function">Type₀</a> <a id="189" class="Keyword">where</a>
+  <a id="ℕ.zero"></a><a id="197" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>  <a id="203" class="Symbol">:</a> <a id="205" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+  <a id="ℕ.suc"></a><a id="209" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a>   <a id="215" class="Symbol">:</a> <a id="217" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="219" class="Symbol">→</a> <a id="221" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+<a id="223" class="Markup">\end{code}</a><a id="233" class="Background">
+%&lt;/nat-def&gt;
+</a><a id="246" class="Markup">\begin{code}</a>
+
+<a id="260" class="Keyword">import</a> <a id="267" href="Agda.Builtin.Nat.html" class="Module">Agda.Builtin.Nat</a> <a id="284" class="Symbol">as</a> <a id="287" class="Module">Builtin</a>
+
+<a id="conv"></a><a id="296" href="Snippets.Nat.html#296" class="Function">conv</a> <a id="301" class="Symbol">:</a> <a id="303" href="Agda.Builtin.Nat.html#192" class="Datatype">Builtin.Nat</a> <a id="315" class="Symbol">→</a> <a id="317" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+<a id="319" href="Snippets.Nat.html#296" class="Function">conv</a> <a id="324" href="Agda.Builtin.Nat.html#210" class="InductiveConstructor">Builtin.zero</a> <a id="337" class="Symbol">=</a> <a id="339" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>
+<a id="344" href="Snippets.Nat.html#296" class="Function">conv</a> <a id="349" class="Symbol">(</a><a id="350" href="Agda.Builtin.Nat.html#223" class="InductiveConstructor">Builtin.suc</a> <a id="362" href="Snippets.Nat.html#362" class="Bound">n</a><a id="363" class="Symbol">)</a> <a id="365" class="Symbol">=</a> <a id="367" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="371" class="Symbol">(</a><a id="372" href="Snippets.Nat.html#296" class="Function">conv</a> <a id="377" href="Snippets.Nat.html#362" class="Bound">n</a><a id="378" class="Symbol">)</a>
+
+<a id="381" class="Keyword">instance</a>
+  <a id="numberNat"></a><a id="392" href="Snippets.Nat.html#392" class="Function">numberNat</a> <a id="402" class="Symbol">:</a> <a id="404" href="Agda.Builtin.FromNat.html#197" class="Record">Number</a> <a id="411" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+  <a id="415" href="Agda.Builtin.FromNat.html#253" class="Field">Number.Constraint</a> <a id="433" href="Snippets.Nat.html#392" class="Function">numberNat</a> <a id="443" class="Symbol">=</a> <a id="445" class="Symbol">λ</a> <a id="447" href="Snippets.Nat.html#447" class="Bound">_</a> <a id="449" class="Symbol">→</a> <a id="451" href="Agda.Builtin.Unit.html#164" class="Record">⊤</a>
+  <a id="455" href="Agda.Builtin.FromNat.html#282" class="Field">Number.fromNat</a> <a id="470" href="Snippets.Nat.html#392" class="Function">numberNat</a> <a id="480" href="Snippets.Nat.html#480" class="Bound">n</a> <a id="482" class="Symbol">=</a> <a id="484" href="Snippets.Nat.html#296" class="Function">conv</a> <a id="489" href="Snippets.Nat.html#480" class="Bound">n</a>
+
+<a id="492" class="Markup">\end{code}</a><a id="502" class="Background">
+%&lt;*text-add&gt;
+</a><a id="516" class="Markup">\begin{code}</a>
+<a id="add"></a><a id="529" href="Snippets.Nat.html#529" class="Function">add</a> <a id="533" class="Symbol">:</a> <a id="535" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="537" class="Symbol">→</a> <a id="539" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="541" class="Symbol">→</a> <a id="543" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+<a id="545" href="Snippets.Nat.html#529" class="Function">add</a> <a id="549" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>     <a id="558" href="Snippets.Nat.html#558" class="Bound">m</a> <a id="560" class="Symbol">=</a> <a id="562" href="Snippets.Nat.html#558" class="Bound">m</a>
+<a id="564" href="Snippets.Nat.html#529" class="Function">add</a> <a id="568" class="Symbol">(</a><a id="569" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="573" href="Snippets.Nat.html#573" class="Bound">n</a><a id="574" class="Symbol">)</a>  <a id="577" href="Snippets.Nat.html#577" class="Bound">m</a> <a id="579" class="Symbol">=</a> <a id="581" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="585" class="Symbol">(</a><a id="586" href="Snippets.Nat.html#529" class="Function">add</a> <a id="590" href="Snippets.Nat.html#573" class="Bound">n</a> <a id="592" href="Snippets.Nat.html#577" class="Bound">m</a><a id="593" class="Symbol">)</a>
+<a id="595" class="Markup">\end{code}</a><a id="605" class="Background">
+%&lt;/text-add&gt;
+</a><a id="619" class="Markup">\begin{code}</a>
+<a id="632" class="Keyword">module</a> <a id="NonCoveringSub"></a><a id="639" href="Snippets.Nat.html#639" class="Module">NonCoveringSub</a> <a id="654" class="Keyword">where</a>
+  <a id="662" class="Symbol">{-#</a> <a id="666" class="Keyword">NON_COVERING</a> <a id="679" class="Symbol">#-}</a>
+<a id="683" class="Markup">\end{code}</a><a id="693" class="Background">
+%&lt;*bad-sub&gt;
+</a><a id="706" class="Markup">\begin{code}</a>
+  <a id="NonCoveringSub._-_"></a><a id="721" href="Snippets.Nat.html#721" class="Function Operator">_-_</a> <a id="725" class="Symbol">:</a> <a id="727" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="729" class="Symbol">→</a> <a id="731" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="733" class="Symbol">→</a> <a id="735" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+  <a id="739" href="Snippets.Nat.html#739" class="Bound">n</a>      <a id="746" href="Snippets.Nat.html#721" class="Function Operator">-</a> <a id="748" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>  <a id="754" class="Symbol">=</a> <a id="756" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>
+  <a id="763" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="767" href="Snippets.Nat.html#767" class="Bound">n</a>  <a id="770" href="Snippets.Nat.html#721" class="Function Operator">-</a> <a id="772" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="776" href="Snippets.Nat.html#776" class="Bound">m</a> <a id="778" class="Symbol">=</a> <a id="780" href="Snippets.Nat.html#767" class="Bound">n</a> <a id="782" href="Snippets.Nat.html#721" class="Function Operator">-</a> <a id="784" href="Snippets.Nat.html#776" class="Bound">m</a>
+<a id="786" class="Markup">\end{code}</a><a id="796" class="Background">
+%&lt;/bad-sub&gt;
+%&lt;*sub-fix&gt;
+</a><a id="821" class="Markup">\begin{code}</a>
+<a id="834" class="Keyword">infixl</a> <a id="841" class="Number">6</a> <a id="843" href="Snippets.Nat.html#895" class="Function Operator">_-_</a>
+<a id="847" class="Markup">\end{code}</a><a id="857" class="Background">
+%&lt;/sub-fix&gt;
+%&lt;*sub-def&gt;
+</a><a id="882" class="Markup">\begin{code}</a>
+<a id="_-_"></a><a id="895" href="Snippets.Nat.html#895" class="Function Operator">_-_</a> <a id="899" class="Symbol">:</a> <a id="901" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="903" class="Symbol">→</a> <a id="905" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="907" class="Symbol">→</a> <a id="909" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+<a id="911" href="Snippets.Nat.html#911" class="Bound">n</a>      <a id="918" href="Snippets.Nat.html#895" class="Function Operator">-</a> <a id="920" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>   <a id="927" class="Symbol">=</a> <a id="929" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>
+<a id="934" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="938" href="Snippets.Nat.html#938" class="Bound">n</a>  <a id="941" href="Snippets.Nat.html#895" class="Function Operator">-</a> <a id="943" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="947" href="Snippets.Nat.html#947" class="Bound">m</a>  <a id="950" class="Symbol">=</a> <a id="952" href="Snippets.Nat.html#938" class="Bound">n</a> <a id="954" href="Snippets.Nat.html#895" class="Function Operator">-</a> <a id="956" href="Snippets.Nat.html#947" class="Bound">m</a>
+<a id="958" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>   <a id="965" href="Snippets.Nat.html#895" class="Function Operator">-</a> <a id="967" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="971" href="Snippets.Nat.html#971" class="Bound">m</a>  <a id="974" class="Symbol">=</a> <a id="976" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>
+<a id="981" class="Markup">\end{code}</a><a id="991" class="Background">
+%&lt;/sub-def&gt;
+</a><a id="1004" class="Markup">\begin{code}</a>
+<a id="1017" class="Keyword">private</a>
+ <a id="1026" class="Keyword">module</a> <a id="BadAdd"></a><a id="1033" href="Snippets.Nat.html#1033" class="Module">BadAdd</a> <a id="1040" class="Keyword">where</a>
+  <a id="1048" class="Symbol">{-#</a> <a id="1052" class="Keyword">TERMINATING</a> <a id="1064" class="Symbol">#-}</a>
+<a id="1068" class="Markup">\end{code}</a><a id="1078" class="Background">
+%&lt;*bad-add&gt;
+</a><a id="1091" class="Markup">\begin{code}</a>
+  <a id="BadAdd._+_"></a><a id="1106" href="Snippets.Nat.html#1106" class="Function Operator">_+_</a> <a id="1110" class="Symbol">:</a> <a id="1112" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="1114" class="Symbol">→</a> <a id="1116" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="1118" class="Symbol">→</a> <a id="1120" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+  <a id="1124" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>  <a id="1130" href="Snippets.Nat.html#1106" class="Function Operator">+</a> <a id="1132" href="Snippets.Nat.html#1132" class="Bound">m</a> <a id="1134" class="Symbol">=</a> <a id="1136" href="Snippets.Nat.html#1132" class="Bound">m</a>
+  <a id="1140" href="Snippets.Nat.html#1140" class="CatchallClause Bound">n</a><a id="1141" class="CatchallClause">     </a><a id="1146" href="Snippets.Nat.html#1106" class="CatchallClause Function Operator">+</a><a id="1147" class="CatchallClause"> </a><a id="1148" href="Snippets.Nat.html#1148" class="CatchallClause Bound">m</a> <a id="1150" class="Symbol">=</a> <a id="1152" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="1156" class="Symbol">((</a><a id="1158" href="Snippets.Nat.html#1140" class="Bound">n</a> <a id="1160" href="Snippets.Nat.html#895" class="Function Operator">-</a> <a id="1162" class="Number">1</a><a id="1163" class="Symbol">)</a> <a id="1165" href="Snippets.Nat.html#1106" class="Function Operator">+</a> <a id="1167" href="Snippets.Nat.html#1148" class="Bound">m</a><a id="1168" class="Symbol">)</a>
+<a id="1170" class="Markup">\end{code}</a><a id="1180" class="Background">
+%&lt;/bad-add&gt;
+%&lt;*add-def&gt;
+</a><a id="1205" class="Markup">\begin{code}</a>
+<a id="_+_"></a><a id="1218" href="Snippets.Nat.html#1218" class="Function Operator">_+_</a> <a id="1222" class="Symbol">:</a> <a id="1224" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="1226" class="Symbol">→</a> <a id="1228" href="Snippets.Nat.html#179" class="Datatype">ℕ</a> <a id="1230" class="Symbol">→</a> <a id="1232" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+<a id="1234" href="Snippets.Nat.html#197" class="InductiveConstructor">zero</a>   <a id="1241" href="Snippets.Nat.html#1218" class="Function Operator">+</a> <a id="1243" href="Snippets.Nat.html#1243" class="Bound">m</a> <a id="1245" class="Symbol">=</a> <a id="1247" href="Snippets.Nat.html#1243" class="Bound">m</a>
+<a id="1249" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="1253" href="Snippets.Nat.html#1253" class="Bound">n</a>  <a id="1256" href="Snippets.Nat.html#1218" class="Function Operator">+</a> <a id="1258" href="Snippets.Nat.html#1258" class="Bound">m</a> <a id="1260" class="Symbol">=</a> <a id="1262" href="Snippets.Nat.html#209" class="InductiveConstructor">suc</a> <a id="1266" class="Symbol">(</a><a id="1267" href="Snippets.Nat.html#1253" class="Bound">n</a> <a id="1269" href="Snippets.Nat.html#1218" class="Function Operator">+</a> <a id="1271" href="Snippets.Nat.html#1258" class="Bound">m</a><a id="1272" class="Symbol">)</a>
+<a id="1274" class="Markup">\end{code}</a><a id="1284" class="Background">
+%&lt;/add-def&gt;
+</a><a id="1297" class="Markup">\begin{code}</a>
+<a id="RiemannIsTrue"></a><a id="1310" href="Snippets.Nat.html#1310" class="Function">RiemannIsTrue</a> <a id="1324" class="Symbol">:</a> <a id="1326" href="Level.html#255" class="Function">Type₀</a>
+<a id="1332" href="Snippets.Nat.html#1310" class="Function">RiemannIsTrue</a> <a id="1346" class="Symbol">=</a> <a id="1348" href="Snippets.Nat.html#179" class="Datatype">ℕ</a>
+
+<a id="1351" class="Symbol">{-#</a> <a id="1355" class="Keyword">NON_TERMINATING</a> <a id="1371" class="Symbol">#-}</a>
+<a id="1375" class="Markup">\end{code}</a><a id="1385" class="Background">
+%&lt;*riemann-proof&gt;
+</a><a id="1404" class="Markup">\begin{code}</a>
+<a id="riemann-proof"></a><a id="1417" href="Snippets.Nat.html#1417" class="Function">riemann-proof</a> <a id="1431" class="Symbol">:</a> <a id="1433" href="Snippets.Nat.html#1310" class="Function">RiemannIsTrue</a>
+<a id="1447" href="Snippets.Nat.html#1417" class="Function">riemann-proof</a> <a id="1461" class="Symbol">=</a> <a id="1463" href="Snippets.Nat.html#1417" class="Function">riemann-proof</a>
+<a id="1477" class="Markup">\end{code}</a><a id="1487" class="Background">
+%&lt;/riemann-proof&gt;
+
+</a></pre></body></html>
