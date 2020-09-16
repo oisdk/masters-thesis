@@ -75,8 +75,7 @@ module _ where
  open import Data.List.Syntax
  open import Data.List.Membership
 
- private
-  module BoolSlop where
+ module BoolSlop where
 \end{code}
 %<*bool-slop>
 \begin{code}

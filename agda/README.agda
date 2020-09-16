@@ -193,10 +193,12 @@ import Function.Surjective.Properties using
   )
 
 import Relation.Nullary.Discrete using
-  (Discrete)
+  ( Discrete
+  )
 
 import Snippets.Dec using
-  (Dec)
+  ( Dec
+  )
 
 import Function.Injective using
   ( Injective
@@ -213,3 +215,31 @@ import Function.Surjective.Properties using
 
 import Cardinality.Finite.SplitEnumerable using
   (ℰ!⇒Discrete)
+
+-- 3.2: Manifest Bishop Finiteness
+
+import Cardinality.Finite.SplitEnumerable using
+  ( module BoolSlop -- 3.8
+  )
+
+import HLevels using
+  ( isContr -- 3.9
+  )
+
+import Container.Membership using
+  ( _∈!_ -- 3.10
+  )
+
+import Cardinality.Finite.ManifestBishop.Container using
+  ( ℬ
+  )
+
+import Snippets.Equivalence using
+  ( isEquiv -- 3.11
+  ; _≃_
+  )
+
+import Cardinality.Finite.ManifestBishop using
+  ( ℬ⇔Fin≃
+  )
+
