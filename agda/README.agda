@@ -107,3 +107,34 @@ import Data.Nat.Properties using
 import Cubical.HITs.S1 using
   ( S¹ -- 2.17
   )
+
+-- 2.9: Basic Type Formers
+
+import Snippets.Formers using
+  ( ℕ-or-String
+  ; Pair
+  ; fst
+  ; snd
+  ; pair
+  )
+
+import Data.Sigma using
+  ( Σ
+  ; _×_ -- 2.18
+  )
+
+import Data.Sum using
+  ( _⊎_ -- 2.19
+  )
+
+-- 2.11: Comparing Classical and Constructive Proofs in Agda
+
+import Snippets.Classical using
+  ( Classical -- 2.20
+  ; lem
+  ; pure
+  ; _>>=_
+  )
+
+import Relation.Nullary.Stable using
+  (Stable)
