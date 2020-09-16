@@ -8,17 +8,16 @@ open import Data.Nat.Base using (ℕ; suc; zero)
 open import Level
 open import Data.Empty
 
-private
-  module DisplayImpl where
-    open import Data.Unit
-    open import Data.Sum
+module DisplayImpl where
+ open import Data.Unit
+ open import Data.Sum
 
-    Fin : ℕ → Type₀
+ Fin : ℕ → Type₀
 \end{code}
 %<*fin-def>
 \begin{code}
-    Fin zero     = ⊥
-    Fin (suc n)  = ⊤ ⊎ Fin n
+ Fin zero     = ⊥
+ Fin (suc n)  = ⊤ ⊎ Fin n
 \end{code}
 %</fin-def>
 \begin{code}

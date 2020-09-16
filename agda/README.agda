@@ -138,3 +138,78 @@ import Snippets.Classical using
 
 import Relation.Nullary.Stable using
   (Stable)
+
+------------------------------------------------------------------------
+-- Chapter 3: Finiteness Predicates
+------------------------------------------------------------------------
+
+-- 3.1: Split Enumerability
+
+import Cardinality.Finite.SplitEnumerable.Container using
+  (ℰ!)
+
+import Container.List using
+  ( List -- 3.1
+  )
+
+import Data.Fin.Base using
+  (module DisplayImpl)
+
+import Data.List using
+  (List)
+
+import Container using
+  ( ⟦_⟧ -- 3.3
+  )
+
+import Container.Membership using
+  ( _∈_ -- 3.4
+  )
+
+import Function.Fiber using
+  ( fiber -- 3.5
+  )
+
+import Function.Surjective using
+  ( SplitSurjective -- 3.6
+  ; _↠!_
+  )
+
+import Cardinality.Finite.SplitEnumerable using
+  ( ℰ!⇔Fin↠!
+  )
+
+import Data.Sigma.Properties using
+  ( reassoc
+  )
+
+import Cardinality.Finite.SplitEnumerable using
+  ( split-enum-is-split-surj
+  ; ℰ!⟨2⟩ -- 3.7
+  )
+
+import Function.Surjective.Properties using
+  ( ↠!-ident
+  )
+
+import Relation.Nullary.Discrete using
+  (Discrete)
+
+import Snippets.Dec using
+  (Dec)
+
+import Function.Injective using
+  ( Injective
+  ; _↣_
+  )
+
+import Function.Injective.Properties using
+  (Discrete-pull-inj)
+
+import Function.Surjective.Properties using
+  ( surj-to-inj
+  ; Discrete-distrib-surj
+  )
+
+import Cardinality.Finite.SplitEnumerable using
+  (ℰ!⇒Discrete)

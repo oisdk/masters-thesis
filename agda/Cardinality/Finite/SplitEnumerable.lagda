@@ -29,13 +29,11 @@ module _ {a} {A : Type a} where
  open import Container.Membership (ℕ , Fin)
  open import Relation.Binary.Equivalence.Reasoning (⇔-equiv {a})
 
- private
-  module SplitSurjDispProof where
 \end{code}
 %<*split-enum-is-split-surj-short>
 \begin{code}
-   split-enum-is-split-surj : ℰ! A ⇔ Σ[ n ⦂ ℕ ] (Fin n ↠! A)
-   split-enum-is-split-surj = reassoc
+ split-enum-is-split-surj : ℰ! A ⇔ Σ[ n ⦂ ℕ ] (Fin n ↠! A)
+ split-enum-is-split-surj = reassoc
 \end{code}
 %</split-enum-is-split-surj-short>
 \begin{code}
