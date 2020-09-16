@@ -186,7 +186,7 @@
 
 <a id="2937" class="Keyword">import</a> <a id="2944" href="Cardinality.Finite.SplitEnumerable.html" class="Module">Cardinality.Finite.SplitEnumerable</a> <a id="2979" class="Keyword">using</a>
   <a id="2987" class="Symbol">(</a> <a id="2989" href="Cardinality.Finite.SplitEnumerable.html#846" class="Function">split-enum-is-split-surj</a>
-  <a id="3016" class="Symbol">;</a> <a id="3018" href="Cardinality.Finite.SplitEnumerable.html#2546" class="Function">ℰ!⟨2⟩</a> <a id="3024" class="Comment">-- 3.7</a>
+  <a id="3016" class="Symbol">;</a> <a id="3018" href="Cardinality.Finite.SplitEnumerable.html#2536" class="Function">ℰ!⟨2⟩</a> <a id="3024" class="Comment">-- 3.7</a>
   <a id="3033" class="Symbol">)</a>
 
 <a id="3036" class="Keyword">import</a> <a id="3043" href="Function.Surjective.Properties.html" class="Module">Function.Surjective.Properties</a> <a id="3074" class="Keyword">using</a>
@@ -194,24 +194,54 @@
   <a id="3095" class="Symbol">)</a>
 
 <a id="3098" class="Keyword">import</a> <a id="3105" href="Relation.Nullary.Discrete.html" class="Module">Relation.Nullary.Discrete</a> <a id="3131" class="Keyword">using</a>
-  <a id="3139" class="Symbol">(</a><a id="3140" href="Relation.Nullary.Discrete.Base.html#173" class="Function">Discrete</a><a id="3148" class="Symbol">)</a>
+  <a id="3139" class="Symbol">(</a> <a id="3141" href="Relation.Nullary.Discrete.Base.html#173" class="Function">Discrete</a>
+  <a id="3152" class="Symbol">)</a>
 
-<a id="3151" class="Keyword">import</a> <a id="3158" href="Snippets.Dec.html" class="Module">Snippets.Dec</a> <a id="3171" class="Keyword">using</a>
-  <a id="3179" class="Symbol">(</a><a id="3180" href="Snippets.Dec.html#156" class="Datatype">Dec</a><a id="3183" class="Symbol">)</a>
+<a id="3155" class="Keyword">import</a> <a id="3162" href="Snippets.Dec.html" class="Module">Snippets.Dec</a> <a id="3175" class="Keyword">using</a>
+  <a id="3183" class="Symbol">(</a> <a id="3185" href="Snippets.Dec.html#156" class="Datatype">Dec</a>
+  <a id="3191" class="Symbol">)</a>
 
-<a id="3186" class="Keyword">import</a> <a id="3193" href="Function.Injective.html" class="Module">Function.Injective</a> <a id="3212" class="Keyword">using</a>
-  <a id="3220" class="Symbol">(</a> <a id="3222" href="Function.Injective.Base.html#167" class="Function">Injective</a>
-  <a id="3234" class="Symbol">;</a> <a id="3236" href="Function.Injective.Base.html#326" class="Function Operator">_↣_</a>
-  <a id="3242" class="Symbol">)</a>
+<a id="3194" class="Keyword">import</a> <a id="3201" href="Function.Injective.html" class="Module">Function.Injective</a> <a id="3220" class="Keyword">using</a>
+  <a id="3228" class="Symbol">(</a> <a id="3230" href="Function.Injective.Base.html#167" class="Function">Injective</a>
+  <a id="3242" class="Symbol">;</a> <a id="3244" href="Function.Injective.Base.html#326" class="Function Operator">_↣_</a>
+  <a id="3250" class="Symbol">)</a>
 
-<a id="3245" class="Keyword">import</a> <a id="3252" href="Function.Injective.Properties.html" class="Module">Function.Injective.Properties</a> <a id="3282" class="Keyword">using</a>
-  <a id="3290" class="Symbol">(</a><a id="3291" href="Function.Injective.Properties.html#326" class="Function">Discrete-pull-inj</a><a id="3308" class="Symbol">)</a>
+<a id="3253" class="Keyword">import</a> <a id="3260" href="Function.Injective.Properties.html" class="Module">Function.Injective.Properties</a> <a id="3290" class="Keyword">using</a>
+  <a id="3298" class="Symbol">(</a><a id="3299" href="Function.Injective.Properties.html#326" class="Function">Discrete-pull-inj</a><a id="3316" class="Symbol">)</a>
 
-<a id="3311" class="Keyword">import</a> <a id="3318" href="Function.Surjective.Properties.html" class="Module">Function.Surjective.Properties</a> <a id="3349" class="Keyword">using</a>
-  <a id="3357" class="Symbol">(</a> <a id="3359" href="Function.Surjective.Properties.html#482" class="Function">surj-to-inj</a>
-  <a id="3373" class="Symbol">;</a> <a id="3375" href="Function.Surjective.Properties.html#813" class="Function">Discrete-distrib-surj</a>
-  <a id="3399" class="Symbol">)</a>
+<a id="3319" class="Keyword">import</a> <a id="3326" href="Function.Surjective.Properties.html" class="Module">Function.Surjective.Properties</a> <a id="3357" class="Keyword">using</a>
+  <a id="3365" class="Symbol">(</a> <a id="3367" href="Function.Surjective.Properties.html#482" class="Function">surj-to-inj</a>
+  <a id="3381" class="Symbol">;</a> <a id="3383" href="Function.Surjective.Properties.html#813" class="Function">Discrete-distrib-surj</a>
+  <a id="3407" class="Symbol">)</a>
 
-<a id="3402" class="Keyword">import</a> <a id="3409" href="Cardinality.Finite.SplitEnumerable.html" class="Module">Cardinality.Finite.SplitEnumerable</a> <a id="3444" class="Keyword">using</a>
-  <a id="3452" class="Symbol">(</a><a id="3453" href="Cardinality.Finite.SplitEnumerable.html#1755" class="Function">ℰ!⇒Discrete</a><a id="3464" class="Symbol">)</a>
+<a id="3410" class="Keyword">import</a> <a id="3417" href="Cardinality.Finite.SplitEnumerable.html" class="Module">Cardinality.Finite.SplitEnumerable</a> <a id="3452" class="Keyword">using</a>
+  <a id="3460" class="Symbol">(</a><a id="3461" href="Cardinality.Finite.SplitEnumerable.html#1755" class="Function">ℰ!⇒Discrete</a><a id="3472" class="Symbol">)</a>
+
+<a id="3475" class="Comment">-- 3.2: Manifest Bishop Finiteness</a>
+
+<a id="3511" class="Keyword">import</a> <a id="3518" href="Cardinality.Finite.SplitEnumerable.html" class="Module">Cardinality.Finite.SplitEnumerable</a> <a id="3553" class="Keyword">using</a>
+  <a id="3561" class="Symbol">(</a> <a id="3563" class="Keyword">module</a> <a id="3570" href="Cardinality.Finite.SplitEnumerable.html#2076" class="Module">BoolSlop</a> <a id="3579" class="Comment">-- 3.8</a>
+  <a id="3588" class="Symbol">)</a>
+
+<a id="3591" class="Keyword">import</a> <a id="3598" href="HLevels.html" class="Module">HLevels</a> <a id="3606" class="Keyword">using</a>
+  <a id="3614" class="Symbol">(</a> <a id="3616" href="Cubical.Foundations.Id.html#854" class="Function">isContr</a> <a id="3624" class="Comment">-- 3.9</a>
+  <a id="3633" class="Symbol">)</a>
+
+<a id="3636" class="Keyword">import</a> <a id="3643" href="Container.Membership.html" class="Module">Container.Membership</a> <a id="3664" class="Keyword">using</a>
+  <a id="3672" class="Symbol">(</a> <a id="3674" href="Container.Membership.html#331" class="Function Operator">_∈!_</a> <a id="3679" class="Comment">-- 3.10</a>
+  <a id="3689" class="Symbol">)</a>
+
+<a id="3692" class="Keyword">import</a> <a id="3699" href="Cardinality.Finite.ManifestBishop.Container.html" class="Module">Cardinality.Finite.ManifestBishop.Container</a> <a id="3743" class="Keyword">using</a>
+  <a id="3751" class="Symbol">(</a> <a id="3753" href="Cardinality.Finite.ManifestBishop.Container.html#254" class="Function">ℬ</a>
+  <a id="3757" class="Symbol">)</a>
+
+<a id="3760" class="Keyword">import</a> <a id="3767" href="Snippets.Equivalence.html" class="Module">Snippets.Equivalence</a> <a id="3788" class="Keyword">using</a>
+  <a id="3796" class="Symbol">(</a> <a id="3798" href="Snippets.Equivalence.html#240" class="Function">isEquiv</a> <a id="3806" class="Comment">-- 3.11</a>
+  <a id="3816" class="Symbol">;</a> <a id="3818" href="Snippets.Equivalence.html#389" class="Function Operator">_≃_</a>
+  <a id="3824" class="Symbol">)</a>
+
+<a id="3827" class="Keyword">import</a> <a id="3834" href="Cardinality.Finite.ManifestBishop.html" class="Module">Cardinality.Finite.ManifestBishop</a> <a id="3868" class="Keyword">using</a>
+  <a id="3876" class="Symbol">(</a> <a id="3878" href="Cardinality.Finite.ManifestBishop.html#1531" class="Function">ℬ⇔Fin≃</a>
+  <a id="3887" class="Symbol">)</a>
+
 </pre></body></html>
