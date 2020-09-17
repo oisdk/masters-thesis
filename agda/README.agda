@@ -16,15 +16,19 @@ import Snippets.Bool using
 import Snippets.Bool using
   ( not
   ; module LambdaNot)
+
 import Function using
-  (id)
+  ( id
+  )
+
 import Snippets.Nat using
   ( ℕ -- 2.2
   ; add
   ; _-_ -- 2.3
   ; module NonCoveringSub
   ; _+_ -- 2.4
-  ; module NonTermAdd)
+  ; module NonTermAdd
+  )
 
 -- 2.3: An Expression Evaluator
 import Snippets.Expr using
@@ -33,7 +37,6 @@ import Snippets.Expr using
   ; module IncorrectEval -- 2.7
   )
 
-
 -- 2.4: Safe Evaluation with Maybe
 import Data.Maybe using
   ( Maybe -- 2.8
@@ -41,7 +44,8 @@ import Data.Maybe using
 
 import Snippets.Maybe using
   ( maybe-two
-  ; maybe-func)
+  ; maybe-func
+  )
 
 import Snippets.Expr using
   ( _-_ -- 2.9
@@ -58,19 +62,24 @@ import Data.Maybe.Sugar using
 
 import Snippets.Expr using
   ( example-eval
-  ; is-just)
+  ; is-just
+  )
 
 import Data.Bool using
-  (T)
+  ( T
+  )
 
 import Data.Empty using
-  (⊥)
+  ( ⊥
+  )
 
 import Snippets.Introduction using
-  (⊤)
+  ( ⊤
+  )
 
 import Data.Empty using
-  (¬_)
+  ( ¬_
+  )
 
 import Snippets.Expr using
   ( Pair -- 2.11
@@ -97,10 +106,12 @@ import Snippets.Equality using
   )
 
 import Snippets.Expr using
-  (example-static-proof)
+  ( example-static-proof
+  )
 
 import Data.Nat.Properties using
-  (+-assoc)
+  ( +-assoc
+  )
 
 -- 2.8: Quotients
 
@@ -137,7 +148,8 @@ import Snippets.Classical using
   )
 
 import Relation.Nullary.Stable using
-  (Stable)
+  ( Stable
+  )
 
 ------------------------------------------------------------------------
 -- Chapter 3: Finiteness Predicates
@@ -146,7 +158,8 @@ import Relation.Nullary.Stable using
 -- 3.1: Split Enumerability
 
 import Cardinality.Finite.SplitEnumerable.Container using
-  (ℰ!)
+  ( ℰ!
+  )
 
 import Container.List using
   ( List -- 3.1
@@ -306,4 +319,39 @@ import Cardinality.Finite.Cardinal using
 
 import Snippets.Classical using
   ( classical-impl
+  )
+
+-- 3.4: Manifest Enumerability
+
+import Cubical.HITs.S1 using
+  ( S¹ -- 3.19
+  )
+
+import HLevels using
+  ( isGroupoid -- 3.20
+  )
+
+import Cardinality.Finite.ManifestEnumerable.Container using
+  ( ℰ
+  )
+
+import Cardinality.Finite.ManifestEnumerable using
+  ( ℰ⟨S¹⟩
+  )
+
+import Cubical.HITs.S1 using
+  ( isConnectedS¹
+  )
+
+import Function.Surjective using
+  ( Surjective -- 3.21
+  ; _↠_
+  )
+
+import Cardinality.Finite.ManifestEnumerable using
+  (  ℰ⇔Fin↠
+  )
+
+import HITs.PropositionalTruncation.Properties using
+  ( recompute -- 3.22
   )

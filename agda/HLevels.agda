@@ -7,6 +7,7 @@ open import Cubical.Foundations.Everything
   using (isProp
         ;isSet
         ;isContr
+        ;isGroupoid
         ;isPropIsContr
         ;isProp→isSet
         ;isOfHLevel→isOfHLevelDep
