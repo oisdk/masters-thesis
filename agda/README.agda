@@ -374,3 +374,38 @@ import Cardinality.Finite.Kuratowski using
   ( 𝒦ᶠ
   ; 𝒞⇔𝒦×Discrete -- 3.24
   )
+
+------------------------------------------------------------------------
+-- Chapter 4: Topos
+------------------------------------------------------------------------
+
+import Categories using
+  ( PreCategory -- 4.1
+  )
+
+import Categories.HSets using
+  ( Ob
+  )
+
+import Cardinality.Finite.SplitEnumerable using
+  ( _|Σ|_
+  ; sup-Σ
+  )
+
+import Cardinality.Finite.ManifestBishop using
+  ( _|Π|_
+  )
+
+import Data.Tuple.UniverseMonomorphic using
+  ( Tuple
+  )
+
+import Cardinality.Finite.Cardinal using
+  ( _∥×∥_
+  ; 𝒞⇒Choice
+  )
+
+import Snippets.Topos using
+  ( Prop-univ
+  ; prop-resize
+  )

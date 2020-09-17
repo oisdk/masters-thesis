@@ -22,7 +22,7 @@ hSetPreCategory .PreCategory.Comp-Id _ = refl
 hSetPreCategory .PreCategory.Id-Comp _ = refl
 hSetPreCategory .PreCategory.Hom-Set {X} {Y} = hLevelPi 2 λ _ → Y .snd
 
-open PreCategory hSetPreCategory
+open PreCategory hSetPreCategory public
 
 
 _⟨×⟩_ : isSet A → isSet B → isSet (A Prelude.× B)
