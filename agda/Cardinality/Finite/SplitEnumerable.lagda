@@ -86,15 +86,13 @@ module _ where
 \end{code}
 %</bool-slop>
 \begin{code}
- private
-  module BoolRev where
 \end{code}
 %<*bool-rev>
 \begin{code}
-   ℰ!⟨2⟩′ : ℰ! Bool
-   ℰ!⟨2⟩′ .fst = [ true , false ]
-   ℰ!⟨2⟩′ .snd false  = 1  , refl
-   ℰ!⟨2⟩′ .snd true   = 0  , refl
+ ℰ!⟨2⟩′ : ℰ! Bool
+ ℰ!⟨2⟩′ .fst = [ true , false ]
+ ℰ!⟨2⟩′ .snd false  = 1  , refl
+ ℰ!⟨2⟩′ .snd true   = 0  , refl
 \end{code}
 %</bool-rev>
 %<*bool-inst>

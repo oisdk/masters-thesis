@@ -243,3 +243,67 @@ import Cardinality.Finite.ManifestBishop using
   ( ℬ⇔Fin≃
   )
 
+-- 3.3: Cardinal Finiteness
+
+import Cardinality.Finite.SplitEnumerable using
+  ( ℰ!⟨2⟩
+  ; ℰ!⟨2⟩′
+  )
+
+import HLevels using
+  ( isProp -- 3.12
+  )
+
+import HITs.PropositionalTruncation using
+  ( ∥_∥ -- 3.13
+  ; rec -- 3.14
+  )
+
+import Cardinality.Finite.Cardinal using
+  ( 𝒞
+  ; 𝒞⇒Discrete
+  )
+
+import Relation.Nullary.Discrete.Properties using
+  ( isPropDiscrete
+  )
+
+import HLevels using
+  ( isSet -- 3.15
+  )
+
+import Relation.Nullary.Discrete.Properties using
+  ( Discrete→isSet
+  )
+
+import HITs.PropositionalTruncation using
+  ( rec→set -- 3.16
+  )
+
+import Cardinality.Finite.Cardinal using
+  ( cardinality-is-unique
+  )
+
+import Data.List.Sort using
+  ( insert
+  ; sort
+  ; sort-sorts
+  ; sort-perm
+  )
+
+import Data.List.Relation.Binary.Permutation using
+  ( _↭_
+  )
+
+import Data.List.Sort using
+  ( sorted-perm-eq
+  ; perm-invar
+  )
+
+import Cardinality.Finite.Cardinal using
+  ( ¬⟨𝒞⋂ℬᶜ⟩
+  )
+
+import Snippets.Classical using
+  ( classical-impl
+  )
