@@ -543,3 +543,36 @@ import Countdown using
   ; Solution
   ; exampleSolutions
   )
+
+------------------------------------------------------------------------
+-- Chapter 6: Countably Infinite Types
+------------------------------------------------------------------------
+
+-- 6.1: Countability
+
+import Cardinality.Infinite.Split using
+  ( ℵ!
+  )
+
+import Codata.Stream using
+  ( Stream
+  )
+
+import Cardinality.Infinite.Split using
+  ( ℵ!⇔ℕ↠!
+  )
+
+-- 6.2: Closure
+
+import Data.List.Kleene using
+  ( _⁺
+  ; _⋆
+  )
+
+import Cardinality.Infinite.Split using
+  ( _*⋆_[_]
+  ; _*_
+  ; _|Σ|_
+  ; |star|
+  ; cantor-diag
+  )
