@@ -469,3 +469,50 @@ import Cardinality.Finite.Kuratowski using
   )
 
 -- 5.3: An Interface for Proof Automation
+
+import Cardinality.Finite.SplitEnumerable.Search using
+  ( ∀?
+  ; ∃?
+  ; module PreInst
+  )
+
+import Snippets.Bool using
+  ( module PreInst′
+  )
+
+import Cardinality.Finite.SplitEnumerable.Search using
+  ( module WithInst
+  )
+
+import Snippets.Bool using
+  ( ∧-idem -- 5.2
+  ; module BadCurrying
+  )
+
+import Instance using
+  ( it
+  )
+
+import Data.Product.NAry using
+  ( Levels
+  ; max-level
+  ; Types
+  ; ⦅_⦆⁺
+  ; ⦅_⦆
+  ; ArgForm
+  ; _[_]→_
+  ; [_$]
+  ; Π[_$]
+  ; ⦅_⦆[_]→_
+  ; pi-arrs-plus
+  ; Π[_^_$]
+  )
+
+import Cardinality.Finite.SplitEnumerable.Search using
+  ( ∃?ⁿ
+  ; ∃↯ⁿ
+  )
+
+import Snippets.Bool using
+  ( ∧-comm
+  )
