@@ -355,3 +355,22 @@ import Cardinality.Finite.ManifestEnumerable using
 import HITs.PropositionalTruncation.Properties using
   ( recompute -- 3.22
   )
+
+-- 3.5: Kuratowski Finiteness
+
+import Algebra.Construct.Free.Semilattice using
+  ( 𝒦 -- 3.23
+  )
+
+import Algebra.Construct.Free.Semilattice.Direct using
+  ( 𝒦
+  )
+
+import Algebra.Construct.Free.Semilattice.Relation.Unary.Membership using
+  ( _∈_
+  )
+
+import Cardinality.Finite.Kuratowski using
+  ( 𝒦ᶠ
+  ; 𝒞⇔𝒦×Discrete -- 3.24
+  )
