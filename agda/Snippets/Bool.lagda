@@ -87,21 +87,19 @@ obvious = refl
 \end{code}
 %</obvious>
 \begin{code}
-private
- module SumDec where
 \end{code}
 %<*is-true>
 \begin{code}
-  True : Dec A → Type₀
-  True (yes  _) = ⊤
-  True (no   _) = ⊥
+True : Dec A → Type₀
+True (yes  _) = ⊤
+True (no   _) = ⊥
 \end{code}
 %</is-true>
 %<*from-true>
 \begin{code}
-  toWitness :  (decision : Dec A) →
-               { _ : True decision } → A
-  toWitness (yes x) = x
+toWitness :  (decision : Dec A) →
+            { _ : True decision } → A
+toWitness (yes x) = x
 \end{code}
 %</from-true>
 \begin{code}

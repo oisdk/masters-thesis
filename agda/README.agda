@@ -379,13 +379,19 @@ import Cardinality.Finite.Kuratowski using
 -- Chapter 4: Topos
 ------------------------------------------------------------------------
 
+-- 4.1: Categories in HoTT
+
 import Categories using
   ( PreCategory -- 4.1
   )
 
+-- 4.2: The Category of Sets
+
 import Categories.HSets using
   ( Ob
   )
+
+-- 4.3: Closure
 
 import Cardinality.Finite.SplitEnumerable using
   ( _|Σ|_
@@ -405,7 +411,61 @@ import Cardinality.Finite.Cardinal using
   ; 𝒞⇒Choice
   )
 
+-- 4.4: The Absence of the Subobject Classifier
+
 import Snippets.Topos using
   ( Prop-univ
   ; prop-resize
   )
+
+------------------------------------------------------------------------
+-- Chapter 5: Search
+------------------------------------------------------------------------
+
+import Snippets.Bool using
+  ( _∧_
+  ; ∧-assoc -- 5.1
+  ; some-assoc
+  )
+
+-- 5.1: How to make the Typechecker do Automation
+
+import Snippets.Bool using
+  ( obvious
+  ; True
+  ; toWitness
+  ; extremely-obvious
+  )
+
+-- 5.2: Omniscience
+
+import Relation.Nullary.Omniscience using
+  ( Exhaustible
+  ; Omniscient
+  )
+
+import Relation.Nullary.Decidable.Properties using
+  ( Dec→DoubleNegElim
+  )
+
+import Relation.Nullary.Omniscience using
+  ( Omniscient→Exhaustible
+  )
+
+import Cardinality.Finite.Kuratowski using
+  ( 𝒦ᶠ⇒Exhaustible
+  )
+
+import Cardinality.Finite.ManifestEnumerable using
+  ( ℰ⇒Omniscient
+  )
+
+import Relation.Nullary.Omniscience using
+  ( Prop-Omniscient
+  )
+
+import Cardinality.Finite.Kuratowski using
+  ( 𝒦ᶠ⇒Prop-Omniscient
+  )
+
+-- 5.3: An Interface for Proof Automation
