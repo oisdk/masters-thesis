@@ -28,8 +28,7 @@ private
 Subseq : ℕ → Type₀
 Subseq = Vec Bool
 
-private
-  module WrongPerm where
+module WrongPerm where
 \end{code}
 %<*wrong-perm>
 \begin{code}
@@ -38,8 +37,7 @@ private
 \end{code}
 %</wrong-perm>
 \begin{code}
-private
-  module IsoPerm where
+module IsoPerm where
 \end{code}
 %<*isomorphism>
 \begin{code}

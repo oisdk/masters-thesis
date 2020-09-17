@@ -516,3 +516,30 @@ import Cardinality.Finite.SplitEnumerable.Search using
 import Snippets.Bool using
   ( ∧-comm
   )
+
+-- 5.4: Countdown
+
+import Countdown using
+  ( ℰ!⟨Vec⟩
+  ; ℰ!⟨Op⟩
+  ; module WrongPerm
+  ; module IsoPerm
+  ; Perm
+  ; ℰ!⟨Perm⟩
+  )
+
+import Dyck using
+  ( Dyck
+  ; module NonParamTree
+  )
+
+import Countdown using
+  ( ExprTree
+  ; Transformation
+  ; ℰ!⟨ExprTree⟩
+  ; ℰ!⟨Transformation⟩
+  ; eval
+  ; _!⟨_⟩!_
+  ; Solution
+  ; exampleSolutions
+  )

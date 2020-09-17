@@ -107,8 +107,7 @@ cover-dyck x = go _ _ x id []
 ℰ!⟨Dyck⟩ .fst = support-dyck _ _
 ℰ!⟨Dyck⟩ .snd = cover-dyck
 
-private
-  module NonParamTree where
+module NonParamTree where
 \end{code}
 %<*tree-simpl-def>
 \begin{code}
