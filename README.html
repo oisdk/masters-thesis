@@ -10,7 +10,7 @@
 <a id="250" class="Comment">-- 2.1: Basic Functional Programming in Agda</a>
 <a id="295" class="Keyword">import</a> <a id="302" href="Snippets.Bool.html" class="Module">Snippets.Bool</a> <a id="316" class="Keyword">using</a>
   <a id="324" class="Symbol">(</a> <a id="326" href="Snippets.Bool.html#161" class="Datatype">Bool</a> <a id="331" class="Comment">-- 2.1</a>
-  <a id="340" class="Symbol">;</a> <a id="342" href="Snippets.Bool.html#3328" class="Function">Boolean</a>
+  <a id="340" class="Symbol">;</a> <a id="342" href="Snippets.Bool.html#3286" class="Function">Boolean</a>
   <a id="352" class="Symbol">;</a> <a id="354" href="Snippets.Bool.html#365" class="Function">a-boolean</a><a id="363" class="Symbol">)</a>
 
 <a id="366" class="Comment">-- 2.2: Some Functions</a>
@@ -380,34 +380,94 @@
 <a id="5829" class="Comment">-- Chapter 4: Topos</a>
 <a id="5849" class="Comment">------------------------------------------------------------------------</a>
 
-<a id="5923" class="Keyword">import</a> <a id="5930" href="Categories.html" class="Module">Categories</a> <a id="5941" class="Keyword">using</a>
-  <a id="5949" class="Symbol">(</a> <a id="5951" href="Categories.html#203" class="Record">PreCategory</a> <a id="5963" class="Comment">-- 4.1</a>
-  <a id="5972" class="Symbol">)</a>
+<a id="5923" class="Comment">-- 4.1: Categories in HoTT</a>
 
-<a id="5975" class="Keyword">import</a> <a id="5982" href="Categories.HSets.html" class="Module">Categories.HSets</a> <a id="5999" class="Keyword">using</a>
-  <a id="6007" class="Symbol">(</a> <a id="6009" href="Categories.html#264" class="Function">Ob</a>
-  <a id="6014" class="Symbol">)</a>
+<a id="5951" class="Keyword">import</a> <a id="5958" href="Categories.html" class="Module">Categories</a> <a id="5969" class="Keyword">using</a>
+  <a id="5977" class="Symbol">(</a> <a id="5979" href="Categories.html#203" class="Record">PreCategory</a> <a id="5991" class="Comment">-- 4.1</a>
+  <a id="6000" class="Symbol">)</a>
 
-<a id="6017" class="Keyword">import</a> <a id="6024" href="Cardinality.Finite.SplitEnumerable.html" class="Module">Cardinality.Finite.SplitEnumerable</a> <a id="6059" class="Keyword">using</a>
-  <a id="6067" class="Symbol">(</a> <a id="6069" href="Cardinality.Finite.SplitEnumerable.html#3477" class="Function Operator">_|Σ|_</a>
-  <a id="6077" class="Symbol">;</a> <a id="6079" href="Cardinality.Finite.SplitEnumerable.html#2810" class="Function">sup-Σ</a>
-  <a id="6087" class="Symbol">)</a>
+<a id="6003" class="Comment">-- 4.2: The Category of Sets</a>
 
-<a id="6090" class="Keyword">import</a> <a id="6097" href="Cardinality.Finite.ManifestBishop.html" class="Module">Cardinality.Finite.ManifestBishop</a> <a id="6131" class="Keyword">using</a>
-  <a id="6139" class="Symbol">(</a> <a id="6141" href="Cardinality.Finite.ManifestBishop.html#3454" class="Function Operator">_|Π|_</a>
-  <a id="6149" class="Symbol">)</a>
+<a id="6033" class="Keyword">import</a> <a id="6040" href="Categories.HSets.html" class="Module">Categories.HSets</a> <a id="6057" class="Keyword">using</a>
+  <a id="6065" class="Symbol">(</a> <a id="6067" href="Categories.html#264" class="Function">Ob</a>
+  <a id="6072" class="Symbol">)</a>
 
-<a id="6152" class="Keyword">import</a> <a id="6159" href="Data.Tuple.UniverseMonomorphic.html" class="Module">Data.Tuple.UniverseMonomorphic</a> <a id="6190" class="Keyword">using</a>
-  <a id="6198" class="Symbol">(</a> <a id="6200" href="Data.Tuple.UniverseMonomorphic.html#172" class="Function">Tuple</a>
-  <a id="6208" class="Symbol">)</a>
+<a id="6075" class="Comment">-- 4.3: Closure</a>
 
-<a id="6211" class="Keyword">import</a> <a id="6218" href="Cardinality.Finite.Cardinal.html" class="Module">Cardinality.Finite.Cardinal</a> <a id="6246" class="Keyword">using</a>
-  <a id="6254" class="Symbol">(</a> <a id="6256" href="Cardinality.Finite.Cardinal.html#1948" class="Function Operator">_∥×∥_</a>
-  <a id="6264" class="Symbol">;</a> <a id="6266" href="Cardinality.Finite.Cardinal.html#1262" class="Function">𝒞⇒Choice</a>
-  <a id="6277" class="Symbol">)</a>
+<a id="6092" class="Keyword">import</a> <a id="6099" href="Cardinality.Finite.SplitEnumerable.html" class="Module">Cardinality.Finite.SplitEnumerable</a> <a id="6134" class="Keyword">using</a>
+  <a id="6142" class="Symbol">(</a> <a id="6144" href="Cardinality.Finite.SplitEnumerable.html#3477" class="Function Operator">_|Σ|_</a>
+  <a id="6152" class="Symbol">;</a> <a id="6154" href="Cardinality.Finite.SplitEnumerable.html#2810" class="Function">sup-Σ</a>
+  <a id="6162" class="Symbol">)</a>
 
-<a id="6280" class="Keyword">import</a> <a id="6287" href="Snippets.Topos.html" class="Module">Snippets.Topos</a> <a id="6302" class="Keyword">using</a>
-  <a id="6310" class="Symbol">(</a> <a id="6312" href="Snippets.Topos.html#136" class="Function">Prop-univ</a>
-  <a id="6324" class="Symbol">;</a> <a id="6326" href="Snippets.Topos.html#228" class="Function">prop-resize</a>
-  <a id="6340" class="Symbol">)</a>
+<a id="6165" class="Keyword">import</a> <a id="6172" href="Cardinality.Finite.ManifestBishop.html" class="Module">Cardinality.Finite.ManifestBishop</a> <a id="6206" class="Keyword">using</a>
+  <a id="6214" class="Symbol">(</a> <a id="6216" href="Cardinality.Finite.ManifestBishop.html#3454" class="Function Operator">_|Π|_</a>
+  <a id="6224" class="Symbol">)</a>
+
+<a id="6227" class="Keyword">import</a> <a id="6234" href="Data.Tuple.UniverseMonomorphic.html" class="Module">Data.Tuple.UniverseMonomorphic</a> <a id="6265" class="Keyword">using</a>
+  <a id="6273" class="Symbol">(</a> <a id="6275" href="Data.Tuple.UniverseMonomorphic.html#172" class="Function">Tuple</a>
+  <a id="6283" class="Symbol">)</a>
+
+<a id="6286" class="Keyword">import</a> <a id="6293" href="Cardinality.Finite.Cardinal.html" class="Module">Cardinality.Finite.Cardinal</a> <a id="6321" class="Keyword">using</a>
+  <a id="6329" class="Symbol">(</a> <a id="6331" href="Cardinality.Finite.Cardinal.html#1948" class="Function Operator">_∥×∥_</a>
+  <a id="6339" class="Symbol">;</a> <a id="6341" href="Cardinality.Finite.Cardinal.html#1262" class="Function">𝒞⇒Choice</a>
+  <a id="6352" class="Symbol">)</a>
+
+<a id="6355" class="Comment">-- 4.4: The Absence of the Subobject Classifier</a>
+
+<a id="6404" class="Keyword">import</a> <a id="6411" href="Snippets.Topos.html" class="Module">Snippets.Topos</a> <a id="6426" class="Keyword">using</a>
+  <a id="6434" class="Symbol">(</a> <a id="6436" href="Snippets.Topos.html#136" class="Function">Prop-univ</a>
+  <a id="6448" class="Symbol">;</a> <a id="6450" href="Snippets.Topos.html#228" class="Function">prop-resize</a>
+  <a id="6464" class="Symbol">)</a>
+
+<a id="6467" class="Comment">------------------------------------------------------------------------</a>
+<a id="6540" class="Comment">-- Chapter 5: Search</a>
+<a id="6561" class="Comment">------------------------------------------------------------------------</a>
+
+<a id="6635" class="Keyword">import</a> <a id="6642" href="Snippets.Bool.html" class="Module">Snippets.Bool</a> <a id="6656" class="Keyword">using</a>
+  <a id="6664" class="Symbol">(</a> <a id="6666" href="Snippets.Bool.html#779" class="Function Operator">_∧_</a>
+  <a id="6672" class="Symbol">;</a> <a id="6674" href="Snippets.Bool.html#1392" class="Function">∧-assoc</a> <a id="6682" class="Comment">-- 5.1</a>
+  <a id="6691" class="Symbol">;</a> <a id="6693" href="Snippets.Bool.html#1555" class="Function">some-assoc</a>
+  <a id="6706" class="Symbol">)</a>
+
+<a id="6709" class="Comment">-- 5.1: How to make the Typechecker do Automation</a>
+
+<a id="6760" class="Keyword">import</a> <a id="6767" href="Snippets.Bool.html" class="Module">Snippets.Bool</a> <a id="6781" class="Keyword">using</a>
+  <a id="6789" class="Symbol">(</a> <a id="6791" href="Snippets.Bool.html#1752" class="Function">obvious</a>
+  <a id="6801" class="Symbol">;</a> <a id="6803" href="Snippets.Bool.html#1870" class="Function">True</a>
+  <a id="6810" class="Symbol">;</a> <a id="6812" href="Snippets.Bool.html#1977" class="Function">toWitness</a>
+  <a id="6824" class="Symbol">;</a> <a id="6826" href="Snippets.Bool.html#2315" class="Function">extremely-obvious</a>
+  <a id="6846" class="Symbol">)</a>
+
+<a id="6849" class="Comment">-- 5.2: Omniscience</a>
+
+<a id="6870" class="Keyword">import</a> <a id="6877" href="Relation.Nullary.Omniscience.html" class="Module">Relation.Nullary.Omniscience</a> <a id="6906" class="Keyword">using</a>
+  <a id="6914" class="Symbol">(</a> <a id="6916" href="Relation.Nullary.Omniscience.html#397" class="Function">Exhaustible</a>
+  <a id="6930" class="Symbol">;</a> <a id="6932" href="Relation.Nullary.Omniscience.html#386" class="Function">Omniscient</a>
+  <a id="6945" class="Symbol">)</a>
+
+<a id="6948" class="Keyword">import</a> <a id="6955" href="Relation.Nullary.Decidable.Properties.html" class="Module">Relation.Nullary.Decidable.Properties</a> <a id="6993" class="Keyword">using</a>
+  <a id="7001" class="Symbol">(</a> <a id="7003" href="Relation.Nullary.Decidable.Properties.html#390" class="Function">Dec→DoubleNegElim</a>
+  <a id="7023" class="Symbol">)</a>
+
+<a id="7026" class="Keyword">import</a> <a id="7033" href="Relation.Nullary.Omniscience.html" class="Module">Relation.Nullary.Omniscience</a> <a id="7062" class="Keyword">using</a>
+  <a id="7070" class="Symbol">(</a> <a id="7072" href="Relation.Nullary.Omniscience.html#767" class="Function">Omniscient→Exhaustible</a>
+  <a id="7097" class="Symbol">)</a>
+
+<a id="7100" class="Keyword">import</a> <a id="7107" href="Cardinality.Finite.Kuratowski.html" class="Module">Cardinality.Finite.Kuratowski</a> <a id="7137" class="Keyword">using</a>
+  <a id="7145" class="Symbol">(</a> <a id="7147" href="Cardinality.Finite.Kuratowski.html#2711" class="Function">𝒦ᶠ⇒Exhaustible</a>
+  <a id="7164" class="Symbol">)</a>
+
+<a id="7167" class="Keyword">import</a> <a id="7174" href="Cardinality.Finite.ManifestEnumerable.html" class="Module">Cardinality.Finite.ManifestEnumerable</a> <a id="7212" class="Keyword">using</a>
+  <a id="7220" class="Symbol">(</a> <a id="7222" href="Cardinality.Finite.ManifestEnumerable.html#2430" class="Function">ℰ⇒Omniscient</a>
+  <a id="7237" class="Symbol">)</a>
+
+<a id="7240" class="Keyword">import</a> <a id="7247" href="Relation.Nullary.Omniscience.html" class="Module">Relation.Nullary.Omniscience</a> <a id="7276" class="Keyword">using</a>
+  <a id="7284" class="Symbol">(</a> <a id="7286" href="Relation.Nullary.Omniscience.html#409" class="Function">Prop-Omniscient</a>
+  <a id="7304" class="Symbol">)</a>
+
+<a id="7307" class="Keyword">import</a> <a id="7314" href="Cardinality.Finite.Kuratowski.html" class="Module">Cardinality.Finite.Kuratowski</a> <a id="7344" class="Keyword">using</a>
+  <a id="7352" class="Symbol">(</a> <a id="7354" href="Cardinality.Finite.Kuratowski.html#2969" class="Function">𝒦ᶠ⇒Prop-Omniscient</a>
+  <a id="7375" class="Symbol">)</a>
+
+<a id="7378" class="Comment">-- 5.3: An Interface for Proof Automation</a>
 </pre></body></html>
