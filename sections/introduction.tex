@@ -124,6 +124,35 @@ previous chapters to the setting of countably infinite types.
 Countably infinite are those types that have a bijection with the natural
 numbers: we will see that we can develop a similar framework of proofs for them
 as we did for the finite types (with some important differences).
+\section{Contributions}
+Since much of this thesis is dedicated to exploring well-researched topics from
+a new perspective, some of the contributions can be difficult to tease out.
+There are three types of valuable and useful work provided in this thesis:
+\begin{description}
+  \item[Exposition of Already-Existing Work]
+    Many explorations of dependent types in programming follow the well-trodden
+    path of describing length-indexed vectors, explaining one or two aspects of
+    totality, and perhaps building up to a proof that \(\mathit{reverse} \circ
+    \mathit{reverse} \equiv \mathit{id}\).
+    One of the aims of this thesis is to provide a different introduction to
+    dependent types which also touches on some of the core aspects of HoTT, a
+    topic missing much introductory material for functional programmers.
+  \item[Formalised Proofs of Theorems proved Informally Elsewhere]
+    ``Informal'' here means not machine checked.
+    All theorems stated in this thesis are proved formally in Cubical Agda and
+    machine-checked: the full code for these proofs is available
+    online\footnote{\url{https://oisdk.github.io/masters-thesis/README.html}}.
+    Formal proofs can be quite different from their informal counterparts, and
+    it is usually not trivial to formalise a pen-and-paper proof.
+    Furthermore, often in formalising a proof new insights about the proof are
+    revealed.
+  \item[New Fundamental Theoretical Contributions]
+    Several of the constructions presented in this thesis are in fact novel, and
+    some of the theorems proven have not been proven (either formally or
+    informally) elsewhere.
+\end{description}
+
+
 \section{What is a Proof?}
 Constructive mathematics is, fundamentally, a different way of thinking about
 proofs.
