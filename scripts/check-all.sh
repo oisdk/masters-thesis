@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ( cd agda
-echo '{-# OPTIONS --cubical --safe #-}
+echo '{-# OPTIONS --cubical #-}
 ' > Everything
 echo 'module Everything where
 ' >> Everything

@@ -1,5 +1,5 @@
 \begin{code}
-{-# OPTIONS --cubical #-}
+{-# OPTIONS --cubical --safe #-}
 
 
 module Snippets.Formers where
