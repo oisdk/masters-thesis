@@ -18,15 +18,19 @@ In constructive mathematics the story is a little different.
 When we prove something constructively, often the thing proven retains
 components of the proof itself.
 Take the proposition \(P\) ``there is a prime number greater than 100''.
-To prove it, we might take a number that's bigger than 100, say 127, and then
-show that it's prime.
-Classically, this proof would show that there is (at least one) prime number
-bigger than 100.
-Constructively, though, proofs themselves are mathematical objects, just like
-numbers or functions.
-As such, our proof of \(P\) actually \emph{contains} the number 127, and it proves
-something formally different from a proof which used another number.
-In fact, modulo some caveats we will explain soon, there is no way to provide a
+\begin{equation}
+  P = \exists n. \mathit{isPrime}(n) \wedge n > 100
+\end{equation}
+A classical proof of the above proposition can avoid naming an \(n\): if we know
+there are infinite primes, for instance, it is not too hard to deduce that there
+must be some that are larger than \(100\).
+
+The constructive existential, on the other hand, is represented by a concrete
+pair.
+In the case of the proposition above, the first component of this pair is \(n\),
+and the second is a proof that that \(n\) adheres to the predicate
+(\(\mathit{isPrime}(n) \wedge n > 100\) in this case).
+As such, modulo some caveats we will explain soon, there is no way to provide a
 proof of \(P\) which \emph{doesn't} reveal the particular prime number we had in
 mind while proving.
 
@@ -275,9 +279,25 @@ choice.
 While this thesis can serve as an introduction to proofs in dependent type
 theory generally, it can also serve as an introduction to Homotopy Type Theory
 \citep{hottbook}.
-HoTT is a type theory and foundational theory for mathematics: it is designed to
-stand in for ZFC in mathematical terms, and things like Martin-Löf type theory
-computer science terms.
+HoTT is both a type theory and a foundational theory for mathematics.
+As a type theory it can be thought of as an alternative to things like
+Martin-Löf type theory; as a foundational theory it can be compared to other
+foundational theories like Zermelo–Fraenkel set theory.
+
+\begin{definition}[ZFC]
+  Zermelo-Fraenkel set theory with choice is a foundational theory for
+  mathematics, which is based on set theory.
+  It is the most commonly-used foundational theory (although it is important to
+  stress that most modern mathematics is foundation-agnostic).
+
+  The Axiom of Choice is a non-constructive axiom which is independent of the
+  rest of Zermely-Fraenkel set theory: when included the theory is often
+  abbreviated to ``ZFC''.
+
+  A full exploration of ZFC and its axioms is beyond the scope of this thesis;
+  we will, see, however, a definition of the axiom of choice in CuTT
+  (Definition~\ref{axiom-of-choice}).
+\end{definition}
 
 Central to the theory is the univalence axiom.
 This axiom states that isomorphism implies equality: more precisely, that
@@ -314,11 +334,27 @@ Finally, we have to explain where Cubical Type Theory
 \citep{cohenCubicalTypeTheory2016} fits in.
 Strictly speaking in this thesis we will not work directly in HoTT: we work
 instead in CuTT, which is very closely related, but not quite the same, as HoTT.
-CuTT introduces the interval type for its paths, whereas in HoTT (and Martin-Löf
-type theory, which we will describe later) paths are an inductive type.
+CuTT's main departure from HoTT is in its representation of equalities, which it
+calls ``paths''.
+In HoTT (and Martin-Löf type theory, which we will describe later) equalities
+are an inductive type.
+In CuTT, paths behave like functions from the real line: an equality
+\(x \equiv y\) is a function which, when applied to \(0\), returns \(x\), and
+when applied to \(1\), returns \(y\).
+\begin{equation}
+\begin{aligned}
+  & e  :    & x \equiv y \\
+  & e(i) = & \begin{cases}
+    x, & i = 0 \\
+       & \vdots \\
+    y, & i = 1
+  \end{cases}
+\end{aligned}
+\end{equation}
 This different ``implementation'' of paths is central to how CuTT can give
 computational content to univalence, but it also slightly changes the way paths
 function.
+
 
 There is one crucial difference between the two theories: in CuTT the
 univalence ``axiom'' is in fact a theorem, with computational content.
