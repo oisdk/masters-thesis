@@ -161,7 +161,8 @@ thesis:
 \begin{description}
   \item[A classification of five finiteness predicates in Cubical Type Theory.]
     Four of these predicates have been previously defined and described in
-    Homotopy Type Theory \citep{fruminFiniteSetsHomotopy2018}; this work defines
+    Homotopy Type Theory \citep{fruminFiniteSetsHomotopy2018}, and two in
+    Martin-Löf type theory \citep{fruminFiniteSetsHomotopy2018}, this work defines
     the same predicates in the slightly different setting of Cubical Type
     Theory.
     This has the advantage of giving the proofs computational content, a feature
@@ -170,11 +171,19 @@ thesis:
     described before.
   \item[Proof of implication between finiteness predicates.]
     Some of these proofs have been seen in the literature before (from
-    cardinal finiteness and manifest Bishop finiteness is present informally
+    cardinal finiteness to manifest Bishop finiteness is present informally
     in \cite{yorgeyCombinatorialSpeciesLabelled2014}, and formally (though in
     HoTT) in \cite{fruminFiniteSetsHomotopy2018}).
     Theorem~\ref{cardinal-to-manifest-bishop} in particular has not been proven
     formally before.
+  \item[Proof of relation between listed and \(\AgdaDatatype{Fin}\)-based
+    finiteness predicates.]
+    There are broadly two different ways to define finiteness predicates:
+    through a list-based approach, or through relations with a finite prefix of the
+    natural numbers.
+    Our container-based treatment of the finiteness predicates is novel, to the
+    best of our knowledge, and allows us to prove that these two approaches are
+    precisely equivalent.
   \item[Proof that Sets form a \(\Pi\)-Pretopos.]
     This is a proof that has been presented before, in both \cite{hottbook} and
     \cite{rijkeSetsHomotopyType2015}: here we present the first machine-checked
@@ -313,8 +322,8 @@ From a programming perspective, this is quite useful for transporting
 \emph{programs}: an API defined on some type can suddenly be reused, without
 change, on another type as long as the latter is isomorphic to the former.
 It's worth noting that the technique mentioned here is used quite
-pervasively in everyday mathematics: it's just that foundational systems could
-not justify its use.
+pervasively in everyday mathematics: it's just that foundational systems (like
+MLTT) could not justify its use.
 
 The other addition that HoTT gives to traditional type theory is that of Higher
 Inductive Types.
@@ -354,7 +363,6 @@ when applied to \(1\), returns \(y\).
 This different ``implementation'' of paths is central to how CuTT can give
 computational content to univalence, but it also slightly changes the way paths
 function.
-
 
 There is one crucial difference between the two theories: in CuTT the
 univalence ``axiom'' is in fact a theorem, with computational content.

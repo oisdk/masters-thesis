@@ -26,7 +26,7 @@ be listed.
   We call the first component of this pair the ``support'' list, and the second
   component the ``cover'' proof.
   An equivalent version of this predicate was called \verb+Listable+ in
-  \citep{firsovDependentlyTypedProgramming2015}.
+  \citet{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
 This predicate is simple and useful, but we will see later on how it is perhaps
@@ -87,7 +87,7 @@ One of the nice things about containers is it gives us a generic way to define
 \begin{agdalisting} \label{container-membership}
   \ExecuteMetaData[agda/Container/Membership.tex]{membership-def}
 \end{agdalisting}
-\begin{marginagdalisting}{A Fiber}
+\begin{marginagdalisting}{A Fiber \cite[definition 4.2.4]{hottbook}}
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{fiber}
 \end{marginagdalisting}
 Here we're using the homotopy-theory notion of a \AgdaDatatype{fiber} to define
@@ -150,6 +150,12 @@ This means that we could have in fact written the whole proof as follows:
 \end{agdalisting*}
 The simplicity of this proof, by the way, is why we preferred the
 container-based definition of lists over the traditional one.
+
+In \citet{firsovDependentlyTypedProgramming2015}, there is a proof that split
+enumerability and surjections from \(\AgdaDatatype{Fin}\) are propositionally
+equivalent; i.e. a function from each to the other is provided.
+The fact that the two proofs are precisely equivalent is not proven (and,
+indeed, it is impossible to prove in MLTT).
 \subsection{Instances}
 \begin{marginagdalisting}{Proof of \(\AgdaFunction{\(\mathcal{E}!\)\;\AgdaDatatype{Bool}}\)} \label{bool-is-split-enumerable}
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
@@ -215,6 +221,8 @@ overall proof resolves quite simply:
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-is-discrete}
 \end{agdalisting*}
 \end{proof}
+This lemma is also proven in \citet{firsovDependentlyTypedProgramming2015},
+although using a significantly different technique.
 \section{Manifest Bishop Finiteness} \label{manifest-bishop-finiteness}
 We mentioned in the introduction that occasionally in constructive mathematics
 proofs will contain ``too much'' information.
@@ -284,6 +292,8 @@ With this we can define manifest Bishop finiteness:
   is the membership term: here we require unique membership
   (\AgdaFunction{\ensuremath{\in!}}), rather than simple membership
   (\AgdaFunction{\(\in\)}).
+  An equivalent version of this predicate was called \verb+ListableNoDup+ in
+  \citet{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
 We use the word ``manifest'' here to distinguish from another common
@@ -308,6 +318,7 @@ Going the other direction takes significantly more work.
 \begin{lemma} \label{split-enum-to-manifest-bishop}
   Any split enumerable set is manifest Bishop finite.
 \end{lemma}
+This lemma is proven in \citet{firsovDependentlyTypedProgramming2015}.
 We will only sketch the proof here:
 the ``unique membership'' condition in
 \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\) means that we are not permitted
@@ -364,6 +375,11 @@ This proof is almost identical to the proof for
 Lemma~\ref{split-enum-is-split-surj}: it reveals that
 enumeration-based finiteness predicates are simply another perspective on
 relation-based ones.
+
+\citet{firsovDependentlyTypedProgramming2015} provides a proof of the
+related statement; that manifest Bishop finiteness implies an equivalence to a
+prefix of the natural number (and vice versa), but similarly to split
+enumerability they cannot show that the two are equivalent as we have done here.
 
 As we are working in CuTT, a proof of equivalence between two types gives us the
 ability to \emph{transport} proofs from one type to the other.
@@ -452,6 +468,7 @@ With this, we can define cardinal finiteness:
   \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
   \end{agdalisting*}
+  This predicate is called Bishop finiteness in \cite{fruminFiniteSetsHomotopy2018}.
 \end{definition}
 \subsection{Deriving Uniquely-Determined Quantities}
 At first glance, it might seem that we lose any useful properties we could
@@ -676,6 +693,7 @@ constant, and therefore can eliminate from within a truncation.
 The second component of the output pair (the cover proof) follows quite
 naturally from the definition of permutations.
 \end{proof}
+To the best of our knowledge, this is the first explicit proof of this theorem.
 \subsection{Restrictiveness}
 So far our explorations into finiteness predicates have pushed us in the
 direction of ``less informative'': however, as mentioned in the introduction, we
@@ -764,6 +782,7 @@ Manifest enumerability is one such predicate.
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable/Container.tex]{manifest-enum-def}
   \end{agdalisting*}
 \end{definition}
+This predicate is novel, to the best of our knowledge.
 
 It might not be immediately clear why this definition of enumerability allows
 the circle to conform while the others do not.
