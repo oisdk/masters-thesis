@@ -55,9 +55,14 @@ category.
 \end{agdalisting}
 \section{The Category of Sets}
 Next we'll look at how to construct the category of sets (in the HoTT sense).
-Much of this work comes directly from \citet[chapter 10]{hottbook} and
-\citet{rijkeSetsHomotopyType2015}.
-The formalisation, however, is novel, as far as we know.
+Much of this work comes directly from \citet{rijkeSetsHomotopyType2015} and
+\citet[chapter 10]{hottbook} (the latter of which is in fact an updated and
+slightly less detailed version of the former).
+In particular, our treatment (and definition) of categories and topoi comes
+directly from those works.
+We have provided in the formalisation a proof that sets in CuTT form a
+\(\Pi\)-pretopos: this proof (in HoTT) is in fact the main result of
+\citet{rijkeSetsHomotopyType2015}; our contribution is simply the formalisation.
 
 The objects are represented by a \(\Sigma\):
 \begin{agdalisting*}
@@ -73,6 +78,12 @@ The two most involved proofs for showing that discrete Kuratowski sets form a
 \(\Pi\)-pretopos are those proofs that show closure under \(\Pi\) and
 \(\Sigma\).
 We will describe them here.
+
+In \cite[Theorem 4.21]{fruminFiniteSetsHomotopy2018}, Kuratowski finite types
+are proven to be closed under surjections, products, and sums.
+Here we prove closure under products and sums, but also functions, \(\Sigma\),
+and \(\Pi\) (and furthermore our closure proofs are given on all of the
+finiteness predicates that they apply to).
 \subsection{Closure of the Ordered Predicates}
 First, we will show that split enumerability (and, by extension, manifest
 enumerability) are closed under \(\Pi\) and \(\Sigma\).
@@ -258,7 +269,7 @@ allowing us to prove the following:
   can recognise this function as \verb+sequenceA+ from the \verb+Traversable+
   class in Haskell).
 \end{proof}
-
+This lemma is a well-known folklore theorem.
 
 This gets us all of the necessary closure proofs on \agdacal{C}, and as a result
 we know the following theorem.
