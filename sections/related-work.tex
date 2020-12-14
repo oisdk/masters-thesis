@@ -28,7 +28,8 @@ programming languages: the most relevant example is
 \citet{firsovDependentlyTypedProgramming2015}, where they are used to automate
 proofs in Agda.
 Manifest Bishop finiteness and split enumerability are the only predicates
-explored, however, and and the setting is MLTT rather than CuTT.
+explored, however, and the setting is MLTT rather than CuTT.
+As a result, no proofs of equivalence are given.
 
 Finite sets in Homotopy Type Theory in particular are explored in
 \citet{fruminFiniteSetsHomotopy2018}: that paper is quite close in subject
@@ -36,6 +37,14 @@ matter to this thesis, and some of the theorems proven in this thesis are
 explicitly called for there.
 They do focus slightly more, however, on Kuratowski finite sets: these were
 first defined in \citet{kuratowskiNotionEnsembleFini1920}.
+None of the ``manifest'' predicates are explored in
+\citet{fruminFiniteSetsHomotopy2018} (i.e. they focus on propositional
+predicates), and the only closure proofs provided are those of (non-dependent)
+products and sums, and surjections, on Kuratowski finite sets.
+As a result, there is no proof that those sets form a topos.
+Also, given that the work was done in HoTT and not CuTT, their univalence axiom
+does not compute: this means that the proof search library we have defined here
+would not be possible.
 \paragraph{Set and Topos Theory}
 Our proof that finite sets form a topos follows quite closely along with the
 structure of chapter 10 of the HoTT book.
@@ -53,7 +62,7 @@ More generally the category of finite sets is explored in
 \citet{solovevCategoryFiniteSets1983}, and the topic of toposes from cardinally
 finite sets in \citet{henryToposesGeneratedCardinal2018}.
 \paragraph{Exhaustibility}
-The twin notions of and omniscience were first defined in
+The twin notions of exhaustibility and omniscience were first defined in
 \citet{bishopFoundationsConstructiveAnalysis1967}.
 There, they were studied as to how they applied to ``constructiveness''.
 In functional programming, perhaps their most famous usage was in
