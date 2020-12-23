@@ -1,10 +1,10 @@
-Outline of Response to Examiner's Report
+Outline of Response to Examiner's Report on examination for Master's thesis.
 
 Donnacha Oisín Kidney
 
 115702295
 
-----------------------------------------
+--------------------------------------------------------------------------------
 
 I would first like to thank the examiners for their thorough
 and helpful report.
@@ -20,3 +20,6 @@ points raised. In particular:
   differs from previous work.
 * A conclusion has been added.
 * The minor comments have been addressed also.
+
+Thank you for your time,
+Donnacha Oisín Kidney.
