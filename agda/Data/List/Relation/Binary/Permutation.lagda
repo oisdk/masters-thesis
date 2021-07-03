@@ -29,7 +29,6 @@ xs ↭ ys = ∀ x → (x ∈ xs) ⇔ (x ∈ ys)
 \end{code}
 %</perm-def>
 \begin{code}
-
 reflₚ : ∀ {xs : List A} → xs ↭ xs
 reflₚ _ = Isomorphism.refl-⇔
 
@@ -189,7 +188,7 @@ tailₚ-inv x xs ys xs↭ys z (n , z∈ys) | f0 , z∈xs | 〖 p₁ 〗
 
   p₆ = z∈xs ≡˘⟨ isSet-subst {B = λ n → (x ∷ ys) ! n ≡ z} (Discrete→isSet discreteFin) (cong fst p₅) z∈xs ⟩
        subst (λ n → (x ∷ ys) ! n ≡ z) (cong fst p₅) z∈xs
-         ≡⟨ pathSigma→sigmaPath (f0 , z∈xs) (f0 , z∈ys₃) p₅ .snd ⟩
+     ≡⟨ PathΣ→ΣPathTransport (f0 , z∈xs) (f0 , z∈ys₃) p₅ .snd ⟩
        z∈ys₃ ∎
 
   p₇ = fs l , z∈ys₄ ≡˘⟨ p₄ ⟩
@@ -204,5 +203,5 @@ tailₚ : ∀ x (xs ys : List A) →
 tailₚ x xs ys x∷xs↭x∷ys k .fun = tailₚ-to x xs ys x∷xs↭x∷ys k
 tailₚ x xs ys x∷xs↭x∷ys k .inv = tailₚ-to x ys xs (sym-⇔ ∘ x∷xs↭x∷ys) k
 tailₚ x xs ys x∷xs↭x∷ys k .rightInv = tailₚ-inv x xs ys x∷xs↭x∷ys k
-tailₚ x xs ys x∷xs↭x∷ys k .leftInv  = tailₚ-inv x ys xs (sym-⇔ ∘ x∷xs↭x∷ys) k
+tailₚ x xs ys x∷xs↭x∷ys k .leftInv  v = cong (λ z → tailₚ-to x ys xs (sym-⇔ ∘ x∷xs↭x∷ys) k (tailₚ-to x xs ys z k v)) (funExt (λ h → sym (sym-sym-iso (x∷xs↭x∷ys h)) ))  ; tailₚ-inv x ys xs (sym-⇔ ∘ x∷xs↭x∷ys) k v
 \end{code}

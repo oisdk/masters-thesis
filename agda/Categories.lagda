@@ -117,8 +117,8 @@ record PreCategory ℓ₁ ℓ₂ : Type (ℓsuc (ℓ₁ ℓ⊔ ℓ₂)) where
   ≅-set : isSet (X ≅ Y)
   ≅-set = isOfHLevelΣ 2 Hom-Set
     λ _ → isOfHLevelΣ 2 Hom-Set
-    λ _ → isOfHLevelΣ 2 (hLevelSuc 2 (Hom _ _) Hom-Set _ _)
-    λ _ → hLevelSuc 2 (Hom _ _) Hom-Set _ _
+    λ _ → isOfHLevelΣ 2 (isOfHLevelSuc 2 Hom-Set _ _)
+    λ _ → isOfHLevelSuc 2 Hom-Set _ _
 
 open import Cubical.Foundations.Transport
 

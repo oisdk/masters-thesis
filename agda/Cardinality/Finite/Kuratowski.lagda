@@ -42,7 +42,7 @@ open import Data.Sigma.Properties
 
 isProp𝒦ᶠ : isProp (𝒦ᶠ A)
 isProp𝒦ᶠ Kˣ Kʸ =
-  ΣProp≡
+  Σ≡Prop
     (λ K p q i x → isProp-◇ {xs = K} (p x) (q x) i)
     {Kˣ} {Kʸ}
     (extensional (fst Kˣ) (fst Kʸ) λ x → const (Kʸ .snd x) iff const (Kˣ .snd x))

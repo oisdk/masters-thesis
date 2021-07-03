@@ -34,7 +34,7 @@ module _ where
   open import Data.Fin.Literals
   open import Data.List.Syntax
 
-  open import Cubical.HITs.S1 hiding (inv; isConnectedS¹)
+  open import Cubical.HITs.S1 hiding (isConnectedS¹)
 
   private
     module S1ConnectedDisplay where
@@ -77,14 +77,14 @@ module _ where
   (xs ∥Σ∥ ys) .fst = sup-Σ (xs .fst) (fst ∘ ys)
   (xs ∥Σ∥ ys) .snd (x , y) = ⦇ (cov-Σ x y (xs .fst) (fst ∘ ys)) (xs .snd x) (ys x .snd y) ⦈
 
-  open import Cubical.Foundations.HLevels using (isOfHLevelΣ; hLevelPi)
+  open import Cubical.Foundations.HLevels using (isOfHLevelΣ; isOfHLevelΠ)
   open import Cubical.Data.List.Properties using (isOfHLevelList)
 
   isSet⟨ℰ⟩ : isSet A → isSet (ℰ A)
   isSet⟨ℰ⟩ isSetA =
     isOfHLevelΣ 2
       (isOfHLevelList 0 isSetA)
-      λ _ → isProp→isSet (hLevelPi 1 λ _ → squash)
+      λ _ → isProp→isSet (isOfHLevelΠ 1 λ _ → squash)
 
   open import Relation.Nullary.Omniscience
   open import Data.List.Relation.Unary

@@ -4,7 +4,9 @@
 module HITs.PropositionalTruncation.Display where
 
 open import Prelude
-open import Cubical.HITs.PropositionalTruncation
+open import Cubical.HITs.PropositionalTruncation hiding (rec)
+import Cubical.HITs.PropositionalTruncation as Cubical
+
 \end{code}
 %<*rec-prop-trunc>
 \begin{code}
@@ -17,6 +19,6 @@ rec→set : isSet B → (f : A → B) → (∀ x y → f x ≡ f y) → ∥ A �
 \end{code}
 %</rec-prop-trunc-set>
 \begin{code}
-rec = recPropTrunc
-rec→set isSetB = recPropTrunc→Set isSetB
+rec = Cubical.rec
+rec→set isSetB = rec→Set isSetB
 \end{code}

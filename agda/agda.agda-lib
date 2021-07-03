@@ -1,3 +1,4 @@
 name: agda
 include: .
 depend: cubical
+flags: --cubical --guardedness --postfix-projections

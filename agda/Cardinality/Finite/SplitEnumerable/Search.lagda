@@ -24,7 +24,7 @@ private variable p : Level
 ℰ!⇒Exhaustible = Omniscient→Exhaustible ∘ ℰ!⇒Omniscient
 
 ℰ!⟨fib⟩ : (f : A → B) → (y : B) → ℰ! A → ℰ! B → ℰ! ∥ fiber f y ∥
-ℰ!⟨fib⟩ f y xs ys with ℰ!⇒Omniscient xs λ x → ℰ!⇒Discrete (𝕃⇔ℒ⟨ℰ!⟩ .fun ys) (f x) y
+ℰ!⟨fib⟩ f y xs ys with ℰ!⇒Omniscient xs (λ x → ℰ!⇒Discrete (𝕃⇔ℒ⟨ℰ!⟩ .fun ys) (f x) y)
 ℰ!⟨fib⟩ f y xs ys | yes p = ∣ p ∣ ∷ [] , λ _ → f0 , squash _ _
 ℰ!⟨fib⟩ f y xs ys | no ¬p = [] , ⊥-elim ∘ refute-trunc ¬p
 

@@ -4,6 +4,7 @@ module Prelude where
 
 open import Level public
 open import Data.Sigma public
+open import Cubical.Data.Sigma using (Σ≡Prop) public
 open import Function.Fiber public
 open import Data.Empty public
 open import Data.Unit public

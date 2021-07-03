@@ -27,20 +27,23 @@ finSetPreCategory .PreCategory.Comp f g = f ∘ g
 finSetPreCategory .PreCategory.assoc-Comp _ _ _ = refl
 finSetPreCategory .PreCategory.Comp-Id _ = refl
 finSetPreCategory .PreCategory.Id-Comp _ = refl
-finSetPreCategory .PreCategory.Hom-Set {X} {Y} = hLevelPi 2 λ _ → Discrete→isSet (𝒞⇒Discrete (Y .snd))
+finSetPreCategory .PreCategory.Hom-Set {X} {Y} = isOfHLevelΠ 2 λ _ → Discrete→isSet (𝒞⇒Discrete (Y .snd))
 
 open PreCategory finSetPreCategory
 
 iso-iso : (X ≅ Y) ⇔ (fst X ⇔ fst Y)
 iso-iso .fun (f , g , f∘g , g∘f) = iso f g (λ x i → g∘f i x) (λ x i → f∘g i x)
-iso-iso .inv (iso f g g∘f f∘g) = f , g  , (λ i x → f∘g x i) , (λ i x → g∘f x i)
-iso-iso .rightInv _ = refl
+iso-iso .inv fg = fg .fun , fg .inv  , (λ i x → fg .leftInv x i) , (λ i x → fg .rightInv x i)
+iso-iso .rightInv fg i .fun = fg .fun
+iso-iso .rightInv fg i .inv = fg .inv
+iso-iso .rightInv fg i .rightInv = fg .rightInv
+iso-iso .rightInv fg i .leftInv = fg .leftInv
 iso-iso .leftInv  _ = refl
 
 finSetCategory : Category (ℓsuc ℓ) ℓ
 finSetCategory .Category.preCategory = finSetPreCategory
 finSetCategory .Category.univalent {X} {Y} =
-  ≃ΣProp≡ (λ _ → squash) ⟨ trans-≃ ⟩
+  ≃Σ≡Prop (λ _ → squash) ⟨ trans-≃ ⟩
   univalence ⟨ trans-≃ ⟩
   isoToEquiv (
   sym-⇔ (iso⇔equiv (Discrete→isSet (𝒞⇒Discrete (X .snd)))) ⟨ trans-⇔ ⟩
@@ -74,7 +77,7 @@ finSetHasPullbacks f g .Pullback.commute = funExt snd
 finSetHasPullbacks f g .Pullback.ump {A = A} h₁ h₂ p .fst x = (h₁ x , h₂ x) , λ i → p i x
 finSetHasPullbacks f g .Pullback.ump {A = A} h₁ h₂ p .snd .fst .fst = refl
 finSetHasPullbacks f g .Pullback.ump {A = A} h₁ h₂ p .snd .fst .snd = refl
-finSetHasPullbacks {Z = Z} f g .Pullback.ump {A = A} h₁ h₂ p .snd .snd {i} (p₁e , p₂e) = funExt (λ x → ΣProp≡ (λ _ →  𝒞⇒isSet (Z .snd) _ _) λ j → p₁e (~ j) x , p₂e (~ j) x)
+finSetHasPullbacks {Z = Z} f g .Pullback.ump {A = A} h₁ h₂ p .snd .snd {i} (p₁e , p₂e) = funExt (λ x → Σ≡Prop (λ _ →  𝒞⇒isSet (Z .snd) _ _) λ j → p₁e (~ j) x , p₂e (~ j) x)
 
 finSetTerminal : Terminal
 finSetTerminal .fst = Lift _ ⊤ , ∣ ℰ!⇒ℬ (ℰ!⟨Lift⟩ ℰ!⟨⊤⟩) ∣
@@ -93,7 +96,7 @@ open import Categories.Coequalizer
 ∃!′ A P = ∥ Σ A P ∥ Prelude.× AtMostOne P
 
 lemma23 : ∀ {p} {P : A → hProp p} → ∃!′ A (fst ∘ P) → Σ A (fst ∘ P)
-lemma23 {P = P} (x , y) = rec (λ xs ys → ΣProp≡ (snd ∘ P) (y (xs .fst) (ys .fst) (xs .snd) (ys .snd))) id x
+lemma23 {P = P} (x , y) = rec (λ xs ys → Σ≡Prop (snd ∘ P) (y (xs .fst) (ys .fst) (xs .snd) (ys .snd))) id x
 
 module _ {A : Type a} {P : A → Type b} (R : ∀ x → P x → hProp c) where
   uniqueChoice : (Π[ x ⦂ A ] (∃!′ (P x) (λ u → R x u .fst))) →
@@ -124,19 +127,19 @@ module CoeqProofs {X Y : Ob} (f : X ⟶ Y) where
     where
     R : Im .fst → H .fst → hProp _
     R w x .fst = ∀ y → im y ≡ w → h y ≡ x
-    R w x .snd = hLevelPi 1 λ _ → hLevelPi 1 λ _ → 𝒞⇒isSet (H .snd) _ _
+    R w x .snd = isOfHLevelΠ 1 λ _ → isOfHLevelΠ 1 λ _ → 𝒞⇒isSet (H .snd) _ _
 
     prf : Π[ x ⦂ Im .fst ] ∃!′ (H .fst) (λ u → ∀ y → im y ≡ x → h y ≡ u)
     prf (xy , p) .fst = (λ { (z , r) → h z , λ y imy≡xyp → cong (_$ ((y , z) , cong fst imy≡xyp ; sym r)) eq }) ∥$∥ p
-    prf (xy , p) .snd x₁ x₂ Px₁ Px₂ = rec (𝒞⇒isSet (H .snd) x₁ x₂) (λ { (z , zs) → sym (Px₁ z (ΣProp≡ (λ _ → squash) zs)) ; Px₂ z (ΣProp≡ (λ _ → squash) zs) } ) p
+    prf (xy , p) .snd x₁ x₂ Px₁ Px₂ = rec (𝒞⇒isSet (H .snd) x₁ x₂) (λ { (z , zs) → sym (Px₁ z (Σ≡Prop (λ _ → squash) zs)) ; Px₂ z (Σ≡Prop (λ _ → squash) zs) } ) p
 
   lem₂ : ∀ (H : Ob) (h : X ⟶ H) (i : Im ⟶ H) (x : Im .fst) (hi : h ≡ i ∘ im) (eq : h ∘ p₁ ≡ h ∘ p₂) → i x ≡ lem {H = H} h eq .fst x
-  lem₂ H h i x hi eq = rec (𝒞⇒isSet (H .snd) _ _) (λ { (y , ys) → (cong i (ΣProp≡ (λ _ → squash) (sym ys)) ; sym (cong (_$ y) hi)) ; lem {H = H} h eq .snd x y (ΣProp≡ (λ _ → squash) ys) }) (x .snd)
+  lem₂ H h i x hi eq = rec (𝒞⇒isSet (H .snd) _ _) (λ { (y , ys) → (cong i (Σ≡Prop (λ _ → squash) (sym ys)) ; sym (cong (_$ y) hi)) ; lem {H = H} h eq .snd x y (Σ≡Prop (λ _ → squash) ys) }) (x .snd)
 
   finSetCoeq : Coequalizer finSetCategory {X = P} {Y = X} p₁ p₂
   finSetCoeq .Coequalizer.obj = Im
   finSetCoeq .Coequalizer.arr = im
-  finSetCoeq .Coequalizer.equality = funExt λ x → ΣProp≡ (λ _ → squash) λ i → commute i x
+  finSetCoeq .Coequalizer.equality = funExt λ x → Σ≡Prop (λ _ → squash) λ i → commute i x
   finSetCoeq .Coequalizer.coequalize {H = H} {h = h} eq = lem {H = H} h eq .fst
   finSetCoeq .Coequalizer.universal {H = H} {h = h} {eq = eq} = funExt λ x → lem {H = H} h eq .snd (im x) x refl
   finSetCoeq .Coequalizer.unique {H = H} {h = h} {i = i} {eq = eq} prf = funExt λ x → lem₂ H h i x prf eq

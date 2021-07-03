@@ -199,8 +199,11 @@ module _ where
         where
         form : (Σ[ fg ⦂ ((A → B) × (B → A)) ] (((fg .fst ∘ fg .snd) ≡ id) × ((fg .snd ∘ fg .fst) ≡ id))) ⇔ (A ⇔ B)
         form .fun ((f , g) , (leftInv , rightInv)) = iso f g (λ x i → leftInv i x) (λ x i → rightInv i x)
-        form .inv (iso f g leftInv rightInv) = ((f , g) , ((λ i x → leftInv x i) , (λ i x → rightInv x i)))
-        form .rightInv _ = refl
+        form .inv fg = ((fg .fun , fg .inv) , ((λ i x → fg .rightInv x i) , (λ i x → fg .leftInv x i)))
+        form .rightInv fg i .fun = fg .fun
+        form .rightInv fg i .inv = fg .inv
+        form .rightInv fg i .rightInv = fg .rightInv
+        form .rightInv fg i .leftInv = fg .leftInv
         form .leftInv  _ = refl
 
     private

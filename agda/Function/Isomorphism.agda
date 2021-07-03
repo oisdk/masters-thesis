@@ -2,7 +2,7 @@
 
 module Function.Isomorphism where
 
-open import Cubical.Foundations.Equiv using (isoToEquiv) public
+open import Cubical.Foundations.Isomorphism using (isoToEquiv) public
 open import Cubical.Foundations.Isomorphism using (Iso; section; retract; isoToPath; iso) public
 open import Level
 open import Path
@@ -20,6 +20,12 @@ fun (sym-⇔ A⇔B) = inv A⇔B
 inv (sym-⇔ A⇔B) = fun A⇔B
 leftInv (sym-⇔ A⇔B) = rightInv A⇔B
 rightInv (sym-⇔ A⇔B) = leftInv A⇔B
+
+sym-sym-iso : (s : A ⇔ B) → sym-⇔ (sym-⇔ s) ≡ s
+sym-sym-iso s i .fun = s .fun
+sym-sym-iso s i .inv = s .inv
+sym-sym-iso s i .rightInv = s .rightInv
+sym-sym-iso s i .leftInv = s .leftInv
 
 refl-⇔ : A ⇔ A
 fun refl-⇔ x = x

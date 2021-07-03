@@ -4,7 +4,8 @@
 module Data.Sigma.Properties where
 
 open import Prelude hiding (B; C)
-open import Cubical.Foundations.HLevels using (ΣProp≡; isOfHLevelΣ) public
+open import Cubical.Data.Sigma using (Σ≡Prop) public
+open import Cubical.Foundations.HLevels using (isOfHLevelΣ) public
 
 private
   variable
@@ -22,14 +23,14 @@ reassoc .inv       (x , (y , z))    = (x , y) , z
 reassoc .leftInv   ((x , y) , z) i  = ((x , y) , z)
 reassoc .rightInv  (x , (y , z)) i  = (x , (y , z))
 
-≃ΣProp≡ : ∀ {A : Type a} {u} {U : A → Type u} → ((x : A) → isProp (U x)) → {p q : Σ A U} → (p ≡ q) ≃ (fst p ≡ fst q)
-≃ΣProp≡ {A = A} {U = U} pA {p} {q} = isoToEquiv (iso to fro (λ _ → refl) (J Jt Jp))
+≃Σ≡Prop : ∀ {A : Type a} {u} {U : A → Type u} → ((x : A) → isProp (U x)) → {p q : Σ A U} → (p ≡ q) ≃ (fst p ≡ fst q)
+≃Σ≡Prop {A = A} {U = U} pA {p} {q} = isoToEquiv (iso to fro (λ _ → refl) (J Jt Jp))
   where
   to : {p q : Σ A U} → p ≡ q → fst p ≡ fst q
   to = cong fst
 
   fro : ∀ {p q} → fst p ≡ fst q → p ≡ q
-  fro = ΣProp≡ pA
+  fro = Σ≡Prop pA
 
   Jt : (q : Σ A U) → p ≡ q → Type _
   Jt q q≡ = fro (to q≡) ≡ q≡

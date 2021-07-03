@@ -127,7 +127,7 @@ cardinality {A = A} = rec→set card-isSet alg const-alg
 
   const-alg : (x y : ∃[ n ] (Fin n ≃ A)) → alg x ≡ alg y
   const-alg (n , x) (m , y) =
-    ΣProp≡
+    Σ≡Prop
       (λ _ → squash)
       {n , ∣ x ∣} {m , ∣ y ∣}
       (Fin-inj n m (ua (x ⟨ trans-≃ ⟩ (sym-≃ y))))
@@ -176,7 +176,7 @@ module _ {a} {A : Type a} where
 \begin{code}
 
     const-alg (n , x) (m , y) =
-      ΣProp≡
+      Σ≡Prop
         (λ _ → squash)
         {n , ∣ x ∣} {m , ∣ y ∣}
         (Fin-inj n m (ua (x ⟨ trans-≃ ⟩ (sym-≃ y))))
@@ -200,8 +200,11 @@ module _ {a b} {A : Type a} {B : Type b} where
 
    form : (Σ[ fg ⦂ ((A → B) × (B → A)) ] (((fg .fst ∘ fg .snd) ≡ id) × ((fg .snd ∘ fg .fst) ≡ id))) ⇔ (A ⇔ B)
    form .fun ((f , g) , (leftInv , rightInv)) = iso f g (λ x i → leftInv i x) (λ x i → rightInv i x)
-   form .inv (iso f g leftInv rightInv) = ((f , g) , ((λ i x → leftInv x i) , (λ i x → rightInv x i)))
-   form .rightInv _ = refl
+   form .inv fg = ((fg .fun , fg .inv) , ((λ i x → fg .rightInv x i) , (λ i x → fg .leftInv x i)))
+   form .rightInv fg i .fun = fg .fun
+   form .rightInv fg i .inv = fg .inv
+   form .rightInv fg i .rightInv = fg .rightInv
+   form .rightInv fg i .leftInv = fg .leftInv
    form .leftInv  _ = refl
 
 open import Relation.Binary
@@ -238,8 +241,8 @@ module _ {e r} {E : Type e} (totalOrder : TotalOrder E r) where
 
     const-alg : (xs ys : ℬ E) → alg xs ≡ alg ys
     const-alg xs ys =
-      ΣProp≡
-        (λ _ → hLevelPi 1 (λ _ → squash))
+      Σ≡Prop
+        (λ _ → isOfHLevelΠ 1 (λ _ → squash))
         (perm-invar (xs .fst) (ys .fst) (perm-ℬ xs ys))
 
 open import Cardinality.Finite.SplitEnumerable using (ℰ!⟨≡⟩)
