@@ -10,10 +10,10 @@ jobs:
 
     strategy:
       matrix:
-        cubical-ref: ["a01973ef7264f9454a40697313a2073c51a6b77a"]
-        agda-ref: ["v2.6.1"]
-        ghc-ver: ["8.10.1"]
-        cabal-ver: ["3.2"]
+        cubical-ref: ["a60b0c6576fac0ba6e181cab75f9f9de2d167f87"]
+        agda-ref: ["v2.6.2"]
+        ghc-ver: ["9.0.1"]
+        cabal-ver: ["3.4.0.0"]
 
     steps:
 
@@ -51,12 +51,12 @@ jobs:
       if: steps.cache-cabal.outputs.cache-hit != 'true'
       run: |
         cabal update
-        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS' alex-3.2.5
+        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS' alex-3.2.6
         cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS' happy-1.19.12
         cd agda
         mkdir -p doc
         touch doc/user-manual.pdf
-        cabal install --overwrite-policy=always --ghc-options='-O1 +RTS -M6G -RTS'
+        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS'
 
 # Install lhs2tex
     - name: Install lhs2tex
@@ -91,10 +91,13 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/cubical
         agda Cubical/Core/Everything.agda
-        agda Cubical/Data/Everything.agda
         agda Cubical/Foundations/Everything.agda
-        agda Cubical/HITs/Everything.agda
-        agda Cubical/Relation/Everything.agda
+        find Cubical/Data -type f -name "*.agda" | while read -r code ; do
+            agda $code
+        done
+        find Cubical/HITs -type f -name "*.agda" | while read -r code ; do
+            agda $code
+        done
         cp -f -r _build/ ~/cubical-build
 
     - name: Retrieve cubical library
@@ -139,43 +142,56 @@ jobs:
         cp -f -R agda/ ~/main-build/
 
 # Compile Local Haskell
-    - uses: actions/cache@v2
-      name: Cache literate Haskell
-      id: cache-lhs
-      with:
-        path: ~/lhs-build
-        key: ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ hashFiles('main/haskell/**') }}
-        restore-keys: ${{ runner.os }}-${{ matrix.ghc-ver }}-
-
     - name: Add literate haskell sty files
       run: |
         cd main
         if [ ! -f "locallhs2TeX.lhs" ]; then
             echo "%include polycode.fmt" > "locallhs2TeX.lhs"
+            echo "%include forall.fmt" >> "locallhs2TeX.lhs"
         fi
         if [ ! -f "locallhs2TeX.sty" ]; then
             lhs2TeX -o "locallhs2TeX.sty" "locallhs2TeX.lhs"
         fi
-        
-    - name: Cache miss (local Haskell); compile local Haskell
-      if: steps.cache-lhs.outputs.cache-hit != 'true'
+
+    - name: Generate tex from literate Haskell
       run: |
-        mkdir -p ~/lhs-build/dist-newstyle
-        cp -f -R ~/lhs-build/dist-newstyle main/haskell/dist-newstyle
-        rm -r ~/lhs-build
-
         cd main/haskell
-
         find . -type f -name '*.lhs' | while read -r code ; do
             lhs2TeX -o ${code%.lhs}.tex "$code"
         done
 
+# Compile Agda
+    - uses: actions/cache@v2
+      name: Cache local Agda
+      id: cache-agda
+      with:
+        path: ~/main-build
+        key: html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.agda-stdlib-ref }}-${{ matrix.cubical-ref }}-${{ hashFiles('main/agda/**') }}
+        restore-keys: html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.agda-stdlib-ref }}-${{ matrix.cubical-ref }}-
+
+    - name: Cache hit (local Agda); retrieve local Agda
+      if: steps.cache-agda.outputs.cache-hit == 'true'
+      run: cp -f -R ~/main-build/* $GITHUB_WORKSPACE/main/agda
+
+    - name: Cache miss (local Agda); compile local Agda
+      if: steps.cache-agda.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p ~/main-build/_build
+        cp -f -R ~/main-build/_build main/agda/_build
+        rm -r ~/main-build
+
+        cd main
+        ./scripts/generate-everything-agda.sh Everything
+        cd agda
+        agda --html --html-dir=docs Everything.agda
+        rm Everything.agda
+
+        sudo apt-get install texlive-binaries
+        find . -type f -name '*.lagda' | while read -r code ; do
+            agda --latex --latex-dir=. $code
+        done
         cd ..
-        cp -f -r haskell/ ~/lhs-build
-      
-    - name: Cache hit (local Haskell); retrieve local Haskell
-      if: steps.cache-lhs.outputs.cache-hit == 'true'
-      run: cp -f -R ~/lhs-build/* main/haskell
+        cp -f -R agda/ ~/main-build/
 
 # Compile pdf
     - name: Remove .latexmkrc
@@ -193,11 +209,18 @@ jobs:
         name: paper
         path: main/paper.pdf
 
-    - name: Move generated pdf in with html
-      run: mv main/paper.pdf main/agda/docs/paper.pdf
+    - name: Make site folder
+      run: mkdir site
+
+    - name: Move generated pdf into site folder
+      run: mv main/paper.pdf site/paper.pdf
+
+    - name: Move agda html into site folder
+      run: mv main/agda/docs site/agda
 
     - name: Deploy html and pdf to github pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v3.7.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: main/agda/docs
+        publish_dir: site
+        destination_dir: agda-tex

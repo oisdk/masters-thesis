@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
 sh scripts/generate-everything-agda.sh EveryModule
-trap "rm -f agda/EveryModule.agda" 0 2 3 15
-( cd agda ; agda EveryModule.agda )
+every_module_file="$(pwd)/agda/EveryModule.agda"
+trap "rm -f $every_module_file" 0 2 3 15
+cd agda || exit 2
+agda EveryModule.agda
