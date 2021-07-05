@@ -1,4 +1,4 @@
-\chapter{Introduction}
+\section{Introduction}
 Finiteness in classical mathematics is a simple, almost uninteresting subject.
 There are many interesting finite things, mind you, and many of those things are
 finite for interesting reasons; finiteness itself, though, is downright boring.
@@ -84,7 +84,7 @@ about dependent types.
 We will explain the basics of dependently-typed programming in Agda, how to
 write programs and how to write proofs, and we will explain something of the
 internals of dependent type theory along the way.
-\section{Overview}
+\subsection{Overview}
 This thesis is structured as follows: in Chapter~\ref{agda-intro} we will
 introduce Agda, its syntax, and quickly bring reader up to speed with how to
 write programs in it.
@@ -114,7 +114,7 @@ category of sets, although it is more general.
 For us, showing that sets in Homotopy Type Theory form a topos (well, nearly)
 will give us access to the general language of toposes.
 
-In Chapter~\ref{search} we will combine everything from the previous chapters
+In Chapter~\ref{search} we will combine everything from the previous sections
 into a (somewhat) practical program for proof search.
 This program will automatically construct proofs of predicates over finite
 domains.
@@ -124,11 +124,11 @@ players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
 
 Finally, in Chapter~\ref{infinite} we will see how we can adapt the work of
-previous chapters to the setting of countably infinite types.
+previous sections to the setting of countably infinite types.
 Countably infinite are those types that have a bijection with the natural
 numbers: we will see that we can develop a similar framework of proofs for them
 as we did for the finite types (with some important differences).
-\section{Contributions}
+\subsection{Contributions}
 Since much of this thesis is dedicated to exploring well-researched topics from
 a new perspective, some of the contributions can be difficult to tease out.
 There are three types of valuable and useful work provided in this thesis:
@@ -202,7 +202,7 @@ thesis:
     univalence axiom would not have computational content, so a proof search
     library (structured in the way presented here) would not function.
     There are other more minor contributions of this library: they are described
-    in detail in section~\ref{search}.
+    in detail in subsection~\ref{search}.
   \item[A verified solver for the countdown problem.]
     The countdown problem \citep{huttonCountdownProblem2002} has been studied
     from a number of angles in functional programming
@@ -211,7 +211,7 @@ thesis:
 \end{description}
 
 
-\section{What is a Proof?}
+\subsection{What is a Proof?}
 Constructive mathematics is, fundamentally, a different way of thinking about
 proofs.
 Classically we have two different universes of things: we have
@@ -284,7 +284,7 @@ Constructive mathematics is a subset of classical, after all.
 When we say ``constructive'' we really just mean that these proofs avoid
 reliance on certain axioms like the law of the excluded middle, or the axiom of
 choice.
-\section{Homotopy Type Theory}
+\subsection{Homotopy Type Theory}
 While this thesis can serve as an introduction to proofs in dependent type
 theory generally, it can also serve as an introduction to Homotopy Type Theory
 \citep{hottbook}.

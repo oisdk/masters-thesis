@@ -1,42 +1,115 @@
-%include polycode.fmt
-\PassOptionsToPackage{dvipsnames}{xcolor}
-\documentclass{memoir}
-\usepackage{graphicx}
-\chapterstyle{veelo}
-\hangsecnum
+\documentclass[acmsmall,screen]{acmart}
 
-\usepackage{url}
-\usepackage{dashbox}
+\definecolor{AHKeywordColour}    {cmyk}{0.86,0.91,0,0.04}
+\definecolor{AHFunctionColour}   {cmyk}{0.64,0,0.95,0.40}
+\definecolor{AHConstructorColour}{cmyk}{0,0.83,1,0.70}
+\definecolor{AHNumberColour}     {HTML}{A020F0}
+\definecolor{AHStringColour}     {HTML}{B22222}
+\definecolor{TodoColour}         {rgb} {0.9,0.9,0.98}
 
-\ifdraftdoc
-\newcommand{\todo}[1]{%
-  \marginpar{%
-    \dbox{%
-      \begin{minipage}{.9\marginparwidth}%
-        \footnotesize#1%
-      \end{minipage}%
-    }%
-  }%
-}%
-\else
-\newcommand{\todo}[1]{}
-\fi
+\PassOptionsToPackage{full}{textcomp}
 
-\usepackage[mono=false]{libertine}
+% Tikz
+\usepackage{tikz}
+\usepackage{forest}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{calc}
+\usetikzlibrary{cd}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotstableset{col sep=comma}
+\pgfplotsset{compat=1.3}
+
+\usepackage{wrapfig}
+\usepackage{cancel}
+
+\usepackage{lineno}
+
+\usepackage{cleveref}
+
+% For some of the operators I define myself I use this package.
+\usepackage{pict2e}
+
+% This package lets us import code snippets into the document.
 \usepackage{catchfilebetweentags}
 
-\input{agda}
-\AgdaNoSpaceAroundCode{}
+% Packages with maths symbols.
+\usepackage{mathtools}
+\usepackage{turnstile}
+\usepackage{stmaryrd}
+\usepackage{latexsym}
 
-\setlength\mathindent{0cm}
+\newtagform{nowidth}{\llap\bgroup(}{)\egroup}
 
-\usepackage{locallhs2TeX}
-\renewcommand{\Varid}[1]{\AgdaBound{#1}}
-\renewcommand{\Conid}[1]{\AgdaDatatype{#1}}
+% Allow for blackboard bold 0 and 1.
+\DeclareMathAlphabet{\numberbb}{U}{bbold}{m}{n}
+
+% Theorem environments
+\theoremstyle{acmdefinition}
+\newtheorem{definition}{Definition}
 
 
-\usepackage{tikz-cd}
-\usetikzlibrary{decorations.pathmorphing}
+\newtheorem*{remark}{Remark}
+
+% Maths fonts
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\let\Bbbk\relax % Need to avoid defining \Bbbk here, because it's defined in the
+                % acmart template.
+
+% Needed to typeset Agda's stuff (I think; I haven't actually tried removing it recently).
+\usepackage[english]{babel}
+
+% Handy package for on-the-fly resizing.
+\usepackage{relsize}
+
+% Does links and stuff.
+\usepackage{hyperref}
+
+\usepackage{cleveref}
+
+% Citations
+\usepackage{natbib}
+\citestyle{acmauthoryear}
+
+% Multiple figures
+\usepackage{subcaption}
+\usepackage{dblfloatfix}
+\usepackage{multicol}
+\setlength{\multicolsep}{6.0pt plus 2.0pt minus 1.5pt}% 50% of original values
+
+
+\newcommand{\ExecuteMetaDataInline}[2][\jobname]{\ExecuteMetaData[#1]{#2}\ignorespaces}
+
+\newcommand{\sameline}[1]{\sloppy{\mbox{#1}}}
+\newcommand{\mathsameline}[1]{\sloppy{\({#1}\)}}
+
+\newcommand{\twocolcode}[2]{\noindent%
+\begin{minipage}[t][][b]{.49\linewidth}\vspace{-0.7\baselineskip}%
+    #1%
+  \end{minipage}%
+  \begin{minipage}[t][][b]{.49\linewidth}\vspace{-0.7\baselineskip}%
+    #2%
+  \end{minipage}\\\noindent%
+}
+
+% Todo notes
+\usepackage[backgroundcolor=TodoColour,textwidth=1.15cm]{todonotes}
+\setlength{\marginparwidth}{1.22cm}
+\newcommand{\mtodo}[1]{\todo[noinline,noline,size=tiny]{\tiny #1}}
+
+% Arrow for hyperfunctions. Can't decide on best one.
+
+% loop shape:
+\newcommand{\hyparrow}{\looparrowright}
+\newcommand{\hypmarrow}[1]{%
+  \mathrel{%
+    \makebox[0pt][c]{%
+      \raisebox{-0.35em}{\(\;\;\scriptstyle#1\)}%
+    }%
+    \raisebox{0.15em}{\(\looparrowright\)}%
+  }%
+}
 \tikzcdset{
   arrow style=tikz,
   diagrams={>={Straight Barb[scale=0.8]}},
@@ -44,11 +117,11 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \renewcommand{\qed}{\ensuremath{\hfill\blacksquare}}
-
 \makeatletter
 \newcommand{\eqnum}{\leavevmode\textup{\tagform@{\theequation}}}
 \makeatother
 
+\usepackage{algorithm2e}
 \newenvironment{agdalisting}
 {
 
@@ -60,11 +133,8 @@
 \begin{minipage}{\linewidth}\centering\vspace{.7\abovedisplayskip}
 }
 {\end{minipage}\vspace{\belowdisplayshortskip}}
-
 \newenvironment{agdalisting*}
-{
-
-  \noindent\begin{minipage}{\linewidth}\centering\vspace{.7\abovedisplayskip}}{\end{minipage}\vspace{\belowdisplayshortskip}}
+{\noindent\begin{minipage}{\linewidth}\centering\vspace{.7\abovedisplayskip}}{\end{minipage}\vspace{\belowdisplayshortskip}}
 
 \usepackage{environ}
 \NewEnviron{marginagdalisting}[1]{%
@@ -75,144 +145,85 @@
   }%
 }
 
-
-
-\newtheoremstyle{roman}
-{.6\baselineskip} % Space above
-{.6\baselineskip} % Space below
-{} % Body font
-{} % Indent amount
-{} % Theorem head font
-{} % Punctuation after theorem head
-{0pt} % Space after theorem head
-{%
-\noindent%
-\raisebox{0pt}[0pt][0pt]{%
-\llap{%
-\parbox[t][][t]{.7\marginparwidth}{%
-\raggedleft%
-{\bfseries\thmname{#1}\thmnumber{ #2}}\thmnote{\\(#3)}}\hspace{\marginparsep}}}}
-
-\theoremstyle{roman}
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}[theorem]{Lemma}
-
-\numberwithin{figure}{chapter}
-
-
-% Haskell bind operator >>=
-\newcommand\hbind{%
-  \ensuremath{\gg\mkern-5.5mu=}%
-}
-% Haskell apply operator <*>
-\newcommand\hap{%
-  \ensuremath{\mathbin{<\mkern-9mu*\mkern-9mu>}}%
-}
-% Haskell alternative operator <|>
-\newcommand\halt{%
-  \ensuremath{\mathbin{<\mkern-5mu\vert\mkern-5mu>}}%
-}
-% Haskell fmap operator <$>$
-\newcommand\hfmap{%
-  \ensuremath{\mathbin{<\mkern-6mu\$\mkern-6mu>}}%
-}
-% Haskell mappend operator <>
-\newcommand\hcmb{%
-  \ensuremath{\mathbin{\diamond}}%
-}
-% Haskell fish operator <><
-\newcommand\hcmbin{%
-  \ensuremath{\mathbin{\diamond\mkern-7.4mu\rtimes}}%
-}
-% Haskell Kleisli composition <=<
-\newcommand\hkcomp{%
-  \ensuremath{\mathbin{<\mkern-10mu=\mkern-7mu<}}
-}
-% Haskell forall
-\newcommand\hforall{%
-  \ensuremath{\forall}%
-}
-% Unique membership \in!
-\newcommand\inunique{%
-  \mathrel{\in\mkern-6mu\raisebox{-0.5pt}{!}}
-}
-% Decide membership \in?
-\newcommand\decin{%
-  \mathrel{\in\mkern-6mu\raisebox{-0.5pt}{?}}
-}
-% Dot as wildcard character
-\newcommand\wc{{\mkern 2mu\cdot\mkern 2mu}}
-% Binary operator !
-\newcommand\ind{\mathbin{!}}
-\usepackage{subcaption}
-\usepackage{multicol}
-\usepackage{tabularx}
-\usepackage{pict2e}
-\usepackage{forest}
-\usepackage{wrapfig}
-% Proper double left paren [( (also ``plano-concave lens'')
-\newcommand{\lbparen}{%
-  \mathopen{%
-    \sbox0{$()$}%
-    \setlength{\unitlength}{\dimexpr\ht0+\dp0}%
-    \raisebox{-\dp0}{%
-      \begin{picture}(.32,1)
-        \linethickness{\fontdimen8\textfont3}
-        \roundcap
-        \put(0,0){\raisebox{\depth}{$($}}
-        \polyline(0.32,0)(0,0)(0,1)(0.32,1)
-      \end{picture}%
-    }%
-  }%
-}
-
-% Proper double right paren [( (also ``plano-concave lens'')
-\newcommand{\rbparen}{%
-  \mathclose{%
-    \sbox0{$()$}%
-    \setlength{\unitlength}{\dimexpr\ht0+\dp0}%
-    \raisebox{-\dp0}{%
-      \begin{picture}(.32,1)
-        \linethickness{\fontdimen8\textfont3}
-        \roundcap
-        \put(-0.08,0){\raisebox{\depth}{$)$}}
-        \polyline(0,0)(0.32,0)(0.32,1)(0,1)
-      \end{picture}%
-    }%
-  }%
-}
-
-\newcommand{\llangle}{%
-  \mathopen{%
-    \langle\mkern -4mu\langle%
-  }
-}
-\newcommand{\rrangle}{%
-  \mathclose{%
-    \rangle\mkern -4mu\rangle%
-  }
-}
-
-\usepackage[authoryear]{natbib}
-\setcitestyle{authoryear}
-
-\usepackage{cancel}
+\input{agda}
+\input{haskell}
 
 \PrerenderUnicode{í}
-\newcommand{\proptrunc}[1]{\ensuremath{\AgdaDatatype{\ensuremath{\lVert}}\;#1\;\AgdaDatatype{\ensuremath{\rVert}}}}
-\newcommand{\agdaequiv}[2]{\ensuremath{#1\;\AgdaFunction{\ensuremath{\equiv}}\;#2}}
-\newcommand{\agdanat}{\ensuremath{\AgdaDatatype{\mathbb{N}}}}
-\newcommand{\agdabot}{\ensuremath{\AgdaDatatype{\ensuremath{\bot}}}}
-\newcommand{\agdatop}{\ensuremath{\AgdaDatatype{\ensuremath{\top}}}}
-\newcommand{\agdacal}[1]{\ensuremath{\AgdaFunction{\ensuremath{\mathcal{#1}}}}}
-\newcommand{\agdambb}[1]{\ensuremath{\AgdaFunction{\ensuremath{\mathbb{#1}}}}}
+%%% The following is specific to ICFP '21 and the paper
+%%% 'Algebras for Weighted Search'
+%%% by Oisin Kidney and Nicolas Wu.
+%%%
+\setcopyright{acmlicensed}
+\acmPrice{}
+\acmDOI{10.1145/3473577}
+\acmYear{2021}
+\copyrightyear{2021}
+\acmSubmissionID{icfp21main-p57-p}
+\acmJournal{PACMPL}
+\acmVolume{5}
+\acmNumber{ICFP}
+\acmArticle{72}
+\acmMonth{8}
 
-\usepackage{setspace}
 
-% \usepackage{hyperref}
+\keywords{Haskell, Agda, graph search, monad}
 
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "paper"
-%%% End:
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003752.10003809.10003635.10010037</concept_id>
+       <concept_desc>Theory of computation~Shortest paths</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10003752.10003809.10011254.10011255</concept_id>
+       <concept_desc>Theory of computation~Backtracking</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10003752.10003790.10003792</concept_id>
+       <concept_desc>Theory of computation~Proof theory</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10003752.10003790.10003796</concept_id>
+       <concept_desc>Theory of computation~Constructive mathematics</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10003752.10003790.10011740</concept_id>
+       <concept_desc>Theory of computation~Type theory</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10003752.10003790.10002990</concept_id>
+       <concept_desc>Theory of computation~Logic and verification</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10003752.10010124.10010131.10010132</concept_id>
+       <concept_desc>Theory of computation~Algebraic semantics</concept_desc>
+       <concept_significance>100</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10011007.10011006.10011008.10011009.10011012</concept_id>
+       <concept_desc>Software and its engineering~Functional languages</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10011007.10011006.10011008.10011024.10011028</concept_id>
+       <concept_desc>Software and its engineering~Data types and structures</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Shortest paths}
+\ccsdesc[500]{Theory of computation~Backtracking}
+\ccsdesc[300]{Theory of computation~Proof theory}
+\ccsdesc[300]{Theory of computation~Constructive mathematics}
+\ccsdesc[300]{Theory of computation~Type theory}
+\ccsdesc[300]{Theory of computation~Logic and verification}
+\ccsdesc[100]{Theory of computation~Algebraic semantics}
+\ccsdesc[500]{Software and its engineering~Functional languages}
+\ccsdesc[300]{Software and its engineering~Data types and structures}

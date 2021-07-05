@@ -1,9 +1,9 @@
-\chapter{Countably Infinite Types} \label{infinite}
+\section{Countably Infinite Types} \label{infinite}
 We have now built up a substantial amount of theory relating to finite types.
-In this chapter, we will look at the \emph{countable} types: we will see that
+In this section, we will look at the \emph{countable} types: we will see that
 there is a parallel kind of classification of predicates to the finiteness
 predicates, with some notable differences.
-\section{Countability}
+\subsection{Countability}
 For our first countability predicate, we will mirror split enumerability:
 \begin{definition}[Split Countability]
   A type is ``split countable'' if there is a \emph{stream} which contains all
@@ -36,11 +36,11 @@ Lists, as an inductive type, are not permitted to be infinitely large.
 
 In the previous sections we saw different flavours of finiteness which were
 really just different flavours of relations to \AgdaFunction{Fin}.
-Unsurprisingly, given the definition of streams, we will see in this section
+Unsurprisingly, given the definition of streams, we will see in this subsection
 that different flavours of countability are really just different flavours of
-relations to \agdambb{N}.
+relations to \Nat.
 Case in point: our definition of split enumerability is definitionally equal to
-a split surjection from \agdambb{N}.
+a split surjection from \Nat.
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{split-surj}
 \end{agdalisting*}
@@ -50,18 +50,18 @@ enumerability. \todo{Explain better?}
 We also have equivalents to manifest enumerability, or even cardinal finiteness,
 in the countable setting: they are less interesting than split countability,
 however.
-\section{Closure}
+\subsection{Closure}
 The closure proofs are where countability begins to differ from split
 enumerability.
 We will see one closure proof that stays the same, one that is absent, and one
 that is additional.
-\subsection{Instances for Finite Types}
+\paragraph{Instances for Finite Types}
 Before we move on to the proper closure proofs, it is worth pointing out that
 all (non-empty) finite types are also countable.
 Split countability, like split enumerability, does not disallow duplicates: this
 means that for any non-empty type we can simply repeat one of its elements
 infinitely to produce a countability proof.
-\subsection{Closure Under \(\Sigma\)}
+\paragraph{Closure Under \(\Sigma\)}
 The proof that split enumerability was closed under \AgdaDatatype{\(\Sigma\)}
 was quite straightforward:
 we were able to use the ``normal'' pattern of taking the Cartesian product of
@@ -70,17 +70,17 @@ two lists in order to generate the finite support list for
 Unfortunately this doesn't work for infinite types: the reason for which can be
 seen in Figure~\ref{pairings}.
 
-\todo{Explain this notion of exploration better:
-  \begin{itemize}
-    \item Talk about how we have to figure out a surjection from the natural
-      numbers.
-    \item This is like trying to figure out a pattern which hits every number.
-    \item Or like a way to map some type to the numbers.
-    \item When doing this in some kind of closure-like proof, we can pretend
-      that the input types (i.e. \(A\) and \(B\) in \(A \times B\)) are simply
-      \(\mathbb{N}\).
-  \end{itemize}
-}
+% \todo{Explain this notion of exploration better:
+%   \begin{itemize}
+%     \item Talk about how we have to figure out a surjection from the natural
+%       numbers.
+%     \item This is like trying to figure out a pattern which hits every number.
+%     \item Or like a way to map some type to the numbers.
+%     \item When doing this in some kind of closure-like proof, we can pretend
+%       that the input types (i.e. \(A\) and \(B\) in \(A \times B\)) are simply
+%       \(\mathbb{N}\).
+%   \end{itemize}
+% }
 
 \input{figures/pairing-functions}
 
@@ -124,7 +124,7 @@ search two streams.
 \end{agdalisting*}
 The corresponding cover proof is relatively straightforward, so we don't include
 it here.
-\subsection{Closure Under The Kleene Star}
+\paragraph{Closure Under The Kleene Star}
 One of the more useful types we can prove to be countably infinite is the
 \emph{list}.
 This proof is significantly more complex than the previous, however: we need to
@@ -141,10 +141,10 @@ consists of the list \(\left[ 0 \right]\), the 2nd of \(\left[ 0 , 0
 \right]\) and \(\left[ 1 \right]\), and so on.
 Again, in pseudo set-builder notation:
 \begin{equation*}
-  \agdambb{N}\star_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} : \AgdaDatatype{List}\;\agdambb{N} ; \AgdaFunction{sum}\;\mathit{js} = i ; 0 \notin \mathit{js}  \right]
+  \Nat\star_i \coloneqq \left[ \left[ \mathit{xs}_{j - 1} \mid j \in \mathit{js} \right] \mid \mathit{js} : \AgdaDatatype{List}\;\Nat ; \AgdaFunction{sum}\;\mathit{js} = i ; 0 \notin \mathit{js}  \right]
 \end{equation*}
 \todo{Include code?}
-\subsection{No Closure Under \(\Pi\)}
+\paragraph{No Closure Under \(\Pi\)}
 One closure proof that is certainly not possible is closure under \(\Pi\):
 it is not the case that functions from countable types are themselves countable.
 While this is a pretty basic fact in computer science, we include it here to

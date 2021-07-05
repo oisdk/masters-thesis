@@ -1,6 +1,6 @@
-\chapter{Finiteness Predicates} \label{finiteness-predicates}
+\section{Finiteness Predicates} \label{finiteness-predicates}
 \input{figures/finite-classification}
-In this section, we will define and briefly describe each of the five predicates
+In this subsection, we will define and briefly describe each of the five predicates
 in Figure~\ref{finite-classification}.
 We will also explain \emph{why} there are five separate predicates: how can it
 be the case that so many different things describe ``finiteness''?
@@ -10,7 +10,7 @@ restrictive (they don't allow certain finite types to be classified as finite).
 These diversions won't be dead-ends, however: the final predicate we will land
 on as the ``correct'' (or, more accurately, most useful) notion of finiteness
 will be built out of all of the others.
-\section{Split Enumerability} \label{split-enumerability}
+\subsection{Split Enumerability} \label{split-enumerability}
 We will start with a simple notion of finiteness, called split enumerability.
 This predicate is perhaps the first definition of ``finite'' that someone might
 come up with (it's certainly the most common in dependently-typed programming):
@@ -33,7 +33,7 @@ This predicate is simple and useful, but we will see later on how it is perhaps
 a little imprecise.
 Before we dive in to exploring the predicate itself, though, we will need to
 explain some of the terms we used in its definition.
-\subsection{What is a List?}
+\paragraph{What is a List?}
 In this paper we prefer a slightly unusual definition for the type of lists:
 \begin{agdalisting} \label{list-def}
   \ExecuteMetaData[agda/Container/List.tex]{list-def}
@@ -43,7 +43,7 @@ effectively, the above definition says that ``Lists are a datatype whose shape
 is given by the natural numbers, and which can be indexed by numbers smaller
 than its shape''.
 
-\begin{marginagdalisting}{Finite Prefixes of \agdambb{N}}
+\begin{marginagdalisting}{Finite Prefixes of \Nat}
   \ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
 \end{marginagdalisting}
 
@@ -96,7 +96,7 @@ is a value \(x\) and a proof that \(f \; x \;\AgdaDatatype{≡}\;y\).
 Membership also makes more sense when described concretely in terms of lists:
 \(x\;\AgdaDatatype{\ensuremath{\in}}\;\mathit{xs}\) means ``there is an index
 into \(\mathit{xs}\) such that the index points at an item equal to \(x\)''.
-\subsection{Split Surjections}
+\paragraph{Split Surjections}
 Now that we have our terms defined, let's look a little at how split
 enumerability relates to more traditional, classical notions of finiteness.
 In a classical setting we likely wouldn't mention ``lists'' or the like, and
@@ -156,7 +156,7 @@ enumerability and surjections from \(\AgdaDatatype{Fin}\) are propositionally
 equivalent; i.e. a function from each to the other is provided.
 The fact that the two proofs are precisely equivalent is not proven (and,
 indeed, it is impossible to prove in MLTT).
-\subsection{Instances}
+\paragraph{Instances}
 \begin{marginagdalisting}{Proof of \(\AgdaFunction{\(\mathcal{E}!\)\;\AgdaDatatype{Bool}}\)} \label{bool-is-split-enumerable}
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
 \end{marginagdalisting}
@@ -175,7 +175,7 @@ We'll prove the following slightly more general statement:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{split-surj-ident}
 \end{agdalisting*}
-\subsection{Decidable Equality}
+\paragraph{Decidable Equality}
 One thing that characterises all split enumerable types is that they are all
 \emph{discrete}, i.e. they have decidable equality. 
 \begin{agdalisting*}
@@ -223,7 +223,7 @@ overall proof resolves quite simply:
 \end{proof}
 This lemma is also proven in \citet{firsovDependentlyTypedProgramming2015},
 although using a significantly different technique.
-\section{Manifest Bishop Finiteness} \label{manifest-bishop-finiteness}
+\subsection{Manifest Bishop Finiteness} \label{manifest-bishop-finiteness}
 We mentioned in the introduction that occasionally in constructive mathematics
 proofs will contain ``too much'' information.
 With split enumerability we can see an instance of this.
@@ -301,7 +301,7 @@ interpretation of Bishop finiteness, which we have called cardinal finiteness in
 this paper: this version of the proof is ``manifest'' because we have a
 concrete, non-truncated list of the elements in the proof.
 
-\subsection{The Relationship Between Manifest Bishop Finiteness and Split
+\paragraph{The Relationship Between Manifest Bishop Finiteness and Split
   Enumerability}
 While manifest Bishop finiteness might seem stronger than split enumerability,
 it turns out this is not the case.
@@ -333,7 +333,7 @@ We have now proved that every manifestly Bishop finite type is split enumerable,
 and vice versa.
 While the types are not \emph{equivalent} (there are more split enumerable
 proofs than there are manifest Bishop finite proofs), they are of equal power.
-\subsection{From Manifest Bishop Finiteness to Equivalence}
+\paragraph{From Manifest Bishop Finiteness to Equivalence}
 We have seen that split enumerability was in fact a split-surjection in
 disguise.
 We will now see that manifest Bishop finiteness is in fact an \emph{equivalence}
@@ -384,7 +384,7 @@ enumerability they cannot show that the two are equivalent as we have done here.
 As we are working in CuTT, a proof of equivalence between two types gives us the
 ability to \emph{transport} proofs from one type to the other.
 This is extremely powerful, as we will see.
-\section{Cardinal Finiteness} \label{cardinal-finiteness}
+\subsection{Cardinal Finiteness} \label{cardinal-finiteness}
 While we have removed some of the unnecessary information from our finiteness
 predicates, one piece still remains.
 The two following proofs are both valid proofs of the finiteness of
@@ -470,7 +470,7 @@ With this, we can define cardinal finiteness:
   \end{agdalisting*}
   This predicate is called Bishop finiteness in \cite{fruminFiniteSetsHomotopy2018}.
 \end{definition}
-\subsection{Deriving Uniquely-Determined Quantities}
+\paragraph{Deriving Uniquely-Determined Quantities}
 At first glance, it might seem that we lose any useful properties we could
 derive from \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\).
 Luckily, this is not the case: we will show here how to derive decidable
@@ -480,7 +480,7 @@ truncation.
 Those two lemmas are proven in
 \citep{yorgeyCombinatorialSpeciesLabelled2014} (Proposition 2.4.9 and 2.4.10,
 respectively), in much the same way as we have done here.
-Our contribution for this section is simply the formalisation.
+Our contribution for this subsection is simply the formalisation.
 
 First we'll show that decidable equality carries over from manifest Bishop
 finiteness.
@@ -549,7 +549,7 @@ finiteness implies decidable equality to cardinal finiteness, proving our goal.
 The next thing we can derive from underneath the truncation in cardinal
 finiteness is a natural number representing the actual cardinality of the finite
 type.
-Of course \agdambb{N} isn't a proposition, so the eliminator in
+Of course \Nat isn't a proposition, so the eliminator in
 equation~\ref{elim-prop} won't work for us here.
 Instead we will use the following:
 \begin{agdalisting} \label{elim-prop-coh}
@@ -617,7 +617,7 @@ With that, we can move on to the proof:
   it is present in our formalisation.
 \end{proof}
 
-\subsection{Going from Cardinal Finiteness to Manifest Bishop Finiteness}
+\paragraph{Going from Cardinal Finiteness to Manifest Bishop Finiteness}
 We know of course that we can convert any proof of manifest Bishop finiteness to
 a proof of Cardinal finiteness: it's just the truncation function
 \AgdaInductiveConstructor{\(\lvert \_ \rvert\)}.
@@ -694,7 +694,7 @@ The second component of the output pair (the cover proof) follows quite
 naturally from the definition of permutations.
 \end{proof}
 To the best of our knowledge, this is the first explicit proof of this theorem.
-\subsection{Restrictiveness}
+\paragraph{Restrictiveness}
 So far our explorations into finiteness predicates have pushed us in the
 direction of ``less informative'': however, as mentioned in the introduction, we
 can \emph{also} ask how \emph{restrictive} certain predicates are.
@@ -730,7 +730,7 @@ implication.
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Classical.tex]{classical-impl}
 \end{agdalisting*}
-\section{Manifest Enumerability} \label{manifest-enumerability}
+\subsection{Manifest Enumerability} \label{manifest-enumerability}
 Given that we have just proven that all of our finiteness predicates apply to
 the same types, the natural next step is to try find a predicate which applies
 to a different class of types.
@@ -801,7 +801,7 @@ We use a lemma here, proven in the Cubical Agda library, that
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{s1-connected}
 \end{agdalisting*}
-\subsection{Surjections}
+\paragraph{Surjections}
 We already saw that split enumerability was the listed form of a split
 surjection: what we didn't explain was why the word ``split'' was placed before
 surjection.
@@ -827,7 +827,7 @@ predicate of manifest enumerability corresponds to the proper surjections.
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{manifest-enum-surj}
   \end{agdalisting*}
 \end{lemma}
-\subsection{Relation To Split Enumerability}
+\paragraph{Relation To Split Enumerability}
 It is trivially easy to construct a proof that any split enumerable type is
 manifest enumerable: we simply truncate the membership proof.
 Going the other way is more difficult, as we need to extract the membership
@@ -858,7 +858,7 @@ of that type, we can construct an element of the type.
 In the case of \(x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\) we can construct a
 decision procedure for membership of a list, since we already have decidable
 equality on the elements of the list, proving our obligation.
-\section{Kuratowski Finiteness} \label{kuratowski}
+\subsection{Kuratowski Finiteness} \label{kuratowski}
 We now finally arrive at the most important definition of finiteness: Kuratowski
 finiteness.
 As a definition, it is quite different from the predicates we've seen (it
@@ -946,7 +946,7 @@ By relating Kuratowski finiteness---with a full equivalence, no less---to an
 enumerated predicate, we have made it possible to talk about Kuratowski
 finiteness without interacting with the type at all.
 
-In the next section, we will explore the category of discrete Kuratowski finite
+In the next subsection, we will explore the category of discrete Kuratowski finite
 sets.
 Under the hood, however, we will really be working with cardinal finite sets.
 We can do this in a fully rigorous way because

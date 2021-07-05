@@ -1,6 +1,6 @@
-\chapter{Programming and Proving in Cubical Agda} \label{agda-intro} Agda \citep{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
+\section{Programming and Proving in Cubical Agda} \label{agda-intro} Agda \citep{norellDependentlyTypedProgramming2008} is a dependently-typed, pure,
 functional programming language and proof assistant.
-In this chapter we will introduce the language with some basic examples, and
+In this section we will introduce the language with some basic examples, and
 explain a little about how to program and prove in Agda.
 Some Haskell knowledge will help, as much of the syntax (any many concepts) are
 similar, but it is possible to struggle through without it.
@@ -31,7 +31,7 @@ those types correspond to proofs of those propositions.
     description]& \text{Program} \ar[u, "\text{inhabits}" description]
   \end{tikzcd}
 \end{figure}
-\section{Basic Functional Programming in Agda}
+\subsection{Basic Functional Programming in Agda}
 The basic unit of functionality in Agda is the \emph{type}.
 Let's define a type: the type of booleans (we include the equivalent code in
 Haskell on the right).
@@ -54,7 +54,7 @@ In prose, it provides four basic pieces of information:
 \end{samepage}
 Let's explain each piece one by one.
 
-\subsection{Data Types}
+\paragraph{Data Types}
 We first say that we're defining a new \AgdaKeyword{data} type.
 Using the ``\AgdaKeyword{data}'' keyword is just one of the many ways of
 defining types: it basically means that we are going to define the type by
@@ -82,7 +82,7 @@ synonym: in Agda, types are first-class values, which we can manipulate just as
 we would functions or numbers.
 As such, defining a type synonym is exactly the same as defining a new variable:
 it doesn't need any special syntax.
-\subsection{Type Names}
+\paragraph{Type Names}
 The second point is pretty straightforward: the name of the type we've defined
 is \AgdaDatatype{Bool}.
 The only thing to watch out for here is that Agda has relatively few
@@ -90,7 +90,7 @@ restrictions on type names, unlike, say, Haskell.
 This type could have included Unicode symbols (Agda supports roughly 50 Unicode
 mathematical symbols), it could have started with a lowercase letter, etc.
 
-\subsection{Type\textsubscript{0}}
+\paragraph{Type\textsubscript{0}}
 The third point is the most interesting: we say that \AgdaDatatype{Bool} is a
 ``\AgdaFunction{\(\text{Type}_0\)}'' kind of thing.
 What does this mean?
@@ -138,7 +138,7 @@ Agda is quite under flux and likely to be changed soon, we won't spend too much
 time on the topic.
 Every code example provided is as universe-polymorphic as possible, though.
 
-\subsection{Constructors}
+\paragraph{Constructors}
 The last point is the simplest: we have listed the ways to construct values of
 type \AgdaDatatype{Bool}.
 Two ways, in fact, \AgdaInductiveConstructor{true} and
@@ -157,7 +157,7 @@ the type \AgdaDatatype{Bool}, and said it is equal to the value
   variable \AgdaFunction{a-boolean} can not change.
   We couldn't reassign it on the following line.}
 
-\section{Some Functions}
+\subsection{Some Functions}
 That's quite a lot of information on how to define things in Agda: let's look a
 little about how to do computation.
 What we need is a function:
@@ -200,7 +200,7 @@ Agda has special syntax for constructing natural numbers: we can write
 There are several small pieces of information we'll need to understand in order
 to write functions in Agda.
 We'll go through them one by one.
-\subsection{Multi-Argument Functions}
+\paragraph{Multi-Argument Functions}
 Agda, like Haskell, doesn't really have a built-in notion of ``multi-argument''
 functions.
 Instead, multiple arguments are kind of simulated with \emph{currying}.
@@ -209,13 +209,13 @@ Here's how we define the addition of two natural numbers:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{text-add}
 \end{agdalisting*}
-Instead of taking two \agdambb{N}s and returning a third, this function takes a
-\agdambb{N}, and returns a function which takes a \agdambb{N} and returns a
-\agdambb{N}.
+Instead of taking two \Nat s and returning a third, this function takes a
+\Nat, and returns a function which takes a \Nat and returns a
+\Nat.
 \AgdaFunction{add}\;\AgdaNumber{0} returns a function which
 adds \AgdaNumber{0} to a number; \AgdaFunction{add}\;\AgdaNumber{2} returns a
 function which adds \AgdaNumber{2} to a number.
-\subsection{Operators}
+\paragraph{Operators}
 Here's a function on the natural numbers:
 \begin{agdalisting} \label{sub-def}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-def}
@@ -230,7 +230,7 @@ We can also specify the precedence and fixity of the operator:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-fix}
 \end{agdalisting*}
-\subsection{Total Functions}
+\paragraph{Total Functions}
 In the introduction, we described Agda as a ``total'' programming language.
 This means that if we give a function the type \(A \rightarrow B\), then we have
 also \emph{proven} that, given an \(A\), it will produce a \(B\) (in finite
@@ -240,7 +240,7 @@ Practically speaking, this means that Agda will perform some checks on our
 code to ensure that every function is indeed total.
 There are three checks that Agda performs that we will run into in this thesis:
 coverage, termination, and productivity.
-\subsubsection{Coverage}
+\subparagraph{Coverage}
 This is the simplest check that Agda performs: it's also performed by GHC (if
 \verb+-Wall+ is turned on).
 This check ensures that functions are defined for all inputs.
@@ -253,7 +253,7 @@ We could have removed the clause which allows for this:
   \ExecuteMetaData[agda/Snippets/Nat.tex]{bad-sub}
 \end{agdalisting*}
 But now the expression \(5 - 6\) is undefined.
-\subsubsection{Termination}
+\subparagraph{Termination}
 The other major check that Agda will preform on our function definitions is for
 \emph{termination} (or productivity, which we will see later).
 This checks that no function we write accidentally contains an infinite loop.
@@ -291,7 +291,7 @@ built in to the compiler or anything: they're actually just extremely clever
 ways to express structural recursion), but if you have to reach for those
 facilities it's usually a sign you've gone wrong.
 We won't use them here.
-\subsubsection{Productivity}
+\subparagraph{Productivity}
 Productivity isn't something we'll describe just yet, but we will give a hint as
 to its purpose.
 Often when describing total programming languages like Agda people make the
@@ -308,7 +308,7 @@ valid with regards to computation in another sense.
 This sense is \emph{productivity}: they need to always be able to produce
 another piece of information in finite time, even if they never ``finish''
 producing pieces of information.
-\subsubsection{What's it all For?}
+\subparagraph{What's it all For?}
 One thing we haven't answered is \emph{why} we bother checking for termination
 or totality.
 The answer is that it's necessary for Agda to be a valid proof assistant.
@@ -322,7 +322,7 @@ But of course we \emph{haven't} provided a proof of the Riemann hypothesis (and
 if we had we certainly wouldn't have buried the lead to this extent).
 The termination checker is vital to rule out these kinds of ``proofs'': that's
 why it's an integral part of Agda.
-\section{An Expression Evaluator}
+\subsection{An Expression Evaluator}
 Let's put all of the different things we've learned into a more complex example.
 We're going to write a small evaluator for arithmetic expressions.
 Later, we'll use this to help us solve the Countdown problem
@@ -356,7 +356,7 @@ We've introduced the \AgdaKeyword{with} syntax here: it functions somewhat like
 a case expression in Haskell.
 Basically, it allows us to pattern-match on the result of applying a function to
 one of the input arguments without defining a new function.
-\section{Safe Evaluation With Maybe}
+\subsection{Safe Evaluation With Maybe}
 The evaluator we have written isn't exactly correct.
 It implies things like \(4 - 5 = 0\), or \(10 \div 3 = 3\), or \(2 \div 0 = 0\);
 this doesn't make the function ``wrong'' per se, but it might be more desirable
@@ -376,7 +376,7 @@ Here, for instance, is a \AgdaDatatype{Maybe} which contains the number 2:
   \ExecuteMetaData[agda/Snippets/Maybe.tex]{maybe-two}
 \end{agdalisting*}
 Or here is a \AgdaDatatype{Maybe} which doesn't contain anything, but whose type
-says it could contain a function from \agdambb{N} to \agdambb{N}:
+says it could contain a function from \Nat to \Nat:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Maybe.tex]{maybe-nat-to-nat}
 \end{agdalisting*}
@@ -407,7 +407,7 @@ The first case is relatively simple:
 \end{agdalisting*}
 
 The second two cases are slightly more complex: the result of evaluating each
-sub-tree is \(\AgdaDatatype{Maybe}\;\agdambb{N}\), not \agdambb{N}, so we will
+sub-tree is \(\AgdaDatatype{Maybe}\;\Nat\), not \Nat, so we will
 have to pattern-match on the outputs to check for
 \AgdaInductiveConstructor{nothing}.
 \begin{agdalisting*}
@@ -446,8 +446,8 @@ addition and multiplication cases the following:
 Next, we have to handle subtraction.
 In contrast to addition and multiplication, subtraction itself can produce a
 \AgdaInductiveConstructor{nothing}: instead of having type
-\(\agdambb{N}\rightarrow\agdambb{N}\rightarrow\agdambb{N}\), it has type 
-\(\agdambb{N}\rightarrow\agdambb{N}\rightarrow\AgdaDatatype{Maybe}\;\agdambb{N}\).
+\(\Nat\rightarrow\Nat\rightarrow\Nat\), it has type 
+\(\Nat\rightarrow\Nat\rightarrow\AgdaDatatype{Maybe}\;\Nat\).
 To construct multi-argument functions of this particular type, we'll need
 another function:
 \begin{agdalisting}
@@ -475,7 +475,7 @@ Agda also provides syntax for that:
 \end{agdalisting*}
 The \AgdaKeyword{where} keyword here lets us match on zero within the
 \AgdaKeyword{do}-notation.
-\section{Statically Proving the Evaluation is Safe}
+\subsection{Statically Proving the Evaluation is Safe}
 Using this evaluator in practice can be a little annoying:
 because it always returns a \AgdaDatatype{Maybe}, simple expressions which are
 obviously valid still need to be checked at run-time.
@@ -636,7 +636,7 @@ We're able to do this because at the top of our Agda file we say the following:
 This \AgdaKeyword{variable} declaration means that if we ever refer to  \(A\) in
 a function signature without defining it beforehand, Agda will automatically
 insert the implicit arguments present in Equation~\ref{id-expl}.
-\section{Equalities}
+\subsection{Equalities}
 We actually have encountered our first ``proof'' with dependent types: we have
 proven that a given expression is valid or not.
 Now we're going to look at another kind of proof: one that shows that an
@@ -727,7 +727,7 @@ we will name it in the next listing.
 We will see some more intricate ways to manipulate paths later on, but for now
 the ``function from an interval'' intuition is enough to understand the basics.
 
-\section{Some Proofs of Equality}
+\subsection{Some Proofs of Equality}
 So now that we know something about the equality type, let's put it to some use.
 We can construct equality proofs of things which are ``obviously equal'' with
 the following function:
@@ -748,14 +748,14 @@ Something a little more complex might be the following:
 Unfortunately we can't look at much more complex proofs without building up some
 more machinery around path types: we can't currently compose paths, for
 instance.
-\section{Quotients}
+\subsection{Quotients}
 We've seen that data types can be defined by listing their constructors, where
 each constructor is just a function whose return type is the type being defined.
 However, we've also seen that equalities are just functions from the interval.
 If we combine these two notions, we can actually define a \emph{higher
   inductive} type.
 \begin{definition}[Higher Inductive Type]
-  A normal inductive type (like \AgdaDatatype{Bool}, or \agdambb{N}) is a type
+  A normal inductive type (like \AgdaDatatype{Bool}, or \Nat) is a type
   where its \emph{point} constructors are listed.
   A higher inductive type can have point constructors, but it can also have
   \emph{path} constructors: instead of adding new values to the type, these
@@ -778,7 +778,7 @@ HoTT representation of the \emph{circle}.
 We won't examine its more interesting properties all that much: however it is a
 good example of the simplest type with complex homotopy, so we will use it to
 demonstrate several HoTT principles.
-\section{Basic Type Formers}
+\subsection{Basic Type Formers}
 So far a lot of our descriptions of Agda have mixed Agda's type theory with its
 syntax.
 If this were a paper presenting the core type theory of Agda to an audience of
@@ -813,7 +813,7 @@ depth.
     \ExecuteMetaData[agda/Snippets/Formers.tex]{nat-or-string}
   \end{agdalisting*}
   When supplied with \AgdaInductiveConstructor{true}, the return type of this
-  function is \agdambb{N}; when given \AgdaInductiveConstructor{false}, the
+  function is \Nat; when given \AgdaInductiveConstructor{false}, the
   return type is \AgdaDatatype{String}.
 \end{definition}
 
@@ -903,7 +903,7 @@ pair from \AgdaDatatype{\(\Pi\)}:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
 \end{agdalisting*}
-\section{The Menagerie of Foundational Theories}
+\subsection{The Menagerie of Foundational Theories}
 So far we have mentioned four different foundational theories: Martin-Löf Type
 Theory, Homotopy Type Theory, Cubical Type Theory, and Zermelo-Fraenkel set theory.
 We have given some hints as to the differences between these theories, but now
@@ -960,14 +960,14 @@ isomorphic types to be treated as equivalent.
 CuTT \citep{cohenCubicalTypeTheory2016} is closely related to HoTT: it is the
 theory which allows us to use univalence in Agda while retaining the
 computational properties that we would expect in a constructive system.
-\section{Comparing Classical And Constructive Proofs in Agda}
+\subsection{Comparing Classical And Constructive Proofs in Agda}
 The dependent sum is a great example of the difference between ``classical'' and
 ``constructive'' mathematics: the closest analogue in classical mathematics to
 \AgdaDatatype{\(\Sigma\)} is \(\exists\), but the semantics of the two
 constructs are subtly different.
 If I say ``there exists an integer larger than 10'' I'm making a rather
 trivially true statement; to provide a proof that
-\(\AgdaDatatype{\(\Sigma\)}\;\agdambb{N}\;\lambda\;\AgdaBound{n}\rightarrow
+\(\AgdaDatatype{\(\Sigma\)}\;\Nat\;\lambda\;\AgdaBound{n}\rightarrow
 \AgdaNumber{10}\;\AgdaFunction{<}\;\AgdaBound{n}\) is more akin to providing a
 natural number, and proving that it's bigger than 10.
 
@@ -1012,12 +1012,12 @@ We will see a use for this notion later on, but we mention it here to point out
 that we do have a way of describing types which can be pulled out of classical
 proofs.
 
-The purpose of this last section was to demonstrate that constructive
+The purpose of this last subsection was to demonstrate that constructive
 mathematics, far from being constrained in comparison to classical, are
 technically \emph{more} capable.
 We can actually use systems to Agda to check and verify classical proofs just as
 much as we can constructive.
-\section{Computational Behaviour}
+\subsection{Computational Behaviour}
 Up until this point we have been suspiciously quiet on the issue of performance
 or efficiency.
 While everything we're doing is absolutely valid as a purely theoretical

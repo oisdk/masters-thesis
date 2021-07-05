@@ -1,5 +1,5 @@
-\chapter{Topos} \label{topos}
-In this section we will examine the categorical interpretation of finite sets.
+\section{Topos} \label{topos}
+In this subsection we will examine the categorical interpretation of finite sets.
 In particular, we will prove that discrete Kuratowski finite types form a
 \(\Pi\)-pretopos.
 A lot of the work for this proof has been done already: we have already proven
@@ -16,17 +16,17 @@ Secondly, and more practically, the language of a topos is (or in our case the
 generally.
 This makes it a good basis for an API for building QuickCheck-like generators,
 for example.
-\section{Categories in HoTT}
+\subsection{Categories in HoTT}
 At first glance, HoTT seems like a perfect setting for category theory: the
 univalence axiom identifies isomorphisms with equality, a useful tool for
 category theory missing from MLTT.
 While this initial impression is broadly true, the construction of categories in
 HoTT is unfortunately quite complex and involved.
 
-Much of this section is simply a summary of parts of \citet[chapter
+Much of this subsection is simply a summary of parts of \citet[section
 9]{hottbook}.
 The formal proofs we provide are part translation of those proofs in that
-chapter, part from \citep{iversenFredefoxCat2018}
+section, part from \citep{iversenFredefoxCat2018}
 \citep{huProofrelevantCategoryTheory2020}, and part our own.
 
 First, we need to think about the type of objects and arrows.
@@ -53,10 +53,10 @@ category.
 \begin{agdalisting}
   \ExecuteMetaData[agda/Categories.tex]{cat-univalence}
 \end{agdalisting}
-\section{The Category of Sets}
+\subsection{The Category of Sets}
 Next we'll look at how to construct the category of sets (in the HoTT sense).
 Much of this work comes directly from \citet{rijkeSetsHomotopyType2015} and
-\citet[chapter 10]{hottbook} (the latter of which is in fact an updated and
+\citet[section 10]{hottbook} (the latter of which is in fact an updated and
 slightly less detailed version of the former).
 In particular, our treatment (and definition) of categories and topoi comes
 directly from those works.
@@ -72,8 +72,8 @@ This will be quite similar to our objects for finite sets.
 
 Since sets in HoTT don't form a topos, there are quite a few smaller lemmas we
 need to prove to get as close as we can (a \(\Pi W\)-pretopos): we won't include
-them here, other than the closure proofs in the following section.
-\section{Closure}
+them here, other than the closure proofs in the following subsection.
+\subsection{Closure}
 The two most involved proofs for showing that discrete Kuratowski sets form a
 \(\Pi\)-pretopos are those proofs that show closure under \(\Pi\) and
 \(\Sigma\).
@@ -84,7 +84,7 @@ are proven to be closed under surjections, products, and sums.
 Here we prove closure under products and sums, but also functions, \(\Sigma\),
 and \(\Pi\) (and furthermore our closure proofs are given on all of the
 finiteness predicates that they apply to).
-\subsection{Closure of the Ordered Predicates}
+\paragraph{Closure of the Ordered Predicates}
 First, we will show that split enumerability (and, by extension, manifest
 enumerability) are closed under \(\Pi\) and \(\Sigma\).
 This is the first stepping stone on our way to prove that cardinal finiteness is
@@ -176,7 +176,7 @@ furthermore of all the previous closure proofs.
   Lemma~\ref{split-enum-sigma} shows us that the product of finitely many split
   enumerable types is itself split enumerable, proving our goal.
 \end{proof}
-\subsection{Closure on Cardinal Finiteness}
+\paragraph{Closure on Cardinal Finiteness}
 Since we don't have a function of type \(\agdacal{C}\;A \rightarrow
 \AgdaDatatype{\ensuremath{\mathcal{B}}}\;A\), closure proofs on \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\) do not transfer over to
 \agdacal{C} trivially (unlike with \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) and \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\)).
@@ -276,7 +276,7 @@ we know the following theorem.
 \begin{theorem} \label{kuratowski-topos}
   Decidable Kuratowski finite sets form a \(\Pi\)-pretopos.
 \end{theorem}
-\section{The Absence of the Subobject Classifier}
+\subsection{The Absence of the Subobject Classifier}
 It's a little unsatisfying that our topos construction has so many caveats: we
 have to prove a lot of small, uninteresting lemmas just to get to a
 \(\Pi\)-pretopos, all because we can't prove the one or two larger, simple
@@ -298,9 +298,9 @@ following notation:
 This is the subset of elements in \(A\) which satisfy some predicate \(P\).
 
 Type theoretically, the way to express the same would be
-\(\AgdaDatatype{\(\Sigma\)}\;A\;P\): if we wanted to describe the subset of \agdambb{N}
+\(\AgdaDatatype{\(\Sigma\)}\;A\;P\): if we wanted to describe the subset of \Nat
 smaller than 10 we would write
-\mbox{\(\AgdaDatatype{\(\Sigma\)[}\;\AgdaBound{n}\;\AgdaDatatype{:}\;\agdambb{N}\;\AgdaDatatype{]}\;\AgdaBound{n}\;\AgdaFunction{\(<\)}\;\AgdaNumber{10}\)}.
+\mbox{\(\AgdaDatatype{\(\Sigma\)[}\;\AgdaBound{n}\;\AgdaDatatype{:}\;\Nat\;\AgdaDatatype{]}\;\AgdaBound{n}\;\AgdaFunction{\(<\)}\;\AgdaNumber{10}\)}.
 In general, however, this type holds too many elements to properly classify the
 subsets of the larger set: there may be more than one inhabitant of \(P\;x\) for
 any given \(x\).

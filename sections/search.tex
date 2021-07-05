@@ -1,4 +1,4 @@
-\chapter{Search} \label{search}
+\section{Search} \label{search}
 A common theme in dependently-typed programming is that proofs of interesting
 theoretical things often correspond to useful algorithms in some way
 related to that thing.
@@ -22,11 +22,11 @@ library to do just that.
 
 Similar automation machinery can be leveraged to provide search algorithms for
 certain ``logic programming''-esque problems.
-Using the machinery we will describe in this section, though, when the program
+Using the machinery we will describe in this subsection, though, when the program
 says it finds a solution to some problem that solution will be accompanied by a
 formal \emph{proof} of its correctness.
 
-In this section, we will describe the theoretical underpinning and
+In this subsection, we will describe the theoretical underpinning and
 implementation of a library for proof search over finite domains, based on the
 finiteness predicates we have introduced already.
 The library will be able to prove statements like the proof of associativity
@@ -61,7 +61,7 @@ associative, and if so return it to us.
 \end{agdalisting*}
 The usefulness of which is dubious, but we will see a more interesting
 application soon.
-\section{How to make the Typechecker do Automation}
+\subsection{How to make the Typechecker do Automation}
 For this prover we will not resort to reflection or similar techniques: instead,
 we will trick the type checker to do our automation for us.
 This is a relatively common technique, although not so much outside of Agda, so
@@ -108,7 +108,7 @@ All in all, we can use it like this:
   \ExecuteMetaData[agda/Snippets/Bool.tex]{extremely-obvious}
 \end{agdalisting*}
 This technique will allow us to automatically compute any decidable predicate.
-\section{Omniscience}
+\subsection{Omniscience}
 So we now know what is needed of us for proof automation: we need to take our
 proofs and make them decidable.
 In particular, we need to be able to ``lift'' decidability back over a
@@ -192,10 +192,10 @@ Kuratowski finite: the 0, 1, and 2 types; (dependent) sums and products; and any
 type proven to be equivalent to these.
 It's still not entirely clear how to actually \emph{use} this automation without
 incurring so much boilerplate as to defeat the point, though.
-\section{An Interface for Proof Automation}
-In this section we will present the more user-friendly interface to the library,
+\subsection{An Interface for Proof Automation}
+In this subsection we will present the more user-friendly interface to the library,
 designed to be used to automate away tedious proofs in an easy way.
-\subsection{The Design of the Interface}
+\paragraph{The Design of the Interface}
 The central idea of the interface to the proof search library are the following
 two functions:\\
 \begin{minipage}{\linewidth}
@@ -229,7 +229,7 @@ Here's an example of its use:
   \ExecuteMetaData[agda/Snippets/Bool.tex]{pre-inst-proof}
 \end{agdalisting*}
 
-\subsection{Instances}
+\paragraph{Instances}
 One bit of cruft in the above proof is the need to specify the particular
 finiteness proof for bools.
 While this isn't any great burden in this case, it of course becomes more
@@ -282,10 +282,10 @@ It's defined like so:
 \end{agdalisting*}
 Basically it searches for an instance for the type in the hole that it's put
 into: it's a way of asking Agda to ``find an instance which fits here''.
-\subsection{Generic Currying and Uncurrying}
+\paragraph{Generic Currying and Uncurrying}
 While we have arguably removed the bulk of the boilerplate from the automated
 proofs, there is still the case of the ugly noise of currying and uncurrying.
-In this section, we take inspiration from
+In this subsection, we take inspiration from
 \citet{allaisGenericLevelPolymorphic2019} to develop a small interface to generic
 \(n\)-ary functions and properties.
 We will describe it briefly here.
@@ -334,7 +334,7 @@ And finally, the tuple, indexed by its list of types:
 The reason for two separate functions here is to avoid the
 \(\AgdaDatatype{\(\top\)}\)-terminated tuples we would need if we just had one.
 This means that, for instance, to represent a tuple of a \AgdaDatatype{Bool} and
-\agdambb{N} we can write
+\Nat we can write
 \((\AgdaInductiveConstructor{true}\;\AgdaInductiveConstructor{,}\;\AgdaNumber{2})\)
 instead of 
 \((\AgdaInductiveConstructor{true}\;\AgdaInductiveConstructor{,}\;\AgdaNumber{2}\;\AgdaInductiveConstructor{,}\;\AgdaInductiveConstructor{tt})\).
@@ -403,13 +403,13 @@ be used to automate away certain tedious proofs.
 Automation of simple proofs like the associativity of conjunction is all well
 and good, but tasks like that are more tedious than they are difficult.
 What about more difficult problems?
-In the next section we will look at a problem which is too complex to be solved
+In the next subsection we will look at a problem which is too complex to be solved
 by the simple instance-search solver we have constructed here.
 Instead, we will have to combine instance search with manual construction of
 finiteness proofs, optimisation of representation, and some other tricks.
 At the end of it, we will have a solver for countdown.
 \pagebreak
-\section{Countdown}
+\subsection{Countdown}
 \input{figures/countdown-transformation}
 The Countdown problem~\citep{huttonCountdownProblem2002} is a well-known puzzle
 in functional programming (which was apparently turned into a TV show).
@@ -475,13 +475,13 @@ finite.
 
 Finally, we will also want to optimise our solutions and solver: for this we
 will remove equivalent expressions, which can be accomplished with quotients.
-We have already introduced and described countdown: in this section, we will
+We have already introduced and described countdown: in this subsection, we will
 fill in the remaining parts of the solver, glue the pieces together, and show
 how the finiteness proofs can assist us to write the solver.
-\subsection{Finite Vectors}
+\paragraph{Finite Vectors}
 We'll start with a simple example: for both the selection
 (Fig.~\ref{countdown-selection}) and operators (Fig.~\ref{countdown-operators})
-section, all we need to show is that a vector of some finite type is itself
+subsection, all we need to show is that a vector of some finite type is itself
 finite.
 To describe which elements to keep from an \(n\)-element list, so instance, we
 only need a vector of Booleans of length \(n\).
@@ -498,7 +498,7 @@ are finitely many operators is similarly simple to prove:
   \ExecuteMetaData[agda/Countdown.tex]{op-fin}
 \end{agdalisting*}
 
-\subsection{Finite Permutations}
+\paragraph{Finite Permutations}
 A more complex, and interesting, step of the transformation is the first step
 (Fig.~\ref{countdown-permutation}), where we need to specify the permutation to
 apply to the chosen numbers.
@@ -533,7 +533,7 @@ functions between finite types are, as we know, finite
 We take a pair of them: pairs of finite things are \emph{also} finite
 (Lemma~\ref{split-enum-sigma}).
 To get the next two components we can filter to the subobject: this requires
-these predicates to be decidable. \todo{Need to do filter subobject in topos section}
+these predicates to be decidable. \todo{Need to do filter subobject in topos subsection}
 We will construct a term of the following type:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{dec-type}
@@ -570,7 +570,7 @@ And it also has a relatively simple proof of finiteness:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{perm-fin}
 \end{agdalisting*}
-\subsection{Parenthesising}
+\paragraph{Parenthesising}
 Our next step is figuring out a way to encode the parenthesisation of the
 expression (Fig.~\ref{countdown-parens}).
 At this point of the transformation, we already have our numbers picked out, we
@@ -591,7 +591,7 @@ of evaluation.
 
 So what data type encapsulates the ``different ways to parenthesise'' a given
 expression?
-That's what we will figure out in this section, and what we will prove finite.
+That's what we will figure out in this subsection, and what we will prove finite.
 
 One way to approach the problem is with a binary tree.
 A binary tree with \(n\) leaves corresponds in a straightforward way to a
@@ -636,7 +636,7 @@ The algorithm itself is quite similar to stack-based parsing algorithms.
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Dyck.tex]{from-dyck}
 \end{agdalisting*}
-\subsection{Putting It All Together}
+\paragraph{Putting It All Together}
 At this point we have each of the four components of the transformation defined.
 From this we can define what an expression is:
 \begin{agdalisting*}
@@ -648,7 +648,7 @@ The proof that this type is finite mirrors its definition closely:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Countdown.tex]{expr-finite}
 \end{agdalisting*}
-\subsection{Filtering to Correct Expressions}
+\paragraph{Filtering to Correct Expressions}
 We now have a way to construct, formally, every expression we can generate from
 a given list of numbers.
 This is incomplete in two ways, however.
