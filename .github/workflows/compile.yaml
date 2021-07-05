@@ -126,53 +126,6 @@ jobs:
       if: steps.cache-main.outputs.cache-hit == 'true'
       run: cp -f -R ~/main-build/* $GITHUB_WORKSPACE/main/agda
 
-    - name: Compile main library
-      if: steps.cache-main.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p ~/main-build/_build
-        cp -f -R ~/main-build/_build $GITHUB_WORKSPACE/main/agda/_build
-        rm -r ~/main-build
-        sudo apt-get install texlive-binaries
-        cd main/agda
-        find . -type f -name '*.lagda' | while read -r code ; do
-            agda --latex --latex-dir=. $code
-        done
-        agda --html --html-dir=docs README.agda
-        cd ..
-        cp -f -R agda/ ~/main-build/
-
-# Compile Local Haskell
-    - name: Add literate haskell sty files
-      run: |
-        cd main
-        if [ ! -f "locallhs2TeX.lhs" ]; then
-            echo "%include polycode.fmt" > "locallhs2TeX.lhs"
-            echo "%include forall.fmt" >> "locallhs2TeX.lhs"
-        fi
-        if [ ! -f "locallhs2TeX.sty" ]; then
-            lhs2TeX -o "locallhs2TeX.sty" "locallhs2TeX.lhs"
-        fi
-
-    - name: Generate tex from literate Haskell
-      run: |
-        cd main/haskell
-        find . -type f -name '*.lhs' | while read -r code ; do
-            lhs2TeX -o ${code%.lhs}.tex "$code"
-        done
-
-# Compile Agda
-    - uses: actions/cache@v2
-      name: Cache local Agda
-      id: cache-agda
-      with:
-        path: ~/main-build
-        key: html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.agda-stdlib-ref }}-${{ matrix.cubical-ref }}-${{ hashFiles('main/agda/**') }}
-        restore-keys: html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.agda-stdlib-ref }}-${{ matrix.cubical-ref }}-
-
-    - name: Cache hit (local Agda); retrieve local Agda
-      if: steps.cache-agda.outputs.cache-hit == 'true'
-      run: cp -f -R ~/main-build/* $GITHUB_WORKSPACE/main/agda
-
     - name: Cache miss (local Agda); compile local Agda
       if: steps.cache-agda.outputs.cache-hit != 'true'
       run: |

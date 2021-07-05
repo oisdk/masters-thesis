@@ -252,15 +252,15 @@ Via Curry-Howard, the type corresponding to conjunction is in fact the pair (or
 tuple).
 \(A\) and \(B\) are also types.
 So, the above proposition, as a type, is the following:
-\begin{agdalisting*}
-  \ExecuteMetaData[haskell/Pair.tex]{fst-ty} \vspace{-\baselineskip}
-\end{agdalisting*}
+\begin{equation*}
+  \mathit{fst}\mathbin{::}(a,b)\to a
+\end{equation*}
 And the proof which inhabits this type?
 It is the function often called \verb+fst+: the selector for the first component
 of the pair.
-\begin{agdalisting*}
-  \ExecuteMetaData[haskell/Pair.tex]{fst} \vspace{-\baselineskip}
-\end{agdalisting*}
+\begin{equation*}
+  \mathit{fst}\;(x,y) = x
+\end{equation*}
 
 Occasionally we don't want to provide the extra information that
 constructiveness demands: it is occasionally useful to say ``there exists some
