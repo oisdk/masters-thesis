@@ -44,11 +44,6 @@ often can be \emph{executed} as computer programs.
 The program ``there is a prime number greater than 100'' isn't a terribly useful
 one, but we will see some examples which are later on.
 
-This thesis will explore and explain finiteness in constructive
-mathematics: using this setting, it will also serve as an introduction to
-constructive mathematics in Cubical Agda
-\citep{vezzosiCubicalAgdaDependently2019}, and some related topics.
-
 An exploration of finiteness also provides ample opportunity to explain much of
 the fundamentals of Homotopy Type Theory \citep{hottbook}: this theory is a
 foundational system for mathematics, which has at its core the \emph{univalence
@@ -77,24 +72,7 @@ programs written in Cubical Type Theory \citep{cohenCubicalTypeTheory2016}: this
 type theory gives a \emph{computational} interpretation of the univalence axiom.
 By ``computational interpretation'' here we mean that we will be able to run the
 programs we write which rely on this axiom.
-
-This thesis is aimed at individuals with some knowledge of Haskell (although
-extensive knowledge of Haskell is not an absolute necessity) and a curiosity
-about dependent types.
-We will explain the basics of dependently-typed programming in Agda, how to
-write programs and how to write proofs, and we will explain something of the
-internals of dependent type theory along the way.
 \subsection{Overview}
-This thesis is structured as follows: in Chapter~\ref{agda-intro} we will
-introduce Agda, its syntax, and quickly bring reader up to speed with how to
-write programs in it.
-We will also begin to talk about some more foundational type-theory concepts,
-and we will explain a little about Agda's particular interpretation of HoTT and
-CuTT.
-As we mentioned, some programming experience in Haskell is useful, although not
-strictly speaking necessary.
-Certainly no knowledge of dependent type theory is required.
-
 In Chapter~\ref{finiteness-predicates} we will look in-depth at the focus of
 this thesis: finiteness.
 As mentioned finiteness in constructive mathematics is a good deal more complex
@@ -122,12 +100,6 @@ We will demonstrate the program with the countdown problem
 \citep{huttonCountdownProblem2002}: this is a somewhat famous puzzle where
 players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
-
-Finally, in Chapter~\ref{infinite} we will see how we can adapt the work of
-previous sections to the setting of countably infinite types.
-Countably infinite are those types that have a bijection with the natural
-numbers: we will see that we can develop a similar framework of proofs for them
-as we did for the finite types (with some important differences).
 \subsection{Contributions}
 Since much of this thesis is dedicated to exploring well-researched topics from
 a new perspective, some of the contributions can be difficult to tease out.
