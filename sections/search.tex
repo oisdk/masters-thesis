@@ -81,7 +81,7 @@ form if they're needed to type check.
 The type checker will perform \(\beta\)-reduction as much as it can.
 
 So our task is to rewrite proof obligations like the one in
-Equation~\ref{bool-assoc-auto-proof} into ones which can reduce completely. 
+\Cref{bool-assoc-auto-proof} into ones which can reduce completely. 
 As it turns out, we have already described the type of proofs which can ``reduce
 completely'': \emph{decidable} proofs.
 If we have a decision procedure over some proposition \(P\) we can run that
@@ -439,7 +439,7 @@ Broadly, it has two parts:
   \item[A Predicate] showing that the expression is valid and evaluates to the
     target.
 \end{description}
-The first part is described in Figure~\ref{countdown-transform}.
+The first part is described in \Cref{countdown-transform}.
 
 
 This transformation has four steps.
@@ -529,9 +529,9 @@ While it may look complex, this term is actually composed of individual
 components we've already proven finite.
 First we have \(\AgdaDatatype{Fin}\;n\rightarrow\AgdaDatatype{Fin}\;n\):
 functions between finite types are, as we know, finite
-(Theorem~\ref{split-enum-pi}).
+(\Cref{split-enum-pi}).
 We take a pair of them: pairs of finite things are \emph{also} finite
-(Lemma~\ref{split-enum-sigma}).
+(\Cref{split-enum-sigma}).
 To get the next two components we can filter to the subobject: this requires
 these predicates to be decidable. \todo{Need to do filter subobject in topos subsection}
 We will construct a term of the following type:

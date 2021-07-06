@@ -4,7 +4,7 @@ In particular, we will prove that discrete Kuratowski finite types form a
 \(\Pi\)-pretopos.
 A lot of the work for this proof has been done already: we have already proven
 that discrete Kuratowski finiteness is equivalent to cardinal finiteness
-(Theorem~\ref{cardinal-kuratowski}), meaning that we can work with the latter
+(\Cref{cardinal-kuratowski}), meaning that we can work with the latter
 definition which is much simpler to prove things about.
 
 There are two reasons we're interested in the categorical and topos-theoretic
@@ -141,8 +141,8 @@ furthermore of all the previous closure proofs.
   which is split enumerable over all points of \(A\).
 
   As \(A\) is split enumerable, we know that it is also manifestly Bishop finite
-  (Lemma~\ref{split-enum-to-manifest-bishop}), and consequently we know \(A
-  \simeq \AgdaDatatype{Fin}\;n\), for some \(n\) (Lemma~\ref{bishop-equiv}).
+  (\Cref{split-enum-to-manifest-bishop}), and consequently we know \(A
+  \simeq \AgdaDatatype{Fin}\;n\), for some \(n\) (\Cref{bishop-equiv}).
   We can therefore replace all occurrences of \(A\) with \(\AgdaDatatype{Fin}\;n\),
   changing our goal to:
   \begin{equation*}
@@ -173,7 +173,7 @@ furthermore of all the previous closure proofs.
   We can prove this goal by showing that \(\AgdaFunction{Tuple}\;n\;U\) is split
   enumerable: it is made up of finitely many products of points of \(U\), which
   are themselves split enumerable, and \agdatop, which is also split enumerable.
-  Lemma~\ref{split-enum-sigma} shows us that the product of finitely many split
+  \Cref{split-enum-sigma} shows us that the product of finitely many split
   enumerable types is itself split enumerable, proving our goal.
 \end{proof}
 \paragraph{Closure on Cardinal Finiteness}
@@ -257,7 +257,7 @@ allowing us to prove the following:
   First, since our goal is itself propositionally truncated, we have access to
   values under truncations: put another way, in the context of proving our goal,
   we can rely on the fact that \(A\) is manifestly Bishop finite.
-  Using the same technique as we did in Lemma~\ref{split-enum-pi}, we can switch
+  Using the same technique as we did in \Cref{split-enum-pi}, we can switch
   from working with dependent functions from \(A\) to \(n\)-tuples, where \(n\)
   is the cardinality of \(A\).
   This changes our goal to the following:

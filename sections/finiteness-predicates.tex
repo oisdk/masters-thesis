@@ -1,7 +1,7 @@
 \section{Finiteness Predicates}\label{finiteness-predicates}
 \input{figures/finite-classification}
 In this subsection, we will define and briefly describe each of the five predicates
-in Figure~\ref{finite-classification}.
+in \Cref{finite-classification}.
 We will also explain \emph{why} there are five separate predicates: how can it
 be the case that so many different things describe ``finiteness''?
 As we will see, some predicates are too informative (they
@@ -38,7 +38,7 @@ In this paper we prefer a slightly unusual definition for the type of lists:
 \begin{agdalisting}\label{list-def}
   \ExecuteMetaData[agda/Container/List.tex]{list-def}
 \end{agdalisting}
-This is the definition for a \emph{container} (Definition~\ref{container-def}):
+This is the definition for a \emph{container} (\Cref{container-def}):
 effectively, the above definition says that ``Lists are a datatype whose shape
 is given by the natural numbers, and which can be indexed by numbers smaller
 than its shape''.
@@ -59,7 +59,7 @@ to use one or the other depending on whichever is more convenient, and
 That said, defining lists as containers will reveal several interesting
 connections and proofs about split enumerability and the other predicates, 
 so for the remainder of the paper whenever we say \AgdaDatatype{List} we will
-mean Equation~\ref{list-def}.
+mean \Cref{list-def}.
 
 We still must define containers themselves, of course.
 Containers are a well-studied topic in dependent type theory, with a rich
@@ -87,7 +87,7 @@ One of the nice things about containers is it gives us a generic way to define
 \begin{agdalisting}\label{container-membership}
   \ExecuteMetaData[agda/Container/Membership.tex]{membership-def}
 \end{agdalisting}
-\begin{marginagdalisting}{A Fiber \cite[definition 4.2.4]{hottbook}}
+\begin{marginagdalisting}{A Fiber~\cite[definition 4.2.4]{hottbook}}
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{fiber}
 \end{marginagdalisting}
 Here we're using the homotopy-theory notion of a \AgdaDatatype{fiber} to define
@@ -167,7 +167,7 @@ basically listing the constructors.
 As a slightly more complex example, consider the \(\AgdaDatatype{Fin}\) type
 we've been using.
 Remember that split enumerability is in fact the same as a split surjection from
-\(\AgdaDatatype{Fin}\) (Lemma~\ref{split-enum-is-split-surj}): to show that
+\(\AgdaDatatype{Fin}\) (\Cref{split-enum-is-split-surj}): to show that
 \(\AgdaDatatype{Fin}\) is split enumerable, then, we need only show that it has
 a split surjection from itself.
 We'll prove the following slightly more general statement:
@@ -325,7 +325,7 @@ the ``unique membership'' condition in
 duplicates in the support list.
 The first step in the proof, then, is to filter those duplicates out from the
 support list of the \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) proof: we can do this using the decidable
-equality provided by \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) (Lemma~\ref{split-enum-discrete}).
+equality provided by \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) (\Cref{split-enum-discrete}).
 From there, we need to show that the membership proof carries over
 appropriately.
 
@@ -372,7 +372,7 @@ We define equivalences as contractible maps \cite[definition 4.4.1]{hottbook}:
 \end{proof}
 
 This proof is almost identical to the proof for
-Lemma~\ref{split-enum-is-split-surj}: it reveals that
+\Cref{split-enum-is-split-surj}: it reveals that
 enumeration-based finiteness predicates are simply another perspective on
 relation-based ones.
 
@@ -421,12 +421,12 @@ What we want is a proof of finiteness that is a proposition.
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{isProp}
 \end{agdalisting}
 The mere propositions are one homotopy level higher than the contractions
-(Equation~\ref{isContr}), the types for which all values are equal to some value.
+(\Cref{isContr}), the types for which all values are equal to some value.
 They represent the types for which all values are equal, or, the types
 isomorphic to \agdabot\;or \agdatop.
 You can also define propositions in terms of the contractions: propositions are
 the types whose paths are contractions.
-Soon (Equation~\ref{isSet}) we will see the next homotopy level, which are
+Soon (\Cref{isSet}) we will see the next homotopy level, which are
 defined in terms of the propositions.
 
 Despite now knowing the precise property we want our finiteness predicate to
@@ -474,8 +474,8 @@ With this, we can define cardinal finiteness:
 At first glance, it might seem that we lose any useful properties we could
 derive from \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\).
 Luckily, this is not the case: we will show here how to derive decidable
-equality (Lemma~\ref{cardinal-finite-discrete}) and cardinality
-(Lemma~\ref{card-finite-cardinality}) out from under the
+equality (\Cref{cardinal-finite-discrete}) and cardinality
+(\Cref{card-finite-cardinality}) out from under the
 truncation.
 Those two lemmas are proven in
 \citep{yorgeyCombinatorialSpeciesLabelled2014} (Proposition 2.4.9 and 2.4.10,
@@ -501,7 +501,7 @@ from \(\neg \neg P\).
 \begin{proof}
 We already know that manifest Bishop finiteness implies decidable equality;
 to apply that proof to cardinal finiteness we'll use the
-eliminator in Equation~\ref{elim-prop}.
+eliminator in \Cref{elim-prop}.
 Our task, in other words, is to prove the following:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{is-prop-discrete}
@@ -530,7 +530,7 @@ propositions: the \emph{sets}.
 \begin{agdalisting}\label{isSet}
   \ExecuteMetaData[agda/Snippets/Introduction.tex]{isSet}
 \end{agdalisting}
-This is the next homotopy level up from the propositions (Equation~\ref{isProp}).
+This is the next homotopy level up from the propositions (\Cref{isProp}).
 More importantly, there is an important theorem relating to sets which
 \emph{also} relates to decidable equality: Hedberg's theorem
 \citep{hedbergCoherenceTheoremMartinLof1998}.
@@ -542,7 +542,7 @@ And of course we know that \(A\) here has decidable equality: we were just given
 two proofs of that fact at the beginning of this proof!
 
 This suffices to prove that decidable equality is itself a proposition, and
-therefore that we can apply Equation~\ref{elim-prop} and the proof that bishop
+therefore that we can apply \Cref{elim-prop} and the proof that bishop
 finiteness implies decidable equality to cardinal finiteness, proving our goal.
 \end{proof}
 
@@ -577,7 +577,7 @@ With that, we can move on to the proof:
   \AgdaFunction{\ensuremath{\lVert \text{map} \rVert}}, we change the truncated
   proof of manifest bishop finiteness to a proof of equivalence with fin.
 
-  Then we use the eliminator from Equation~\ref{elim-prop-coh} with three
+  Then we use the eliminator from \Cref{elim-prop-coh} with three
   parameters.
   The first simply proves that that the output is a set:
   \begin{agdalisting*}
@@ -631,7 +631,7 @@ we only give its sketch here.
 
 Our strategy will be to \emph{sort} the support list of the proof for Bishop
 finiteness, and then prove that the sorting function is coherently constant,
-thereby satisfying the eliminator in Equation~\ref{elim-prop-coh}.
+thereby satisfying the eliminator in \Cref{elim-prop-coh}.
 We need to show, in other words, that sorting two support lists from proofs of
 manifest Bishop finiteness on the same type with the same order always returns
 the same result.
@@ -716,16 +716,16 @@ The proof of this fact is relatively short:
 We can apply the function of type \(\agdacal{B}\;A\rightarrow\agdabot\)
 (i.e. \(\AgdaFunction{\(\neg\)}\;\agdacal{B}\;A\)) to the value of type
 \(\AgdaDatatype{\(\lVert\)}\;\agdacal{B}\;A\;\AgdaDatatype{\(\rVert\)}\) (i.e.
-\(\agdacal{C}\;A\)) using Equation~\ref{elim-prop}, since \agdabot\;is itself a
+\(\agdacal{C}\;A\)) using \Cref{elim-prop}, since \agdabot\;is itself a
 proposition.
 This tells us that manifest bishop finiteness, cardinal finiteness, and split
 enumerability all refer to the same class of types.
 
 Interestingly, while we cannot construct a function with the type in
-Equation~\ref{c-to-b}, it does exist \emph{classically}.
-In fact we can derive it from Equation~\ref{no-gap-card-bishop} using
+\Cref{c-to-b}, it does exist \emph{classically}.
+In fact we can derive it from \Cref{no-gap-card-bishop} using
 the classical monad we developed in the introduction, since
-Equation~\ref{no-gap-card-bishop} is actually equivalent to classical
+\Cref{no-gap-card-bishop} is actually equivalent to classical
 implication.
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Classical.tex]{classical-impl}
@@ -747,8 +747,8 @@ enumerable, is its \emph{higher homotopy structure}.
 
 
 So far we have seen three levels of homotopy structure: the contractions
-(Equation~\ref{isContr}), the propositions (Equation~\ref{isProp}), and the sets
-(Equation~\ref{isSet}).
+(\Cref{isContr}), the propositions (\Cref{isProp}), and the sets
+(\Cref{isSet}).
 You may have noticed the pattern that each new level is generated by saying its
 paths are members of the previous level; if we apply that pattern again, we get
 to the next homotopy level: the groupoids.
@@ -771,7 +771,7 @@ and can't include types like the circle.
 But the type certainly \emph{seems} finite!
 It has finitely many points, for instance.
 In order to explore the ``restrictiveness'' axis in
-Figure~\ref{finite-classification}, then, we'll need to construct a predicate
+\Cref{finite-classification}, then, we'll need to construct a predicate
 which admits the circle.
 Manifest enumerability is one such predicate.
 \begin{definition}[Manifest Enumerability]
@@ -950,7 +950,7 @@ In the next subsection, we will explore the category of discrete Kuratowski fini
 sets.
 Under the hood, however, we will really be working with cardinal finite sets.
 We can do this in a fully rigorous way because
-Lemma~\ref{manifest-enum-kuratowski} allows us to prove the following:
+\Cref{manifest-enum-kuratowski} allows us to prove the following:
 \begin{agdalisting}\label{cardinal-kuratowski}
   \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{card-iso-kuratowski}
 \end{agdalisting}

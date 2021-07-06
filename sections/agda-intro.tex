@@ -185,7 +185,7 @@ For a more complex example, we're going to need a more complex type:
   \ExecuteMetaData[agda/Snippets/Nat.tex]{nat-def}
 \end{agdalisting}
 This is the type of the natural numbers.
-With \AgdaDatatype{Bool} (Equation~\ref{bool-def}) we were able to list all the
+With \AgdaDatatype{Bool} (\Cref{bool-def}) we were able to list all the
 actual values in the type: doing so for the natural numbers would somewhat bloat
 the page count of this thesis.
 Instead, we list the two ways to construct natural numbers: first,
@@ -245,7 +245,7 @@ This is the simplest check that Agda performs: it's also performed by GHC (if
 \verb+-Wall+ is turned on).
 This check ensures that functions are defined for all inputs.
 
-Our definition of subtraction above (Equation~\ref{sub-def}), for instance,
+Our definition of subtraction above (\Cref{sub-def}), for instance,
 truncates to zero when there's arithmetic underflow.
 In other words \(5 - 6 = 0\), according to our definition.
 We could have removed the clause which allows for this:
@@ -278,7 +278,7 @@ For instance, the following will \emph{not} pass the termination checker:
 \begin{agdalisting*}
   \ExecuteMetaData[agda/Snippets/Nat.tex]{bad-add}
 \end{agdalisting*}
-Though it defines the same function as Equation~\ref{add-def}, it doesn't make
+Though it defines the same function as \Cref{add-def}, it doesn't make
 it absolutely obvious to the termination checker that the first argument to the
 recursive call (\(n - 1\)) is structurally smaller than the outer argument
 (\(n\)).
@@ -635,7 +635,7 @@ We're able to do this because at the top of our Agda file we say the following:
 \end{agdalisting*}
 This \AgdaKeyword{variable} declaration means that if we ever refer to  \(A\) in
 a function signature without defining it beforehand, Agda will automatically
-insert the implicit arguments present in Equation~\ref{id-expl}.
+insert the implicit arguments present in \Cref{id-expl}.
 \subsection{Equalities}
 We actually have encountered our first ``proof'' with dependent types: we have
 proven that a given expression is valid or not.
@@ -835,7 +835,7 @@ All three of these expressions denote the same type.
 
 As the symbol suggests, \AgdaFunction{\(\Pi\)} types are \emph{product} types.
 This might seem strange at first: a product type is usually a tuple,
-i.e. the pair type we saw in Equation~\ref{pair-def}.
+i.e. the pair type we saw in \Cref{pair-def}.
 As it happens, given the basic type formers we've defined so far, we can
 actually make the pair type:
 \begin{agdalisting*}
