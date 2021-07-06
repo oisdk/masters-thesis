@@ -17,7 +17,13 @@ jobs:
 
     steps:
 
-# Install Agda
+# Download this git repo
+    - name: Checkout main
+      uses: actions/checkout@v2
+      with:
+        path: main
+
+# Install GHC & Cabal
     - uses: actions/cache@v2
       name: Cache cabal packages
       id: cache-cabal
@@ -106,11 +112,7 @@ jobs:
         mkdir -p cubical/_build
         cp -f -r ~/cubical-build/* cubical/_build
 
-# Download and compile main library
-    - name: Checkout main
-      uses: actions/checkout@v2
-      with:
-        path: main
+# Compile Agda
 
     - uses: actions/cache@v2
       name: Cache main library
@@ -127,7 +129,7 @@ jobs:
       run: cp -f -R ~/main-build/* $GITHUB_WORKSPACE/main/agda
 
     - name: Cache miss (local Agda); compile local Agda
-      if: steps.cache-agda.outputs.cache-hit != 'true'
+      if: steps.cache-main.outputs.cache-hit != 'true'
       run: |
         mkdir -p ~/main-build/_build
         cp -f -R ~/main-build/_build main/agda/_build
