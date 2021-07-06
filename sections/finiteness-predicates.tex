@@ -27,6 +27,7 @@ be listed.
   \citet{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
+
 This predicate is simple and useful, but we will see later on how it is perhaps
 a little imprecise.
 Before we dive in to exploring the predicate itself, though, we will need to
@@ -99,27 +100,12 @@ surjection-based one, in quite a deep way!
 \begin{lemma}\label{split-enum-is-split-surj}%
   A proof of split enumerability is equivalent to a split surjection from a
   finite prefix of the natural numbers.
-  \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj-type}
-  \end{agdalisting*}
+  \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj-type}
 \end{lemma}
-\begin{proof} \let\qed\relax \vspace{-\baselineskip}\phantom{Proof.} \\
-  \begin{minipage}[t]{.83\textwidth} \vspace{-1.25\baselineskip}
-    \begin{agdalisting*}
-      \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj}
-    \end{agdalisting*}
-  \end{minipage}
-  \begin{minipage}[t]{.165\textwidth}
-
-      Def.~\ref{split-enum-def} (\AgdaDatatype{\ensuremath{\mathcal{E}!}}) \\
-      Eqn.~\ref{container-membership} (\AgdaDatatype{\ensuremath{\in}}) \\
-      Eqn.~\ref{sp-surj-eqn}  \\
-      Eqn.~\ref{list-def} (\(\AgdaDatatype{List}\)) \\
-      Eqn.~\ref{container-interp}  \\
-      Reassociation \\
-      Eqn.~\ref{sp-surj-eqn}
-  \end{minipage}
+\begin{proof} \let\qed\relax
+   \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj}
 \end{proof}
+
 In the above proof syntax the
 \(\AgdaDatatype{\ensuremath{\equiv \langle{} \rangle{} }}\) connects lines which
 are definitionally equal, i.e. they are ``obviously'' equal from the type
