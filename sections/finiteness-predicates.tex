@@ -20,9 +20,7 @@ be listed.
   To say that some type \(A\) is split enumerable is to say that there is a list
   \(\mathit{support} : \AgdaDatatype{List}\;A\) such that any value \(x : A\) is in
   \(\mathit{support}\).
-  \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable/Container.tex]{split-enum-def}
-  \end{agdalisting*}
+  \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable/Container.tex]{split-enum-def}
   We call the first component of this pair the ``support'' list, and the second
   component the ``cover'' proof.
   An equivalent version of this predicate was called \verb+Listable+ in
@@ -35,23 +33,16 @@ Before we dive in to exploring the predicate itself, though, we will need to
 explain some of the terms we used in its definition.
 \paragraph{What is a List?}
 In this paper we prefer a slightly unusual definition for the type of lists:
-\begin{agdalisting}\label{list-def}
-  \ExecuteMetaDataInline[agda/Container/List.tex]{list-def}
-\end{agdalisting}
+\twocolcode
+{\ExecuteMetaDataInline[agda/Container/List.tex]{list-def}}
+{\ExecuteMetaDataInline[agda/Data/Fin/Base.tex]{fin-def}}
 This is the definition for a \emph{container} (\Cref{container-def}):
 effectively, the above definition says that ``Lists are a datatype whose shape
 is given by the natural numbers, and which can be indexed by numbers smaller
 than its shape''.
-
-\begin{marginagdalisting}{Finite Prefixes of \Nat}
-  \ExecuteMetaDataInline[agda/Data/Fin/Base.tex]{fin-def}
-\end{marginagdalisting}
-
 If that seems needlessly complex, don't worry: this definition is precisely
 equivalent to the usual inductive one.
-\begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Data/List/Base.tex]{list-def}
-\end{agdalisting*}
+\ExecuteMetaDataInline[agda/Data/List/Base.tex]{list-def}
 And this isn't some kind of hand-waving equivalence, either: since we are
 working in HoTT, we can (and do) prove that the two types are equal, allowing us
 to use one or the other depending on whichever is more convenient, and
@@ -59,7 +50,7 @@ to use one or the other depending on whichever is more convenient, and
 That said, defining lists as containers will reveal several interesting
 connections and proofs about split enumerability and the other predicates, 
 so for the remainder of the paper whenever we say \AgdaDatatype{List} we will
-mean \Cref{list-def}.
+mean  \(\;\AgdaFunction{⟦}\Nat,\AgdaFunction{Fin}\AgdaFunction{⟧}\;\).
 
 We still must define containers themselves, of course.
 Containers are a well-studied topic in dependent type theory, with a rich
@@ -70,9 +61,7 @@ theory: we won't dive in to that here.
   the \emph{shapes} of the container, and \(P\) is a type family on \(S\), where
   the elements of \(P(s)\) are called the \emph{positions} of a container.
   We ``interpret'' a container into a functor defined like so:
-  \begin{agdalisting}\label{container-interp}
-    \ExecuteMetaDataInline[agda/Container.tex]{container-interp}
-  \end{agdalisting} \vspace{-\baselineskip}
+  \ExecuteMetaDataInline[agda/Container.tex]{container-interp}
 \end{definition}
 
 The definition of container is a little abstract: it is instructive to think of
@@ -84,12 +73,9 @@ list.
 
 One of the nice things about containers is it gives us a generic way to define
 ``membership'':
-\begin{agdalisting}\label{container-membership}
-  \ExecuteMetaDataInline[agda/Container/Membership.tex]{membership-def}
-\end{agdalisting}
-\begin{marginagdalisting}{A Fiber~\cite[definition 4.2.4]{hottbook}}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{fiber}
-\end{marginagdalisting}
+\twocolcode
+{\ExecuteMetaDataInline[agda/Container/Membership.tex]{membership-def}}
+{\ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{fiber}}
 Here we're using the homotopy-theory notion of a \AgdaDatatype{fiber} to define
 membership: a fiber for some function \(f\) and some point \(y\) in its codomain
 is a value \(x\) and a proof that \(f \; x \;\AgdaDatatype{≡}\;y\).
@@ -104,12 +90,10 @@ would instead define finiteness based on the existence of some injection or
 surjection, say a surjection from a finite prefix of the natural numbers.
 In HoTT, surjections (or, more precisely, \emph{split} surjections
 \cite[definition 4.6.1]{hottbook}), are defined like so:
-\begin{agdalisting}\label{sp-surj-eqn}
-  \begin{multicols}{2}
-    \ExecuteMetaDataInline[agda/Function/Surjective/Base.tex]{split-surjective}
-    \ExecuteMetaDataInline[agda/Function/Surjective/Base.tex]{split-surjection}
-  \end{multicols}
-\end{agdalisting} 
+
+\twocolcode
+{\ExecuteMetaDataInline[agda/Function/Surjective/Base.tex]{split-surjective}}
+{\ExecuteMetaDataInline[agda/Function/Surjective/Base.tex]{split-surjection}}
 As it turns out, our definition of finiteness here is precisely the same as a
 surjection-based one, in quite a deep way!
 \begin{lemma}\label{split-enum-is-split-surj}%
