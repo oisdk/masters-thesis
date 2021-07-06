@@ -17,12 +17,13 @@ jobs:
 
     steps:
 
+# Download this git repo
     - name: Checkout main
       uses: actions/checkout@v2
       with:
         path: main
 
-# Install Agda
+# Install GHC & Cabal
     - uses: actions/cache@v2
       name: Cache cabal packages
       id: cache-cabal
