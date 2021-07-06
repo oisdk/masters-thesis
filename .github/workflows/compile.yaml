@@ -17,6 +17,11 @@ jobs:
 
     steps:
 
+    - name: Checkout main
+      uses: actions/checkout@v2
+      with:
+        path: main
+
 # Install Agda
     - uses: actions/cache@v2
       name: Cache cabal packages
@@ -27,7 +32,10 @@ jobs:
           ~/.cabal/store
           ~/.cabal/bin
           dist-newstyle
-        key: ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-${{ matrix.agda-ref }}-lhs2TeX
+        key: ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-${{ matrix.agda-ref }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-${{ matrix.agda-ref }}
+          ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-
 
     - name: Install cabal
       if: steps.cache-cabal.outputs.cache-hit != 'true'
@@ -58,13 +66,6 @@ jobs:
         touch doc/user-manual.pdf
         cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS'
 
-# Install lhs2tex
-    - name: Install lhs2tex
-      if: steps.cache-cabal.outputs.cache-hit != 'true'
-      run: |
-        cabal update
-        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS' lhs2tex-1.24
-
 # Download and compile cubical library
     - name: Checkout cubical library
       uses: actions/checkout@v2
@@ -86,7 +87,7 @@ jobs:
         touch ~/.agda/libraries
         echo "$GITHUB_WORKSPACE/cubical/cubical.agda-lib" > ~/.agda/libraries
 
-    - name: Compile cubical library
+    - name: Cache miss on cubical library; compile cubical library
       if: steps.cache-cubical.outputs.cache-hit != 'true'
       run: |
         cd $GITHUB_WORKSPACE/cubical
@@ -100,21 +101,17 @@ jobs:
         done
         cp -f -r _build/ ~/cubical-build
 
-    - name: Retrieve cubical library
+    - name: Cache hit on cubical library; retrieve cubical library
       if: steps.cache-cubical.outputs.cache-hit == 'true'
       run: |
         mkdir -p cubical/_build
         cp -f -r ~/cubical-build/* cubical/_build
 
-# Download and compile main library
-    - name: Checkout main
-      uses: actions/checkout@v2
-      with:
-        path: main
+# Download and compile agda code
 
     - uses: actions/cache@v2
-      name: Cache main library
-      id: cache-main
+      name: Cache agda code
+      id: cache-agda
       with:
         path: ~/main-build
         key: html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}-${{ hashFiles('main/agda/**') }}
@@ -122,11 +119,11 @@ jobs:
           html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}-
           html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-
 
-    - name: Retrieve main library
-      if: steps.cache-main.outputs.cache-hit == 'true'
+    - name: Cache hit on agda code; retrieve agda code library
+      if: steps.cache-agda.outputs.cache-hit == 'true'
       run: cp -f -R ~/main-build/* $GITHUB_WORKSPACE/main/agda
 
-    - name: Cache miss (local Agda); compile local Agda
+    - name: Cache miss on agda code; compile Agda code
       if: steps.cache-agda.outputs.cache-hit != 'true'
       run: |
         mkdir -p ~/main-build/_build
