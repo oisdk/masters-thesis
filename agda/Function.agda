@@ -30,10 +30,12 @@ _$_ : ∀ {A : Type a} {B : A → Type b}
       → (x : A)
       → B x
 f $ x = f x
+{-# INLINE _$_ #-}
 
 infixl 1 _⟨_⟩_
 _⟨_⟩_ : A → (A → B → C) → B → C
 x ⟨ f ⟩ y = f x y
+{-# INLINE _⟨_⟩_ #-}
 
 infixl 0 _∋_
 _∋_ : (A : Type a) → A → A
@@ -42,6 +44,7 @@ A ∋ x = x
 infix 0 case_of_
 case_of_ : A → (A → B) → B
 case x of f = f x
+{-# INLINE case_of_ #-}
 
 record Reveal_·_is_ {A : Type a} {B : A → Type b} (f : (x : A) → B x) (x : A) (y : B x) : Type b where
   constructor 〖_〗
