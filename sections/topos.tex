@@ -36,22 +36,22 @@ to restrict the type of arrows to just the sets.
 This notion: that of a category with all the usual laws such that arrows are a
 set, is called a \emph{precategory}.
 \begin{agdalisting}
-  \ExecuteMetaData[agda/Categories.tex]{precategory}
+  \ExecuteMetaDataInline[agda/Categories.tex]{precategory}
 \end{agdalisting}
 We will use long arrows to refer to morphisms within a category:
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Categories.tex]{morph-arrow}
+  \ExecuteMetaDataInline[agda/Categories.tex]{morph-arrow}
 \end{agdalisting*}
 
 From here, we can define a notion of isomorphisms.
 \begin{agdalisting}
-  \ExecuteMetaData[agda/Categories.tex]{isomorphism}
+  \ExecuteMetaDataInline[agda/Categories.tex]{isomorphism}
 \end{agdalisting}
 It's a condition on this type which separates the precategories from the
 categories: if it satisfies a form of univalence, it the precategory is a full
 category.
 \begin{agdalisting}
-  \ExecuteMetaData[agda/Categories.tex]{cat-univalence}
+  \ExecuteMetaDataInline[agda/Categories.tex]{cat-univalence}
 \end{agdalisting}
 \subsection{The Category of Sets}
 Next we'll look at how to construct the category of sets (in the HoTT sense).
@@ -66,7 +66,7 @@ We have provided in the formalisation a proof that sets in CuTT form a
 
 The objects are represented by a \(\Sigma\):
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Category.tex]{hset}
+  \ExecuteMetaDataInline[agda/Snippets/Category.tex]{hset}
 \end{agdalisting*}
 This will be quite similar to our objects for finite sets.
 
@@ -98,7 +98,7 @@ cases for free.
 \begin{lemma} \label{split-enum-sigma}
   Split enumerability is closed under \(\Sigma\).
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-sigma}
+    \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-sigma}
   \end{agdalisting*}
 \end{lemma}
 \begin{proof}
@@ -107,7 +107,7 @@ cases for free.
   We'll start with the support list: this is constructed by taking the Cartesian
   product of the input support lists.
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{sup-sigma}
+    \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{sup-sigma}
   \end{agdalisting*}
   We use do notation here because we're working the list monad: this applies the
   latter function (\(ys\)) to every element of the list \(xs\), and concatenates
@@ -133,7 +133,7 @@ furthermore of all the previous closure proofs.
   Split enumerability is closed under dependent functions
   (\(\Pi\)-types).
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{pi-clos}
+    \ExecuteMetaDataInline[agda/Cardinality/Finite/ManifestBishop.tex]{pi-clos}
   \end{agdalisting*}
 \end{theorem}
 \begin{proof}
@@ -155,11 +155,11 @@ furthermore of all the previous closure proofs.
   
   We then define the type of \(n\)-tuples over some type family.
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-def}
+    \ExecuteMetaDataInline[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-def}
   \end{agdalisting*}
   We can show that this type is equivalent to functions (proven in our formalisation):
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-iso}
+    \ExecuteMetaDataInline[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-iso}
   \end{agdalisting*}
   And therefore we can simplify again our goal to the following:
   \begin{equation*}
@@ -189,11 +189,11 @@ straightforward: since \(\AgdaDatatype{\ensuremath{\lVert\_\rVert}}\) forms a
 monad, we can apply \(n\)-ary functions to values inside it, combining them
 together.
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{times-clos-sig}
+  \ExecuteMetaDataInline[agda/Cardinality/Finite/ManifestBishop.tex]{times-clos-sig}
 \end{agdalisting*}
 Into a truncated context:
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{times-clos-impl}
+  \ExecuteMetaDataInline[agda/Cardinality/Finite/Cardinal.tex]{times-clos-impl}
 \end{agdalisting*}
 
 
@@ -314,7 +314,7 @@ classify monomorphisms in sets in HoTT (in fact directly through univalence),
 but at this point we run into our one and only size problem in this thesis.
 The actual object corresponding to the subobject classifier is the following:
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Topos.tex]{prop-univ}
+  \ExecuteMetaDataInline[agda/Snippets/Topos.tex]{prop-univ}
 \end{agdalisting*}
 The problem here, crucially, is that the universe level of this type is one
 higher than the universe level of the types it bounds.
@@ -328,7 +328,7 @@ which does \emph{not} imply the paradox: propositional resizing.
   The axiom of propositional resizing states that the following two types, for
   any universe level \(u\), are equivalent:
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Snippets/Topos.tex]{prop-resize}
+    \ExecuteMetaDataInline[agda/Snippets/Topos.tex]{prop-resize}
   \end{agdalisting*}
 \end{definition}
 If propositional resizing holds, then we \emph{can} in fact construct a

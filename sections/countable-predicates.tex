@@ -9,7 +9,7 @@ For our first countability predicate, we will mirror split enumerability:
   A type is ``split countable'' if there is a \emph{stream} which contains all
   of its elements.
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{split-count}
+    \ExecuteMetaDataInline[agda/Cardinality/Infinite/Split.tex]{split-count}
   \end{agdalisting*}
 \end{definition}
 The similarity to split enumerability should be clear: the only difference
@@ -22,12 +22,12 @@ Lists, as an inductive type, are not permitted to be infinitely large.
 \begin{definition}[Streams]
   In Agda the type of streams can be given as a container:
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Container/Stream.tex]{stream-def}
+    \ExecuteMetaDataInline[agda/Container/Stream.tex]{stream-def}
   \end{agdalisting*}
   Although this definition is so simple it is more common to define it without
   reference to the usual container machinery:
   \begin{agdalisting*}
-    \ExecuteMetaData[agda/Codata/Stream.tex]{stream-def}
+    \ExecuteMetaDataInline[agda/Codata/Stream.tex]{stream-def}
   \end{agdalisting*}
   By inlining the definition of the container primitives it's clear that the two
   types are isomorphic, but by defining streams in these terms we're able to
@@ -42,7 +42,7 @@ relations to \Nat.
 Case in point: our definition of split enumerability is definitionally equal to
 a split surjection from \Nat.
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{split-surj}
+  \ExecuteMetaDataInline[agda/Cardinality/Infinite/Split.tex]{split-surj}
 \end{agdalisting*}
 From this we can derive decidable equality, just like we could with split
 enumerability. \todo{Explain better?}
@@ -108,8 +108,8 @@ another definition of lists in its implementation, instead of the normal lists,
 as it is useful for termination proofs.
 \begin{agdalisting*}
   \begin{multicols}{2} \centering
-    \ExecuteMetaData[agda/Data/List/Kleene.tex]{plus-def} \columnbreak
-    \ExecuteMetaData[agda/Data/List/Kleene.tex]{star-def}
+    \ExecuteMetaDataInline[agda/Data/List/Kleene.tex]{plus-def} \columnbreak
+    \ExecuteMetaDataInline[agda/Data/List/Kleene.tex]{star-def}
   \end{multicols}
 \end{agdalisting*}
 This definition of lists interleaves the definition of non-empty lists with the
@@ -120,7 +120,7 @@ functions.
 Finally, we can provide the function which actually performs the breadth-first
 search two streams.
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{sigma-sup}
+  \ExecuteMetaDataInline[agda/Cardinality/Infinite/Split.tex]{sigma-sup}
 \end{agdalisting*}
 The corresponding cover proof is relatively straightforward, so we don't include
 it here.
@@ -150,7 +150,7 @@ it is not the case that functions from countable types are themselves countable.
 While this is a pretty basic fact in computer science, we include it here to
 show how simple its proof in Agda can be:
 \begin{agdalisting*}
-  \ExecuteMetaData[agda/Cardinality/Infinite/Split.tex]{cantor-diag}
+  \ExecuteMetaDataInline[agda/Cardinality/Infinite/Split.tex]{cantor-diag}
 \end{agdalisting*}
 
 %%% Local Variables:
