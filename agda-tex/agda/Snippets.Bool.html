@@ -10,7 +10,7 @@
 <a id="117" class="Markup">\end{code}</a><a id="127" class="Background">
 %&lt;*bool-def&gt;
 </a><a id="141" class="Markup">\begin{code}</a>
-  <a id="156" class="Keyword">data</a> <a id="BoolDefn.Bool"></a><a id="161" href="Snippets.Bool.html#161" class="Datatype">Bool</a> <a id="166" class="Symbol">:</a> <a id="168" href="Level.html#255" class="Function">Type₀</a> <a id="174" class="Keyword">where</a>
+  <a id="156" class="Keyword">data</a> <a id="BoolDefn.Bool"></a><a id="161" href="Snippets.Bool.html#161" class="Datatype">Bool</a> <a id="166" class="Symbol">:</a> <a id="168" href="Agda.Primitive.html#326" class="Primitive">Type₀</a> <a id="174" class="Keyword">where</a>
     <a id="BoolDefn.Bool.false"></a><a id="184" href="Snippets.Bool.html#184" class="InductiveConstructor">false</a>  <a id="191" class="Symbol">:</a> <a id="193" href="Snippets.Bool.html#161" class="Datatype">Bool</a>
     <a id="BoolDefn.Bool.true"></a><a id="202" href="Snippets.Bool.html#202" class="InductiveConstructor">true</a>   <a id="209" class="Symbol">:</a> <a id="211" href="Snippets.Bool.html#161" class="Datatype">Bool</a>
 <a id="216" class="Markup">\end{code}</a><a id="226" class="Background">
@@ -91,15 +91,15 @@
 <a id="1834" class="Markup">\end{code}</a><a id="1844" class="Background">
 %&lt;*is-true&gt;
 </a><a id="1857" class="Markup">\begin{code}</a>
-<a id="True"></a><a id="1870" href="Snippets.Bool.html#1870" class="Function">True</a> <a id="1875" class="Symbol">:</a> <a id="1877" href="Relation.Nullary.Decidable.Base.html#309" class="Record">Dec</a> <a id="1881" href="Level.html#444" class="Generalizable">A</a> <a id="1883" class="Symbol">→</a> <a id="1885" href="Level.html#255" class="Function">Type₀</a>
+<a id="True"></a><a id="1870" href="Snippets.Bool.html#1870" class="Function">True</a> <a id="1875" class="Symbol">:</a> <a id="1877" href="Relation.Nullary.Decidable.Base.html#309" class="Record">Dec</a> <a id="1881" href="Level.html#301" class="Generalizable">A</a> <a id="1883" class="Symbol">→</a> <a id="1885" href="Agda.Primitive.html#326" class="Primitive">Type₀</a>
 <a id="1891" href="Snippets.Bool.html#1870" class="Function">True</a> <a id="1896" class="Symbol">(</a><a id="1897" href="Relation.Nullary.Decidable.Base.html#447" class="InductiveConstructor">yes</a>  <a id="1902" class="Symbol">_)</a> <a id="1905" class="Symbol">=</a> <a id="1907" href="Agda.Builtin.Unit.html#164" class="Record">⊤</a>
 <a id="1909" href="Snippets.Bool.html#1870" class="Function">True</a> <a id="1914" class="Symbol">(</a><a id="1915" href="Relation.Nullary.Decidable.Base.html#485" class="InductiveConstructor">no</a>   <a id="1920" class="Symbol">_)</a> <a id="1923" class="Symbol">=</a> <a id="1925" href="Cubical.Data.Empty.Base.html#178" class="Datatype">⊥</a>
 <a id="1927" class="Markup">\end{code}</a><a id="1937" class="Background">
 %&lt;/is-true&gt;
 %&lt;*from-true&gt;
 </a><a id="1964" class="Markup">\begin{code}</a>
-<a id="toWitness"></a><a id="1977" href="Snippets.Bool.html#1977" class="Function">toWitness</a> <a id="1987" class="Symbol">:</a>  <a id="1990" class="Symbol">(</a><a id="1991" href="Snippets.Bool.html#1991" class="Bound">decision</a> <a id="2000" class="Symbol">:</a> <a id="2002" href="Relation.Nullary.Decidable.Base.html#309" class="Record">Dec</a> <a id="2006" href="Level.html#444" class="Generalizable">A</a><a id="2007" class="Symbol">)</a> <a id="2009" class="Symbol">→</a>
-            <a id="2023" class="Symbol">{</a> <a id="2025" href="Snippets.Bool.html#2025" class="Bound">_</a> <a id="2027" class="Symbol">:</a> <a id="2029" href="Snippets.Bool.html#1870" class="Function">True</a> <a id="2034" href="Snippets.Bool.html#1991" class="Bound">decision</a> <a id="2043" class="Symbol">}</a> <a id="2045" class="Symbol">→</a> <a id="2047" href="Level.html#444" class="Generalizable">A</a>
+<a id="toWitness"></a><a id="1977" href="Snippets.Bool.html#1977" class="Function">toWitness</a> <a id="1987" class="Symbol">:</a>  <a id="1990" class="Symbol">(</a><a id="1991" href="Snippets.Bool.html#1991" class="Bound">decision</a> <a id="2000" class="Symbol">:</a> <a id="2002" href="Relation.Nullary.Decidable.Base.html#309" class="Record">Dec</a> <a id="2006" href="Level.html#301" class="Generalizable">A</a><a id="2007" class="Symbol">)</a> <a id="2009" class="Symbol">→</a>
+            <a id="2023" class="Symbol">{</a> <a id="2025" href="Snippets.Bool.html#2025" class="Bound">_</a> <a id="2027" class="Symbol">:</a> <a id="2029" href="Snippets.Bool.html#1870" class="Function">True</a> <a id="2034" href="Snippets.Bool.html#1991" class="Bound">decision</a> <a id="2043" class="Symbol">}</a> <a id="2045" class="Symbol">→</a> <a id="2047" href="Level.html#301" class="Generalizable">A</a>
 <a id="2049" href="Snippets.Bool.html#1977" class="Function">toWitness</a> <a id="2059" class="Symbol">(</a><a id="2060" href="Relation.Nullary.Decidable.Base.html#447" class="InductiveConstructor">yes</a> <a id="2064" href="Snippets.Bool.html#2064" class="Bound">x</a><a id="2065" class="Symbol">)</a> <a id="2067" class="Symbol">=</a> <a id="2069" href="Snippets.Bool.html#2064" class="Bound">x</a>
 <a id="2071" class="Markup">\end{code}</a><a id="2081" class="Background">
 %&lt;/from-true&gt;
@@ -107,7 +107,7 @@
 <a id="2109" class="Keyword">open</a> <a id="2114" class="Keyword">import</a> <a id="2121" href="Relation.Nullary.Decidable.Logic.html" class="Module">Relation.Nullary.Decidable.Logic</a>
 <a id="2154" class="Keyword">open</a> <a id="2159" class="Keyword">import</a> <a id="2166" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a>
 
-<a id="from-true"></a><a id="2194" href="Snippets.Bool.html#2194" class="Function">from-true</a> <a id="2204" class="Symbol">:</a> <a id="2206" class="Symbol">(</a><a id="2207" href="Snippets.Bool.html#2207" class="Bound">dec</a> <a id="2211" class="Symbol">:</a> <a id="2213" href="Relation.Nullary.Decidable.Base.html#309" class="Record">Dec</a> <a id="2217" href="Level.html#444" class="Generalizable">A</a><a id="2218" class="Symbol">)</a> <a id="2220" class="Symbol">→</a> <a id="2222" class="Symbol">{</a> <a id="2224" href="Snippets.Bool.html#2224" class="Bound">_</a> <a id="2226" class="Symbol">:</a> <a id="2228" href="Data.Bool.html#640" class="Function">T</a> <a id="2230" class="Symbol">(</a><a id="2231" href="Relation.Nullary.Decidable.Base.html#381" class="Field">does</a> <a id="2236" href="Snippets.Bool.html#2207" class="Bound">dec</a><a id="2239" class="Symbol">)</a> <a id="2241" class="Symbol">}</a> <a id="2243" class="Symbol">→</a> <a id="2245" href="Level.html#444" class="Generalizable">A</a>
+<a id="from-true"></a><a id="2194" href="Snippets.Bool.html#2194" class="Function">from-true</a> <a id="2204" class="Symbol">:</a> <a id="2206" class="Symbol">(</a><a id="2207" href="Snippets.Bool.html#2207" class="Bound">dec</a> <a id="2211" class="Symbol">:</a> <a id="2213" href="Relation.Nullary.Decidable.Base.html#309" class="Record">Dec</a> <a id="2217" href="Level.html#301" class="Generalizable">A</a><a id="2218" class="Symbol">)</a> <a id="2220" class="Symbol">→</a> <a id="2222" class="Symbol">{</a> <a id="2224" href="Snippets.Bool.html#2224" class="Bound">_</a> <a id="2226" class="Symbol">:</a> <a id="2228" href="Data.Bool.html#640" class="Function">T</a> <a id="2230" class="Symbol">(</a><a id="2231" href="Relation.Nullary.Decidable.Base.html#381" class="Field">does</a> <a id="2236" href="Snippets.Bool.html#2207" class="Bound">dec</a><a id="2239" class="Symbol">)</a> <a id="2241" class="Symbol">}</a> <a id="2243" class="Symbol">→</a> <a id="2245" href="Level.html#301" class="Generalizable">A</a>
 <a id="2247" href="Snippets.Bool.html#2194" class="Function">from-true</a> <a id="2257" class="Symbol">(</a><a id="2258" href="Relation.Nullary.Decidable.Base.html#447" class="InductiveConstructor">yes</a> <a id="2262" href="Snippets.Bool.html#2262" class="Bound">p</a><a id="2263" class="Symbol">)</a> <a id="2265" class="Symbol">=</a> <a id="2267" href="Snippets.Bool.html#2262" class="Bound">p</a>
 <a id="2269" class="Markup">\end{code}</a><a id="2279" class="Background">
 %&lt;*extremely-obvious&gt;
@@ -162,7 +162,7 @@
 
 %&lt;*boolean&gt;
 </a><a id="3273" class="Markup">\begin{code}</a>
-<a id="Boolean"></a><a id="3286" href="Snippets.Bool.html#3286" class="Function">Boolean</a> <a id="3294" class="Symbol">:</a> <a id="3296" href="Level.html#255" class="Function">Type₀</a>
+<a id="Boolean"></a><a id="3286" href="Snippets.Bool.html#3286" class="Function">Boolean</a> <a id="3294" class="Symbol">:</a> <a id="3296" href="Agda.Primitive.html#326" class="Primitive">Type₀</a>
 <a id="3302" href="Snippets.Bool.html#3286" class="Function">Boolean</a> <a id="3310" class="Symbol">=</a> <a id="3312" href="Agda.Builtin.Bool.html#163" class="Datatype">Bool</a>
 <a id="3317" class="Markup">\end{code}</a><a id="3327" class="Background">
 %&lt;/boolean&gt;
