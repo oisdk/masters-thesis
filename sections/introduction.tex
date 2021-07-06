@@ -74,10 +74,10 @@ By ``computational interpretation'' here we mean that we will be able to run the
 programs we write which rely on this axiom.
 \subsection{Overview}
 In Chapter~\ref{finiteness-predicates} we will look in-depth at the focus of
-this thesis: finiteness.
+this paper: finiteness.
 As mentioned finiteness in constructive mathematics is a good deal more complex
 than finiteness classically:
-in this thesis alone we will see five separate definitions of ``finiteness'',
+in this paper alone we will see five separate definitions of ``finiteness'',
 each different, and each with reasonable claim to being the ``true'' definition
 of finiteness.
 We will see which predicates imply each other, what extra information we can
@@ -101,21 +101,21 @@ We will demonstrate the program with the countdown problem
 players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
 \subsection{Contributions}
-Since much of this thesis is dedicated to exploring well-researched topics from
+Since much of this paper is dedicated to exploring well-researched topics from
 a new perspective, some of the contributions can be difficult to tease out.
-There are three types of valuable and useful work provided in this thesis:
+There are three types of valuable and useful work provided in this paper:
 \begin{description}
   \item[Exposition of Already-Existing Work]
     Many explorations of dependent types in programming follow the well-trodden
     path of describing length-indexed vectors, explaining one or two aspects of
     totality, and perhaps building up to a proof that \(\mathit{reverse} \circ
     \mathit{reverse} \equiv \mathit{id}\).
-    One of the aims of this thesis is to provide a different introduction to
+    One of the aims of this paper is to provide a different introduction to
     dependent types which also touches on some of the core aspects of HoTT, a
     topic missing much introductory material for functional programmers.
   \item[Formalised Proofs of Theorems proved Informally Elsewhere]
     ``Informal'' here means not machine checked.
-    All theorems stated in this thesis are proved formally in Cubical Agda and
+    All theorems stated in this paper are proved formally in Cubical Agda and
     machine-checked: the full code for these proofs is available
     online\footnote{\url{https://doisinkidney.com/code/masters-thesis/README.html}}.
     Formal proofs can be quite different from their informal counterparts, and
@@ -123,7 +123,7 @@ There are three types of valuable and useful work provided in this thesis:
     Furthermore, often in formalising a proof new insights about the proof are
     revealed.
   \item[New Fundamental Theoretical Contributions]
-    Several of the constructions presented in this thesis are in fact novel, and
+    Several of the constructions presented in this paper are in fact novel, and
     some of the theorems proven have not been proven (either formally or
     informally) elsewhere.
 \end{description}
@@ -250,7 +250,7 @@ other, this means that for every such type we have \(n!\) different objects,
 instead of just 1.
 We'll see a way to fix this problem with Homotopy Type Theory.
 
-The proofs we will provide in this thesis will be written in the syntax of
+The proofs we will provide in this paper will be written in the syntax of
 Agda: they are, however, all valid classical proofs.
 Constructive mathematics is a subset of classical, after all.
 When we say ``constructive'' we really just mean that these proofs avoid
@@ -273,7 +273,7 @@ foundational theories like Zermelo–Fraenkel set theory.
   rest of Zermelo-Fraenkel set theory: when included the theory is often
   abbreviated to ``ZFC''.
 
-  A full exploration of ZFC and its axioms is beyond the scope of this thesis;
+  A full exploration of ZFC and its axioms is beyond the scope of this paper;
   we will, see, however, a definition of the axiom of choice in CuTT
   (\Cref{axiom-of-choice}).
 \end{definition}
@@ -307,12 +307,12 @@ In truth, the fact that HITs can be used to describe simple set quotients is
 almost incidental: in HoTT they are a far more powerful, general tool,
 which can be used to define a wide variety of essential constructions like the
 circle, torus, etc.
-This thesis isn't very interested in these homotopy-focused topics, however it
+This paper isn't very interested in these homotopy-focused topics, however it
 is worth mentioning as it is one of HoTT's great strengths.
 
 Finally, we have to explain where Cubical Type Theory
 \citep{cohenCubicalTypeTheory2016} fits in.
-Strictly speaking in this thesis we will not work directly in HoTT: we work
+Strictly speaking in this paper we will not work directly in HoTT: we work
 instead in CuTT, which is very closely related, but not quite the same, as HoTT.
 CuTT's main departure from HoTT is in its representation of equalities, which it
 calls ``paths''.

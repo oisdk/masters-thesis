@@ -131,7 +131,7 @@ To be honest, avoiding Girard's paradox is one of things that isn't done
 especially well in dependently-typed languages: most approaches require quite a
 bit of tedious busywork from the programmer, and it's quite rare that a
 programmer would run into a genuine universe size issue that exposes a deep
-logical impossibility (we will run into one of the few cases in this thesis).
+logical impossibility (we will run into one of the few cases in this paper).
 Most of the time, managing universe levels amounts to bookkeeping.
 For that reason, and also because the current system of universe polymorphism in
 Agda is quite under flux and likely to be changed soon, we won't spend too much
@@ -187,7 +187,7 @@ For a more complex example, we're going to need a more complex type:
 This is the type of the natural numbers.
 With \AgdaDatatype{Bool} (\Cref{bool-def}) we were able to list all the
 actual values in the type: doing so for the natural numbers would somewhat bloat
-the page count of this thesis.
+the page count of this paper.
 Instead, we list the two ways to construct natural numbers: first,
 \AgdaInductiveConstructor{zero} is a natural number.
 Next, if you have a natural number, its successor
@@ -238,7 +238,7 @@ time).
 
 Practically speaking, this means that Agda will perform some checks on our
 code to ensure that every function is indeed total.
-There are three checks that Agda performs that we will run into in this thesis:
+There are three checks that Agda performs that we will run into in this paper:
 coverage, termination, and productivity.
 \subparagraph{Coverage}
 This is the simplest check that Agda performs: it's also performed by GHC (if
@@ -428,7 +428,7 @@ multi-argument function, we can apply it to arguments wrapped in
 Any type which implements these functions (in a certain law-abiding way) is said
 to be an ``Applicative Functor''
 \citep{mcbrideApplicativeProgrammingEffects2008}, a full explanation of which is
-beyond the scope of this thesis.
+beyond the scope of this paper.
 
 It might not be immediately clear how those two functions can help us.
 Basically, we can replace the \AgdaFunction{add-helper} function with the
