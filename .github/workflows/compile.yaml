@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        cubical-ref: ["a60b0c6576fac0ba6e181cab75f9f9de2d167f87"]
+        cubical-ref: ["a60b0c65"]
         agda-ver: ["2.6.2"]
         
     steps:
