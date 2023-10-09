@@ -1,79 +1,37 @@
 \section{Introduction}
-Finiteness in classical mathematics is a simple, almost uninteresting subject.
-There are many interesting finite things, mind you, and many of those things are
-finite for interesting reasons; finiteness itself, though, is downright boring.
+Unlike its classical counterpart, finiteness in constructive mathematics is a
+rich and complex subject.
+Classically, something is ``finite'' if it has a cardinality equal to some
+natural number; every notion of finiteness is equivalent to this one.
+Constructively, however, there are multiple distinct notions of finiteness, each
+with interesting properties~\citep{coquandConstructivelyFinite2010,
+  firsovVariationsNoetherianness2016, fruminFiniteSetsHomotopy2018}.
 
-Part of the reason for the simplicity of finiteness is that there's really only
-one notion of finiteness: we say that some set is finite if it has a cardinality
-equal to some natural number.
-If we want to \emph{prove} that something is finite we have at our disposal a
-rich array of techniques and insights: we could show that it has a surjection
-from another finite set, or that it's equivalent to another finite set.
-We could show that any infinite list of its elements must contain duplicates
-(this is called ``streamless''), or that there is a finite list which contains
-all of its elements.
-Once proven, though, all of that complexity collapses.
-
-In constructive mathematics the story is a little different.
-When we prove something constructively, often the thing proven retains
-components of the proof itself.
-Take the proposition \(P\) ``there is a prime number greater than 100''.
-\begin{equation}
-  P = \exists n. \mathit{isPrime}(n) \wedge n > 100
-\end{equation}
-A classical proof of the above proposition can avoid naming an \(n\): if we know
-there are infinite primes, for instance, it is not too hard to deduce that there
-must be some that are larger than \(100\).
-
-The constructive existential, on the other hand, is represented by a concrete
-pair.
-In the case of the proposition above, the first component of this pair is \(n\),
-and the second is a proof that that \(n\) adheres to the predicate
-(\(\mathit{isPrime}(n) \wedge n > 100\) in this case).
-As such, modulo some caveats we will explain soon, there is no way to provide a
-proof of \(P\) which \emph{doesn't} reveal the particular prime number we had in
-mind while proving.
-
-This phenomenon is what makes finiteness in constructive mathematics so much
-richer and more complex than classical finiteness.
-Proving that something is ``streamless'' proves something fundamentally
-different to showing a bijection with a finite set.
-The other sense in which proofs in constructive mathematics are objects which
-can be manipulated is that, when these proofs are written on a computer, they
-often can be \emph{executed} as computer programs.
-The program ``there is a prime number greater than 100'' isn't a terribly useful
-one, but we will see some examples which are later on.
-
-An exploration of finiteness also provides ample opportunity to explain much of
-the fundamentals of Homotopy Type Theory \citep{hottbook}: this theory is a
-foundational system for mathematics, which has at its core the \emph{univalence
-  axiom}.
-We will dive much more into this axiom later on, but for now know that it gives
-a formal grounding to say ``if two types are isomorphic, it is possible to treat
-them as the same.''
-We could, for instance, have two different representations for the natural
-numbers (binary and unary possibly): the univalence axiom allows us to say ``all
-of the things we have proven about the unary numbers are also true about the
-binary numbers''.
-This is an essential technique in most areas of mathematics, which
-had no formal basis in type theory until recently.
+Part of the reason for different notions of finiteness in constructive
+mathematics is that constructive proofs tend to be ``leaky''; as mathematical
+objects, they tend to reveal some information about \emph{how} they were proven,
+where a proof of a classical proposition only reveals that the proposition is
+true.
+Recent developments in type
+theory~\citep[in particular Cubical Agda][]{vezzosiCubicalAgdaDependently2019}
+have made constructions like propositional truncation more available, which
+allow constructive proofs to patch this ``leak''; rather than making classical
+and constructive proofs the same, however, this only makes their differences
+more subtle.
 
 All of our work will be formalised in Agda
 \citep{norellDependentlyTypedProgramming2008}, a
 dependently typed, pure, functional programming language which can be
 used as a proof assistant.
-Proof assistants are computer programs which verify the correctness of formal
-proofs.
-Proofs in Agda are programs which can be run: its syntax is quite similar to
-Haskell's.
 A recent extension to Agda, Cubical Agda
 \citep{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
 programs written in Cubical Type Theory \citep{cohenCubicalTypeTheory2016}: this
 type theory gives a \emph{computational} interpretation of the univalence axiom.
 By ``computational interpretation'' here we mean that we will be able to run the
 programs we write which rely on this axiom.
+
 \subsection{Overview}
-In Chapter~\ref{finiteness-predicates} we will look in-depth at the focus of
+In Section~\ref{finiteness-predicates} we will look in-depth at the focus of
 this paper: finiteness.
 As mentioned finiteness in constructive mathematics is a good deal more complex
 than finiteness classically:
@@ -85,14 +43,14 @@ derive from the predicates, and what types are included or excluded from each.
 Along the way we will learn a little more about HoTT and univalence, and we'll
 see some practical and direct uses of the univalence axiom.
 
-In Chapter~\ref{topos} we will look a little at a slightly more advanced
+In Section~\ref{topos} we will look a little at a slightly more advanced
 application of HoTT: topos theory.
 A topos is quite a complex, abstract object: it behaves something like the
 category of sets, although it is more general.
 For us, showing that sets in Homotopy Type Theory form a topos (well, nearly)
 will give us access to the general language of toposes.
 
-In Chapter~\ref{search} we will combine everything from the previous sections
+In Section~\ref{search} we will combine everything from the previous sections
 into a (somewhat) practical program for proof search.
 This program will automatically construct proofs of predicates over finite
 domains.
