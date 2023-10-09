@@ -11,102 +11,24 @@ jobs:
     strategy:
       matrix:
         cubical-ref: ["a60b0c6576fac0ba6e181cab75f9f9de2d167f87"]
-        agda-ref: ["v2.6.2"]
-        ghc-ver: ["9.0.1"]
-        cabal-ver: ["3.4.0.0"]
-
+        agda-ver: ["2.6.2"]
+        
     steps:
+
+  # Install Agda
+    - uses: wenkokke/setup-agda@v2.0.0
+      with:
+        agda-version: ${{ matrix.agda-ver }}
+        agda-stdlib-version: 'recommended'
+        agda-libraries: |
+          https://github.com/agda/cubical.git#${{ matrix.cubical-ref }}
+
 
 # Download this git repo
     - name: Checkout main
       uses: actions/checkout@v2
       with:
         path: main
-
-# Install GHC & Cabal
-    - uses: actions/cache@v2
-      name: Cache cabal packages
-      id: cache-cabal
-      with:
-        path: |
-          ~/.cabal/packages
-          ~/.cabal/store
-          ~/.cabal/bin
-          dist-newstyle
-        key: ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-${{ matrix.agda-ref }}
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-${{ matrix.agda-ref }}
-          ${{ runner.os }}-${{ matrix.ghc-ver }}-${{ matrix.cabal-ver }}-
-
-    - name: Install cabal
-      if: steps.cache-cabal.outputs.cache-hit != 'true'
-      uses: actions/setup-haskell@v1.1.4
-      with:
-        ghc-version: ${{ matrix.ghc-ver }}
-        cabal-version: ${{ matrix.cabal-ver }}
-
-    - name: Put cabal programs in PATH
-      run: echo "~/.cabal/bin" >> $GITHUB_PATH
-
-    - name: Download Agda from github
-      if: steps.cache-cabal.outputs.cache-hit != 'true'
-      uses: actions/checkout@v2
-      with:
-        repository: agda/agda
-        path: agda
-        ref: ${{ matrix.agda-ref }}
-      
-    - name: Install Agda
-      if: steps.cache-cabal.outputs.cache-hit != 'true'
-      run: |
-        cabal update
-        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS' alex-3.2.6
-        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS' happy-1.19.12
-        cd agda
-        mkdir -p doc
-        touch doc/user-manual.pdf
-        cabal install --overwrite-policy=always --ghc-options='-O2 +RTS -M6G -RTS'
-
-# Download and compile cubical library
-    - name: Checkout cubical library
-      uses: actions/checkout@v2
-      with:
-        repository: agda/cubical
-        path: cubical
-        ref: ${{ matrix.cubical-ref }}
-
-    - name: Cache cubical library
-      uses: actions/cache@v2
-      id: cache-cubical
-      with:
-        path: ~/cubical-build
-        key: ${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}
-
-    - name: Put cubical library in Agda library list
-      run: |
-        mkdir -p ~/.agda/
-        touch ~/.agda/libraries
-        echo "$GITHUB_WORKSPACE/cubical/cubical.agda-lib" > ~/.agda/libraries
-
-    - name: Cache miss on cubical library; compile cubical library
-      if: steps.cache-cubical.outputs.cache-hit != 'true'
-      run: |
-        cd $GITHUB_WORKSPACE/cubical
-        agda Cubical/Core/Everything.agda
-        agda Cubical/Foundations/Everything.agda
-        find Cubical/Data -type f -name "*.agda" | while read -r code ; do
-            agda $code
-        done
-        find Cubical/HITs -type f -name "*.agda" | while read -r code ; do
-            agda $code
-        done
-        cp -f -r _build/ ~/cubical-build
-
-    - name: Cache hit on cubical library; retrieve cubical library
-      if: steps.cache-cubical.outputs.cache-hit == 'true'
-      run: |
-        mkdir -p cubical/_build
-        cp -f -r ~/cubical-build/* cubical/_build
 
 # Download and compile agda code
 
