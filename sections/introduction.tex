@@ -62,35 +62,6 @@ players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
 
 \subsection{Contributions}
-Since much of this paper is dedicated to exploring well-researched topics from
-a new perspective, some of the contributions can be difficult to tease out.
-There are three types of valuable and useful work provided in this paper:
-\begin{description}
-  \item[Exposition of Already-Existing Work]
-    Many explorations of dependent types in programming follow the well-trodden
-    path of describing length-indexed vectors, explaining one or two aspects of
-    totality, and perhaps building up to a proof that \(\mathit{reverse} \circ
-    \mathit{reverse} \equiv \mathit{id}\).
-    One of the aims of this paper is to provide a different introduction to
-    dependent types which also touches on some of the core aspects of HoTT, a
-    topic missing much introductory material for functional programmers.
-  \item[Formalised Proofs of Theorems proved Informally Elsewhere]
-    ``Informal'' here means not machine checked.
-    All theorems stated in this paper are proved formally in Cubical Agda and
-    machine-checked: the full code for these proofs is available
-    online\footnote{\url{https://doisinkidney.com/code/masters-thesis/README.html}}.
-    Formal proofs can be quite different from their informal counterparts, and
-    it is usually not trivial to formalise a pen-and-paper proof.
-    Furthermore, often in formalising a proof new insights about the proof are
-    revealed.
-  \item[New Fundamental Theoretical Contributions]
-    Several of the constructions presented in this paper are in fact novel, and
-    some of the theorems proven have not been proven (either formally or
-    informally) elsewhere.
-\end{description}
-
-What follows is an accounting of the specific technical contributions of this
-thesis:
 \begin{description}
   \item[A classification of five finiteness predicates in Cubical Type Theory.]
     Four of these predicates have been previously defined and described in
@@ -100,8 +71,7 @@ thesis:
     Theory.
     This has the advantage of giving the proofs computational content, a feature
     used in Section~\ref{search}.
-    One of the predicates is new (manifest enumerability), and has not been
-    described before.
+    Manifest enumerability is a new predicate.
   \item[Proof of implication between finiteness predicates.]
     Some of these proofs have been seen in the literature before (from
     cardinal finiteness to manifest Bishop finiteness is present informally
@@ -114,16 +84,14 @@ thesis:
     There are broadly two different ways to define finiteness predicates:
     through a list-based approach, or through relations with a finite prefix of the
     natural numbers.
-    Our container-based treatment of the finiteness predicates is novel, to the
-    best of our knowledge, and allows us to prove that the two forms of the
-    predicates are equivalent, which is also novel.
+    Our container-based treatment of the finiteness predicates  allows us to
+    prove that the two forms of the predicates are equivalent.
   \item[Proof that Sets form a \(\Pi\)-Pretopos.]
-    This is a proof that has been presented before, in both \cite{hottbook} and
-    \cite{rijkeSetsHomotopyType2015}: here we present the first machine-checked
+    This is a proof that has been presented before, in both~\citet{hottbook}
+    and~\citet{rijkeSetsHomotopyType2015}: here we present a machine-checked
     version of this proof.
   \item[Proof that Kuratowski Finite Sets form a \(\Pi\)-Pretopos
     (\Cref{kuratowski-topos}).]
-    This is a new proof, both formally and informally.
   \item[A library for proof search.]
     While several libraries for proof search based on finiteness exist in
     dependently-typed programming languages
@@ -138,86 +106,11 @@ thesis:
     in detail in subsection~\ref{search}.
   \item[A verified solver for the countdown problem.]
     The countdown problem \citep{huttonCountdownProblem2002} has been studied
-    from a number of angles in functional programming
-    \cite{birdCountdownCaseStudy2005}; ours is the first verified solver of the
-    problem.
+    from a number of angles in functional
+    programming~\cite{birdCountdownCaseStudy2005}; our solver is the first 
+    machine-checked solver, to the best of our knowledge.
 \end{description}
-\begin{comment}
 
-\subsection{What is a Proof?}
-Constructive mathematics is, fundamentally, a different way of thinking about
-proofs.
-Classically we have two different universes of things: we have
-objects, like the natural numbers, or the rings; and the proofs on those things.
-Constructive mathematics joins those two worlds together.
-
-Practically speaking this means that in constructive mathematics we can't
-always ``prove the existence of'' some thing; instead we simply provide that
-thing.
-We mentioned an example where this comes into play: to prove that something is
-finite we might want to prove that it is in bijection with some other finite
-type.
-Constructively, this proof \emph{is} a bijection.
-
-Constructive mathematics is also deeply tied to computers.
-Dependently-typed programming languages, like Agda
-\citep{norellDependentlyTypedProgramming2008}, Coq
-\citep{thecoqdevelopmentteamCoqProofAssistant2020}, or Idris
-\citep{bradyIdrisGeneralpurposeDependently2013}, allow us to compile and
-\emph{run} our proofs.
-If we provide a bijection between two types in Agda we also provide a function
-to and from each type.
-Agda is therefore both a formal language for constructive proofs and a
-programming language which can run those proofs.
-
-This relation between proofs and programs is often called the Curry-Howard
-correspondence.
-Under this framework, propositions in the logical sense correspond to types in
-the programming sense \citep{wadlerPropositionsTypes2015}; proofs of those
-propositions then correspond to programs which inhabit those types.
-As an example we have from propositional logic the following:
-\begin{equation*}
-  \frac{A \wedge B}{A}
-\end{equation*}
-This is conjunction elimination: if we know \(A\) and \(B\), we also know \(A\).
-
-Via Curry-Howard, the type corresponding to conjunction is in fact the pair (or
-tuple).
-\(A\) and \(B\) are also types.
-So, the above proposition, as a type, is the following:
-\begin{equation*}
-  \mathit{fst}\mathbin{::}(a,b)\to a
-\end{equation*}
-And the proof which inhabits this type?
-It is the function often called \verb+fst+: the selector for the first component
-of the pair.
-\begin{equation*}
-  \mathit{fst}\;(x,y) = x
-\end{equation*}
-
-Occasionally we don't want to provide the extra information that
-constructiveness demands: it is occasionally useful to say ``there exists some
-\(x\) which satisfies some predicate \(P\)'' without revealing the value of \(x\).
-In other words, we want to retrieve something of the classical notion of an
-existential in a constructive setting.
-Later, for instance, we will begin to work with the
-category of finite sets.
-The objects of this category are (of course) finite sets: however, if our notion
-of ``finite'' is tied to an explicit bijection, that means that the type of
-``things which are finite'' is pairs of types and bijections between those
-types. 
-Since there are \(n!\) bijections between a type of cardinality \(n\) and any
-other, this means that for every such type we have \(n!\) different objects,
-instead of just 1.
-We'll see a way to fix this problem with Homotopy Type Theory.
-
-The proofs we will provide in this paper will be written in the syntax of
-Agda: they are, however, all valid classical proofs.
-Constructive mathematics is a subset of classical, after all.
-When we say ``constructive'' we really just mean that these proofs avoid
-reliance on certain axioms like the law of the excluded middle, or the axiom of
-choice.
-\end{comment}
 \subsection{Homotopy Type Theory}
 HoTT is both a type theory and a foundational theory for mathematics.
 As a type theory it can be thought of as an alternative to things like
@@ -247,29 +140,13 @@ We haven't defined equivalence yet (and we haven't defined equality rigorously
 yet), but the core thrust of the axiom is that it gives proofs of isomorphism
 all the power of proofs of equality.
 
-From a proof perspective, this is quite useful for transporting proofs from one
-domain to another: for instance, a proof that some type \(A\) is finite can be
-transported to a proof that any type isomorphic to \(A\) is finite.
-From a programming perspective, this is quite useful for transporting
-\emph{programs}: an API defined on some type can suddenly be reused, without
-change, on another type as long as the latter is isomorphic to the former.
-It's worth noting that the technique mentioned here is used quite
-pervasively in everyday mathematics: it's just that foundational systems (like
-MLTT) could not justify its use.
-
 The other addition that HoTT gives to traditional type theory is that of Higher
 Inductive Types.
 Traditional inductive types are defined by listing their constructors: with HITs
 we can also list the equalities they must satisfy.
-The most obvious immediate use of this is quotient types: another concept which
-is regarded as standard in normal mathematics, but somewhat embarrassingly
-missing from most constructive theories.
-In truth, the fact that HITs can be used to describe simple set quotients is
-almost incidental: in HoTT they are a far more powerful, general tool,
-which can be used to define a wide variety of essential constructions like the
-circle, torus, etc.
-This paper isn't very interested in these homotopy-focused topics, however it
-is worth mentioning as it is one of HoTT's great strengths.
+The most obvious immediate use of this is quotient types,
+but in HoTT they can be used of for much more exotic constructions like the
+torus etc.
 
 Finally, we have to explain where Cubical Type Theory
 \citep{cohenCubicalTypeTheory2016} fits in.
@@ -277,8 +154,7 @@ Strictly speaking in this paper we will not work directly in HoTT: we work
 instead in CuTT, which is very closely related, but not quite the same, as HoTT.
 CuTT's main departure from HoTT is in its representation of equalities, which it
 calls ``paths''.
-In HoTT (and Martin-Löf type theory, which we will describe later) equalities
-are an inductive type.
+In HoTT equalities are an inductive type.
 In CuTT, paths behave like functions from the real line: an equality
 \(x \equiv y\) is a function which, when applied to \(0\), returns \(x\), and
 when applied to \(1\), returns \(y\).
@@ -319,4 +195,3 @@ which can be run.
   differences between the theories which mean that some proofs which are valid
   HoTT are not valid in CuTT.
 }
-

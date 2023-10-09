@@ -2,19 +2,11 @@
 \input{figures/finite-classification}
 In this subsection, we will define and briefly describe each of the five predicates
 in \Cref{finite-classification}.
-We will also explain \emph{why} there are five separate predicates: how can it
-be the case that so many different things describe ``finiteness''?
 As we will see, some predicates are too informative (they
 tell us more about the underlying type other than it just being finite), or too
 restrictive (they don't allow certain finite types to be classified as finite).
-These diversions won't be dead-ends, however: the final predicate we will land
-on as the ``correct'' (or, more accurately, most useful) notion of finiteness
-will be built out of all of the others.
 \subsection{Split Enumerability}\label{split-enumerability}
-We will start with a simple notion of finiteness, called split enumerability.
-This predicate is perhaps the first definition of ``finite'' that someone might
-come up with (it's certainly the most common in dependently-typed programming):
-put simply, a split enumerable type is a type for which all of its elements can
+A split enumerable type is a type for which all of its elements can
 be listed.
 \begin{definition}[Split Enumerable Set]\label{split-enum-def}
   To say that some type \(A\) is split enumerable is to say that there is a list
@@ -26,7 +18,6 @@ be listed.
   An equivalent version of this predicate was called \verb+Listable+ in
   \citet{firsovDependentlyTypedProgramming2015}.
 \end{definition}
-
 
 This predicate is simple and useful, but we will see later on how it is perhaps
 a little imprecise.
@@ -41,21 +32,12 @@ This is the definition for a \emph{container} (\Cref{container-def}):
 effectively, the above definition says that ``Lists are a datatype whose shape
 is given by the natural numbers, and which can be indexed by numbers smaller
 than its shape''.
-If that seems needlessly complex, don't worry: this definition is precisely
+This definition is precisely
 equivalent to the usual inductive one.
 \ExecuteMetaDataInline[agda/Data/List/Base.tex]{list-def}
-And this isn't some kind of hand-waving equivalence, either: since we are
-working in HoTT, we can (and do) prove that the two types are equal, allowing us
-to use one or the other depending on whichever is more convenient, and
-\(\AgdaFunction{subst}\) in the other representation without loss of generality.
-That said, defining lists as containers will reveal several interesting
-connections and proofs about split enumerability and the other predicates, 
-so for the remainder of the paper whenever we say \AgdaDatatype{List} we will
-mean  \(\;\AgdaFunction{⟦}\Nat,\AgdaFunction{Fin}\AgdaFunction{⟧}\;\).
+In fact, we can \emph{prove} that these two representations of lists are equal.
 
-We still must define containers themselves, of course.
-Containers are a well-studied topic in dependent type theory, with a rich
-theory: we won't dive in to that here.
+Containers themselves have the following definition:
 \begin{definition}[Containers]\label{container-def}
   A container \citep{abbottContainersConstructingStrictly2005} is a pair
   \(S , P\) where \(S\) is a type, the elements of which are called
@@ -65,30 +47,20 @@ theory: we won't dive in to that here.
   \ExecuteMetaDataInline[agda/Container.tex]{container-interp}
 \end{definition}
 
-The definition of container is a little abstract: it is instructive to think of
-it more concretely for the case of lists.
-The container representing finite lists is a pair of a natural number \(n\)
-representing the length (or ``shape'') of the list, and a function
-\(\AgdaDatatype{Fin}\;n\to A\), representing the indexing function into the
-list.
-
-One of the nice things about containers is it gives us a generic way to define
-``membership'':
+With containers we get a generic way to define ``membership'':\\
 \twocolcode
 {\ExecuteMetaDataInline[agda/Container/Membership.tex]{membership-def}}
 {\ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{fiber}}
 Here we're using the homotopy-theory notion of a \AgdaDatatype{fiber} to define
 membership: a fiber for some function \(f\) and some point \(y\) in its codomain
 is a value \(x\) and a proof that \(f \; x \;\AgdaDatatype{≡}\;y\).
-Membership also makes more sense when described concretely in terms of lists:
+In the case of lists,
 \(x\;\AgdaDatatype{\ensuremath{\in}}\;\mathit{xs}\) means ``there is an index
 into \(\mathit{xs}\) such that the index points at an item equal to \(x\)''.
+
 \paragraph{Split Surjections}
-Now that we have our terms defined, let's look a little at how split
-enumerability relates to more traditional, classical notions of finiteness.
-In a classical setting we likely wouldn't mention ``lists'' or the like, and
-would instead define finiteness based on the existence of some injection or
-surjection, say a surjection from a finite prefix of the natural numbers.
+A common definition of finiteness requires a surjection from a finite prefix of
+the natural numbers.
 In HoTT, surjections (or, more precisely, \emph{split} surjections
 \cite[definition 4.6.1]{hottbook}), are defined like so:
 
@@ -96,7 +68,7 @@ In HoTT, surjections (or, more precisely, \emph{split} surjections
 {\ExecuteMetaDataInline[agda/Function/Surjective/Base.tex]{split-surjective}}
 {\ExecuteMetaDataInline[agda/Function/Surjective/Base.tex]{split-surjection}}
 As it turns out, our definition of finiteness here is precisely the same as a
-surjection-based one, in quite a deep way!
+surjection-based one.
 \begin{lemma}\label{split-enum-is-split-surj}%
   A proof of split enumerability is equivalent to a split surjection from a
   finite prefix of the natural numbers.
