@@ -26,9 +26,11 @@ used as a proof assistant.
 A recent extension to Agda, Cubical Agda
 \citep{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
 programs written in Cubical Type Theory \citep{cohenCubicalTypeTheory2016}: this
-type theory gives a \emph{computational} interpretation of the univalence axiom.
+type theory gives a \emph{computational} interpretation of the univalence axiom
+\citep{hottbook}.
 By ``computational interpretation'' here we mean that we will be able to run the
 programs we write which rely on this axiom.
+The univalence axiom allows us to do Homotopy Type Theory (HoTT) in Agda.
 
 \subsection{Overview}
 In Section~\ref{finiteness-predicates} we will look in-depth at the focus of
@@ -47,17 +49,18 @@ In Section~\ref{topos} we will look a little at a slightly more advanced
 application of HoTT: topos theory.
 A topos is quite a complex, abstract object: it behaves something like the
 category of sets, although it is more general.
-For us, showing that sets in Homotopy Type Theory form a topos (well, nearly)
+For us, showing that finite sets in HoTT form a $\Pi$-pretopos
 will give us access to the general language of toposes.
 
 In Section~\ref{search} we will combine everything from the previous sections
-into a (somewhat) practical program for proof search.
+into a program for proof search.
 This program will automatically construct proofs of predicates over finite
 domains.
 We will demonstrate the program with the countdown problem
-\citep{huttonCountdownProblem2002}: this is a somewhat famous puzzle where
+\citep{huttonCountdownProblem2002}: this is a puzzle where
 players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
+
 \subsection{Contributions}
 Since much of this paper is dedicated to exploring well-researched topics from
 a new perspective, some of the contributions can be difficult to tease out.
