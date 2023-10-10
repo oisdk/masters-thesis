@@ -173,7 +173,7 @@ isProp A = (x y : A) → x ≡ y
 \end{code}
 %</isProp>
 %<*isSet>
-\begin{code}
+\begin{code}[number=isSet]
 isSet A = (x y : A) → isProp (x ≡ y)
 \end{code}
 %</isSet>

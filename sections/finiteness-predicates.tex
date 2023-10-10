@@ -76,9 +76,9 @@ surjection-based one.
 \end{lemma}\noindent%
 \begin{proof} \let\qed\relax \vspace{-\baselineskip}\phantom{Proof.} \\
   \begin{minipage}[t]{.83\textwidth} \vspace{-1.25\baselineskip}
-    \begin{agdalisting*}
+    
       \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj}
-    \end{agdalisting*}
+    
   \end{minipage}
   \begin{minipage}[t]{.165\textwidth}
 
@@ -119,12 +119,12 @@ We'll prove the following slightly more general statement:
 \paragraph{Decidable Equality}
 One thing that characterises all split enumerable types is that they are all
 \emph{discrete}, i.e. they have decidable equality. 
-\begin{agdalisting*}
+
   \begin{multicols}{2} \null \vfill
     \ExecuteMetaData[agda/Relation/Nullary/Discrete/Base.tex]{discrete-def} \vfill \null \columnbreak
     \ExecuteMetaData[agda/Snippets/Dec.tex]{dec-def}
   \end{multicols}
-\end{agdalisting*}
+
 We will see later that this has implications for the space of types we're
 dealing with, but for now it simply provides a useful function on split
 enumerable types.
@@ -134,33 +134,33 @@ enumerable types.
 \begin{proof}
 To prove that split enumerability implies decidable equality we'll take a quick
 detour through injections.
-\begin{agdalisting*}
+
   \begin{multicols}{2}
     \ExecuteMetaData[agda/Function/Injective/Base.tex]{injective} \columnbreak
     \ExecuteMetaData[agda/Function/Injective/Base.tex]{injection}
   \end{multicols}
-\end{agdalisting*}
+
 These are useful because we know that any type which injects into a discrete
 type is itself discrete:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Function/Injective/Properties.tex]{inj-discrete}
-\end{agdalisting*}
+
 And we can turn a split surjection from \(A\) to \(B\) into an injection from
 \(B\) to \(A\):
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{surj-to-inj}
-\end{agdalisting*}
+
 Yielding a simple proof that any type with a split surjection from a discrete
 type is itself discrete:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Function/Surjective/Properties.tex]{discrete-surj}
-\end{agdalisting*}
+
 Since split enumerability is really just a split surjection from
 \AgdaDatatype{Fin}, and since we know that \AgdaDatatype{Fin} is discrete, the
 overall proof resolves quite simply:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-is-discrete}
-\end{agdalisting*}
+
 \end{proof}
 
 \subsection{Manifest Bishop Finiteness}\label{manifest-bishop-finiteness}
@@ -264,15 +264,15 @@ We define equivalences as contractible maps \cite[definition 4.4.1]{hottbook}:
 \begin{lemma}\label{bishop-equiv}
   Manifest bishop finiteness is equivalent to an equivalence to a finite prefix
   of the natural numbers.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv-type}
-  \end{agdalisting*}
+  
 \end{lemma}
 \begin{proof} \let\qed\relax \vspace{-1\baselineskip}\phantom{Proof.} \\
   \begin{minipage}[t]{.83\textwidth}\vspace{-1.25\baselineskip}
-    \begin{agdalisting*}
+    
       \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv}
-    \end{agdalisting*}
+    
   \end{minipage}
   \begin{minipage}[t]{.16\textwidth}
 
@@ -300,12 +300,12 @@ The two following proofs are both valid proofs of the finiteness of
 
 \begin{minipage}{\textwidth}
 \begin{multicols}{2}
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
-  \end{agdalisting*} \columnbreak
-  \begin{agdalisting*}
+   \columnbreak
+  
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-rev}
-  \end{agdalisting*}
+  
 \end{multicols}
 \end{minipage}
 Clearly they're not the same though: the order of their support lists differs.
@@ -369,9 +369,9 @@ With this, we can define cardinal finiteness:
   A type \(A\) is cardinally finite if there exists a propositionally truncated
   proof that \(A\) is manifest Bishop finite or equivalent to a finite prefix of
   the natural numbers.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
-  \end{agdalisting*}
+  
   This predicate is called Bishop finiteness in~\citet{fruminFiniteSetsHomotopy2018}.
 \end{definition}
 
@@ -414,32 +414,27 @@ of the type are equal, i.e. we are given two proofs of decidable equality on
 Remember that \(\AgdaFunction{Discrete}\;A\) is a function of two arguments
 returning a \AgdaDatatype{Dec} of whether those two arguments are equal or not.
 By function extensionality, to prove that that is a proposition we have to prove
-that \(\AgdaDatatype{Dec}\;(\agdaequiv{x}{y})\) is a proposition.
+that \(\AgdaDatatype{Dec}\;(x\;\agdaequiv\;{y})\) is a proposition.
 This proof requires that we show that the payload of each of the constructors
 (\AgdaInductiveConstructor{yes} and \AgdaInductiveConstructor{no}) are
 propositions.
 \AgdaInductiveConstructor{no}'s payload is
-\(\agdaequiv{x}{y}\rightarrow\agdabot\), which is a
+\(x\;\agdaequiv\;{y}\rightarrow\agdabot\), which is a
 proposition because \agdabot\; is a proposition.
 
 \AgdaInductiveConstructor{yes} is a little more interesting: its payload is
-\agdaequiv{x}{y}.
+$x\;\agdaequiv\;y$.
 How can we prove that the path between \(x\) and \(y\) is a proposition?
 It turns out that there is a class of types for which all paths are
 propositions: the \emph{sets}.
-\begin{agdalisting}\label{isSet}
-  \ExecuteMetaData[agda/Snippets/Introduction.tex]{isSet}
-\end{agdalisting}
+\ExecuteMetaData[agda/Snippets/Introduction.tex]{isSet}
 This is the next homotopy level up from the propositions (\Cref{isProp}).
 More importantly, there is an important theorem relating to sets which
 \emph{also} relates to decidable equality: Hedberg's theorem
 \citep{hedbergCoherenceTheoremMartinLof1998}.
 This tells us that any type with decidable equality is a set.
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{discrete-isset}
-\end{agdalisting*}
-And of course we know that \(A\) here has decidable equality: we were just given
-two proofs of that fact at the beginning of this proof!
+\ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{discrete-isset}
+And of course we know that \(A\) here has decidable equality.
 
 This suffices to prove that decidable equality is itself a proposition, and
 therefore that we can apply \Cref{elim-prop} and the proof that bishop
@@ -464,15 +459,15 @@ With that, we can move on to the proof:
   Given a cardinally finite type, we can derive the type's cardinality, as well
   as a propositionally truncated proof of equivalence with \AgdaDatatype{Fin}s of
   the same cardinality.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinality-is-unique}
-  \end{agdalisting*}
+  
 \end{lemma}
 \begin{proof}
   The high-level overview of our proof is as follows:
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinality-is-unique-impl}
-  \end{agdalisting*}
+  
   It is the composition of two operations: first, with
   \AgdaFunction{\ensuremath{\lVert \text{map} \rVert}}, we change the truncated
   proof of manifest bishop finiteness to a proof of equivalence with fin.
@@ -480,17 +475,17 @@ With that, we can move on to the proof:
   Then we use the eliminator from \Cref{elim-prop-coh} with three
   parameters.
   The first simply proves that that the output is a set:
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{card-isSet}
-  \end{agdalisting*}
+  
   The second is the function we apply to the truncated value:
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{alg}
-  \end{agdalisting*}
+  
   And the third is a proof that that function is itself coherently constant:
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{const-alg}
-  \end{agdalisting*}
+  
 
   The tricky part of the proof is \AgdaFunction{const-alg}: here we need to show
   that \AgdaFunction{alg} returns the same value no matter its input.
@@ -502,13 +497,13 @@ With that, we can move on to the proof:
     \frac{(n :\;\AgdaDatatype{\ensuremath{\mathbb{N}}}) \; \; \; (p : \AgdaDatatype{Fin}\;n\;\AgdaFunction{\ensuremath{\simeq}}\;A) \; \; \;
       (m :\;\AgdaDatatype{\ensuremath{\mathbb{N}}}) \; \; \; (q : \AgdaDatatype{Fin}\;m\;\AgdaFunction{\ensuremath{\simeq}}\;A)
     }{
-      \agdaequiv{n}{m}
+      n\;\agdaequiv\;m
     }
   \end{equation*}
   Given univalence we have \(\AgdaDatatype{Fin}\;n \;\AgdaFunction{\ensuremath{\equiv}}\; \AgdaDatatype{Fin}\;m\),
   and the rest of our task is to prove:
   \begin{equation*}
-    \frac{\agdaequiv{\AgdaDatatype{Fin}\;n}{\AgdaDatatype{Fin}\;m}}{\agdaequiv{n}{m}}
+    \frac{{\AgdaDatatype{Fin}\;n}\;\agdaequiv\;{\AgdaDatatype{Fin}\;m}}{n\;\agdaequiv\;m}
   \end{equation*}
 
   This is a well-known puzzle in dependently-typed programming, and one that
@@ -539,23 +534,23 @@ For simplicity's sake we will use insertion sort:
 
 \begin{minipage}{\linewidth}
 \begin{multicols}{2}
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Data/List/Sort.tex]{insert}
-  \end{agdalisting*} \columnbreak \vfill \null \vfill
-  \begin{agdalisting*}
+   \columnbreak \vfill \null \vfill
+  
     \ExecuteMetaData[agda/Data/List/Sort.tex]{insertion-sort}
-  \end{agdalisting*} \vfill \null
+   \vfill \null
 \end{multicols}
 \end{minipage} \noindent
 And we prove that \AgdaFunction{sort} produces a list which is sorted, and a
 permutation of its input.
 \begin{multicols}{2}
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-sorts}
-  \end{agdalisting*} \columnbreak
-  \begin{agdalisting*}
+   \columnbreak
+  
     \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-perm}
-  \end{agdalisting*}
+  
 \end{multicols} \vspace{-\baselineskip}
 We've introduced two new types here: \AgdaFunction{Sorted} is a predicate
 enforcing that the given list is sorted, and
@@ -564,29 +559,29 @@ lists.
 We take the definition of permutations from
 \citep{danielssonBagEquivalenceProofRelevant2012}: two lists are permutations of
 each other if their membership proofs are all equivalent.
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Data/List/Relation/Binary/Permutation.tex]{perm-def}
-\end{agdalisting*}
+
 This definition fits particularly well for two reasons: first, it is defined on
 containers generically, which fits well with our finiteness predicates.
 Secondly, it is extremely straightforward to show that the support lists of any
 two proofs of manifest Bishop finiteness must be permutations of each other:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{perm-bish}
-\end{agdalisting*}
+
 
 Almost all of the pieces are in place now: we know that the support lists of all
 proofs of \(\agdacal{B}\;A\) are permutations of each other, and we know that
 \AgdaFunction{sort} returns a sorted permutation of its input.
 The final piece of the puzzle is the following:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Data/List/Sort.tex]{sorted-perm-eq}
-\end{agdalisting*}
+
 If two sorted lists are both permutations of each other they must be equal.
 Connecting up all the pieces we get the following:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Data/List/Sort.tex]{perm-invar}
-\end{agdalisting*}
+
 Because we know that all support lists of \(\agdacal{B}\;A\) are permutations of
 each other this is enough to prove that \AgdaFunction{sort} is coherently
 constant, and therefore can eliminate from within a truncation.
@@ -627,9 +622,9 @@ In fact we can derive it from \Cref{no-gap-card-bishop} using
 the classical monad we developed in the introduction, since
 \Cref{no-gap-card-bishop} is actually equivalent to classical
 implication.
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Snippets/Classical.tex]{classical-impl}
-\end{agdalisting*}
+
 \subsection{Manifest Enumerability}\label{manifest-enumerability}
 Given that we have just proven that all of our finiteness predicates apply to
 the same types, the natural next step is to try find a predicate which applies
@@ -678,9 +673,9 @@ Manifest enumerability is one such predicate.
   Manifest enumerability is an enumeration predicate like Bishop finiteness or
   split enumerability with the only difference being a propositionally truncated
   membership proof.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable/Container.tex]{manifest-enum-def}
-  \end{agdalisting*}
+  
 \end{definition}
 This predicate is novel, to the best of our knowledge.
 
@@ -693,14 +688,14 @@ From the position we were able to derive decidable equality: that position is
 precisely what's hidden in manifest enumerability.
 
 And indeed this means that the circle is manifestly enumerable.
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{circle-is-manifest-enum}
-\end{agdalisting*}
+
 We use a lemma here, proven in the Cubical Agda library, that
 \AgdaDatatype{S\(^1\)} is \emph{connected}:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{s1-connected}
-\end{agdalisting*}
+
 \paragraph{Surjections}
 We already saw that split enumerability was the listed form of a split
 surjection: what we didn't explain was why the word ``split'' was placed before
@@ -723,9 +718,9 @@ predicate of manifest enumerability corresponds to the proper surjections.
 \begin{lemma}
   Manifest enumerability is equivalent to a surjection from a finite prefix of
   the natural numbers.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{manifest-enum-surj}
-  \end{agdalisting*}
+  
 \end{lemma}
 \paragraph{Relation To Split Enumerability}
 It is trivially easy to construct a proof that any split enumerable type is
@@ -793,9 +788,9 @@ Other definitions of \(\agdacal{K}\) exist (such as the one in
 the free join semilattice more obvious.
 We have included such a definition in our formalisation, and proven it
 equivalent to the one above.
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Direct.tex]{direct-def}
-\end{agdalisting*}
+
 
 Next, we need a way to say that an entire type is Kuratowski finite.
 For that, we will need to define membership of \(\agdacal{K}\).
@@ -814,9 +809,9 @@ This gives us enough to define Kuratowski finiteness.
 \begin{definition}[Kuratowski Finiteness]
   A type is Kuratowski finite if there exists a Kuratowski-finite subset of that
   type which contains every element of the type.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-finite-def}
-  \end{agdalisting*}
+  
 \end{definition}
 
 While Kuratowski finiteness is something of the standard formal definition of
@@ -829,9 +824,9 @@ possible.
 To do so we use the following lemma:
 \begin{lemma} \label{manifest-enum-kuratowski}
   Kuratowski finiteness is equivalent to truncated manifest enumerability.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{manifest-enum-kuratowski}
-  \end{agdalisting*}
+  
 \end{lemma}
 \begin{proof}
   This proof is constructed by providing a pair of functions, to and from each
