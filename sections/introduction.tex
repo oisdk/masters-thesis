@@ -37,26 +37,20 @@ In Section~\ref{finiteness-predicates} we will look in-depth at the focus of
 this paper: finiteness.
 As mentioned finiteness in constructive mathematics is a good deal more complex
 than finiteness classically:
-in this paper alone we will see five separate definitions of ``finiteness'',
-each different, and each with reasonable claim to being the ``true'' definition
-of finiteness.
+in this paper alone we will see five separate definitions of ``finiteness''.
 We will see which predicates imply each other, what extra information we can
 derive from the predicates, and what types are included or excluded from each.
 Along the way we will learn a little more about HoTT and univalence, and we'll
-see some practical and direct uses of the univalence axiom.
+see some direct uses of the univalence axiom.
 
 In Section~\ref{topos} we will look a little at a slightly more advanced
-application of HoTT: topos theory.
+application of HoTT:\@ topos theory.
 A topos is quite a complex, abstract object: it behaves something like the
 category of sets, although it is more general.
-For us, showing that finite sets in HoTT form a $\Pi$-pretopos
-will give us access to the general language of toposes.
+We will show that finite sets in HoTT form a $\Pi$-pretopos.
 
-In Section~\ref{search} we will combine everything from the previous sections
-into a program for proof search.
-This program will automatically construct proofs of predicates over finite
-domains.
-We will demonstrate the program with the countdown problem
+In Section~\ref{search} we will present a library for finite proof search.
+We will demonstrate the library with the countdown problem
 \citep{huttonCountdownProblem2002}: this is a puzzle where
 players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
@@ -71,12 +65,11 @@ using some or all of the supplied numbers which evaluates to the target.
     Theory.
     This has the advantage of giving the proofs computational content, a feature
     used in Section~\ref{search}.
-    Manifest enumerability is a new predicate.
   \item[Proof of implication between finiteness predicates.]
     Some of these proofs have been seen in the literature before (from
     cardinal finiteness to manifest Bishop finiteness is present informally
-    in \cite{yorgeyCombinatorialSpeciesLabelled2014}, and formally (though in
-    HoTT) in \cite{fruminFiniteSetsHomotopy2018}).
+    in~\cite{yorgeyCombinatorialSpeciesLabelled2014}, and formally (though in
+    HoTT) in~\cite{fruminFiniteSetsHomotopy2018}).
     \Cref{cardinal-to-manifest-bishop} in particular is new, to the best
     of our knowledge.
   \item[Proof of relation between listed and \(\AgdaDatatype{Fin}\)-based
