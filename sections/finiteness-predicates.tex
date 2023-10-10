@@ -99,10 +99,8 @@ Remember that split enumerability is in fact the same as a split surjection from
 \(\AgdaDatatype{Fin}\) is split enumerable, then, we need only show that it has
 a split surjection from itself.
 We'll prove the following slightly more general statement:
+\ExecuteMetaData[agda/Function/Surjective/Properties.tex]{split-surj-ident}
 
-\begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Function/Surjective/Properties.tex]{split-surj-ident}
-\end{agdalisting*}
 \paragraph{Decidable Equality}
 One thing that characterises all split enumerable types is that they are all
 \emph{discrete}, i.e. they have decidable equality. 
@@ -149,8 +147,7 @@ overall proof resolves quite simply:
   \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{split-is-discrete}
 \end{agdalisting*}
 \end{proof}
-This lemma is also proven in \citet{firsovDependentlyTypedProgramming2015},
-although using a significantly different technique.
+
 \subsection{Manifest Bishop Finiteness}\label{manifest-bishop-finiteness}
 We mentioned in the introduction that occasionally in constructive mathematics
 proofs will contain ``too much'' information.
@@ -161,27 +158,11 @@ Consider the following proof of the finiteness of bool:
 \end{agdalisting}
 There is an extra \AgdaInductiveConstructor{false} at the end of the support
 list.
-There's nothing terribly wrong with that: it is still a valid proof of
-finiteness, after all, but it does mean that this proof has some extra
-information which we didn't necessarily intend to encode.
-
 There is ``slop'' in the type of split enumerability: there are more distinct
 values than there are \emph{usefully} distinct values.
 To reconcile this, we will disallow duplicates in the support list.
 
-This is where manifest Bishop finiteness comes in: this is a definition of
-finiteness quite similar to split enumerability in other regards, except that it
-does not allows for duplicates in the support list.
-
-How exactly to prohibit duplicates is the next question.
-One approach might be to change the definition of \(\AgdaDatatype{List}\), or
-introduce a new type \(\AgdaDatatype{NoDupeList}\), and use it in the predicate
-instead.
-However, this would mean we lose access to the functions we have defined on
-lists, and we have to change the definition of
-\(\AgdaFunction{\ensuremath{\in}}\) as well.
-
-There is a much simpler and more elegant solution: we insist that every
+To prohibit duplicates, we will insist that every
 \emph{membership proof} must be unique.
 This would disallow a definition of \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\;
 \AgdaDatatype{Bool}\) with
@@ -194,18 +175,14 @@ just adding a condition to the returned membership proof in the cover proof.
 
 To specify that a value must exist uniquely in HoTT we can use the concept of a
 \emph{contraction} \cite[definition 3.11.1]{hottbook}.
-\begin{agdalisting}\label{isContr}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{isContr}
-\end{agdalisting}
+\ExecuteMetaData[agda/Snippets/Introduction.tex]{isContr}
 A contraction is a type with the least possible amount of information: it
 represents the tautologies.
 All contractions are isomorphic to \AgdaDatatype{\ensuremath{\top}}.
 
 By saying that a proof of membership is a contraction, we are saying that it
 must be \emph{unique}.
-\begin{agdalisting}\label{uniq-memb-def}
-  \ExecuteMetaDataInline[agda/Container/Membership.tex]{uniq-memb-def}
-\end{agdalisting}
+\ExecuteMetaData[agda/Container/Membership.tex]{uniq-memb-def}
 Now a proof of \(x\;\AgdaFunction{\ensuremath{\in}!}\;\mathit{xs}\) means that
 \(x\) is not just in \(\mathit{xs}\), but it appears there \emph{only once}.
 
@@ -213,9 +190,7 @@ With this we can define manifest Bishop finiteness:
 \begin{definition}[Manifest Bishop Finiteness] \label{bish-def}
   A type is manifest Bishop finite if there exists a list which contains each
   value in the type once.
-  \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Cardinality/Finite/ManifestBishop/Container.tex]{bish-def}
-  \end{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop/Container.tex]{bish-def}
   The only difference between manifest Bishop finiteness and split enumerability
   is the membership term: here we require unique membership
   (\AgdaFunction{\ensuremath{\in!}}), rather than simple membership
@@ -309,9 +284,6 @@ related statement; that manifest Bishop finiteness implies an equivalence to a
 prefix of the natural number (and vice versa), but similarly to split
 enumerability they cannot show that the two are equivalent as we have done here.
 
-As we are working in CuTT, a proof of equivalence between two types gives us the
-ability to \emph{transport} proofs from one type to the other.
-This is extremely powerful, as we will see.
 \subsection{Cardinal Finiteness}\label{cardinal-finiteness}
 While we have removed some of the unnecessary information from our finiteness
 predicates, one piece still remains.

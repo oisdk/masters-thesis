@@ -163,7 +163,7 @@ isSet : Type a → Type a
 isGroupoid : Type a → Type a
 \end{code}
 %<*isContr>
-\begin{code}
+\begin{code}[number=isContr]
 isContr A = Σ[ x ⦂ A ] ∀ y → x ≡ y
 \end{code}
 %</isContr>

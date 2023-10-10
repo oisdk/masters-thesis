@@ -10,7 +10,7 @@ open import Container
 List : Type a → Type a
 \end{code}
 %<*list-def>
-\begin{code}
+\begin{code}[number=list-def]
 List = ⟦ ℕ , Fin ⟧
 \end{code}
 %</list-def>

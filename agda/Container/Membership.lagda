@@ -12,7 +12,7 @@ infixr 5 _∈_ _∈!_
 _∈_ : A → ⟦ 𝒞 ⟧ A → Type _
 \end{code}
 %<*membership-def>
-\begin{code}
+\begin{code}[number=container-membership]
 x ∈ xs = fiber (snd xs) x
 \end{code}
 %</membership-def>
@@ -21,7 +21,7 @@ x ∈ xs = fiber (snd xs) x
 _∈!_ : A → ⟦ 𝒞 ⟧ A → Type _
 \end{code}
 %<*uniq-memb-def>
-\begin{code}
+\begin{code}[number=uniq-memb-def]
 x ∈! xs = isContr (x ∈ xs)
 \end{code}
 %</uniq-memb-def>
