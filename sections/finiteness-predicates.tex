@@ -372,8 +372,9 @@ With this, we can define cardinal finiteness:
   \begin{agdalisting*}
     \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
   \end{agdalisting*}
-  This predicate is called Bishop finiteness in \cite{fruminFiniteSetsHomotopy2018}.
+  This predicate is called Bishop finiteness in~\citet{fruminFiniteSetsHomotopy2018}.
 \end{definition}
+
 \paragraph{Deriving Uniquely-Determined Quantities}
 At first glance, it might seem that we lose any useful properties we could
 derive from \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\).
@@ -382,8 +383,8 @@ equality (\Cref{cardinal-finite-discrete}) and cardinality
 (\Cref{card-finite-cardinality}) out from under the
 truncation.
 Those two lemmas are proven in
-\citep{yorgeyCombinatorialSpeciesLabelled2014} (Proposition 2.4.9 and 2.4.10,
-respectively), in much the same way as we have done here.
+\citet[Proposition 2.4.9 and 2.4.10]{yorgeyCombinatorialSpeciesLabelled2014}, in
+much the same way as we have done here.
 Our contribution for this subsection is simply the formalisation.
 
 First we'll show that decidable equality carries over from manifest Bishop
@@ -398,25 +399,20 @@ No matter how much we prove that a function from \(P\) doesn't care about which
 from \(\neg \neg P\).
 \begin{lemma}\label{cardinal-finite-discrete}
   Any cardinal-finite set has decidable equality.
-  \begin{agdalisting*}
-    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{card-discrete}
-  \end{agdalisting*}
+  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{card-discrete}
 \end{lemma}
 \begin{proof}
 We already know that manifest Bishop finiteness implies decidable equality;
 to apply that proof to cardinal finiteness we'll use the
 eliminator in \Cref{elim-prop}.
 Our task, in other words, is to prove the following:
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{is-prop-discrete}
-\end{agdalisting*}
+\ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{is-prop-discrete}
 
 To show that this type is a proposition we must show that any two given members
 of the type are equal, i.e. we are given two proofs of decidable equality on
 \(A\) and we must show that they are equal.
 Remember that \(\AgdaFunction{Discrete}\;A\) is a function of two arguments
 returning a \AgdaDatatype{Dec} of whether those two arguments are equal or not.
-\todo{ref for wherever this definition was}
 By function extensionality, to prove that that is a proposition we have to prove
 that \(\AgdaDatatype{Dec}\;(\agdaequiv{x}{y})\) is a proposition.
 This proof requires that we show that the payload of each of the constructors
