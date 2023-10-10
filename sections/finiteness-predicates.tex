@@ -73,41 +73,27 @@ surjection-based one.
   A proof of split enumerability is equivalent to a split surjection from a
   finite prefix of the natural numbers.
   \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj-type}
-\end{lemma}
-\begin{proof} \let\qed\relax
-   \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj}
-\end{proof}
+\end{lemma}\noindent%
+\textsc{Proof:}
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{is-split-inj}
 
 In the above proof syntax the
 \(\AgdaDatatype{\ensuremath{\equiv \langle{} \rangle{} }}\) connects lines which
 are definitionally equal, i.e. they are ``obviously'' equal from the type
 checker's perspective.
 Clearly, only one line isn't a definitional equality: 
-\begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Data/Sigma/Properties.tex]{reassoc}
-\end{agdalisting*}
+\ExecuteMetaData[agda/Data/Sigma/Properties.tex]{reassoc}
 This means that we could have in fact written the whole proof as follows:
-\begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-is-split-surj-short}
-\end{agdalisting*}
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-is-split-surj-short}
 The simplicity of this proof, by the way, is why we preferred the
 container-based definition of lists over the traditional one.
 
-In \citet{firsovDependentlyTypedProgramming2015}, there is a proof that split
-enumerability and surjections from \(\AgdaDatatype{Fin}\) are propositionally
-equivalent; i.e. a function from each to the other is provided.
-The fact that the two proofs are precisely equivalent is not proven (and,
-indeed, it is impossible to prove in MLTT).
-\paragraph{Instances}
-\begin{marginagdalisting}{Proof of \(\AgdaFunction{\(\mathcal{E}!\)\;\AgdaDatatype{Bool}}\)}\label{bool-is-split-enumerable}
-  \ExecuteMetaDataInline[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
-\end{marginagdalisting}
 To actually show that a type \(A\) is finite amounts to constructing a term of
 type \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\;A\).
 For simple types like \AgdaDatatype{Bool}, that is simple: it just amounts to
 basically listing the constructors.
-As a slightly more complex example, consider the \(\AgdaDatatype{Fin}\) type
-we've been using.
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
+As a slightly more complex example, consider the \(\AgdaDatatype{Fin}\) type.
 Remember that split enumerability is in fact the same as a split surjection from
 \(\AgdaDatatype{Fin}\) (\Cref{split-enum-is-split-surj}): to show that
 \(\AgdaDatatype{Fin}\) is split enumerable, then, we need only show that it has
