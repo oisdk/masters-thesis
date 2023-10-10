@@ -31,7 +31,7 @@ infixr 0 _↠!_ _↠_
 _↠!_ : Type a → Type b → Type (a ℓ⊔ b)
 \end{code}
 %<*split-surjection>
-\begin{code}
+\begin{code}[number=sp-surj-eqn]
 A ↠! B = Σ (A → B) SplitSurjective
 \end{code}
 %</split-surjection>

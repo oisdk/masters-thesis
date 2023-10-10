@@ -7,7 +7,7 @@ open import Level
 open import Path
 \end{code}
 %<*prop-trunc-def>
-\begin{code}
+\begin{code}[number=prop-trunc]
 data ∥_∥ (A : Type a) : Type a where
   ∣_∣      : A → ∥ A ∥
   squash   :  (x y : ∥ A ∥) → x ≡ y

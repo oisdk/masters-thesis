@@ -20,7 +20,7 @@ module _ {A : Type a} {B : Type b} where
 _≃_ : Type a → Type b → Type _
 \end{code}
 %<*equiv-def>
-\begin{code}
+\begin{code}[number=equiv-def]
 A ≃ B = Σ[ f ⦂ (A → B) ] isEquiv f
 \end{code}
 %</equiv-def>

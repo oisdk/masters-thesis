@@ -168,7 +168,7 @@ isContr A = Σ[ x ⦂ A ] ∀ y → x ≡ y
 \end{code}
 %</isContr>
 %<*isProp>
-\begin{code}
+\begin{code}[number=isProp]
 isProp A = (x y : A) → x ≡ y
 \end{code}
 %</isProp>

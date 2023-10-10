@@ -37,8 +37,8 @@ Let's define a type: the type of booleans (we include the equivalent code in
 Haskell on the right).
 \begin{agdalisting} \label{bool-def}
   \begin{multicols}{2} \centering
-    \ExecuteMetaDataInline[agda/Snippets/Bool.tex]{bool-def} \columnbreak
-    \ExecuteMetaDataInline[haskell/Bool.tex]{bool-def}
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-def} \columnbreak
+    \ExecuteMetaData[haskell/Bool.tex]{bool-def}
   \end{multicols}\vspace{-2\baselineskip}
 \end{agdalisting}
 There's a lot of syntax wrapped up in this small snippet.
@@ -66,8 +66,8 @@ types, creating a synonym.
 Here, for instance, we define the \AgdaFunction{Boolean} type:
 \begin{agdalisting*}
   \begin{multicols}{2} \centering
-    \ExecuteMetaDataInline[agda/Snippets/Bool.tex]{boolean} \columnbreak
-    \ExecuteMetaDataInline[haskell/Bool.tex]{boolean-synonym}
+    \ExecuteMetaData[agda/Snippets/Bool.tex]{boolean} \columnbreak
+    \ExecuteMetaData[haskell/Bool.tex]{boolean-synonym}
   \end{multicols}\vspace{-\baselineskip}
 \end{agdalisting*}
 This snippet says ``I am defining a new thing called \AgdaFunction{Boolean}, it
@@ -146,8 +146,8 @@ Two ways, in fact, \AgdaInductiveConstructor{true} and
 We can use these constructors in programs by (for instance) assigning them to
 variables.
 \begin{multicols}{2}\centering
-  \ExecuteMetaDataInline[agda/Snippets/Bool.tex]{bool-val}\columnbreak
-  \ExecuteMetaDataInline[haskell/Bool.tex]{bool-val}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-val}\columnbreak
+  \ExecuteMetaData[haskell/Bool.tex]{bool-val}
 \end{multicols}\vspace{-2\baselineskip}\noindent
 Here we've declared a variable\footnotemark\;called \AgdaFunction{a-boolean} with
 the type \AgdaDatatype{Bool}, and said it is equal to the value
@@ -162,8 +162,8 @@ That's quite a lot of information on how to define things in Agda: let's look a
 little about how to do computation.
 What we need is a function:
 \begin{multicols}{2}\centering
-  \ExecuteMetaDataInline[agda/Snippets/Bool.tex]{not-def}\columnbreak
-  \ExecuteMetaDataInline[haskell/Bool.tex]{not-func}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{not-def}\columnbreak
+  \ExecuteMetaData[haskell/Bool.tex]{not-func}
 \end{multicols}\vspace{-2\baselineskip}\noindent
 This function is defined by pattern-matching: when the clause on the
 left-hand-side of the equals sign is seen, the right-hand-side is what's
@@ -172,17 +172,17 @@ computed.
 This syntax with the equals sign is actually just syntactic sugar for a \(\lambda\).
 The identity function, for instance, could be written as follows:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Implicits.tex]{id-lambda}
+  \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-lambda}
 \end{agdalisting*}
 The \AgdaFunction{not} function could also have been written with a \(\lambda\).
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Bool.tex]{lambda-not}
+  \ExecuteMetaData[agda/Snippets/Bool.tex]{lambda-not}
 \end{agdalisting*}
 
 
 For a more complex example, we're going to need a more complex type:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{nat-def}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{nat-def}
 \end{agdalisting}
 This is the type of the natural numbers.
 With \AgdaDatatype{Bool} (\Cref{bool-def}) we were able to list all the
@@ -207,7 +207,7 @@ Instead, multiple arguments are kind of simulated with \emph{currying}.
 
 Here's how we define the addition of two natural numbers:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{text-add}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{text-add}
 \end{agdalisting*}
 Instead of taking two \Nat s and returning a third, this function takes a
 \Nat, and returns a function which takes a \Nat and returns a
@@ -218,7 +218,7 @@ function which adds \AgdaNumber{2} to a number.
 \paragraph{Operators}
 Here's a function on the natural numbers:
 \begin{agdalisting} \label{sub-def}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{sub-def}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-def}
 \end{agdalisting}
 We've defined subtraction.
 
@@ -228,7 +228,7 @@ expect the arguments to the operator to go.
 
 We can also specify the precedence and fixity of the operator:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{sub-fix}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{sub-fix}
 \end{agdalisting*}
 \paragraph{Total Functions}
 In the introduction, we described Agda as a ``total'' programming language.
@@ -250,7 +250,7 @@ truncates to zero when there's arithmetic underflow.
 In other words \(5 - 6 = 0\), according to our definition.
 We could have removed the clause which allows for this:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{bad-sub}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{bad-sub}
 \end{agdalisting*}
 But now the expression \(5 - 6\) is undefined.
 \subparagraph{Termination}
@@ -262,7 +262,7 @@ termination checker, but it does happen occasionally, so it's helpful to
 understand a little how it works. When we define the following function
 (addition on the natural numbers):
 \begin{agdalisting} \label{add-def}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{add-def}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{add-def}
 \end{agdalisting}
 Agda checks that the argument to the recursive call is \emph{structurally
   smaller} than the argument given to the outer function.
@@ -276,7 +276,7 @@ of their arguments.
 It does require careful definitions, though.
 For instance, the following will \emph{not} pass the termination checker:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{bad-add}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{bad-add}
 \end{agdalisting*}
 Though it defines the same function as \Cref{add-def}, it doesn't make
 it absolutely obvious to the termination checker that the first argument to the
@@ -316,7 +316,7 @@ Imagine if we could construct a type for ``proofs of the Riemann hypothesis''.
 We might call it \AgdaFunction{RiemannIsTrue}.
 In a language like Haskell, the following is a completely valid program:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Nat.tex]{riemann-proof}
+  \ExecuteMetaData[agda/Snippets/Nat.tex]{riemann-proof}
 \end{agdalisting*}
 But of course we \emph{haven't} provided a proof of the Riemann hypothesis (and
 if we had we certainly wouldn't have buried the lead to this extent).
@@ -332,11 +332,11 @@ We want to define a language of arithmetic expressions.
 With countdown in mind, we'll only need to support four operators, which we can
 define in a simple data type:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{op-def}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{op-def}
 \end{agdalisting}
 Next, we'll define the actual type of expressions.
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{expr-def}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{expr-def}
 \end{agdalisting}
 What we've defined here is actually a simple leafy binary tree.
 The syntax for the second constructor is not so simple, however: it defines a
@@ -345,12 +345,12 @@ Each underscore in \AgdaInductiveConstructor{\(\_\langle \_ \rangle\_\)}
 represents a hole which expressions can be put into.
 This allows us to use the constructor like so:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{example-expr}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{example-expr}
 \end{agdalisting*}
 
 Evaluation of an expression is done by the following function:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{incorrect-eval}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{incorrect-eval}
 \end{agdalisting}
 We've introduced the \AgdaKeyword{with} syntax here: it functions somewhat like
 a case expression in Haskell.
@@ -366,19 +366,19 @@ other equations) isn't permitted.
 
 To remedy the problem we're going to introduce a new type.
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Data/Maybe/Base.tex]{maybe-def}
+  \ExecuteMetaData[agda/Data/Maybe/Base.tex]{maybe-def}
 \end{agdalisting}
 \AgdaDatatype{Maybe} is a container that can contain at most one item.
 It's the first \emph{parameterised} type we have seen: \AgdaDatatype{Maybe} can
 contain an item of any type.
 Here, for instance, is a \AgdaDatatype{Maybe} which contains the number 2:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Maybe.tex]{maybe-two}
+  \ExecuteMetaData[agda/Snippets/Maybe.tex]{maybe-two}
 \end{agdalisting*}
 Or here is a \AgdaDatatype{Maybe} which doesn't contain anything, but whose type
 says it could contain a function from \Nat to \Nat:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Maybe.tex]{maybe-nat-to-nat}
+  \ExecuteMetaData[agda/Snippets/Maybe.tex]{maybe-nat-to-nat}
 \end{agdalisting*}
 
 Maybe is used often in functional programming to represent partiality: if you
@@ -388,7 +388,7 @@ have a function which is undefined for certain inputs, you can wrap
 We can use it here, for instance, to define a version of subtraction which
 doesn't truncate arithmetic underflow:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{safe-sub}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{safe-sub}
 \end{agdalisting}
 It's often also used for similar purposes as \verb+null+ is in imperative
 programming, although it is of course far safer since it's impossible to forget
@@ -399,11 +399,11 @@ return \AgdaInductiveConstructor{nothing} on expressions which evaluate to
 undefined values.
 That changes the type to the following:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{eval-ty}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{eval-ty}
 \end{agdalisting*}
 The first case is relatively simple:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{lit-case}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{lit-case}
 \end{agdalisting*}
 
 The second two cases are slightly more complex: the result of evaluating each
@@ -411,7 +411,7 @@ sub-tree is \(\AgdaDatatype{Maybe}\;\Nat\), not \Nat, so we will
 have to pattern-match on the outputs to check for
 \AgdaInductiveConstructor{nothing}.
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{add-helper}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{add-helper}
 \end{agdalisting*}
 Code like this is quite tedious.
 Luckily, there's a common pattern we can abstract out: whenever we have a
@@ -419,10 +419,10 @@ multi-argument function, we can apply it to arguments wrapped in
 \AgdaDatatype{Maybe} using the following two functions.
 \begin{multicols}{2} \null \vfill
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Data/Maybe/Sugar.tex]{pure}
+    \ExecuteMetaData[agda/Data/Maybe/Sugar.tex]{pure}
   \end{agdalisting*} \vfill \null \columnbreak
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Data/Maybe/Sugar.tex]{ap}
+    \ExecuteMetaData[agda/Data/Maybe/Sugar.tex]{ap}
   \end{agdalisting*}
 \end{multicols} \noindent
 Any type which implements these functions (in a certain law-abiding way) is said
@@ -434,13 +434,13 @@ It might not be immediately clear how those two functions can help us.
 Basically, we can replace the \AgdaFunction{add-helper} function with the
 following:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{add-helper-app}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{add-helper-app}
 \end{agdalisting*}
 And, as it happens, Agda has special syntax which will automatically insert the
 \AgdaFunction{pure} and \AgdaFunction{\_<*>\_} operators for us, making both the
 addition and multiplication cases the following:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{appl-cases}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{appl-cases}
 \end{agdalisting*}
 
 Next, we have to handle subtraction.
@@ -451,7 +451,7 @@ In contrast to addition and multiplication, subtraction itself can produce a
 To construct multi-argument functions of this particular type, we'll need
 another function:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Data/Maybe/Sugar.tex]{bind}
+  \ExecuteMetaData[agda/Data/Maybe/Sugar.tex]{bind}
 \end{agdalisting}
 Types which implement this function (along with \AgdaFunction{pure}), modulo
 some laws, are called Monads \citep{moggiNotionsComputationMonads1991a}.
@@ -459,19 +459,19 @@ This function will allow us to easily chain together several maybes even with
 functions that return \AgdaDatatype{Maybe}.
 It's used like this:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{sub-bind}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{sub-bind}
 \end{agdalisting*}
 And of course Agda also provides a syntax (do notation, just like Haskell) to
 express the same:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{sub-case}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{sub-case}
 \end{agdalisting*}
 
 Finally, we will handle the division case.
 Here, we want to pattern-match on the returned value of the recursive call.
 Agda also provides syntax for that:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{div-case}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{div-case}
 \end{agdalisting*}
 The \AgdaKeyword{where} keyword here lets us match on zero within the
 \AgdaKeyword{do}-notation.
@@ -480,7 +480,7 @@ Using this evaluator in practice can be a little annoying:
 because it always returns a \AgdaDatatype{Maybe}, simple expressions which are
 obviously valid still need to be checked at run-time.
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{example-eval}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{example-eval}
 \end{agdalisting*}
 This is where Agda can add a little to the usual example for monads of an
 expression evaluator: using dependent types, we can actually statically (and
@@ -489,7 +489,7 @@ checking for \AgdaInductiveConstructor{nothing} safely.
 
 First, we will need the following function:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{is-just}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{is-just}
 \end{agdalisting*}
 This simple function can tell us if the result of evaluating an expression is
 successful or not.
@@ -498,17 +498,17 @@ In other words, it can test if an expression is valid.
 To use this statically, however, we will need to employ the following
 \emph{dependent} function:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{tee}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{tee}
 \end{agdalisting*}
 This function turns our boolean values into types: \agdatop\;(tautology), or
 \agdabot\;(impossibility).
 These types are defined like so:
 \begin{multicols}{2}
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{bot}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{bot}
   \end{agdalisting*}  \columnbreak
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{top}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{top}
   \end{agdalisting*}
 \end{multicols}
 The first type here, \agdabot, has no constructors: there are no values which
@@ -520,7 +520,7 @@ function.
 In other words, the type \(A\) must not have any values which inhabit it.
 As such, we can use \agdabot\;to define a notion of ``not'' for types:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{not}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{not}
 \end{agdalisting*}
 
 The second type, \agdatop, is a \AgdaKeyword{record}.
@@ -531,7 +531,7 @@ the \emph{fields} of these types.
 Of course, in this case, our type doesn't have any fields.
 Perhaps a more instructive example of a record is the following:
 \begin{agdalisting} \label{pair-def}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{pair}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{pair}
 \end{agdalisting}
 Here we've defined the type of \emph{pairs}.
 
@@ -548,7 +548,7 @@ respectively.
 Now, to be completely clear, we could absolutely have defined \agdatop\;as a
 \AgdaKeyword{data} type with one constructor:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{data-top}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{data-top}
 \end{agdalisting*}
 We use the \AgdaKeyword{record} definition simply because it tends to work a
 little better in terms of ergonomics: basically, to construct a
@@ -565,7 +565,7 @@ So, now that we have a way of turning booleans into their logical equivalents
 we can define a type for proofs that a given
 expression is valid:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{valid}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{valid}
 \end{agdalisting}
 A value of type \(\AgdaFunction{Valid}\;e\), for some expression \(e\), is a
 proof that \(e\) doesn't have (for example) any divisions by zero, or
@@ -576,13 +576,13 @@ expression is valid; then, when we pattern-match on evaluating the expression
 Agda will automatically rule out the case where it evaluates to
 \AgdaInductiveConstructor{nothing}.
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{static-eval-explicit}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval-explicit}
 \end{agdalisting*}
 
 A way to make calling this function a little cleaner (syntactically speaking) is
 to use an implicit argument: 
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{static-eval}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{static-eval}
 \end{agdalisting*}
 By surrounding the argument here in braces we are basically going to pass around
 the argument invisibly and automatically (as much as is possible).
@@ -592,7 +592,7 @@ proof still rules out the clause where the evaluation returns
 The real use of this feature, however, is that the argument is \emph{passed}
 invisibly.
 \begin{agdalisting} \label{example-static-eval}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{example-static-eval}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{example-static-eval}
 \end{agdalisting}
 What's happened here is that the type of \(\AgdaFunction{Valid}\;e\) uniquely
 determines one value: Agda can derive this, and it can also derive the value
@@ -606,7 +606,7 @@ Agda manual.
 Two more things about implicit arguments: first, it is possible to retrieve an
 argument even when it's supplied implicitly, with the following syntax:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{retrieve-implicit}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{retrieve-implicit}
 \end{agdalisting*}
 Here we have bound the proof that the expression is valid to the variable
 \AgdaBound{valid}.
@@ -618,11 +618,11 @@ Haskellers), so it might come as a surprise that we've been using them, but it's
 true.
 Take the following definition of the identity function:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Implicits.tex]{id-def}
+  \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-def}
 \end{agdalisting*}
 This is the same function with all implicit arguments made explicit:
 \begin{agdalisting} \label{id-expl}
-  \ExecuteMetaDataInline[agda/Snippets/Implicits.tex]{id-expl}
+  \ExecuteMetaData[agda/Snippets/Implicits.tex]{id-expl}
 \end{agdalisting}
 We have hidden the universe level of the type (\(a\)) and the type itself
 (\(A\)).
@@ -631,7 +631,7 @@ Furthermore, not only have we made these things implicit, we haven't actually
 specified them in the type at all!
 We're able to do this because at the top of our Agda file we say the following:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Level.tex]{level-var-decl}
+  \ExecuteMetaData[agda/Level.tex]{level-var-decl}
 \end{agdalisting*}
 This \AgdaKeyword{variable} declaration means that if we ever refer to  \(A\) in
 a function signature without defining it beforehand, Agda will automatically
@@ -654,7 +654,7 @@ Equalities as paths is the first topic we have reached where Cubical Type Theory
 begins to differ from traditional Martin-Löf Type Theory.
 There, we would usually define the type of proofs of equality like so:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Equality.tex]{equality-def}
+  \ExecuteMetaData[agda/Snippets/Equality.tex]{equality-def}
 \end{agdalisting}
 This is an inductive \AgdaKeyword{data} type, with one constructor: the
 constructor can only be used when the two parameters to the type are the same,
@@ -722,7 +722,7 @@ point in the interval, for instance.
 It's worth thinking about what this ``inverse'' corresponds to in the equality:
 we will name it in the next listing.
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Equality.tex]{sym-def}
+  \ExecuteMetaData[agda/Snippets/Equality.tex]{sym-def}
 \end{agdalisting*}
 We will see some more intricate ways to manipulate paths later on, but for now
 the ``function from an interval'' intuition is enough to understand the basics.
@@ -732,18 +732,18 @@ So now that we know something about the equality type, let's put it to some use.
 We can construct equality proofs of things which are ``obviously equal'' with
 the following function:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Equality.tex]{refl-def}
+  \ExecuteMetaData[agda/Snippets/Equality.tex]{refl-def}
 \end{agdalisting}
 With this we can prove that the output from Equation.~\ref{example-static-eval}
 is 8:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Expr.tex]{example-static-proof}
+  \ExecuteMetaData[agda/Snippets/Expr.tex]{example-static-proof}
 \end{agdalisting*}
 
 Of course, these proofs aren't very interesting.
 Something a little more complex might be the following:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Data/Nat/Properties.tex]{plus-assoc}
+  \ExecuteMetaData[agda/Data/Nat/Properties.tex]{plus-assoc}
 \end{agdalisting*}
 Unfortunately we can't look at much more complex proofs without building up some
 more machinery around path types: we can't currently compose paths, for
@@ -767,7 +767,7 @@ from the ``function from an interval'' interpretation of path types.
 Expand out the definition of \AgdaFunction{\(\equiv\)} in the following type,
 for instance:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Circle.tex]{circle-def}
+  \ExecuteMetaData[agda/Snippets/Circle.tex]{circle-def}
 \end{agdalisting}
 We see that the \AgdaInductiveConstructor{loop} constructor, though odd looking,
 still does represent a function whose return value is
@@ -810,7 +810,7 @@ depth.
   of the input.
   Here's a silly example:
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Formers.tex]{nat-or-string}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{nat-or-string}
   \end{agdalisting*}
   When supplied with \AgdaInductiveConstructor{true}, the return type of this
   function is \Nat; when given \AgdaInductiveConstructor{false}, the
@@ -820,16 +820,16 @@ depth.
 Dependent functions are a built-in type in Agda, and they get the built-in
 syntax that looks like the following:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{pi-syntax-2}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-2}
 \end{agdalisting*}
 If the \(A\) can be inferred, we could alternatively use the following syntax:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{pi-syntax-3}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-3}
 \end{agdalisting*}
 Finally, if we wanted to avoid syntactic sugar altogether, we can use the
 \(\Pi\) symbol:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{pi-syntax-1}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{pi-syntax-1}
 \end{agdalisting*}
 All three of these expressions denote the same type.
 
@@ -839,18 +839,18 @@ i.e. the pair type we saw in \Cref{pair-def}.
 As it happens, given the basic type formers we've defined so far, we can
 actually make the pair type:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Formers.tex]{pair-def}
+  \ExecuteMetaData[agda/Snippets/Formers.tex]{pair-def}
 \end{agdalisting*}
 This type has all the functions we might need on a standard pair:
 \begin{multicols}{3}
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Formers.tex]{fst-def}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{fst-def}
   \end{agdalisting*} \columnbreak
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Formers.tex]{snd-def}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{snd-def}
   \end{agdalisting*} \columnbreak
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Formers.tex]{mk-pair}
+    \ExecuteMetaData[agda/Snippets/Formers.tex]{mk-pair}
   \end{agdalisting*}
 \end{multicols}
 
@@ -862,7 +862,7 @@ needed to define it.
   Dependent sums are denoted with the usual \(\Sigma\) symbol, and has the
   following definition in Agda:
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{sigma}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma}
   \end{agdalisting*}
   The dependent sum is like the constructive version of the existential
   quantifier: the expression \(\AgdaDatatype{\(\Sigma\)}\;A\;B\) can be
@@ -874,16 +874,16 @@ There are a number of different syntactic ways to express
 The following are all equivalent:
 \begin{multicols}{4}
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{sigma-syntax-1}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-1}
   \end{agdalisting*} \columnbreak
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{sigma-syntax-3}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-3}
   \end{agdalisting*} \columnbreak
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{sigma-syntax-4}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-4}
   \end{agdalisting*} \columnbreak
   \begin{agdalisting*}
-    \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{sigma-syntax-2}
+    \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-syntax-2}
   \end{agdalisting*}
 \end{multicols} \vspace{-1\baselineskip}
 
@@ -891,17 +891,17 @@ Though we have shown that the dependent function type is suitable as a pair
 type, \AgdaDatatype{\(\Sigma\)} is actually a little easier to use as our basic
 pair type.
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Formers.tex]{pair-sigma}
+  \ExecuteMetaData[agda/Snippets/Formers.tex]{pair-sigma}
 \end{agdalisting}
 So how, then, is \AgdaDatatype{\(\Sigma\)} a sum type?
 Sum types in non-dependent type theory are the disjoint unions:
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{disj-union}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{disj-union}
 \end{agdalisting}
 It turns out that we can actually use a quite similar trick to how we got the
 pair from \AgdaDatatype{\(\Pi\)}:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Introduction.tex]{sigma-disj-union}
+  \ExecuteMetaData[agda/Snippets/Introduction.tex]{sigma-disj-union}
 \end{agdalisting*}
 \subsection{The Menagerie of Foundational Theories}
 So far we have mentioned four different foundational theories: Martin-Löf Type
@@ -975,7 +975,7 @@ More formally speaking, there are a number of axioms which we don't have access
 to constructively.
 One such axiom is double negation elimination:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Classical.tex]{doubleneg-elim}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{doubleneg-elim}
 \end{agdalisting*}
 One way to ``do'' classical mathematics within Agda, then, would be to write all
 of the proofs assuming these axioms.
@@ -986,7 +986,7 @@ true\textellipsis'', although this is a little clunky.
 Instead, using this axiom of double negation, we can actually provide a type for
 classical computation.
 \begin{agdalisting}
-  \ExecuteMetaDataInline[agda/Snippets/Classical.tex]{classical-def}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{classical-def}
 \end{agdalisting}
 In the ``propositions-as-types'' sense, a value of type
 \(\AgdaFunction{Classical}\;A\) is a classical proof of the proposition \(A\).
@@ -995,18 +995,18 @@ is sometimes called the double-negation translation.
 
 We can prove, inside this type, things like the law of the excluded middle:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Classical.tex]{lem-proof}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{lem-proof}
 \end{agdalisting*}
 This type forms a monad, meaning that it implements the following functions:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Classical.tex]{monad}
+  \ExecuteMetaData[agda/Snippets/Classical.tex]{monad}
 \end{agdalisting*}
 This gives us a convenient syntax to work with classical proofs.
 
 Finally, in HoTT we have a notion of \emph{stability}.
 Certain types do support double-negation elimination:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Relation/Nullary/Stable.tex]{stable-def}
+  \ExecuteMetaData[agda/Relation/Nullary/Stable.tex]{stable-def}
 \end{agdalisting*}
 We will see a use for this notion later on, but we mention it here to point out
 that we do have a way of describing types which can be pulled out of classical
@@ -1028,7 +1028,7 @@ The first thing to note is that Agda is a \emph{lazy} language.
 This means that expressions are not evaluated until they're needed.
 Take the following function:
 \begin{agdalisting*}
-  \ExecuteMetaDataInline[agda/Snippets/Complexity.tex]{f-def}
+  \ExecuteMetaData[agda/Snippets/Complexity.tex]{f-def}
 \end{agdalisting*}
 Since this function ignores its argument, Agda won't \emph{compute} its
 argument.
