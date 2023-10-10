@@ -60,6 +60,7 @@ We have provided in the formalisation a proof that sets in CuTT form a
 The objects are represented by a \(\Sigma\):
 \ExecuteMetaData[agda/Snippets/Category.tex]{hset}
 
+
 This will be quite similar to our objects for finite sets.
 
 Since sets in HoTT don't form a topos, there are quite a few smaller lemmas we
@@ -71,11 +72,12 @@ The two most involved proofs for showing that discrete Kuratowski sets form a
 \(\Sigma\).
 We will describe them here.
 
-In \cite[Theorem 4.21]{fruminFiniteSetsHomotopy2018}, Kuratowski finite types
+In~\citet[Theorem 4.21]{fruminFiniteSetsHomotopy2018}, Kuratowski finite types
 are proven to be closed under surjections, products, and sums.
 Here we prove closure under products and sums, but also functions, \(\Sigma\),
 and \(\Pi\) (and furthermore our closure proofs are given on all of the
 finiteness predicates that they apply to).
+
 \paragraph{Closure of the Ordered Predicates}
 First, we will show that split enumerability (and, by extension, manifest
 enumerability) are closed under \(\Pi\) and \(\Sigma\).
@@ -87,11 +89,9 @@ proofs to us.
 By proving that dependent products and sums are finite, we get the non-dependent
 cases for free.
 
-\begin{lemma} \label{split-enum-sigma}
+\begin{lemma}\label{split-enum-sigma}
   Split enumerability is closed under \(\Sigma\).
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-sigma}
-  
+  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-sigma}
 \end{lemma}
 \begin{proof}
   Our task is to construct the two components of the output pair: the support
@@ -121,7 +121,7 @@ Since we have things like function extensionality and transport, we can indeed
 prove the finiteness of function types.
 Our proof here makes use directly of the univalence axiom, and makes use
 furthermore of all the previous closure proofs.
-\begin{theorem} \label{split-enum-pi}
+\begin{theorem}\label{split-enum-pi}
   Split enumerability is closed under dependent functions
   (\(\Pi\)-types).
   
@@ -265,7 +265,7 @@ This lemma is a well-known folklore theorem.
 
 This gets us all of the necessary closure proofs on \agdacal{C}, and as a result
 we know the following theorem.
-\begin{theorem} \label{kuratowski-topos}
+\begin{theorem}\label{kuratowski-topos}
   Decidable Kuratowski finite sets form a \(\Pi\)-pretopos.
 \end{theorem}
 \subsection{The Absence of the Subobject Classifier}
@@ -324,7 +324,7 @@ which does \emph{not} imply the paradox: propositional resizing.
   
 \end{definition}
 If propositional resizing holds, then we \emph{can} in fact construct a
-subobject classifier, for both sets and finite sets. \todo{Mention lem?}
+subobject classifier, for both sets and finite sets.
 
 %%% Local Variables:
 %%% mode: latex

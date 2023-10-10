@@ -69,7 +69,7 @@ infixl 4 _≟_
 _≟_ = discreteBool
 \end{code}
 %<*bool-assoc-auto-proof>
-\begin{code}
+\begin{code}[number=bool-assoc-auto-proof]
 ∧-assoc : ∀ x y z → (x ∧ y) ∧ z ≡ x ∧ (y ∧ z)
 ∧-assoc = ∀↯ⁿ 3 λ x y z → (x ∧ y) ∧ z ≟ x ∧ (y ∧ z)
 \end{code}
