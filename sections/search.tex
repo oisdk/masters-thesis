@@ -518,8 +518,6 @@ Where an isomorphism is defined as follows:
 
   \ExecuteMetaData[agda/Countdown.tex]{isomorphism}
 
-\todo{Should this isomorphism definition be put earlier in the intro with the
-  equivalences etc?}
 While it may look complex, this term is actually composed of individual
 components we've already proven finite.
 First we have \(\AgdaDatatype{Fin}\;n\rightarrow\AgdaDatatype{Fin}\;n\):
@@ -528,7 +526,7 @@ functions between finite types are, as we know, finite
 We take a pair of them: pairs of finite things are \emph{also} finite
 (\Cref{split-enum-sigma}).
 To get the next two components we can filter to the subobject: this requires
-these predicates to be decidable. \todo{Need to do filter subobject in topos subsection}
+these predicates to be decidable.
 We will construct a term of the following type:
 
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{dec-type}
