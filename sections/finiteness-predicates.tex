@@ -357,9 +357,7 @@ Put another way, a proof of type \proptrunc{A}
 is a proof that some \(A\) exists, without revealing \emph{which} \(A\).
 
 To actually use values of this type we have the following eliminator:
-\begin{agdalisting}\label{elim-prop}
-  \ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc}
-\end{agdalisting}
+\ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc}
 This says that we can eliminate into any proposition: interestingly, this allows
 us to define a monad instance for \AgdaDatatype{\(\lVert \_ \rVert\)}, meaning
 we can use things like do-notation.
@@ -521,16 +519,13 @@ It's the other direction which presents a difficulty:
   Any cardinal finite type with a total order is Bishop finite.
 \end{theorem}
 \begin{proof}
-The proof for this particular theorem is quite involved in the formalisation, so
-we only give its sketch here.
+  The following is a sketch of the proof, which is quite involved in the
+  formalisation.
 
 Our strategy will be to \emph{sort} the support list of the proof for Bishop
 finiteness, and then prove that the sorting function is coherently constant,
 thereby satisfying the eliminator in \Cref{elim-prop-coh}.
-We need to show, in other words, that sorting two support lists from proofs of
-manifest Bishop finiteness on the same type with the same order always returns
-the same result.
-For simplicity's sake we will use insertion sort:
+Here is the sorting function:
 
 \begin{minipage}{\linewidth}
 \begin{multicols}{2}
@@ -541,9 +536,8 @@ For simplicity's sake we will use insertion sort:
     \ExecuteMetaData[agda/Data/List/Sort.tex]{insertion-sort}
    \vfill \null
 \end{multicols}
-\end{minipage} \noindent
-And we prove that \AgdaFunction{sort} produces a list which is sorted, and a
-permutation of its input.
+\end{minipage} \noindent%
+This does produce a sorted list, which is a permutation of the input.
 \begin{multicols}{2}
   
     \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-sorts}
@@ -552,31 +546,21 @@ permutation of its input.
     \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-perm}
   
 \end{multicols} \vspace{-\baselineskip}
-We've introduced two new types here: \AgdaFunction{Sorted} is a predicate
+\AgdaFunction{Sorted} is a predicate
 enforcing that the given list is sorted, and
 \AgdaFunction{\(\leftrightsquigarrow\)} is a permutation relation between two
 lists.
-We take the definition of permutations from
+The definition of permutations is from
 \citep{danielssonBagEquivalenceProofRelevant2012}: two lists are permutations of
 each other if their membership proofs are all equivalent.
-
-  \ExecuteMetaData[agda/Data/List/Relation/Binary/Permutation.tex]{perm-def}
-
+\ExecuteMetaData[agda/Data/List/Relation/Binary/Permutation.tex]{perm-def}
 This definition fits particularly well for two reasons: first, it is defined on
 containers generically, which fits well with our finiteness predicates.
 Secondly, it is extremely straightforward to show that the support lists of any
 two proofs of manifest Bishop finiteness must be permutations of each other:
-
-  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{perm-bish}
-
-
-Almost all of the pieces are in place now: we know that the support lists of all
-proofs of \(\agdacal{B}\;A\) are permutations of each other, and we know that
-\AgdaFunction{sort} returns a sorted permutation of its input.
+\ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{perm-bish}
 The final piece of the puzzle is the following:
-
-  \ExecuteMetaData[agda/Data/List/Sort.tex]{sorted-perm-eq}
-
+\ExecuteMetaData[agda/Data/List/Sort.tex]{sorted-perm-eq}
 If two sorted lists are both permutations of each other they must be equal.
 Connecting up all the pieces we get the following:
 
@@ -588,7 +572,7 @@ constant, and therefore can eliminate from within a truncation.
 The second component of the output pair (the cover proof) follows quite
 naturally from the definition of permutations.
 \end{proof}
-To the best of our knowledge, this is the first explicit proof of this theorem.
+
 \paragraph{Restrictiveness}
 So far our explorations into finiteness predicates have pushed us in the
 direction of ``less informative'': however, as mentioned in the introduction, we
@@ -597,17 +581,15 @@ Since split enumerability and manifest Bishop finiteness imply each other we
 know that there can be no type which satisfies one but not the other.
 We also know that manifest Bishop finiteness implies cardinal finiteness, but we
 do \emph{not} have a function in the other direction:
-\begin{agdalisting}\label{c-to-b}
+\begin{equation}\label{c-to-b}
   \(\agdacal{C}\;A\rightarrow\agdacal{B}\;A\)
-\end{agdalisting} \todo{Solve the mystery of the mathcal difference for C and B}
+\end{equation}
 So the question arises naturally: is there a cardinally finite type which is
 \emph{not} manifest Bishop finite?
 
-It turns out the answer is no!
+The answer is no.
 The proof of this fact is relatively short:
-\begin{agdalisting}\label{no-gap-card-bishop}
-  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{no-gap-card-bishop}
-\end{agdalisting}
+\ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{no-gap-card-bishop}
 We can apply the function of type \(\agdacal{B}\;A\rightarrow\agdabot\)
 (i.e. \(\AgdaFunction{\(\neg\)}\;\agdacal{B}\;A\)) to the value of type
 \(\AgdaDatatype{\(\lVert\)}\;\agdacal{B}\;A\;\AgdaDatatype{\(\rVert\)}\) (i.e.
@@ -616,15 +598,6 @@ proposition.
 This tells us that manifest bishop finiteness, cardinal finiteness, and split
 enumerability all refer to the same class of types.
 
-Interestingly, while we cannot construct a function with the type in
-\Cref{c-to-b}, it does exist \emph{classically}.
-In fact we can derive it from \Cref{no-gap-card-bishop} using
-the classical monad we developed in the introduction, since
-\Cref{no-gap-card-bishop} is actually equivalent to classical
-implication.
-
-  \ExecuteMetaData[agda/Snippets/Classical.tex]{classical-impl}
-
 \subsection{Manifest Enumerability}\label{manifest-enumerability}
 Given that we have just proven that all of our finiteness predicates apply to
 the same types, the natural next step is to try find a predicate which applies
@@ -632,69 +605,56 @@ to a different class of types.
 Let's first talk about what this new class of types might look like:
 what we're looking for is a type which is in some sense finite, but doesn't
 conform to any of the predicates we've seen so far.
-The \emph{circle} (Listing~\ref{circle-def}) is such a type.
+The \emph{circle} is such a type.
+\ExecuteMetaData[agda/Snippets/Circle.tex]{circle-def}
 The thing that this type has which precludes it from being, say, split
 enumerable, is its \emph{higher homotopy structure}.
-
-\begin{marginagdalisting}{The Circle}\label{circle-def}
-  \ExecuteMetaData[agda/Snippets/Circle.tex]{circle-def}
-\end{marginagdalisting}
-
 
 So far we have seen three levels of homotopy structure: the contractions
 (\Cref{isContr}), the propositions (\Cref{isProp}), and the sets
 (\Cref{isSet}).
-You may have noticed the pattern that each new level is generated by saying its
+Notice the pattern: each new level is generated by saying its
 paths are members of the previous level; if we apply that pattern again, we get
 to the next homotopy level: the groupoids.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Snippets/Introduction.tex]{isGroupoid}
-\end{agdalisting}
+\ExecuteMetaData[agda/Snippets/Introduction.tex]{isGroupoid}
 These types do not necessarily have unique identity proofs: there is more than
-one value which can inhabit the type \agdaequiv{x}{y}.
+one value which can inhabit the type $x \; \agdaequiv \; y$.
 The circle is one of the simplest examples of non-set groupoids: the constructor
 \AgdaInductiveConstructor{loop} is the extra path in the type which isn't the
 identity path.
 
-We now need to recall two facts: first, Hedberg's theorem tells us that every
-discrete type is a set.
-Second, every finiteness predicate we've seen thus far implies decidable
+Is the circle finite?
+According to the finiteness predicates we have seen so far, it is not.
+Recall that Hedberg's theorem says every discrete type is a set, and
+every finiteness predicate we've seen implies decidable
 equality.
-From this it's clear that all of the previous predicates are restricted to sets,
-and can't include types like the circle.
 
-But the type certainly \emph{seems} finite!
+But this type is certainly finite in some other sense.
 It has finitely many points, for instance.
-In order to explore the ``restrictiveness'' axis in
-\Cref{finite-classification}, then, we'll need to construct a predicate
-which admits the circle.
+To complete the ``restrictiveness'' axis in \Cref{finite-classification}, we
+need a predicate which admits the circle.
 Manifest enumerability is one such predicate.
 \begin{definition}[Manifest Enumerability]
   Manifest enumerability is an enumeration predicate like Bishop finiteness or
   split enumerability with the only difference being a propositionally truncated
   membership proof.
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable/Container.tex]{manifest-enum-def}
-  
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable/Container.tex]{manifest-enum-def}
 \end{definition}
-This predicate is novel, to the best of our knowledge.
 
 It might not be immediately clear why this definition of enumerability allows
 the circle to conform while the others do not.
-The crux of the issue was that the cover proofs of the previous definitions
-didn't just tell us that some element was in the support list, they told us
+The crux of the issue was that the membership proofs of the previous definitions
+didn't just prove that some element was in the support list, they revealed
 \emph{where} it was in the support list.
-From the position we were able to derive decidable equality: that position is
-precisely what's hidden in manifest enumerability.
+This position information allows the derivation of decidable equality, and this
+position is what is erased in manifest enumerability.
 
 And indeed this means that the circle is manifestly enumerable.
+\ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{circle-is-manifest-enum}
 
-  \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{circle-is-manifest-enum}
-
-We use a lemma here, proven in the Cubical Agda library, that
+This uses a lemma, proven in the Cubical Agda library, that
 \AgdaDatatype{S\(^1\)} is \emph{connected}:
-
-  \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{s1-connected}
+\ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{s1-connected}
 
 \paragraph{Surjections}
 We already saw that split enumerability was the listed form of a split
@@ -705,23 +665,20 @@ In the presence of higher homotopies than sets, split surjections are actually
 And we are most certainly in the presence of higher homotopies: just moments ago
 we were introduced to the circle.
 In these cases, the following definition of surjections is
-preferred~\cite[definition 4.6.1]{hottbook}:
-\begin{agdalisting}\label{surj-eqn}
-  \begin{multicols}{2}
-    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective} \columnbreak
-    \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjection}
-  \end{multicols}
-\end{agdalisting}
+preferred~\citep[definition 4.6.1]{hottbook}:
+\begin{multicols}{2}
+  \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective} \columnbreak
+  \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjection}
+\end{multicols}
 
 Much in the same way that split enumerability were split surjections, our new
 predicate of manifest enumerability corresponds to the proper surjections.
 \begin{lemma}
   Manifest enumerability is equivalent to a surjection from a finite prefix of
   the natural numbers.
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{manifest-enum-surj}
-  
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{manifest-enum-surj}
 \end{lemma}
+
 \paragraph{Relation To Split Enumerability}
 It is trivially easy to construct a proof that any split enumerable type is
 manifest enumerable: we simply truncate the membership proof.
@@ -744,15 +701,14 @@ and only the return type of the cover proof needs to change: from
 to \(x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\).
 
 That can be accomplished with the help of the following function:
-\begin{agdalisting}
-  \ExecuteMetaData[agda/HITs/PropositionalTruncation/Properties.tex]{recompute}
-\end{agdalisting}
+\ExecuteMetaData[agda/HITs/PropositionalTruncation/Properties.tex]{recompute}
 Given a decision procedure for some type, and a propositionally truncated value
 of that type, we can construct an element of the type.
 
 In the case of \(x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\) we can construct a
 decision procedure for membership of a list, since we already have decidable
 equality on the elements of the list, proving our obligation.
+
 \subsection{Kuratowski Finiteness}\label{kuratowski}
 We now finally arrive at the most important definition of finiteness: Kuratowski
 finiteness.
@@ -761,9 +717,7 @@ doesn't involve lists, for instance), but it plays a much larger role in the
 literature on finiteness predicates than, say, manifest enumerability.
 
 We start with the definition of Kuratowski-finite subsets.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Definition.tex]{kuratowski-def}
-\end{agdalisting}
+\ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Definition.tex]{kuratowski-def}
 The first two constructors are point constructors, giving ways to create
 values of type \(\agdacal{K}\;A\).
 They are also recognisable as the two constructors for finite lists, a type
@@ -788,9 +742,7 @@ Other definitions of \(\agdacal{K}\) exist (such as the one in
 the free join semilattice more obvious.
 We have included such a definition in our formalisation, and proven it
 equivalent to the one above.
-
-  \ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Direct.tex]{direct-def}
-
+\ExecuteMetaData[agda/Algebra/Construct/Free/Semilattice/Direct.tex]{direct-def}
 
 Next, we need a way to say that an entire type is Kuratowski finite.
 For that, we will need to define membership of \(\agdacal{K}\).
@@ -809,9 +761,7 @@ This gives us enough to define Kuratowski finiteness.
 \begin{definition}[Kuratowski Finiteness]
   A type is Kuratowski finite if there exists a Kuratowski-finite subset of that
   type which contains every element of the type.
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-finite-def}
-  
+  \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-finite-def}
 \end{definition}
 
 While Kuratowski finiteness is something of the standard formal definition of
@@ -822,11 +772,9 @@ different style of proof to reason about.
 As such, we want to get \emph{away} from Kuratowski finiteness as quickly as
 possible.
 To do so we use the following lemma:
-\begin{lemma} \label{manifest-enum-kuratowski}
+\begin{lemma}\label{manifest-enum-kuratowski}
   Kuratowski finiteness is equivalent to truncated manifest enumerability.
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{manifest-enum-kuratowski}
-  
+  \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{manifest-enum-kuratowski}
 \end{lemma}
 \begin{proof}
   This proof is constructed by providing a pair of functions, to and from each
@@ -846,9 +794,7 @@ sets.
 Under the hood, however, we will really be working with cardinal finite sets.
 We can do this in a fully rigorous way because
 \Cref{manifest-enum-kuratowski} allows us to prove the following:
-\begin{agdalisting}\label{cardinal-kuratowski}
-  \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{card-iso-kuratowski}
-\end{agdalisting}
+\ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{card-iso-kuratowski}
 
 %%% Local Variables:
 %%% mode: latex

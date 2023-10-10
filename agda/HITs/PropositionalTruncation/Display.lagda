@@ -9,7 +9,7 @@ import Cubical.HITs.PropositionalTruncation as Cubical
 
 \end{code}
 %<*rec-prop-trunc>
-\begin{code}
+\begin{code}[number=elim-prop]
 rec : isProp B → (A → B) → ∥ A ∥ → B
 \end{code}
 %</rec-prop-trunc>

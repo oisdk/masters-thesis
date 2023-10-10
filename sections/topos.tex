@@ -1,4 +1,4 @@
-\section{Topos} \label{topos}
+\section{Topos}\label{topos}
 In this subsection we will examine the categorical interpretation of finite sets.
 In particular, we will prove that discrete Kuratowski finite types form a
 \(\Pi\)-pretopos.
@@ -35,24 +35,17 @@ higher homotopy in HoTT types, we have
 to restrict the type of arrows to just the sets.
 This notion: that of a category with all the usual laws such that arrows are a
 set, is called a \emph{precategory}.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Categories.tex]{precategory}
-\end{agdalisting}
+\ExecuteMetaData[agda/Categories.tex]{precategory}
 We will use long arrows to refer to morphisms within a category:
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Categories.tex]{morph-arrow}
-\end{agdalisting*}
+\ExecuteMetaData[agda/Categories.tex]{morph-arrow}
 
 From here, we can define a notion of isomorphisms.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Categories.tex]{isomorphism}
-\end{agdalisting}
+\ExecuteMetaData[agda/Categories.tex]{isomorphism}
 It's a condition on this type which separates the precategories from the
 categories: if it satisfies a form of univalence, it the precategory is a full
 category.
-\begin{agdalisting}
-  \ExecuteMetaData[agda/Categories.tex]{cat-univalence}
-\end{agdalisting}
+\ExecuteMetaData[agda/Categories.tex]{cat-univalence}
+
 \subsection{The Category of Sets}
 Next we'll look at how to construct the category of sets (in the HoTT sense).
 Much of this work comes directly from \citet{rijkeSetsHomotopyType2015} and
@@ -65,9 +58,8 @@ We have provided in the formalisation a proof that sets in CuTT form a
 \citet{rijkeSetsHomotopyType2015}; our contribution is simply the formalisation.
 
 The objects are represented by a \(\Sigma\):
-\begin{agdalisting*}
-  \ExecuteMetaData[agda/Snippets/Category.tex]{hset}
-\end{agdalisting*}
+\ExecuteMetaData[agda/Snippets/Category.tex]{hset}
+
 This will be quite similar to our objects for finite sets.
 
 Since sets in HoTT don't form a topos, there are quite a few smaller lemmas we
@@ -97,18 +89,18 @@ cases for free.
 
 \begin{lemma} \label{split-enum-sigma}
   Split enumerability is closed under \(\Sigma\).
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{split-enum-sigma}
-  \end{agdalisting*}
+  
 \end{lemma}
 \begin{proof}
   Our task is to construct the two components of the output pair: the support
   list, and the cover proof.
   We'll start with the support list: this is constructed by taking the Cartesian
   product of the input support lists.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{sup-sigma}
-  \end{agdalisting*}
+  
   We use do notation here because we're working the list monad: this applies the
   latter function (\(ys\)) to every element of the list \(xs\), and concatenates
   the results.
@@ -132,9 +124,9 @@ furthermore of all the previous closure proofs.
 \begin{theorem} \label{split-enum-pi}
   Split enumerability is closed under dependent functions
   (\(\Pi\)-types).
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{pi-clos}
-  \end{agdalisting*}
+  
 \end{theorem}
 \begin{proof}
   Let \(A\) be a split enumerable type, and \(U\) be a type family from \(A\),
@@ -154,13 +146,13 @@ furthermore of all the previous closure proofs.
   \end{equation*}
   
   We then define the type of \(n\)-tuples over some type family.
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-def}
-  \end{agdalisting*}
+  
   We can show that this type is equivalent to functions (proven in our formalisation):
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Data/Tuple/UniverseMonomorphic.tex]{tuple-iso}
-  \end{agdalisting*}
+  
   And therefore we can simplify again our goal to the following:
   \begin{equation*}
     \frac{
@@ -188,13 +180,13 @@ Non-dependent operators like \AgdaFunction{\(\times\)},
 straightforward: since \(\AgdaDatatype{\ensuremath{\lVert\_\rVert}}\) forms a
 monad, we can apply \(n\)-ary functions to values inside it, combining them
 together.
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{times-clos-sig}
-\end{agdalisting*}
+
 Into a truncated context:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{times-clos-impl}
-\end{agdalisting*}
+
 
 
 Unfortunately, for the dependent type formers like \(\Sigma\) and \(\Pi\), the
@@ -313,9 +305,9 @@ We can actually show that the ``subset'' notion we just defined does in fact
 classify monomorphisms in sets in HoTT (in fact directly through univalence),
 but at this point we run into our one and only size problem in this paper.
 The actual object corresponding to the subobject classifier is the following:
-\begin{agdalisting*}
+
   \ExecuteMetaData[agda/Snippets/Topos.tex]{prop-univ}
-\end{agdalisting*}
+
 The problem here, crucially, is that the universe level of this type is one
 higher than the universe level of the types it bounds.
 In other words, this is \emph{not} an object in our \(\Pi\)-pretopos of sets,
@@ -327,9 +319,9 @@ which does \emph{not} imply the paradox: propositional resizing.
 \begin{definition}[Propositional Resizing]
   The axiom of propositional resizing states that the following two types, for
   any universe level \(u\), are equivalent:
-  \begin{agdalisting*}
+  
     \ExecuteMetaData[agda/Snippets/Topos.tex]{prop-resize}
-  \end{agdalisting*}
+  
 \end{definition}
 If propositional resizing holds, then we \emph{can} in fact construct a
 subobject classifier, for both sets and finite sets. \todo{Mention lem?}

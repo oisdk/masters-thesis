@@ -39,7 +39,7 @@ A ↠! B = Σ (A → B) SplitSurjective
 _↠_ : Type a → Type b → Type (a ℓ⊔ b)
 \end{code}
 %<*surjection>
-\begin{code}
+\begin{code}[number=surj-eqn]
 A ↠ B = Σ (A → B) Surjective
 \end{code}
 %</surjection>

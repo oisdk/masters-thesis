@@ -76,7 +76,7 @@ open import Relation.Nullary.Discrete.Properties
 𝒞⇔𝒦×Discrete :
 \end{code}
 %<*card-iso-kuratowski>
-\begin{code}
+\begin{code}[number=card-iso-kuratowski]
   𝒞 A ⇔ 𝒦ᶠ A × Discrete A
 \end{code}
 %</card-iso-kuratowski>

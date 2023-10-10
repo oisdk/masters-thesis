@@ -6,7 +6,7 @@ module Snippets.Circle where
 open import Prelude
 \end{code}
 %<*circle-def>
-\begin{code}
+\begin{code}[number=circle-def]
 data S¹ : Type₀ where
   base  : S¹
   loop  : base ≡ base

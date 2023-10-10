@@ -27,7 +27,7 @@ open import Data.Fin
 \end{code}
 %</cardinal-def>
 %<*no-gap-card-bishop>
-\begin{code}
+\begin{code}[number=no-gap-card-bishop]
 ¬⟨𝒞⋂ℬᶜ⟩ : ¬ Σ[ A ⦂ Type a ] 𝒞 A × ¬ ℬ A
 ¬⟨𝒞⋂ℬᶜ⟩ (_ , c , ¬b) = rec isProp⊥ ¬b c
 \end{code}
