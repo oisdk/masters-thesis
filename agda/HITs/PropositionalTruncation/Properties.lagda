@@ -12,11 +12,11 @@ refute-trunc = rec isProp⊥
 %<*recompute>
 \begin{code}
 recompute : Dec A → ∥ A ∥ → A
-recompute (yes p)  _  = p
-recompute (no ¬p)  p  = ⊥-elim (rec isProp⊥ ¬p p)
 \end{code}
 %</recompute>
 \begin{code}
+recompute (yes p)  _  = p
+recompute (no ¬p)  p  = ⊥-elim (rec isProp⊥ ¬p p)
 
 open import HITs.PropositionalTruncation.Sugar
 

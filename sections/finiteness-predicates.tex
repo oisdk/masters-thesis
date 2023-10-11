@@ -136,20 +136,20 @@ Luckily, the identity function is a split surjection, so this holds.
 
 \paragraph{Decidable Equality}
 All split enumerable types are \emph{discrete}: they have decidable equality. 
-\begin{multicols}{2} 
+\begin{paracol}{2} 
 \ExecuteMetaData[agda/Relation/Nullary/Discrete/Base.tex]{discrete-def}
-\columnbreak%
+\switchcolumn%
 \ExecuteMetaData[agda/Snippets/Dec.tex]{dec-def}
-\end{multicols}
+\end{paracol}
 \begin{lemma}\label{split-enum-discrete}
   Split enumerability implies decidable equality.
 \end{lemma}
 \begin{proof}
   We will use the following definition of injections for this proof:
-  \begin{multicols}{2}
-    \ExecuteMetaData[agda/Function/Injective/Base.tex]{injective} \columnbreak%
+  \begin{paracol}{2}
+    \ExecuteMetaData[agda/Function/Injective/Base.tex]{injective}\switchcolumn%
     \ExecuteMetaData[agda/Function/Injective/Base.tex]{injection}
-  \end{multicols}
+  \end{paracol}
 
   Any type which injects into a discrete type is itself discrete:
   \ExecuteMetaData[agda/Function/Injective/Properties.tex]{inj-discrete}
@@ -257,10 +257,11 @@ disguise.
 We will now see that manifest Bishop finiteness is in fact an \emph{equivalence}
 in disguise.
 We define equivalences as contractible maps \cite[definition 4.4.1]{hottbook}:
-    \begin{multicols}{2}
-      \ExecuteMetaData[agda/Snippets/Equivalence.tex]{is-equiv-def} \columnbreak
+    \begin{paracol}{2}
+      \ExecuteMetaData[agda/Snippets/Equivalence.tex]{is-equiv-def}\switchcolumn%
       \ExecuteMetaData[agda/Snippets/Equivalence.tex]{equiv-def}
-    \end{multicols}
+      \synccounter{equation}%
+    \end{paracol}
 \begin{lemma}\label{bishop-equiv}
   Manifest bishop finiteness is equivalent to an equivalence to a finite prefix
   of the natural numbers.
@@ -384,23 +385,8 @@ eliminator in \Cref{elim-prop}.
 Our task, in other words, is to prove the following:
 \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{is-prop-discrete}
 
-To show that this type is a proposition we must show that any two given members
-of the type are equal, i.e. we are given two proofs of decidable equality on
-\(A\) and we must show that they are equal.
-Remember that \(\AgdaFunction{Discrete}\;A\) is a function of two arguments
-returning a \AgdaDatatype{Dec} of whether those two arguments are equal or not.
-By function extensionality, to prove that that is a proposition we have to prove
-that \(\AgdaDatatype{Dec}\;(x\;\agdaequiv\;{y})\) is a proposition.
-This proof requires that we show that the payload of each of the constructors
-(\AgdaInductiveConstructor{yes} and \AgdaInductiveConstructor{no}) are
-propositions.
-\AgdaInductiveConstructor{no}'s payload is
-\(x\;\agdaequiv\;{y}\rightarrow\agdabot\), which is a
-proposition because \agdabot\; is a proposition.
-
-\AgdaInductiveConstructor{yes} is a little more interesting: its payload is
-$x\;\agdaequiv\;y$.
-How can we prove that the path between \(x\) and \(y\) is a proposition?
+To show that $\AgdaDatatype{Dec}\;(x\; \agdaequiv \; y)$ is a proposition it is
+sufficient to show that $x \; \agdaequiv \; y$ is a proposition.
 It turns out that there is a class of types for which all paths are
 propositions: the \emph{sets}.
 \ExecuteMetaData[agda/Snippets/Introduction.tex]{isSet}
@@ -411,10 +397,6 @@ More importantly, there is an important theorem relating to sets which
 This tells us that any type with decidable equality is a set.
 \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{discrete-isset}
 And of course we know that \(A\) here has decidable equality.
-
-This suffices to prove that decidable equality is itself a proposition, and
-therefore that we can apply \Cref{elim-prop} and the proof that bishop
-finiteness implies decidable equality to cardinal finiteness, proving our goal.
 \end{proof}
 
 The next thing we can derive from underneath the truncation in cardinal
@@ -426,9 +408,8 @@ Instead we will use the following:
 \ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc-set}
 This says that we can eliminate into a set as long as the function we use
 doesn't care about which value it's given: formally, \(f\) in this example has
-to be ``coherently constant'' \citep{krausGeneralUniversalProperty2015}.
+to be ``coherently constant''~\citep{krausGeneralUniversalProperty2015}.
 
-With that, we can move on to the proof:
 \begin{lemma}\label{card-finite-cardinality}
   Given a cardinally finite type, we can derive the type's cardinality, as well
   as a propositionally truncated proof of equivalence with \AgdaDatatype{Fin}s of
@@ -499,27 +480,13 @@ It's the other direction which presents a difficulty:
 Our strategy will be to \emph{sort} the support list of the proof for Bishop
 finiteness, and then prove that the sorting function is coherently constant,
 thereby satisfying the eliminator in \Cref{elim-prop-coh}.
-Here is the sorting function:
-
-\begin{minipage}{\linewidth}
-\begin{multicols}{2}
-  
-    \ExecuteMetaData[agda/Data/List/Sort.tex]{insert}
-   \columnbreak \vfill \null \vfill
-  
-    \ExecuteMetaData[agda/Data/List/Sort.tex]{insertion-sort}
-   \vfill \null
-\end{multicols}
-\end{minipage} \noindent%
-This does produce a sorted list, which is a permutation of the input.
-\begin{multicols}{2}
-  
-    \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-sorts}
-   \columnbreak
-  
-    \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-perm}
-  
-\end{multicols} \vspace{-\baselineskip}
+We have implemented insertion sort as $\AgdaFunction{sort}$, and proven that it
+produces a sorted list which is a permutation of its input.
+\begin{paracol}{2}
+  \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-sorts}
+  \switchcolumn%
+  \ExecuteMetaData[agda/Data/List/Sort.tex]{sort-perm}
+\end{paracol}
 \AgdaFunction{Sorted} is a predicate
 enforcing that the given list is sorted, and
 \AgdaFunction{\(\leftrightsquigarrow\)} is a permutation relation between two
@@ -573,12 +540,10 @@ This tells us that manifest bishop finiteness, cardinal finiteness, and split
 enumerability all refer to the same class of types.
 
 \subsection{Manifest Enumerability}\label{manifest-enumerability}
-Given that we have just proven that all of our finiteness predicates apply to
-the same types, the natural next step is to try find a predicate which applies
-to a different class of types.
-Let's first talk about what this new class of types might look like:
-what we're looking for is a type which is in some sense finite, but doesn't
-conform to any of the predicates we've seen so far.
+All of the finiteness predicates seen so far apply to the same types.
+Other than obviously non-finite types (like {\Nat}), there are some exotic types
+which do not conform to any of the previous predicates, but are in some sense
+finite.
 The \emph{circle} is such a type.
 \ExecuteMetaData[agda/Snippets/Circle.tex]{circle-def}
 The thing that this type has which precludes it from being, say, split
@@ -632,24 +597,20 @@ This uses a lemma, proven in the Cubical Agda library, that
 
 \paragraph{Surjections}
 We already saw that split enumerability was the listed form of a split
-surjection: what we didn't explain was why the word ``split'' was placed before
-surjection.
-In the presence of higher homotopies than sets, split surjections are actually
-\emph{not} a satisfactory definition of surjection.
-And we are most certainly in the presence of higher homotopies: just moments ago
-we were introduced to the circle.
-In these cases, the following definition of surjections is
-preferred~\citep[definition 4.6.1]{hottbook}:
-\begin{multicols}{2}
-  \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective} \columnbreak
+surjection, however, in the presence of higher homotopies than sets, there is a
+distinction between split surjections and surjections.
+The following is the definition of a surjection which is not necessarily
+split~\citep[definition 4.6.1]{hottbook}:
+\begin{paracol}{2}
+  \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective}\switchcolumn%
   \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjection}
-\end{multicols}
+  \synccounter{equation}%
+\end{paracol}
 
 Much in the same way that split enumerability were split surjections, our new
 predicate of manifest enumerability corresponds to the proper surjections.
 \begin{lemma}
-  Manifest enumerability is equivalent to a surjection from a finite prefix of
-  the natural numbers.
+  Manifest enumerability is equivalent to a surjection from $\AgdaDatatype{Fin}$.
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestEnumerable.tex]{manifest-enum-surj}
 \end{lemma}
 
@@ -658,30 +619,14 @@ It is trivially easy to construct a proof that any split enumerable type is
 manifest enumerable: we simply truncate the membership proof.
 Going the other way is more difficult, as we need to extract the membership
 proof from under a truncation.
-We do know what we need, however: the key difference between manifest
-enumerability and split enumerability is that the latter implied decidable
-equality.
-So that's the missing piece we should require in order to go from one to the
-other:
+However, the function $\AgdaFunction{recompute}$ can do exactly this, when the
+truncated type is decidable:
+\ExecuteMetaData[agda/HITs/PropositionalTruncation/Properties.tex]{recompute}
+And the membership proof in question is indeed decidable, because of the
+presence of decidable equality.
 \begin{lemma}\label{manifest-enum-to-split-enum}
   A manifestly enumerable type with decidable equality is split enumerable.
 \end{lemma}
-
-Now that we know what extra bit of information we are allowed use in this proof,
-the path forward becomes a little more clear.
-In terms of the actual conversion function, the support list will stay the same,
-and only the return type of the cover proof needs to change: from
-\(\AgdaDatatype{\(\lVert\)}\;x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\;\AgdaDatatype{\(\rVert\)}\)
-to \(x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\).
-
-That can be accomplished with the help of the following function:
-\ExecuteMetaData[agda/HITs/PropositionalTruncation/Properties.tex]{recompute}
-Given a decision procedure for some type, and a propositionally truncated value
-of that type, we can construct an element of the type.
-
-In the case of \(x\;\AgdaFunction{\(\in\)}\;\mathit{xs}\) we can construct a
-decision procedure for membership of a list, since we already have decidable
-equality on the elements of the list, proving our obligation.
 
 \subsection{Kuratowski Finiteness}\label{kuratowski}
 We now finally arrive at the most important definition of finiteness: Kuratowski
