@@ -1,11 +1,22 @@
 \section{Finiteness Predicates}\label{finiteness-predicates}
 \input{figures/finite-classification}
-In this subsection, we will define and briefly describe each of the five predicates
-in \Cref{finite-classification}.
-As we will see, some predicates are too informative (they
-tell us more about the underlying type other than it just being finite), or too
-restrictive (they don't allow certain finite types to be classified as finite).
+This section will define and describe each of the five predicates in
+\Cref{finite-classification}.
+These predicates are classified along two axes: restrictiveness, and
+informativeness.
+Restrictiveness refers to how many types are able to satisfy the predicate:
+there are fewer Cardinal finite (\Cref{cardinal-finiteness}) types than there
+are Kuratowski (\Cref{kuratowski}).
+Informativeness refers to how much information the predicate ``leaks''; a proof
+of Manifest Bishop finiteness (\Cref{manifest-bishop-finiteness}), for instance,
+reveals an ordering on the underlying set.
+Each arrow in~\Cref{finite-classification} indicates an implication proof in the
+formalisation; for instance, when discreteness is provided we can go from
+Manifest enumerable finiteness~\Cref{manifest-enumerability} to split
+enumerable~\Cref{split-enumerability}.
+
 \subsection{Split Enumerability}\label{split-enumerability}
+The first finiteness predicate we will look at is split enumerability.
 A split enumerable type is a type for which all of its elements can
 be listed.
 \begin{definition}[Split Enumerable Set]\label{split-enum-def}
@@ -19,10 +30,8 @@ be listed.
   \citet{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
-This predicate is simple and useful, but we will see later on how it is perhaps
-a little imprecise.
-Before we dive in to exploring the predicate itself, though, we will need to
-explain some of the terms we used in its definition.
+In this definition we refer to lists, and their membership: 
+
 \paragraph{What is a List?}
 In this paper we prefer a slightly unusual definition for the type of lists:
 \ExecuteMetaData[agda/Container/List.tex]{list-def}
