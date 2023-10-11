@@ -53,7 +53,7 @@ Here, \(\AgdaDatatype{⊎}\) is the disjoint union of two types,
 $\AgdaDatatype{\ensuremath{\bot}}$ is the type with no inhabitants, and
 $\AgdaDatatype{\ensuremath{\top}}$ is the type with one inhabitant.
 As a result, the type $\AgdaDatatype{Fin}\;\AgdaBound{n}$ has precisely
-$\Agdabound{n}$ inhabitants.
+$\AgdaBound{n}$ inhabitants.
 It is a representation of a finite prefix of the natural numbers.
 \begin{equation*}
   \AgdaDatatype{Fin}\;\AgdaBound{n} \simeq \left\{ m \; \vert \; 0 \leq m \lt n   \right\}
@@ -167,10 +167,9 @@ All split enumerable types are \emph{discrete}: they have decidable equality.
 \end{proof}
 
 \subsection{Manifest Bishop Finiteness}\label{manifest-bishop-finiteness}
-We mentioned in the introduction that occasionally in constructive mathematics
-proofs will contain ``too much'' information.
-With split enumerability we can see an instance of this.
-Consider the following proof of the finiteness of bool:
+As mentioned in the introduction, occasionally in constructive mathematics
+proofs will contain information superfluous to the proposition in question.
+For instance, in 
 \begin{agdalisting}\label{op-slop}
   \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop}
 \end{agdalisting}

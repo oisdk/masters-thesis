@@ -63,9 +63,7 @@ module _ {a} {A : Type a} where
 %<*split-is-discrete>
 \begin{code}
  ℰ!⇒Discrete : ℰ! A → Discrete A
- ℰ!⇒Discrete  = flip Discrete-distrib-surj discreteFin
-              ∘ snd
-              ∘ ℰ!⇔Fin↠! .fun
+ ℰ!⇒Discrete = flip Discrete-distrib-surj discreteFin ∘ snd ∘ ℰ!⇔Fin↠! .fun
 \end{code}
 %</split-is-discrete>
 \begin{code}

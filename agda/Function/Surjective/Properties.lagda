@@ -18,15 +18,15 @@ open import Function
 %<*surj-to-inj>
 \begin{code}
 surj-to-inj : (A ↠! B) → (B ↣ A)
+\end{code}
+%</surj-to-inj>
+\begin{code}
 surj-to-inj (f , surj) .fst x = surj x .fst
 surj-to-inj (f , surj) .snd x y f⁻¹⟨x⟩≡f⁻¹⟨y⟩ =
   x                ≡˘⟨ surj x .snd ⟩
   f (surj x .fst)  ≡⟨ cong f f⁻¹⟨x⟩≡f⁻¹⟨y⟩ ⟩
   f (surj y .fst)  ≡⟨ surj y .snd ⟩
   y ∎
-\end{code}
-%</surj-to-inj>
-\begin{code}
 \end{code}
 %<*discrete-surj>
 \begin{code}
