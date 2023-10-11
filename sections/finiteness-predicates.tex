@@ -56,7 +56,7 @@ As a result, the type $\AgdaDatatype{Fin}\;\AgdaBound{n}$ has precisely
 $\AgdaBound{n}$ inhabitants.
 It is a representation of a finite prefix of the natural numbers.
 \begin{equation*}
-  \AgdaDatatype{Fin}\;\AgdaBound{n} \simeq \left\{ m \; \vert \; 0 \leq m \lt n   \right\}
+  \AgdaDatatype{Fin}\;\AgdaBound{n} \simeq \left\{ m \; \vert \; 0 \leq m < n   \right\}
 \end{equation*}
 
 With this definition in hand, the container-based definition of lists 
@@ -170,16 +170,14 @@ All split enumerable types are \emph{discrete}: they have decidable equality.
 As mentioned in the introduction, occasionally in constructive mathematics
 proofs will contain information superfluous to the proposition in question.
 For instance, in 
-\begin{agdalisting}\label{op-slop}
-  \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop}
-\end{agdalisting}
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop}
 There is an extra \AgdaInductiveConstructor{false} at the end of the support
 list.
 There is ``slop'' in the type of split enumerability: there are more distinct
 values than there are \emph{usefully} distinct values.
 To reconcile this, we will disallow duplicates in the support list.
 
-To prohibit duplicates, we will insist that every
+A simple way to do this is to insist that every
 \emph{membership proof} must be unique.
 This would disallow a definition of \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\;
 \AgdaDatatype{Bool}\) with
@@ -266,28 +264,22 @@ We define equivalences as contractible maps \cite[definition 4.4.1]{hottbook}:
 \begin{lemma}\label{bishop-equiv}
   Manifest bishop finiteness is equivalent to an equivalence to a finite prefix
   of the natural numbers.
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv-type}
-  
-\end{lemma}
-\begin{proof} \let\qed\relax \vspace{-1\baselineskip}\phantom{Proof.} \\
-  \begin{minipage}[t]{.83\textwidth}\vspace{-1.25\baselineskip}
-    
-      \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv}
-    
-  \end{minipage}
-  \begin{minipage}[t]{.16\textwidth}
-
-    Def.~\ref{bish-def} (\AgdaDatatype{\ensuremath{\mathcal{B}}})     \\
-    Eqn.~\ref{uniq-memb-def} (\AgdaDatatype{\ensuremath{\in!}})       \\
-    Eqn.~\ref{container-membership} (\AgdaDatatype{\ensuremath{\in}}) \\
-    Eqn.~\ref{equiv-def} \\
-    Eqn.~\ref{list-def} ({\AgdaDatatype{List}}) \\
-    Eqn.~\ref{container-interp}  \\
-    Reassociation \\
-    Eqn.~\ref{equiv-def}
-  \end{minipage}
-\end{proof}
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv-type}
+\end{lemma}\noindent%
+\textsc{Proof.}\\
+\begin{minipage}[t]{.83\textwidth}\vspace{-1.25\baselineskip}
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv}
+\end{minipage}
+\begin{minipage}[t]{.16\textwidth}
+  Def.~\ref{bish-def} (\AgdaDatatype{\ensuremath{\mathcal{B}}})     \\
+  Eqn.~\ref{uniq-memb-def} (\AgdaDatatype{\ensuremath{\in!}})       \\
+  Eqn.~\ref{container-membership} (\AgdaDatatype{\ensuremath{\in}}) \\
+  Eqn.~\ref{equiv-def} \\
+  Eqn.~\ref{list-def} ({\AgdaDatatype{List}}) \\
+  Eqn.~\ref{container-interp}  \\
+  Reassociation \\
+  Eqn.~\ref{equiv-def}
+\end{minipage}
 
 This proof is almost identical to the proof for
 \Cref{split-enum-is-split-surj}: it reveals that

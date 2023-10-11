@@ -76,7 +76,7 @@ module _ where
  module BoolSlop where
 \end{code}
 %<*bool-slop>
-\begin{code}
+\begin{code}[number=op-slop]
    ℰ!⟨2⟩ : ℰ! Bool
    ℰ!⟨2⟩ .fst = [ false , true , false ]
    ℰ!⟨2⟩ .snd false  = 0  , refl
