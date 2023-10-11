@@ -30,8 +30,7 @@ insert x (y ∷ xs) with x ≤? y
 %<*insertion-sort>
 \begin{code}
 sort : List E → List E
-sort []        = []
-sort (x ∷ xs)  = insert x (sort xs)
+sort = foldr insert []
 \end{code}
 %</insertion-sort>
 \begin{code}

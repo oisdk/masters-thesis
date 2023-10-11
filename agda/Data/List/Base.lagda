@@ -49,7 +49,9 @@ map : (A → B) → List A → List B
 map f = foldr (λ x xs → f x ∷ xs) []
 
 take : ℕ → List A → List A
-take zero _ = []
-take (suc n) [] = []
-take (suc n) (x ∷ xs) = x ∷ take n xs
+take n xs = foldr f (const []) xs n
+  where
+  f : A → (ℕ → List A) → ℕ → List A
+  f x k zero = []
+  f x k (suc n) = x ∷ k n
 \end{code}

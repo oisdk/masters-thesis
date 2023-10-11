@@ -25,11 +25,10 @@ Before we dive in to exploring the predicate itself, though, we will need to
 explain some of the terms we used in its definition.
 \paragraph{What is a List?}
 In this paper we prefer a slightly unusual definition for the type of lists:
-\twocolcode
-{\ExecuteMetaData[agda/Container/List.tex]{list-def}}
-{\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}}
-This is the definition for a \emph{container} (\Cref{container-def}):
-effectively, the above definition says that ``Lists are a datatype whose shape
+\ExecuteMetaData[agda/Container/List.tex]{list-def}
+\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
+This is the definition of a list as a \emph{container} (\Cref{container-def}):
+effectively, it says that ``Lists are a datatype whose shape
 is given by the natural numbers, and which can be indexed by numbers smaller
 than its shape''.
 This definition is precisely

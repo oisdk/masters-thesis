@@ -8,17 +8,21 @@ with interesting properties~\citep{coquandConstructivelyFinite2010,
   firsovVariationsNoetherianness2016, fruminFiniteSetsHomotopy2018}.
 
 Part of the reason for different notions of finiteness in constructive
-mathematics is that constructive proofs tend to be ``leaky''; as mathematical
+mathematics is that constructive proofs are ``leaky''; as mathematical
 objects, they tend to reveal some information about \emph{how} they were proven,
 where a proof of a classical proposition only reveals that the proposition is
 true.
 Recent developments in type
 theory~\citep[in particular Cubical Agda][]{vezzosiCubicalAgdaDependently2019}
-have made constructions like propositional truncation more available, which
-allow constructive proofs to patch this ``leak''; rather than making classical
+have made constructions like propositional truncation available in proof
+assistants, which
+can be used to patch this ``leak''; rather than making classical
 and constructive proofs the same, however, this only makes their differences
 more subtle.
 
+This paper will catalogue five separate variants of finiteness in constructive
+mathematics, and use them to build an automated solver for propositions over a
+finite domain.
 All of our work will be formalised in Agda
 \citep{norellDependentlyTypedProgramming2008}, a
 dependently typed, pure, functional programming language which can be
@@ -103,88 +107,3 @@ using some or all of the supplied numbers which evaluates to the target.
     programming~\cite{birdCountdownCaseStudy2005}; our solver is the first 
     machine-checked solver, to the best of our knowledge.
 \end{description}
-
-\subsection{Homotopy Type Theory}
-HoTT is both a type theory and a foundational theory for mathematics.
-As a type theory it can be thought of as an alternative to things like
-Martin-Löf type theory; as a foundational theory it can be compared to other
-foundational theories like Zermelo–Fraenkel set theory.
-\begin{comment}
-\begin{definition}[ZFC]
-  Zermelo-Fraenkel set theory with choice is a foundational theory for
-  mathematics, which is based on set theory.
-  It is the most commonly-used foundational theory (although it is important to
-  stress that most modern mathematics is foundation-agnostic).
-
-  The Axiom of Choice is a non-constructive axiom which is independent of the
-  rest of Zermelo-Fraenkel set theory: when included the theory is often
-  abbreviated to ``ZFC''.
-
-  A full exploration of ZFC and its axioms is beyond the scope of this paper;
-  we will, see, however, a definition of the axiom of choice in CuTT
-  (\Cref{axiom-of-choice}).
-\end{definition}
-\end{comment}
-
-Central to the theory is the univalence axiom.
-This axiom states that isomorphism implies equality: more precisely, that
-``equivalence'' is equivalent to equality.
-We haven't defined equivalence yet (and we haven't defined equality rigorously
-yet), but the core thrust of the axiom is that it gives proofs of isomorphism
-all the power of proofs of equality.
-
-The other addition that HoTT gives to traditional type theory is that of Higher
-Inductive Types.
-Traditional inductive types are defined by listing their constructors: with HITs
-we can also list the equalities they must satisfy.
-The most obvious immediate use of this is quotient types,
-but in HoTT they can be used of for much more exotic constructions like the
-torus etc.
-
-Finally, we have to explain where Cubical Type Theory
-\citep{cohenCubicalTypeTheory2016} fits in.
-Strictly speaking in this paper we will not work directly in HoTT: we work
-instead in CuTT, which is very closely related, but not quite the same, as HoTT.
-CuTT's main departure from HoTT is in its representation of equalities, which it
-calls ``paths''.
-In HoTT equalities are an inductive type.
-In CuTT, paths behave like functions from the real line: an equality
-\(x \equiv y\) is a function which, when applied to \(0\), returns \(x\), and
-when applied to \(1\), returns \(y\).
-\begin{equation}
-\begin{aligned}
-  & e  :    & x \equiv y \\
-  & e(i) = & \begin{cases}
-    x, & i = 0 \\
-       & \vdots \\
-    y, & i = 1
-  \end{cases}
-\end{aligned}
-\end{equation}
-This different ``implementation'' of paths is central to how CuTT can give
-computational content to univalence, but it also slightly changes the way paths
-function.
-
-There is one crucial difference between the two theories: in CuTT the
-univalence ``axiom'' is in fact a theorem, with computational content.
-This means that univalence is not a built-in, assumed to be true, but instead
-it's actually derived from other axioms in the system.
-Practically speaking it means that univalence has computational content: i.e. if
-we see that two types are equal then we can actually derive the isomorphism that
-that equality implies.
-As we're using CuTT as a programming language (in the form of Cubical Agda
-\citep{vezzosiCubicalAgdaDependently2019}), this is an essential feature.
-It means that the proofs we write using univalence still correspond to programs
-which can be run.
-
-\footnotetext{
-  To be absolutely correct we should not say that CuTT implements HoTT, as the
-  two have some subtle differences.
-  While everything we can prove in HoTT can also be proven in CuTT,
-  it is not the case that one is a strict subset of the other.
-  CuTT has many of the same features of HoTT, like HITs and univalence, so
-  almost all of the theory of HoTT applies to both (and indeed almost all of the
-  univalent foundations program applies to both), but there are some slight
-  differences between the theories which mean that some proofs which are valid
-  HoTT are not valid in CuTT.
-}

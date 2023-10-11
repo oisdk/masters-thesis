@@ -40,13 +40,13 @@ transₚ xs↭ys ys↭zs x = Isomorphism.trans-⇔ (xs↭ys x) (ys↭zs x)
 
 consₚ : ∀ x {xs ys : List A} → xs ↭ ys → x ∷ xs ↭ x ∷ ys
 consₚ _ xs↭ys _ .fun       (f0   , x≡x )    = f0 , x≡x
-consₚ _ xs↭ys _ .fun       (fs n  , x∈xs)    = push (xs↭ys _ .fun (n , x∈xs))
+consₚ _ xs↭ys _ .fun       (fs n , x∈xs)    = push (xs↭ys _ .fun (n , x∈xs))
 consₚ _ xs↭ys _ .inv       (f0   , x≡x )    = f0 , x≡x
-consₚ _ xs↭ys _ .inv       (fs n  , x∈xs)    = push (xs↭ys _ .inv (n , x∈xs))
+consₚ _ xs↭ys _ .inv       (fs n , x∈xs)    = push (xs↭ys _ .inv (n , x∈xs))
 consₚ _ xs↭ys _ .leftInv   (f0   , x≡x)     = refl
-consₚ _ xs↭ys _ .leftInv   (fs n  , x∈xs) i  = push (xs↭ys _ .leftInv (n , x∈xs) i)
+consₚ _ xs↭ys _ .leftInv   (fs n , x∈xs) i  = push (xs↭ys _ .leftInv (n , x∈xs) i)
 consₚ _ xs↭ys _ .rightInv  (f0   , x≡x)     = refl
-consₚ _ xs↭ys _ .rightInv  (fs n  , x∈xs) i  = push (xs↭ys _ .rightInv (n , x∈xs) i)
+consₚ _ xs↭ys _ .rightInv  (fs n , x∈xs) i  = push (xs↭ys _ .rightInv (n , x∈xs) i)
 
 swapₚ-to : ∀ (x₁ x₂ : A) xs → x₁ ∷ x₂ ∷ xs ↝ x₂ ∷ x₁ ∷ xs
 swapₚ-to _ _ _ _ (f0 , x≡x₁) = fs f0 , x≡x₁
@@ -95,7 +95,7 @@ index-equality-preserved x xs ys p q xs↭ys ip≡iq =
   xs↭ys x .fun q .fst ∎
   where open import Path.Reasoning
 
-perm-inj : ∀ (x : A) xs ys n →
+perm-inj : ∀ (x : A) (xs ys : List A) (n : Fin (length xs)) →
          (xs↭ys : x ∷ xs ↭ x ∷ ys) →
          ∀ z
          (z∈ys : x ≡ z)
