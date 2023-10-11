@@ -30,22 +30,9 @@ be listed.
   \citet{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
-In this definition we refer to lists, and their membership: 
-
-\paragraph{What is a List?}
-In this paper we prefer a slightly unusual definition for the type of lists:
-\ExecuteMetaData[agda/Container/List.tex]{list-def}
-\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
-This is the definition of a list as a \emph{container} (\Cref{container-def}):
-effectively, it says that ``Lists are a datatype whose shape
-is given by the natural numbers, and which can be indexed by numbers smaller
-than its shape''.
-This definition is precisely
-equivalent to the usual inductive one.
+The usual definition of lists is as follows:
 \ExecuteMetaData[agda/Data/List/Base.tex]{list-def}
-In fact, we can \emph{prove} that these two representations of lists are equal.
-
-Containers themselves have the following definition:
+However, the predicate above uses a \emph{container}-based definition of lists.
 \begin{definition}[Containers]\label{container-def}
   A container \citep{abbottContainersConstructingStrictly2005} is a pair
   \(S , P\) where \(S\) is a type, the elements of which are called
@@ -55,10 +42,21 @@ Containers themselves have the following definition:
   \ExecuteMetaData[agda/Container.tex]{container-interp}
 \end{definition}
 
+Containers are a generic way to encode functors; while they can be cumbersome to
+use in practice, as a representation they are very flexible, and they will
+greatly simplify some proofs later on.
+Lists are encoded as a container like so:
+\ExecuteMetaData[agda/Container/List.tex]{list-def}
+\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
+Effectively, this says that ``Lists are a datatype whose shape
+is given by the natural numbers, and which can be indexed by numbers smaller
+than its shape''.
+This representation is isomorphic to the standard one.
+
 With containers we get a generic way to define ``membership'':\\
 \twocolcode
-{\ExecuteMetaData[agda/Container/Membership.tex]{membership-def}}
 {\ExecuteMetaData[agda/Snippets/Introduction.tex]{fiber}}
+{\ExecuteMetaData[agda/Container/Membership.tex]{membership-def}}
 Here we're using the homotopy-theory notion of a \AgdaDatatype{fiber} to define
 membership: a fiber for some function \(f\) and some point \(y\) in its codomain
 is a value \(x\) and a proof that \(f \; x \;\AgdaDatatype{≡}\;y\).
