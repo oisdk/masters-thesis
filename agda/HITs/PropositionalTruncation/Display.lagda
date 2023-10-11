@@ -14,7 +14,7 @@ rec : isProp B → (A → B) → ∥ A ∥ → B
 \end{code}
 %</rec-prop-trunc>
 %<*rec-prop-trunc-set>
-\begin{code}
+\begin{code}[number=elim-prop-coh]
 rec→set : isSet B → (f : A → B) → (∀ x y → f x ≡ f y) → ∥ A ∥ → B
 \end{code}
 %</rec-prop-trunc-set>

@@ -266,7 +266,8 @@ We define equivalences as contractible maps \cite[definition 4.4.1]{hottbook}:
   of the natural numbers.
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv-type}
 \end{lemma}\noindent%
-\textsc{Proof.}\\
+\textsc{Proof.}
+
 \begin{minipage}[t]{.83\textwidth}\vspace{-1.25\baselineskip}
   \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{bishop-is-equiv}
 \end{minipage}
@@ -288,26 +289,12 @@ relation-based ones.
 
 \subsection{Cardinal Finiteness}\label{cardinal-finiteness}
 While we have removed some of the unnecessary information from our finiteness
-predicates, one piece still remains.
-The two following proofs are both valid proofs of the finiteness of
-\(\AgdaDatatype{Bool}\), and both do not include any duplicates:
-
-\begin{minipage}{\textwidth}
-\begin{multicols}{2}
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-inst}
-   \columnbreak
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-rev}
-  
-\end{multicols}
-\end{minipage}
-Clearly they're not the same though: the order of their support lists differs.
-Each finiteness predicate so far has contained an \emph{ordering} of the
-underlying type.
+predicates, one piece still remains: the ordering.
+A proof of manifest bishop finiteness includes a total order on the underlying
+set.
 For our purposes, this is too much information: it means that when constructing
 the ``category of finite sets'' later on, instead of each type having one
-canonical representative, it will have \(n!\), where \(n\) is the cardinality of
+canonical representative, it will have $n!$ where $n$ is the cardinality of
 the type\footnotemark.
 
 \footnotetext{
@@ -318,7 +305,7 @@ the type\footnotemark.
   We do not explore this particular construction in any detail.
 }
 
-What we want is a proof of finiteness that is a proposition.
+What is needed is a proof of finiteness that is a proposition.
 \ExecuteMetaData[agda/Snippets/Introduction.tex]{isProp}
 The mere propositions are one homotopy level higher than the contractions
 (\Cref{isContr}), the types for which all values are equal to some value.
@@ -359,11 +346,8 @@ we can use things like do-notation.
 With this, we can define cardinal finiteness:
 \begin{definition}[Cardinal Finiteness]
   A type \(A\) is cardinally finite if there exists a propositionally truncated
-  proof that \(A\) is manifest Bishop finite or equivalent to a finite prefix of
-  the natural numbers.
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
-  
+  proof that \(A\) is manifest Bishop finite.
+  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
   This predicate is called Bishop finiteness in~\citet{fruminFiniteSetsHomotopy2018}.
 \end{definition}
 
@@ -436,12 +420,10 @@ finiteness implies decidable equality to cardinal finiteness, proving our goal.
 The next thing we can derive from underneath the truncation in cardinal
 finiteness is a natural number representing the actual cardinality of the finite
 type.
-Of course \Nat isn't a proposition, so the eliminator in
+Of course {\Nat} isn't a proposition, so the eliminator in
 equation~\ref{elim-prop} won't work for us here.
 Instead we will use the following:
-\begin{agdalisting}\label{elim-prop-coh}
-  \ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc-set}
-\end{agdalisting}
+\ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc-set}
 This says that we can eliminate into a set as long as the function we use
 doesn't care about which value it's given: formally, \(f\) in this example has
 to be ``coherently constant'' \citep{krausGeneralUniversalProperty2015}.
@@ -451,9 +433,7 @@ With that, we can move on to the proof:
   Given a cardinally finite type, we can derive the type's cardinality, as well
   as a propositionally truncated proof of equivalence with \AgdaDatatype{Fin}s of
   the same cardinality.
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinality-is-unique}
-  
+  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinality-is-unique}
 \end{lemma}
 \begin{proof}
   The high-level overview of our proof is as follows:
