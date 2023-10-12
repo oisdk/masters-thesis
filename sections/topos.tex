@@ -168,8 +168,7 @@ Interestingly, this is similar to an encoding of the axiom of choice.
     \left( (x : A) \rightarrow  \AgdaDatatype{\ensuremath{\lVert}}\; U(x) \;\AgdaDatatype{\ensuremath{\rVert}} \right) \rightarrow \AgdaDatatype{\ensuremath{\lVert}}\; (x : A) \rightarrow U(x) \;\AgdaDatatype{\ensuremath{\rVert}}
   \end{equation*}
 \end{definition}
-Luckily the axiom of choice \emph{does} hold for cardinally finite types,
-allowing us to prove the following:
+Luckily, choice does hold on finite types.
 \begin{lemma}
   The axiom of choice holds for finite sets.
   \begin{equation*}
@@ -197,8 +196,7 @@ allowing us to prove the following:
 \end{proof}
 This lemma is a well-known folklore theorem.
 
-This gets us all of the necessary closure proofs on \agdacal{C}, and as a result
-we know the following theorem.
+With the closure properties proven, the following theorem is complete:
 \begin{theorem}\label{kuratowski-topos}
   Decidable Kuratowski finite sets form a \(\Pi\)-pretopos.
 \end{theorem}
