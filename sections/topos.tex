@@ -2,49 +2,20 @@
 In this subsection we will examine the categorical interpretation of finite sets.
 In particular, we will prove that discrete Kuratowski finite types form a
 \(\Pi\)-pretopos.
-A lot of the work for this proof has been done already: we have already proven
-that discrete Kuratowski finiteness is equivalent to cardinal finiteness
-(\Cref{cardinal-kuratowski}), meaning that we can work with the latter
-definition which is much simpler to prove things about.
 
-There are two reasons we're interested in the categorical and topos-theoretic
-interpretation of finite sets: first, it's an important theoretical grounding
-for finite sets, which allows us to understand them in the context of other
-set-like constructions.
-Secondly, and more practically, the language of a topos is (or in our case the
-\(\Pi\)-pretopos) is a common standard framework for doing mathematics
-generally.
-This makes it a good basis for an API for building QuickCheck-like generators,
-for example.
 \subsection{Categories in HoTT}
-At first glance, HoTT seems like a perfect setting for category theory: the
-univalence axiom identifies isomorphisms with equality, a useful tool for
-category theory missing from MLTT.
-While this initial impression is broadly true, the construction of categories in
-HoTT is unfortunately quite complex and involved.
-
+In this subsection we will present the encoding of (pre) categories in HoTT.
 Much of this subsection is simply a summary of parts of \citet[section
 9]{hottbook}.
 The formal proofs we provide are part translation of those proofs in that
 section, part from \citep{iversenFredefoxCat2018}
 \citep{huProofrelevantCategoryTheory2020}, and part our own.
 
-First, we need to think about the type of objects and arrows.
-We cannot, unfortunately, leave them unrestricted: because of the potential for
-higher homotopy in HoTT types, we have
-to restrict the type of arrows to just the sets.
-This notion: that of a category with all the usual laws such that arrows are a
-set, is called a \emph{precategory}.
-\ExecuteMetaData[agda/Categories.tex]{precategory}
-We will use long arrows to refer to morphisms within a category:
-\ExecuteMetaData[agda/Categories.tex]{morph-arrow}
-
-From here, we can define a notion of isomorphisms.
-\ExecuteMetaData[agda/Categories.tex]{isomorphism}
-It's a condition on this type which separates the precategories from the
-categories: if it satisfies a form of univalence, it the precategory is a full
-category.
-\ExecuteMetaData[agda/Categories.tex]{cat-univalence}
+While it is possible to use HoTT to do some category theory, there is not (at
+present) a fully-general encoding of categories that avoids issues with higher
+homotopy structure.
+As a result, we will encode \emph{pre}categories: a precategory is a category
+such that all of the arrows are sets.
 
 \subsection{The Category of Sets}
 Next we'll look at how to construct the category of sets (in the HoTT sense).
@@ -57,9 +28,8 @@ We have provided in the formalisation a proof that sets in CuTT form a
 \(\Pi\)-pretopos: this proof (in HoTT) is in fact the main result of
 \citet{rijkeSetsHomotopyType2015}; our contribution is simply the formalisation.
 
-The objects are represented by a \(\Sigma\):
+The objects of this category are represented by a \(\Sigma\):
 \ExecuteMetaData[agda/Snippets/Category.tex]{hset}
-
 
 This will be quite similar to our objects for finite sets.
 
@@ -72,22 +42,9 @@ The two most involved proofs for showing that discrete Kuratowski sets form a
 \(\Sigma\).
 We will describe them here.
 
-In~\citet[Theorem 4.21]{fruminFiniteSetsHomotopy2018}, Kuratowski finite types
-are proven to be closed under surjections, products, and sums.
-Here we prove closure under products and sums, but also functions, \(\Sigma\),
-and \(\Pi\) (and furthermore our closure proofs are given on all of the
-finiteness predicates that they apply to).
-
 \paragraph{Closure of the Ordered Predicates}
 First, we will show that split enumerability (and, by extension, manifest
 enumerability) are closed under \(\Pi\) and \(\Sigma\).
-This is the first stepping stone on our way to prove that cardinal finiteness is
-closed under the same.
-
-Practically speaking, these proofs also open up a wide number of other closure
-proofs to us.
-By proving that dependent products and sums are finite, we get the non-dependent
-cases for free.
 
 \begin{lemma}\label{split-enum-sigma}
   Split enumerability is closed under \(\Sigma\).
@@ -98,35 +55,22 @@ cases for free.
   list, and the cover proof.
   We'll start with the support list: this is constructed by taking the Cartesian
   product of the input support lists.
-  
+  \begin{multicols}{2}
     \ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{sup-sigma}
-  
+  \end{multicols}
   We use do notation here because we're working the list monad: this applies the
-  latter function (\(ys\)) to every element of the list \(xs\), and concatenates
+  function \(ys\) to every element of the list \(xs\), and concatenates
   the results.
-
-  To show that this does indeed cover every element of the target type is a
-  little intricate, but not necessarily difficult.
+  The cover proof is in our formalisation.
 \end{proof}
 
 Next we'll look at closure under \(\Pi\).
-In MLTT, this is of course not provable: since all of the finiteness predicates
-we have seen so far imply decidable equality, and since we don't have any kind
-of decidable equality on functions in MLTT, we know that we won't be able to
-show that any kind of function is finite; even one like \(\AgdaDatatype{Bool}
-\rightarrow \AgdaDatatype{Bool}\).
-
-CuTT is not so restricted.
-Since we have things like function extensionality and transport, we can indeed
-prove the finiteness of function types.
 Our proof here makes use directly of the univalence axiom, and makes use
-furthermore of all the previous closure proofs.
+furthermore of the previous closure proof.
 \begin{theorem}\label{split-enum-pi}
   Split enumerability is closed under dependent functions
   (\(\Pi\)-types).
-  
-    \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{pi-clos}
-  
+  \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{pi-clos}
 \end{theorem}
 \begin{proof}
   Let \(A\) be a split enumerable type, and \(U\) be a type family from \(A\),
@@ -181,15 +125,7 @@ straightforward: since \(\AgdaDatatype{\ensuremath{\lVert\_\rVert}}\) forms a
 monad, we can apply \(n\)-ary functions to values inside it, combining them
 together.
 
-  \ExecuteMetaData[agda/Cardinality/Finite/ManifestBishop.tex]{times-clos-sig}
-
-Into a truncated context:
-
-  \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{times-clos-impl}
-
-
-
-Unfortunately, for the dependent type formers like \(\Sigma\) and \(\Pi\), the
+However, for the dependent type formers like \(\Sigma\) and \(\Pi\), the
 same trick does not work.
 We have closure proofs like:
 \begin{equation*}
@@ -216,16 +152,14 @@ However our \emph{desired} closure proof is the following:
     \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;((x : A) \rightarrow U\;x) \;\AgdaDatatype{\ensuremath{\rVert}}
   }
 \end{equation*}
-They don't match!
 
 The solution would be to find a function of the following type:
 \begin{equation*}
   ((x : A) \rightarrow \AgdaDatatype{\ensuremath{\lVert}}\; \AgdaDatatype{\ensuremath{\mathcal{B}}}\;(U\;x) \;\AgdaDatatype{\ensuremath{\rVert}}) \rightarrow
   \AgdaDatatype{\ensuremath{\lVert}}\; (x : A) \rightarrow \AgdaDatatype{\ensuremath{\mathcal{B}}}\;(U\;x) \;\AgdaDatatype{\ensuremath{\rVert}}
 \end{equation*}
-However we might be disheartened at realising that this is a required goal: the
-above equation is \emph{extremely} similar to the axiom of choice!
-\begin{definition}[Axiom of Choice] \label{axiom-of-choice}
+Interestingly, this is similar to an encoding of the axiom of choice.
+\begin{definition}[Axiom of Choice]\label{axiom-of-choice}
   In HoTT, the axiom of choice is commonly defined as follows \cite[lemma
   3.8.2]{hottbook}.
   For any set \(A\), and a type family \(U\) which is a set at all the points
