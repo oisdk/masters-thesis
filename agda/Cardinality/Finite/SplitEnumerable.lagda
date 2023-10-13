@@ -75,14 +75,18 @@ module _ where
 
  module BoolSlop where
 \end{code}
-%<*bool-slop>
-\begin{code}[number=op-slop]
+%<*bool-slop-1>
+\begin{code}
    ℰ!⟨2⟩ : ℰ! Bool
    ℰ!⟨2⟩ .fst = [ false , true , false ]
+\end{code}
+%</bool-slop-1>
+%<*bool-slop-2>
+\begin{code}[number=op-slop]
    ℰ!⟨2⟩ .snd false  = 0  , refl
    ℰ!⟨2⟩ .snd true   = 1  , refl
 \end{code}
-%</bool-slop>
+%</bool-slop-2>
 \begin{code}
 \end{code}
 %<*bool-rev>

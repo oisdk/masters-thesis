@@ -174,12 +174,16 @@ All split enumerable types are \emph{discrete}: they have decidable equality.
 As mentioned in the introduction, occasionally in constructive mathematics
 proofs will contain information superfluous to the proposition in question.
 For instance, in 
-\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop}
+\begin{paracol}{2}
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop-1}\switchcolumn%
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop-2}
+\end{paracol}\noindent%
 There is an extra \AgdaInductiveConstructor{false} at the end of the support
 list.
 There is ``slop'' in the type of split enumerability: there are more distinct
 values than there are \emph{usefully} distinct values.
 To reconcile this, we will disallow duplicates in the support list.
+
 
 A simple way to do this is to insist that every
 \emph{membership proof} must be unique.
