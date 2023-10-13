@@ -10,10 +10,10 @@ are Kuratowski (\Cref{kuratowski}).
 Informativeness refers to how much information the predicate ``leaks''; a proof
 of Manifest Bishop finiteness (\Cref{manifest-bishop-finiteness}), for instance,
 reveals an ordering on the underlying set.
-Each arrow in~\Cref{finite-classification} indicates an implication proof in the
-formalisation; for instance, when discreteness is provided we can go from
-Manifest enumerable finiteness~\Cref{manifest-enumerability} to split
-enumerable~\Cref{split-enumerability}.
+Each arrow in~\Cref{finite-classification} indicates an implication proof; for
+instance, when discreteness is provided we can go from
+Manifest enumerability~\Cref{manifest-enumerability} to split
+enumerability~\Cref{split-enumerability}.
 
 \subsection{Split Enumerability}\label{split-enumerability}
 The first finiteness predicate we will look at is split enumerability.
@@ -36,9 +36,9 @@ However, the predicate above uses a \emph{container}-based definition of lists.
 \begin{definition}[Containers]\label{container-def}
   A container \citep{abbottContainersConstructingStrictly2005} is a pair
   \(S , P\) where \(S\) is a type, the elements of which are called
-  the \emph{shapes} of the container, and \(P\) is a type family on \(S\), where
-  the elements of \(P(s)\) are called the \emph{positions} of a container.
-  We ``interpret'' a container into a functor defined like so:
+  \emph{shapes}, and \(P\) is a type family on \(S\), where
+  the elements of \(P(s)\) are the \emph{positions}.
+  We ``interpret'' a container into a functor like so:
   \ExecuteMetaData[agda/Container.tex]{container-interp}
 \end{definition}
 
@@ -48,7 +48,10 @@ greatly simplify some proofs later on.
 Lists are encoded as a container like so:
 \ExecuteMetaData[agda/Container/List.tex]{list-def}
 This definition further relies on the $\AgdaDatatype{Fin}$ type:
-\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
+\begin{paracol}{2}
+\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def-1}\switchcolumn%
+\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def-2}
+\end{paracol}\noindent%
 Here, \(\AgdaDatatype{⊎}\) is the disjoint union of two types,
 $\AgdaDatatype{\ensuremath{\bot}}$ is the type with no inhabitants, and
 $\AgdaDatatype{\ensuremath{\top}}$ is the type with one inhabitant.
@@ -58,6 +61,7 @@ It is a representation of a finite prefix of the natural numbers.
 \begin{equation*}
   \AgdaDatatype{Fin}\;\AgdaBound{n} \simeq \left\{ m \; \vert \; 0 \leq m < n   \right\}
 \end{equation*}
+
 
 With this definition in hand, the container-based definition of lists 
 says that ``Lists are a datatype whose shape
