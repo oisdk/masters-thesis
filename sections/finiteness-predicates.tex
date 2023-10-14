@@ -244,16 +244,24 @@ Going the other direction takes significantly more work.
 \begin{lemma}\label{split-enum-to-manifest-bishop}
   Any split enumerable set is manifest Bishop finite.
 \end{lemma}
+\begin{proof}
 This lemma is proven in \citet{firsovDependentlyTypedProgramming2015}.
 We will only sketch the proof here:
-the ``unique membership'' condition in
-\(\AgdaDatatype{\ensuremath{\mathcal{B}}}\) means that we are not permitted
-duplicates in the support list.
-The first step in the proof, then, is to filter those duplicates out from the
-support list of the \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) proof: we can do this using the decidable
-equality provided by \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) (\Cref{split-enum-discrete}).
-From there, we need to show that the membership proof carries over
-appropriately.
+for a split enumerable type $A$, we know that it has decidable equality,
+via~\Cref{split-enum-discrete}.
+This allows us to write a function that removes duplicates from a list:
+\begin{paracol}{2}
+  \ExecuteMetaData[agda/Data/List/Membership.tex]{uniques}\switchcolumn%
+  \ExecuteMetaData[agda/Data/List/Membership.tex]{remove}
+\end{paracol}
+Running this function on the support list of the split enumerability proof
+yields a suitable support list for the manifest Bishop finiteness proof.
+All that remains is to show that any element present in the original list is
+also present in the created list
+($\forall x \; \AgdaBound{xs}. \; x \in \AgdaBound{xs} \to x \in \AgdaFunction{uniques}\;\AgdaBound{xs}$),
+and that every element in the created list is unique
+($\forall x \; \AgdaBound{xs}. \; \AgdaFunction{isProp}\; (x \in \AgdaFunction{uniques}\;\AgdaBound{xs})$).
+\end{proof}
 
 We have now proved that every manifestly Bishop finite type is split enumerable,
 and vice versa.

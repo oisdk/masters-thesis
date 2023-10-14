@@ -1,3 +1,4 @@
+\begin{code}
 {-# OPTIONS --cubical --safe #-}
 
 module Data.List.Membership where
@@ -45,24 +46,31 @@ open import Function.Injective
 at : ∀ {xs : List A} (n : Fin (length xs)) → (xs ! n) ∈ xs
 at n = n , refl
 
+module LocalFilter where
+  filter : (A → Bool) → List A → List A
+  filter p = foldr (λ x xs → if p x then x ∷ xs else xs) []
+
 module _ {a} {A : Set a} (_≟_ : Discrete A) where
+  open LocalFilter
+
   isSet⟨A⟩ : isSet A
   isSet⟨A⟩ = Discrete→isSet _≟_
 
   infixl 6 _\\_
+\end{code}
+%<*remove>
+\begin{code}
   _\\_ : List A → A → List A
-  xs \\ x = foldr f [] xs
-    where
-    f : A → List A → List A
-    f y xs with x ≟ y
-    ... | yes p = xs
-    ... | no  p = y ∷ xs
-
+  xs \\ x = filter (λ y → not (does (x ≟ y))) xs
+\end{code}
+%</remove>
+%<*uniques>
+\begin{code}
   uniques : List A → List A
-  uniques = foldr f []
-    where
-    f : A → List A → List A
-    f x xs = x ∷ (xs \\ x)
+  uniques = foldr (λ x xs → x ∷ (xs \\ x)) []
+\end{code}
+%</uniques>
+\begin{code}
 
   x∉xs\\x : ∀ x xs → x ∉ xs \\ x
   x∉xs\\x x (y ∷ xs) (n , x∈xs) with x ≟ y
@@ -105,3 +113,4 @@ x ∈² xs = ◇ (x ∈_) xs
 
 ∈²→∈ : ∀ {x : A} xs → x ∈² xs → x ∈ concat xs
 ∈²→∈ = Relation.◇-concat (_≡ _)
+\end{code}
