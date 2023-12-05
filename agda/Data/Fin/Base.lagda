@@ -14,12 +14,16 @@ module DisplayImpl where
 
  Fin : ℕ → Type₀
 \end{code}
-%<*fin-def>
+%<*fin-def-1>
 \begin{code}
  Fin zero     = ⊥
+\end{code}
+%</fin-def-1>
+%<*fin-def-2>
+\begin{code}
  Fin (suc n)  = ⊤ ⊎ Fin n
 \end{code}
-%</fin-def>
+%</fin-def-2>
 \begin{code}
 
 Fin : ℕ → Type₀

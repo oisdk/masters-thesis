@@ -1,25 +1,26 @@
 \section{Topos}\label{topos}
-In this subsection we will examine the categorical interpretation of finite sets.
+In this subsection we will examine the categorical interpretation of finite
+sets.
 In particular, we will prove that discrete Kuratowski finite types form a
 \(\Pi\)-pretopos.
 
 \subsection{Categories in HoTT}
-In this subsection we will present the encoding of (pre) categories in HoTT.
-Much of this subsection is simply a summary of parts of \citet[section
-9]{hottbook}.
+Many aspects of HoTT and CuTT are advantageous for the study of categories and
+category theory, especially when compared to MLTT.
+However, there is not (at present) a fully-general encoding of categories
+that avoids issues with higher homotopy structure.
+As a result, most formalisations of categories in HoTT actually formalise
+\emph{pre} categories; i.e.\ categories such that all arrows are sets.
+
+This is the approach taken in \citet[section 9]{hottbook}, and the approach we
+will take here.
 The formal proofs we provide are part translation of those proofs in that
 section, part from \citep{iversenFredefoxCat2018}
 \citep{huProofrelevantCategoryTheory2020}, and part our own.
 
-While it is possible to use HoTT to do some category theory, there is not (at
-present) a fully-general encoding of categories that avoids issues with higher
-homotopy structure.
-As a result, we will encode \emph{pre}categories: a precategory is a category
-such that all of the arrows are sets.
-
 \subsection{The Category of Sets}
-Next we'll look at how to construct the category of sets (in the HoTT sense).
-Much of this work comes directly from \citet{rijkeSetsHomotopyType2015} and
+To construct the category of sets we will follow
+\citet{rijkeSetsHomotopyType2015} and
 \citet[section 10]{hottbook} (the latter of which is in fact an updated and
 slightly less detailed version of the former).
 In particular, our treatment (and definition) of categories and topoi comes
@@ -35,7 +36,7 @@ This will be quite similar to our objects for finite sets.
 
 Since sets in HoTT don't form a topos, there are quite a few smaller lemmas we
 need to prove to get as close as we can (a \(\Pi W\)-pretopos): we won't include
-them here, other than the closure proofs in the following subsection.
+them here, other than the closure proofs.
 \subsection{Closure}
 The two most involved proofs for showing that discrete Kuratowski sets form a
 \(\Pi\)-pretopos are those proofs that show closure under \(\Pi\) and

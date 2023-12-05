@@ -12,17 +12,33 @@ mathematics is that constructive proofs are ``leaky''; as mathematical
 objects, they tend to reveal some information about \emph{how} they were proven,
 where a proof of a classical proposition only reveals that the proposition is
 true.
+The \verb+Listable+ predicate
+from~\citet{firsovDependentlyTypedProgramming2015}, for instance (called Split
+Enumerable (\Cref{split-enum-def}) in this paper),
+states that a type is finite if every element of the type is present in some
+finite list.
+A proof of this predicate, then, will reveal not just that the type in question
+is finite, but it will also specify a total order.
+And different proofs of \verb+Listable+ that use different total orders will be
+distinguishable.
+
 Recent developments in type
 theory~\citep[in particular Cubical Agda][]{vezzosiCubicalAgdaDependently2019}
 have made constructions like propositional truncation available in proof
 assistants, which
-can be used to patch this ``leak''; rather than making classical
-and constructive proofs the same, however, this only makes their differences
-more subtle.
+can be used to patch this ``leak'': any two propositionally truncated values of
+the same type are indistinguishable.
+The propositional truncation of \verb+Listable+, called Cardinal
+finiteness~(\Cref{card-finite-def}), does not reveal an ordering, for instance.
+However, far from closing the gap between classical and constructive proofs,
+this only makes the divide more subtle: while we can't extract quantities like a
+total order from a proof of cardinal finiteness, we can extract computational
+content like an algorithm for decidable equality
+(\Cref{cardinal-finite-discrete}), or the cardinality of the underlying type
+(\Cref{card-finite-cardinality}).
 
 This paper will catalogue five separate variants of finiteness in constructive
-mathematics, and use them to build an automated solver for propositions over a
-finite domain.
+mathematics, and study their relationships and properties.
 All of our work will be formalised in Agda
 \citep{norellDependentlyTypedProgramming2008}, a
 dependently typed, pure, functional programming language which can be
@@ -33,11 +49,15 @@ programs written in Cubical Type Theory \citep{cohenCubicalTypeTheory2016}: this
 type theory gives a \emph{computational} interpretation of the univalence axiom
 \citep{hottbook}.
 By ``computational interpretation'' here we mean that we will be able to run the
-programs we write which rely on this axiom.
-The univalence axiom allows us to do Homotopy Type Theory (HoTT) in Agda.
+programs which rely on this axiom.
+
+We will use this computational capability to build a library for proof search
+for predicates over finite domains.
+This proof search library will be further used to build a verified solver for
+the countdown problem.
 
 \subsection{Overview}
-In Section~\ref{finiteness-predicates} we will look in-depth at the focus of
+In~\Cref{finiteness-predicates} we will look in-depth at the focus of
 this paper: finiteness.
 As mentioned finiteness in constructive mathematics is a good deal more complex
 than finiteness classically:

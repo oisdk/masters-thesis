@@ -85,11 +85,11 @@ If we have a decision procedure over some proposition \(P\) we can run that
 decision during type checking, because the decision procedure itself is a proof
 that the decision will terminate.
 In code, we capture this idea with the following pair of functions:
-\begin{multicols}{2}
+\begin{paracol}{2}
   \ExecuteMetaData[agda/Snippets/Bool.tex]{is-true}
-  \columnbreak%
+  \switchcolumn%
   \ExecuteMetaData[agda/Snippets/Bool.tex]{from-true}
-\end{multicols}
+\end{paracol}\noindent%
 The first is a function which derives a type from whether a decision is
 successful or not.
 This function is important because if we use the output of this type at any
@@ -98,9 +98,7 @@ The second takes---as an implicit argument---an inhabitant of the type generated
 from the first, and uses it to prove that the decision can only be true, and the
 extracts the resulting proof from that decision.
 All in all, we can use it like this:
-
-  \ExecuteMetaData[agda/Snippets/Bool.tex]{extremely-obvious}
-
+\ExecuteMetaData[agda/Snippets/Bool.tex]{extremely-obvious}
 This technique will allow us to automatically compute any decidable predicate.
 
 \subsection{Omniscience}

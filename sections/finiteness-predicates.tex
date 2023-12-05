@@ -10,10 +10,10 @@ are Kuratowski (\Cref{kuratowski}).
 Informativeness refers to how much information the predicate ``leaks''; a proof
 of Manifest Bishop finiteness (\Cref{manifest-bishop-finiteness}), for instance,
 reveals an ordering on the underlying set.
-Each arrow in~\Cref{finite-classification} indicates an implication proof in the
-formalisation; for instance, when discreteness is provided we can go from
-Manifest enumerable finiteness~\Cref{manifest-enumerability} to split
-enumerable~\Cref{split-enumerability}.
+Each arrow in~\Cref{finite-classification} indicates an implication proof; for
+instance, when discreteness is provided we can go from
+Manifest enumerability~\Cref{manifest-enumerability} to split
+enumerability~\Cref{split-enumerability}.
 
 \subsection{Split Enumerability}\label{split-enumerability}
 The first finiteness predicate we will look at is split enumerability.
@@ -36,9 +36,9 @@ However, the predicate above uses a \emph{container}-based definition of lists.
 \begin{definition}[Containers]\label{container-def}
   A container \citep{abbottContainersConstructingStrictly2005} is a pair
   \(S , P\) where \(S\) is a type, the elements of which are called
-  the \emph{shapes} of the container, and \(P\) is a type family on \(S\), where
-  the elements of \(P(s)\) are called the \emph{positions} of a container.
-  We ``interpret'' a container into a functor defined like so:
+  \emph{shapes}, and \(P\) is a type family on \(S\), where
+  the elements of \(P(s)\) are the \emph{positions}.
+  We ``interpret'' a container into a functor like so:
   \ExecuteMetaData[agda/Container.tex]{container-interp}
 \end{definition}
 
@@ -48,7 +48,10 @@ greatly simplify some proofs later on.
 Lists are encoded as a container like so:
 \ExecuteMetaData[agda/Container/List.tex]{list-def}
 This definition further relies on the $\AgdaDatatype{Fin}$ type:
-\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def}
+\begin{paracol}{2}
+\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def-1}\switchcolumn%
+\ExecuteMetaData[agda/Data/Fin/Base.tex]{fin-def-2}
+\end{paracol}\noindent%
 Here, \(\AgdaDatatype{⊎}\) is the disjoint union of two types,
 $\AgdaDatatype{\ensuremath{\bot}}$ is the type with no inhabitants, and
 $\AgdaDatatype{\ensuremath{\top}}$ is the type with one inhabitant.
@@ -58,6 +61,7 @@ It is a representation of a finite prefix of the natural numbers.
 \begin{equation*}
   \AgdaDatatype{Fin}\;\AgdaBound{n} \simeq \left\{ m \; \vert \; 0 \leq m < n   \right\}
 \end{equation*}
+
 
 With this definition in hand, the container-based definition of lists 
 says that ``Lists are a datatype whose shape
@@ -170,12 +174,16 @@ All split enumerable types are \emph{discrete}: they have decidable equality.
 As mentioned in the introduction, occasionally in constructive mathematics
 proofs will contain information superfluous to the proposition in question.
 For instance, in 
-\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop}
+\begin{paracol}{2}
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop-1}\switchcolumn%
+\ExecuteMetaData[agda/Cardinality/Finite/SplitEnumerable.tex]{bool-slop-2}
+\end{paracol}\noindent%
 There is an extra \AgdaInductiveConstructor{false} at the end of the support
 list.
 There is ``slop'' in the type of split enumerability: there are more distinct
 values than there are \emph{usefully} distinct values.
 To reconcile this, we will disallow duplicates in the support list.
+
 
 A simple way to do this is to insist that every
 \emph{membership proof} must be unique.
@@ -236,16 +244,24 @@ Going the other direction takes significantly more work.
 \begin{lemma}\label{split-enum-to-manifest-bishop}
   Any split enumerable set is manifest Bishop finite.
 \end{lemma}
+\begin{proof}
 This lemma is proven in \citet{firsovDependentlyTypedProgramming2015}.
 We will only sketch the proof here:
-the ``unique membership'' condition in
-\(\AgdaDatatype{\ensuremath{\mathcal{B}}}\) means that we are not permitted
-duplicates in the support list.
-The first step in the proof, then, is to filter those duplicates out from the
-support list of the \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) proof: we can do this using the decidable
-equality provided by \(\AgdaDatatype{\ensuremath{\mathcal{E}!}}\) (\Cref{split-enum-discrete}).
-From there, we need to show that the membership proof carries over
-appropriately.
+for a split enumerable type $A$, we know that it has decidable equality,
+via~\Cref{split-enum-discrete}.
+This allows us to write a function that removes duplicates from a list:
+\begin{paracol}{2}
+  \ExecuteMetaData[agda/Data/List/Membership.tex]{uniques}\switchcolumn%
+  \ExecuteMetaData[agda/Data/List/Membership.tex]{remove}
+\end{paracol}
+Running this function on the support list of the split enumerability proof
+yields a suitable support list for the manifest Bishop finiteness proof.
+All that remains is to show that any element present in the original list is
+also present in the created list
+($\forall x \; \AgdaBound{xs}. \; x \in \AgdaBound{xs} \to x \in \AgdaFunction{uniques}\;\AgdaBound{xs}$),
+and that every element in the created list is unique
+($\forall x \; \AgdaBound{xs}. \; \AgdaFunction{isProp}\; (x \in \AgdaFunction{uniques}\;\AgdaBound{xs})$).
+\end{proof}
 
 We have now proved that every manifestly Bishop finite type is split enumerable,
 and vice versa.
@@ -345,7 +361,7 @@ us to define a monad instance for \AgdaDatatype{\(\lVert \_ \rVert\)}, meaning
 we can use things like do-notation.
 
 With this, we can define cardinal finiteness:
-\begin{definition}[Cardinal Finiteness]
+\begin{definition}[Cardinal Finiteness]\label{card-finite-def}
   A type \(A\) is cardinally finite if there exists a propositionally truncated
   proof that \(A\) is manifest Bishop finite.
   \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
