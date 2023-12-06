@@ -1,10 +1,10 @@
 \section{Related Work}
 \paragraph{Homotopy Type Theory}
 To understand the background and subject area behind this paper, the most
-important piece of work is the \citet{hottbook}, often simply called ``the HoTT
+important piece of work is the \cite{hottbook}, often simply called ``the HoTT
 Book''.
 
-One particular paper we relied on is \citet{krausGeneralUniversalProperty2015}:
+One particular paper we relied on is \cite{krausGeneralUniversalProperty2015}:
 this gave a proof (which we use) that one can eliminate out of a propositional
 truncation into a set provided the elimination is coherently constant.
 \paragraph{Agda and Cubical Type Theory}
@@ -15,30 +15,30 @@ This is an implementation of Cubical Type Theory
 language Agda \cite{norellDependentlyTypedProgramming2008}.
 \paragraph{Constructive Finiteness}
 An excellent introduction to the topic of finiteness in a constructive setting
-is \citet{coquandConstructivelyFinite2010}: this paper introduced 4 notions of
+is \cite{coquandConstructivelyFinite2010}: this paper introduced 4 notions of
 finiteness, called enumerated, bounded, Noetherian, and streamless.
 We have only looked at the first of these (enumerated, which we called ``split
 enumerable'').
 The other three are interesting definitions, though: Noetherianness in
-particular is explored more in \citet{firsovVariationsNoetherianness2016}, and
-streamlessness in \citet{parmannInvestigatingStreamlessSets2015}.
+particular is explored more in \cite{firsovVariationsNoetherianness2016}, and
+streamlessness in \cite{parmannInvestigatingStreamlessSets2015}.
 
 Finite sets have long been used for proof automation in dependently typed
 programming languages: the most relevant example is
-\citet{firsovDependentlyTypedProgramming2015}, where they are used to automate
+\cite{firsovDependentlyTypedProgramming2015}, where they are used to automate
 proofs in Agda.
 Manifest Bishop finiteness and split enumerability are the only predicates
 explored, however, and the setting is MLTT rather than CuTT.
 As a result, no proofs of equivalence are given.
 
 Finite sets in Homotopy Type Theory in particular are explored in
-\citet{fruminFiniteSetsHomotopy2018}: that paper is quite close in subject
+\cite{fruminFiniteSetsHomotopy2018}: that paper is quite close in subject
 matter to this paper, and some of the theorems proven in this paper are
 explicitly called for there.
 They do focus slightly more, however, on Kuratowski finite sets: these were
-first defined in \citet{kuratowskiNotionEnsembleFini1920}.
+first defined in \cite{kuratowskiNotionEnsembleFini1920}.
 None of the ``manifest'' predicates are explored in
-\citet{fruminFiniteSetsHomotopy2018} (i.e. they focus on propositional
+\cite{fruminFiniteSetsHomotopy2018} (i.e. they focus on propositional
 predicates), and the only closure proofs provided are those of (non-dependent)
 products and sums, and surjections, on Kuratowski finite sets.
 As a result, there is no proof that those sets form a topos.
@@ -48,31 +48,31 @@ would not be possible.
 \paragraph{Set and Topos Theory}
 Our proof that finite sets form a topos follows quite closely along with the
 structure of section 10 of the HoTT book.
-This section itself is adapted from \citet{rijkeSetsHomotopyType2015}.
+This section itself is adapted from \cite{rijkeSetsHomotopyType2015}.
 
 The category of finite sets in HoTT is also explored quite a bit in
-\citet{yorgeyCombinatorialSpeciesLabelled2014}: we have formalised several of
+\cite{yorgeyCombinatorialSpeciesLabelled2014}: we have formalised several of
 the proofs there in this paper.
 
-The paper \citet{iversenUnivalentCategoriesFormalization2018} was essential in
+The paper \cite{iversenUnivalentCategoriesFormalization2018} was essential in
 explaining the techniques and tricks needed to formalise category-theoretic
 concepts in Cubical Agda.
 
 More generally the category of finite sets is explored in
-\citet{solovevCategoryFiniteSets1983}, and the topic of toposes from cardinally
-finite sets in \citet{henryToposesGeneratedCardinal2018}.
+\cite{solovevCategoryFiniteSets1983}, and the topic of toposes from cardinally
+finite sets in \cite{henryToposesGeneratedCardinal2018}.
 \paragraph{Exhaustibility}
 The twin notions of exhaustibility and omniscience were first defined in
-\citet{bishopFoundationsConstructiveAnalysis1967}.
+\cite{bishopFoundationsConstructiveAnalysis1967}.
 There, they were studied as to how they applied to ``constructiveness''.
 In functional programming, perhaps their most famous usage was in
-\citet{escardoInfiniteSetsThat2013}: there,
+\cite{escardoInfiniteSetsThat2013}: there,
 \citeauthor{escardoInfiniteSetsThat2013} shows that there are in fact sets which
 satisfy this principle of omniscience (or exhaustibility), \emph{without} being
 finite.
 \paragraph{Countdown}
 The countdown problem is well-known in functional programming: its first
-description was in \citet{huttonCountdownProblem2002}, but subsequent papers
+description was in \cite{huttonCountdownProblem2002}, but subsequent papers
 \cite{birdCountdownCaseStudy2005, birdFunctionalPearlTrouble2003}
 explored its different aspects.
 As far as we know, ours is the first paper to look at countdown from the
@@ -82,16 +82,16 @@ While the formal grounding for the API for our proof search library comes from
 topos theory, the less formal inspiration is from QuickCheck
 \cite{claessenQuickCheckLightweightTool2011}.
 This more general pattern of using generators in a principled way to generate
-data for tests is also explored in \citet{runcimanSmallCheckLazySmallCheck2008},
+data for tests is also explored in \cite{runcimanSmallCheckLazySmallCheck2008},
 which is perhaps closer in spirit to our work than QuickCheck.
 In the setting of dependently-typed programming (and Agda in particular),
-\citet{oconnorApplicationsApplicativeProof2016} looks into the generate-and-test
+\cite{oconnorApplicationsApplicativeProof2016} looks into the generate-and-test
 technique but for proofs, much like we do here.
 There, also, partial proof search is examined.
 
 Finally, in order to present a usable interface to the proof search library, we
 used (and expanded on) some of the techniques in
-\citet{allaisGenericLevelPolymorphic2019}, for generic currying.
+\cite{allaisGenericLevelPolymorphic2019}, for generic currying.
 
 %%% Local Variables:
 %%% mode: latex

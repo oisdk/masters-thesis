@@ -27,7 +27,7 @@ be listed.
   We call the first component of this pair the ``support'' list, and the second
   component the ``cover'' proof.
   An equivalent version of this predicate was called \verb+Listable+ in
-  \citet{firsovDependentlyTypedProgramming2015}.
+  \cite{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
 The usual definition of lists is as follows:
@@ -219,7 +219,7 @@ With this we can define manifest Bishop finiteness:
   (\AgdaFunction{\ensuremath{\in!}}), rather than simple membership
   (\AgdaFunction{\(\in\)}).
   An equivalent version of this predicate was called \verb+ListableNoDup+ in
-  \citet{firsovDependentlyTypedProgramming2015}.
+  \cite{firsovDependentlyTypedProgramming2015}.
 \end{definition}
 
 We use the word ``manifest'' here to distinguish from another common
@@ -245,7 +245,7 @@ Going the other direction takes significantly more work.
   Any split enumerable set is manifest Bishop finite.
 \end{lemma}
 \begin{proof}
-This lemma is proven in \citet{firsovDependentlyTypedProgramming2015}.
+This lemma is proven in \cite{firsovDependentlyTypedProgramming2015}.
 We will only sketch the proof here:
 for a split enumerable type $A$, we know that it has decidable equality,
 via~\Cref{split-enum-discrete}.
@@ -365,7 +365,7 @@ With this, we can define cardinal finiteness:
   A type \(A\) is cardinally finite if there exists a propositionally truncated
   proof that \(A\) is manifest Bishop finite.
   \ExecuteMetaData[agda/Cardinality/Finite/Cardinal.tex]{cardinal-def}
-  This predicate is called Bishop finiteness in~\citet{fruminFiniteSetsHomotopy2018}.
+  This predicate is called Bishop finiteness in~\cite{fruminFiniteSetsHomotopy2018}.
 \end{definition}
 
 \paragraph{Deriving Uniquely-Determined Quantities}
@@ -376,7 +376,7 @@ equality (\Cref{cardinal-finite-discrete}) and cardinality
 (\Cref{card-finite-cardinality}) out from under the
 truncation.
 Those two lemmas are proven in
-\citet[Proposition 2.4.9 and 2.4.10]{yorgeyCombinatorialSpeciesLabelled2014}, in
+\cite[Proposition 2.4.9 and 2.4.10]{yorgeyCombinatorialSpeciesLabelled2014}, in
 much the same way as we have done here.
 Our contribution for this subsection is simply the formalisation.
 
@@ -700,7 +700,7 @@ Nonetheless, it is equivalent to a finiteness definition we have seen already.
   This pair implies an equivalence, because both source and target are
   propositions.
   This proof, as well as its auxiliary lemmas, are also provided in
-  \citet{fruminFiniteSetsHomotopy2018}, although there the setting is HoTT
+  \cite{fruminFiniteSetsHomotopy2018}, although there the setting is HoTT
   rather than CuTT.
 \end{proof}
 
