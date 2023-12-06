@@ -16,7 +16,6 @@
 # 
 # 4: (high)
 # 
-# 
 # ## Questions for authors
 # 
 # none
@@ -149,7 +148,10 @@ The fully new proofs in the paper are:
   Bishop finite.
 - Theorem 3.4, showing that any cardinal finite set forms a Π-Pretopos.
 
-In addition, the 
+Of course, these theorems have some sub-lemmas that are also new (and others
+that have been proven before); we will identify which is which in an update.
+
+Another 
 
 # 2. Could you fix the countdown example or provide some more examples to
 #    demonstrate the full power of your library (which I suppose is the ability to

@@ -4,7 +4,7 @@ rich and complex subject.
 Classically, something is ``finite'' if it has a cardinality equal to some
 natural number; every notion of finiteness is equivalent to this one.
 Constructively, however, there are multiple distinct notions of finiteness, each
-with interesting properties~\citep{coquandConstructivelyFinite2010,
+with interesting properties~\cite{coquandConstructivelyFinite2010,
   firsovVariationsNoetherianness2016, fruminFiniteSetsHomotopy2018}.
 
 Part of the reason for different notions of finiteness in constructive
@@ -23,7 +23,7 @@ And different proofs of \verb+Listable+ that use different total orders will be
 distinguishable.
 
 Recent developments in type
-theory~\citep[in particular Cubical Agda][]{vezzosiCubicalAgdaDependently2019}
+theory~\cite[in particular Cubical Agda][]{vezzosiCubicalAgdaDependently2019}
 have made constructions like propositional truncation available in proof
 assistants, which
 can be used to patch this ``leak'': any two propositionally truncated values of
@@ -40,14 +40,14 @@ content like an algorithm for decidable equality
 This paper will catalogue five separate variants of finiteness in constructive
 mathematics, and study their relationships and properties.
 All of our work will be formalised in Agda
-\citep{norellDependentlyTypedProgramming2008}, a
+\cite{norellDependentlyTypedProgramming2008}, a
 dependently typed, pure, functional programming language which can be
 used as a proof assistant.
 A recent extension to Agda, Cubical Agda
-\citep{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
-programs written in Cubical Type Theory \citep{cohenCubicalTypeTheory2016}: this
+\cite{vezzosiCubicalAgdaDependently2019}, allows Agda to compile and typecheck
+programs written in Cubical Type Theory \cite{cohenCubicalTypeTheory2016}: this
 type theory gives a \emph{computational} interpretation of the univalence axiom
-\citep{hottbook}.
+\cite{hottbook}.
 By ``computational interpretation'' here we mean that we will be able to run the
 programs which rely on this axiom.
 
@@ -75,7 +75,7 @@ We will show that finite sets in HoTT form a $\Pi$-pretopos.
 
 In Section~\ref{search} we will present a library for finite proof search.
 We will demonstrate the library with the countdown problem
-\citep{huttonCountdownProblem2002}: this is a puzzle where
+\cite{huttonCountdownProblem2002}: this is a puzzle where
 players are given five numbers and a target, and have to construct an expression
 using some or all of the supplied numbers which evaluates to the target.
 
@@ -83,8 +83,8 @@ using some or all of the supplied numbers which evaluates to the target.
 \begin{description}
   \item[A classification of five finiteness predicates in Cubical Type Theory.]
     Four of these predicates have been previously defined and described in
-    Homotopy Type Theory \citep{fruminFiniteSetsHomotopy2018}, and two in
-    Martin-Löf type theory \citep{fruminFiniteSetsHomotopy2018}, this work defines
+    Homotopy Type Theory \cite{fruminFiniteSetsHomotopy2018}, and two in
+    Martin-Löf type theory \cite{fruminFiniteSetsHomotopy2018}, this work defines
     the same predicates in the slightly different setting of Cubical Type
     Theory.
     This has the advantage of giving the proofs computational content, a feature
@@ -112,7 +112,7 @@ using some or all of the supplied numbers which evaluates to the target.
   \item[A library for proof search.]
     While several libraries for proof search based on finiteness exist in
     dependently-typed programming languages
-    \citep{firsovDependentlyTypedProgramming2015}, the one that is presented
+    \cite{firsovDependentlyTypedProgramming2015}, the one that is presented
     here is strictly more powerful than those that came before as it is capable
     of including functions in the search space.
     This is a direct consequence of the use of Cubical Type Theory: in MLTT
@@ -122,7 +122,7 @@ using some or all of the supplied numbers which evaluates to the target.
     There are other more minor contributions of this library: they are described
     in detail in subsection~\ref{search}.
   \item[A verified solver for the countdown problem.]
-    The countdown problem \citep{huttonCountdownProblem2002} has been studied
+    The countdown problem \cite{huttonCountdownProblem2002} has been studied
     from a number of angles in functional
     programming~\cite{birdCountdownCaseStudy2005}; our solver is the first 
     machine-checked solver, to the best of our knowledge.

@@ -36,7 +36,7 @@ countdown puzzle.
 
 The API for writing searches over finite domains comes from the language of the
 \(\Pi\)-pretopos: with it we will show how to compose QuickCheck-like
-generators~\citep{claessenQuickCheckLightweightTool2011}
+generators~\cite{claessenQuickCheckLightweightTool2011}
 for proof search, with the addition of some automation machinery that allows us
 to prove things like the associativity in a couple of lines:
 \ExecuteMetaData[agda/Snippets/Bool.tex]{bool-assoc-auto-proof}
@@ -127,7 +127,7 @@ For that we need the more well-known related property of
   \ExecuteMetaData[agda/Relation/Nullary/Omniscience.tex]{omniscient}
 
 The ``limited principle of omniscience''
-\citep{bishopFoundationsConstructiveAnalysis1967} is a classical principle which
+\cite{bishopFoundationsConstructiveAnalysis1967} is a classical principle which
 says that omniscience holds for all sets.
 It doesn't hold constructively, of course: it lies a little bit below LEM in
 terms of its non-constructiveness, given that it can be derived from LEM but LEM
@@ -143,7 +143,7 @@ Our focus here is on those types for which omniscience \emph{does} hold,
 which includes the (ordered) finite types.
 Perhaps surprisingly, it is not \emph{only} finite types which are exhaustible.
 Certain infinite types can be
-exhaustible~\citep{escardoInfiniteSetsThat2007}, but an exploration of that is
+exhaustible~\cite{escardoInfiniteSetsThat2007}, but an exploration of that is
 beyond the scope of this work.
 
 All of the finiteness predicates imply exhaustibility.
@@ -196,7 +196,7 @@ allow for fully automatic derivation of proofs for $n$-ary properties.
 \newpage
 \subsection{Countdown}
 \input{figures/countdown-transformation}
-The Countdown problem~\citep{huttonCountdownProblem2002} is a well-known puzzle
+The Countdown problem~\cite{huttonCountdownProblem2002} is a well-known puzzle
 in functional programming (which was apparently turned into a TV show).
 As a running example in this paper, we will produce a verified program which
 lists all solutions to a given countdown puzzle: here we will briefly explain

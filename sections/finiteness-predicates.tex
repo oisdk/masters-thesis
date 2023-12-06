@@ -34,7 +34,7 @@ The usual definition of lists is as follows:
 \ExecuteMetaData[agda/Data/List/Base.tex]{list-def}
 However, the predicate above uses a \emph{container}-based definition of lists.
 \begin{definition}[Containers]\label{container-def}
-  A container \citep{abbottContainersConstructingStrictly2005} is a pair
+  A container \cite{abbottContainersConstructingStrictly2005} is a pair
   \(S , P\) where \(S\) is a type, the elements of which are called
   \emph{shapes}, and \(P\) is a type family on \(S\), where
   the elements of \(P(s)\) are the \emph{positions}.
@@ -84,7 +84,7 @@ into \(\mathit{xs}\) such that the index points at an item equal to \(x\)''.
 A common definition of finiteness requires a surjection from a finite prefix of
 the natural numbers.
 In HoTT, surjections (or, more precisely, \emph{split} surjections
-\citep[definition 4.6.1]{hottbook}), are defined like so:
+\cite[definition 4.6.1]{hottbook}), are defined like so:
 
 \twocolcode
 {\ExecuteMetaData[agda/Function/Surjective/Base.tex]{split-surjective}}
@@ -316,7 +316,7 @@ the type\footnotemark.
 
 \footnotetext{
   We actually do get a category (a groupoid, even) from manifest Bishop
-  finiteness \citep{yorgeyCombinatorialSpeciesLabelled2014}: it's the groupoid of
+  finiteness \cite{yorgeyCombinatorialSpeciesLabelled2014}: it's the groupoid of
   finite sets equipped with a linear order, whose morphisms are order-preserving
   bijections.
   We do not explore this particular construction in any detail.
@@ -409,7 +409,7 @@ propositions: the \emph{sets}.
 This is the next homotopy level up from the propositions (\Cref{isProp}).
 More importantly, there is an important theorem relating to sets which
 \emph{also} relates to decidable equality: Hedberg's theorem
-\citep{hedbergCoherenceTheoremMartinLof1998}.
+\cite{hedbergCoherenceTheoremMartinLof1998}.
 This tells us that any type with decidable equality is a set.
 \ExecuteMetaData[agda/Relation/Nullary/Discrete/Properties.tex]{discrete-isset}
 And of course we know that \(A\) here has decidable equality.
@@ -424,7 +424,7 @@ Instead we will use the following:
 \ExecuteMetaData[agda/HITs/PropositionalTruncation/Display.tex]{rec-prop-trunc-set}
 This says that we can eliminate into a set as long as the function we use
 doesn't care about which value it's given: formally, \(f\) in this example has
-to be ``coherently constant''~\citep{krausGeneralUniversalProperty2015}.
+to be ``coherently constant''~\cite{krausGeneralUniversalProperty2015}.
 
 \begin{lemma}\label{card-finite-cardinality}
   Given a cardinally finite type, we can derive the type's cardinality, as well
@@ -508,7 +508,7 @@ enforcing that the given list is sorted, and
 \AgdaFunction{\(\leftrightsquigarrow\)} is a permutation relation between two
 lists.
 The definition of permutations is from
-\citep{danielssonBagEquivalenceProofRelevant2012}: two lists are permutations of
+\cite{danielssonBagEquivalenceProofRelevant2012}: two lists are permutations of
 each other if their membership proofs are all equivalent.
 \ExecuteMetaData[agda/Data/List/Relation/Binary/Permutation.tex]{perm-def}
 This definition fits particularly well for two reasons: first, it is defined on
@@ -616,7 +616,7 @@ We already saw that split enumerability was the listed form of a split
 surjection, however, in the presence of higher homotopies than sets, there is a
 distinction between split surjections and surjections.
 The following is the definition of a surjection which is not necessarily
-split~\citep[definition 4.6.1]{hottbook}:
+split~\cite[definition 4.6.1]{hottbook}:
 \begin{paracol}{2}
   \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjective}\switchcolumn%
   \ExecuteMetaData[agda/Function/Surjective/Base.tex]{surjection}
@@ -661,7 +661,7 @@ The final constructor truncates the type \(\agdacal{K}\;A\) to a (homotopy) set.
 The Kuratowski finite subset is a free join semilattice (or, equivalently, a
 free commutative idempotent monoid).
 More practically, \(\agdacal{K}\) is the abstract data type for finite sets, as
-defined in the Boom hierarchy \citep{boomFurtherThoughtsAbstracto1981,
+defined in the Boom hierarchy \cite{boomFurtherThoughtsAbstracto1981,
   bunkenburgBoomHierarchy1994}.
 However, rather than just being a specification, \(\agdacal{K}\) is fully usable
 as a data type in its own right, thanks to HITs.
