@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Snippets.Category</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Markup">\begin{code}</a>
+<a id="14" class="Symbol">{-#</a> <a id="18" class="Keyword">OPTIONS</a> <a id="26" class="Pragma">--cubical</a> <a id="36" class="Pragma">--safe</a> <a id="43" class="Symbol">#-}</a>
+
+<a id="48" class="Keyword">module</a> <a id="55" href="Snippets.Category.html" class="Module">Snippets.Category</a> <a id="73" class="Keyword">where</a>
+
+<a id="80" class="Keyword">open</a> <a id="85" class="Keyword">import</a> <a id="92" href="Level.html" class="Module">Level</a>
+<a id="98" class="Keyword">open</a> <a id="103" class="Keyword">import</a> <a id="110" href="Data.Sigma.html" class="Module">Data.Sigma</a>
+<a id="121" class="Keyword">open</a> <a id="126" class="Keyword">import</a> <a id="133" href="HLevels.html" class="Module">HLevels</a> <a id="141" class="Keyword">hiding</a> <a id="148" class="Symbol">(</a><a id="149" href="Cubical.Foundations.HLevels.html#1805" class="Function">hSet</a><a id="153" class="Symbol">)</a>
+
+<a id="Ob"></a><a id="156" href="Snippets.Category.html#156" class="Function">Ob</a> <a id="159" class="Symbol">:</a> <a id="161" href="Agda.Primitive.html#326" class="Primitive">Type₁</a>
+<a id="167" class="Markup">\end{code}</a><a id="177" class="Background">
+%&lt;*hset&gt;
+</a><a id="187" class="Markup">\begin{code}</a>
+<a id="200" href="Snippets.Category.html#156" class="Function">Ob</a> <a id="203" class="Symbol">=</a> <a id="205" href="Data.Sigma.Base.html#401" class="Function">Σ[</a> <a id="208" href="Snippets.Category.html#208" class="Bound">t</a> <a id="210" href="Data.Sigma.Base.html#401" class="Function">⦂</a> <a id="212" href="Agda.Primitive.html#326" class="Primitive">Type₀</a> <a id="218" href="Data.Sigma.Base.html#401" class="Function">]</a> <a id="220" href="Cubical.Foundations.Id.html#919" class="Function">isSet</a> <a id="226" href="Snippets.Category.html#208" class="Bound">t</a>
+<a id="228" class="Markup">\end{code}</a><a id="238" class="Background">
+%&lt;/hset&gt;
+</a></pre></body></html>

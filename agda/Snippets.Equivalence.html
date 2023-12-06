@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Snippets.Equivalence</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Markup">\begin{code}</a>
+<a id="14" class="Symbol">{-#</a> <a id="18" class="Keyword">OPTIONS</a> <a id="26" class="Pragma">--cubical</a> <a id="36" class="Pragma">--safe</a> <a id="43" class="Symbol">#-}</a>
+
+<a id="48" class="Keyword">module</a> <a id="55" href="Snippets.Equivalence.html" class="Module">Snippets.Equivalence</a> <a id="76" class="Keyword">where</a>
+
+<a id="83" class="Keyword">open</a> <a id="88" class="Keyword">import</a> <a id="95" href="Level.html" class="Module">Level</a>
+<a id="101" class="Keyword">open</a> <a id="106" class="Keyword">import</a> <a id="113" href="Data.Sigma.html" class="Module">Data.Sigma</a>
+<a id="124" class="Keyword">open</a> <a id="129" class="Keyword">import</a> <a id="136" href="HLevels.html" class="Module">HLevels</a>
+<a id="144" class="Keyword">open</a> <a id="149" class="Keyword">import</a> <a id="156" href="Cubical.Foundations.Equiv.html" class="Module">Cubical.Foundations.Equiv</a> <a id="182" class="Keyword">using</a> <a id="188" class="Symbol">(</a><a id="189" href="Cubical.Foundations.Equiv.Base.html#253" class="Function">fiber</a><a id="194" class="Symbol">)</a>
+
+<a id="197" class="Keyword">module</a> <a id="204" href="Snippets.Equivalence.html#204" class="Module">_</a> <a id="206" class="Symbol">{</a><a id="207" href="Snippets.Equivalence.html#207" class="Bound">A</a> <a id="209" class="Symbol">:</a> <a id="211" href="Agda.Primitive.html#326" class="Primitive">Type</a> <a id="216" href="Level.html#285" class="Generalizable">a</a><a id="217" class="Symbol">}</a> <a id="219" class="Symbol">{</a><a id="220" href="Snippets.Equivalence.html#220" class="Bound">B</a> <a id="222" class="Symbol">:</a> <a id="224" href="Agda.Primitive.html#326" class="Primitive">Type</a> <a id="229" href="Level.html#287" class="Generalizable">b</a><a id="230" class="Symbol">}</a> <a id="232" class="Keyword">where</a>
+  <a id="240" href="Snippets.Equivalence.html#240" class="Function">isEquiv</a> <a id="248" class="Symbol">:</a> <a id="250" class="Symbol">(</a><a id="251" href="Snippets.Equivalence.html#207" class="Bound">A</a> <a id="253" class="Symbol">→</a> <a id="255" href="Snippets.Equivalence.html#220" class="Bound">B</a><a id="256" class="Symbol">)</a> <a id="258" class="Symbol">→</a> <a id="260" href="Agda.Primitive.html#326" class="Primitive">Type</a> <a id="265" class="Symbol">_</a>
+<a id="267" class="Markup">\end{code}</a><a id="277" class="Background">
+%&lt;*is-equiv-def&gt;
+</a><a id="295" class="Markup">\begin{code}</a>
+  <a id="310" href="Snippets.Equivalence.html#240" class="Function">isEquiv</a> <a id="318" href="Snippets.Equivalence.html#318" class="Bound">f</a> <a id="320" class="Symbol">=</a> <a id="322" class="Symbol">∀</a> <a id="324" href="Snippets.Equivalence.html#324" class="Bound">y</a> <a id="326" class="Symbol">→</a> <a id="328" href="Cubical.Foundations.Id.html#844" class="Function">isContr</a> <a id="336" class="Symbol">(</a><a id="337" href="Cubical.Foundations.Equiv.Base.html#253" class="Function">fiber</a> <a id="343" href="Snippets.Equivalence.html#318" class="Bound">f</a> <a id="345" href="Snippets.Equivalence.html#324" class="Bound">y</a><a id="346" class="Symbol">)</a>
+<a id="348" class="Markup">\end{code}</a><a id="358" class="Background">
+%&lt;/is-equiv-def&gt;
+</a><a id="376" class="Markup">\begin{code}</a>
+<a id="_≃_"></a><a id="389" href="Snippets.Equivalence.html#389" class="Function Operator">_≃_</a> <a id="393" class="Symbol">:</a> <a id="395" href="Agda.Primitive.html#326" class="Primitive">Type</a> <a id="400" href="Level.html#285" class="Generalizable">a</a> <a id="402" class="Symbol">→</a> <a id="404" href="Agda.Primitive.html#326" class="Primitive">Type</a> <a id="409" href="Level.html#287" class="Generalizable">b</a> <a id="411" class="Symbol">→</a> <a id="413" href="Agda.Primitive.html#326" class="Primitive">Type</a> <a id="418" class="Symbol">_</a>
+<a id="420" class="Markup">\end{code}</a><a id="430" class="Background">
+%&lt;*equiv-def&gt;
+</a><a id="445" class="Markup">\begin{code}[number=equiv-def]</a>
+<a id="476" href="Snippets.Equivalence.html#476" class="Bound">A</a> <a id="478" href="Snippets.Equivalence.html#389" class="Function Operator">≃</a> <a id="480" href="Snippets.Equivalence.html#480" class="Bound">B</a> <a id="482" class="Symbol">=</a> <a id="484" href="Data.Sigma.Base.html#401" class="Function">Σ[</a> <a id="487" href="Snippets.Equivalence.html#487" class="Bound">f</a> <a id="489" href="Data.Sigma.Base.html#401" class="Function">⦂</a> <a id="491" class="Symbol">(</a><a id="492" href="Snippets.Equivalence.html#476" class="Bound">A</a> <a id="494" class="Symbol">→</a> <a id="496" href="Snippets.Equivalence.html#480" class="Bound">B</a><a id="497" class="Symbol">)</a> <a id="499" href="Data.Sigma.Base.html#401" class="Function">]</a> <a id="501" href="Snippets.Equivalence.html#240" class="Function">isEquiv</a> <a id="509" href="Snippets.Equivalence.html#487" class="Bound">f</a>
+<a id="511" class="Markup">\end{code}</a><a id="521" class="Background">
+%&lt;/equiv-def&gt;
+</a></pre></body></html>

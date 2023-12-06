@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>HITs.PropositionalTruncation.Display</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Markup">\begin{code}</a>
+<a id="14" class="Symbol">{-#</a> <a id="18" class="Keyword">OPTIONS</a> <a id="26" class="Pragma">--cubical</a> <a id="36" class="Pragma">--safe</a> <a id="43" class="Symbol">#-}</a>
+
+<a id="48" class="Keyword">module</a> <a id="55" href="HITs.PropositionalTruncation.Display.html" class="Module">HITs.PropositionalTruncation.Display</a> <a id="92" class="Keyword">where</a>
+
+<a id="99" class="Keyword">open</a> <a id="104" class="Keyword">import</a> <a id="111" href="Prelude.html" class="Module">Prelude</a>
+<a id="119" class="Keyword">open</a> <a id="124" class="Keyword">import</a> <a id="131" href="Cubical.HITs.PropositionalTruncation.html" class="Module">Cubical.HITs.PropositionalTruncation</a> <a id="168" class="Keyword">hiding</a> <a id="175" class="Symbol">(</a><a id="176" href="Cubical.HITs.PropositionalTruncation.Properties.html#782" class="Function">rec</a><a id="179" class="Symbol">)</a>
+<a id="181" class="Keyword">import</a> <a id="188" href="Cubical.HITs.PropositionalTruncation.html" class="Module">Cubical.HITs.PropositionalTruncation</a> <a id="225" class="Symbol">as</a> <a id="228" class="Module">Cubical</a>
+
+<a id="237" class="Markup">\end{code}</a><a id="247" class="Background">
+%&lt;*rec-prop-trunc&gt;
+</a><a id="267" class="Markup">\begin{code}[number=elim-prop]</a>
+<a id="rec"></a><a id="298" href="HITs.PropositionalTruncation.Display.html#298" class="Function">rec</a> <a id="302" class="Symbol">:</a> <a id="304" href="Cubical.Foundations.Id.html#882" class="Function">isProp</a> <a id="311" href="Level.html#315" class="Generalizable">B</a> <a id="313" class="Symbol">→</a> <a id="315" class="Symbol">(</a><a id="316" href="Level.html#301" class="Generalizable">A</a> <a id="318" class="Symbol">→</a> <a id="320" href="Level.html#315" class="Generalizable">B</a><a id="321" class="Symbol">)</a> <a id="323" class="Symbol">→</a> <a id="325" href="Cubical.HITs.PropositionalTruncation.Base.html#249" class="Datatype Operator">∥</a> <a id="327" href="Level.html#301" class="Generalizable">A</a> <a id="329" href="Cubical.HITs.PropositionalTruncation.Base.html#249" class="Datatype Operator">∥</a> <a id="331" class="Symbol">→</a> <a id="333" href="Level.html#315" class="Generalizable">B</a>
+<a id="335" class="Markup">\end{code}</a><a id="345" class="Background">
+%&lt;/rec-prop-trunc&gt;
+%&lt;*rec-prop-trunc-set&gt;
+</a><a id="388" class="Markup">\begin{code}[number=elim-prop-coh]</a>
+<a id="rec→set"></a><a id="423" href="HITs.PropositionalTruncation.Display.html#423" class="Function">rec→set</a> <a id="431" class="Symbol">:</a> <a id="433" href="Cubical.Foundations.Id.html#919" class="Function">isSet</a> <a id="439" href="Level.html#315" class="Generalizable">B</a> <a id="441" class="Symbol">→</a> <a id="443" class="Symbol">(</a><a id="444" href="HITs.PropositionalTruncation.Display.html#444" class="Bound">f</a> <a id="446" class="Symbol">:</a> <a id="448" href="Level.html#301" class="Generalizable">A</a> <a id="450" class="Symbol">→</a> <a id="452" href="Level.html#315" class="Generalizable">B</a><a id="453" class="Symbol">)</a> <a id="455" class="Symbol">→</a> <a id="457" class="Symbol">(∀</a> <a id="460" href="HITs.PropositionalTruncation.Display.html#460" class="Bound">x</a> <a id="462" href="HITs.PropositionalTruncation.Display.html#462" class="Bound">y</a> <a id="464" class="Symbol">→</a> <a id="466" href="HITs.PropositionalTruncation.Display.html#444" class="Bound">f</a> <a id="468" href="HITs.PropositionalTruncation.Display.html#460" class="Bound">x</a> <a id="470" href="Agda.Builtin.Cubical.Path.html#381" class="Function Operator">≡</a> <a id="472" href="HITs.PropositionalTruncation.Display.html#444" class="Bound">f</a> <a id="474" href="HITs.PropositionalTruncation.Display.html#462" class="Bound">y</a><a id="475" class="Symbol">)</a> <a id="477" class="Symbol">→</a> <a id="479" href="Cubical.HITs.PropositionalTruncation.Base.html#249" class="Datatype Operator">∥</a> <a id="481" href="Level.html#301" class="Generalizable">A</a> <a id="483" href="Cubical.HITs.PropositionalTruncation.Base.html#249" class="Datatype Operator">∥</a> <a id="485" class="Symbol">→</a> <a id="487" href="Level.html#315" class="Generalizable">B</a>
+<a id="489" class="Markup">\end{code}</a><a id="499" class="Background">
+%&lt;/rec-prop-trunc-set&gt;
+</a><a id="523" class="Markup">\begin{code}</a>
+<a id="536" href="HITs.PropositionalTruncation.Display.html#298" class="Function">rec</a> <a id="540" class="Symbol">=</a> <a id="542" href="Cubical.HITs.PropositionalTruncation.Properties.html#782" class="Function">Cubical.rec</a>
+<a id="554" href="HITs.PropositionalTruncation.Display.html#423" class="Function">rec→set</a> <a id="562" href="HITs.PropositionalTruncation.Display.html#562" class="Bound">isSetB</a> <a id="569" class="Symbol">=</a> <a id="571" href="Cubical.HITs.PropositionalTruncation.Properties.html#3474" class="Function">rec→Set</a> <a id="579" href="HITs.PropositionalTruncation.Display.html#562" class="Bound">isSetB</a>
+<a id="586" class="Markup">\end{code}</a><a id="596" class="Background">
+</a></pre></body></html>
