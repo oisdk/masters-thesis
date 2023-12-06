@@ -96,9 +96,28 @@
 # I think lemmas/theorems already proved in previous work should be marked
 # explicitly as such, or even just briefly summarised to save space (to fit the
 # whole paper into 25 LNCS pages).
-# 
+
+Indeed, there is significant overlap with the early part of the paper and other
+work (though we would point to Frumin, D., Geuvers, H., Gondelman, L., van der
+Weide, N.: Finite Sets in Homotopy Type Theory [2018] as the closest work).
+The difference with our work is the new setting of cubical type theory, which is
+what facilitates the novel theorems later on (theorem 2.7, 3.4, and the library
+development as a whole).
+
+However, in the interests of space, we are happy to cut down the exposition of
+these early theorems and instead present them from a high level, with pointers
+to their original proofs.
+
+After converting the paper to the LNCS format it stands at 30 pages, without
+any editing or squeezing, so we think it should be possible to get down to 25
+pages with this change.
+
 # Without univalence or at least function extensionality, it’s probably much more
 # problematic to deal with finiteness that involves higher-order/function types.
+
+Indeed, it is not possible to prove functions with cardinality other than 0 are
+finite without extensionality.
+
 # Thanks to Cubical Agda, in this paper we can state and prove equivalences
 # between higher-order types, and prove that some of the formulations of
 # finiteness are closed under Pi, while still getting proofs of properties such as
@@ -108,12 +127,42 @@
 # deal with (dependent) function types nicely is the main contribution of this
 # paper that differentiates it from previous work — if that’s the case, the
 # contribution needs to be stated and demonstrated more clearly.
-# 
+
+We will emphasise this contribution more clearly in an update.
+
 # However, the countdown example doesn’t really demonstrate the aforementioned
 # ability: the exhaustive search is performed on a type which is complex but still
-# doesn’t involve functions, so I find the example somewhat unsatisfactory. Also,
+# doesn’t involve functions, so I find the example somewhat unsatisfactory.
+
+Indeed, this is an oversight on our part.
+Originally, the type in question was meant to contain a function: the
+isomorphism between `Fin`s, used to represent permutations.
+However, as noted in the paper, this type doesn't work for efficiency reasons,
+so we used a different representation of permutations.
+Missing from the paper (but to be included in an update) is a proof that the two
+representations are isomorphic, and therefore equivalent, resulting in a
+finiteness proof over a type which *does* contain a function.
+
+# Also,
 # while using a larger example is a good idea, in this case exhaustive search is
-# not a good way to solve the countdown problem. The example is more like a fun
+# not a good way to solve the countdown problem. 
+
+We disagree.
+While it is certainly not an efficient solution, semantically speaking the
+essence of the countdown problem is one of constraint satisfaction, and 
+proving or disproving that a system of constraints is satisfiable amounts to
+making a judgement about the cardinality of the set of possible solutions.
+That is *precisely* what our work does.
+The question "does this countdown problem have a solution" is a question about
+the cardinality of the type representing its solutions.
+A constructive answer to that question is a precise enumeration of that type.
+
+To be clear, we don't imagine people using the library to solve problems like
+the countdown problem.
+We think that the finiteness proofs and explanations are useful for other
+formalisation efforts
+
+# The example is more like a fun
 # exercise but doesn’t make a lot of sense by itself. This kind of example is not
 # entirely appealing, but on the other hand it’s kind of acceptable: there’s a
 # library that seems useful here and there, but the actual applications may not be
@@ -157,9 +206,11 @@ update.
 #    demonstrate the full power of your library (which I suppose is the ability to
 #    deal with function types)?
 
-
+Answered above.
 
 # 3. Just curious: how (in)efficient is your solution to the countdown problem?
+
+The example in the paper takes a few seconds to typecheck.
 
 # 4. How would you plan to shrink this paper to 25 LNCS pages?
 
