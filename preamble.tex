@@ -1,4 +1,6 @@
-\documentclass[acmsmall,screen,review,anonymous]{acmart}
+\documentclass{llncs}
+
+\usepackage{xcolor}
 
 \definecolor{AHKeywordColour}    {cmyk}{0.86,0.91,0,0.04}
 \definecolor{AHFunctionColour}   {cmyk}{0.64,0,0.95,0.40}
@@ -25,7 +27,6 @@
 
 \usepackage{lineno}
 
-\usepackage{cleveref}
 
 % For some of the operators I define myself I use this package.
 \usepackage{pict2e}
@@ -44,12 +45,7 @@
 % Allow for blackboard bold 0 and 1.
 \DeclareMathAlphabet{\numberbb}{U}{bbold}{m}{n}
 
-% Theorem environments
-\theoremstyle{acmdefinition}
-\newtheorem{definition}{Definition}
 
-
-\newtheorem*{remark}{Remark}
 
 % Maths fonts
 \usepackage{mathrsfs}
@@ -70,7 +66,6 @@
 
 % Citations
 \usepackage{natbib}
-\citestyle{acmauthoryear}
 
 % Multiple figures
 \usepackage{subcaption}
@@ -112,7 +107,6 @@
   diagrams={>={Straight Barb[scale=0.8]}},
 }
 \usepackage{amsmath}
-\usepackage{amsthm}
 \renewcommand{\qed}{\ensuremath{\hfill\blacksquare}}
 \makeatletter
 \newcommand{\eqnum}{\leavevmode\textup{\tagform@{\theequation}}}

@@ -140,6 +140,17 @@
 # ## Questions for authors
 # 
 # 1. Could you clarify exactly which definitions and theorems are new?
+
+Yes absolutely.
+
+The fully new proofs in the paper are:
+
+- Theorem 2.7, showing that any cardinal finite type with a total order is
+  Bishop finite.
+- Theorem 3.4, showing that any cardinal finite set forms a Π-Pretopos.
+
+In addition, the 
+
 # 2. Could you fix the countdown example or provide some more examples to
 #    demonstrate the full power of your library (which I suppose is the ability to
 #    deal with function types)?

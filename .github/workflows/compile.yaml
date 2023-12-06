@@ -1,21 +1,25 @@
-name: Compile LaTeX and HTML
+name: Compile Agda and LaTeX and Deploy to Site
 on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '**.md'
+      - '**.markdown'
 
 jobs:
-  build:
+  compile-agda:
+    name: Compile Agda
     runs-on: ubuntu-20.04
 
     strategy:
       matrix:
         cubical-ref: ["v0.3"]
         agda-ver: ["2.6.2"]
-        
+
     steps:
 
-  # Install Agda
+# Install Agda
     - uses: wenkokke/setup-agda@v2.0.0
       with:
         agda-version: ${{ matrix.agda-ver }}
@@ -23,50 +27,89 @@ jobs:
         agda-libraries: |
           https://github.com/agda/cubical.git#${{ matrix.cubical-ref }}
 
-
-# Download this git repo
+# Download and compile main library
     - name: Checkout main
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3.4.0
       with:
         path: main
 
-# Download and compile agda code
-
-    - uses: actions/cache@v2
-      name: Cache agda code
+    - uses: actions/cache@v3.3.1
+      name: Cache agda library
       id: cache-agda
       with:
         path: ~/main-build
-        key: html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}-${{ hashFiles('main/agda/**') }}
+        key: ${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}-${{ hashFiles('main/agda/**') }}-${{ hashFiles('main/scripts/replace.sed') }}
         restore-keys: |
-          html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}-
-          html-and-tex-${{ runner.os }}-${{ matrix.agda-ver }}-
+          ${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}-${{ hashFiles('main/agda/**') }}-
+          ${{ runner.os }}-${{ matrix.agda-ver }}-${{ matrix.cubical-ref }}-
+          ${{ runner.os }}-${{ matrix.agda-ver }}-
 
-    - name: Cache hit on agda code; retrieve agda code library
+    - name: Cache hit (agda); Retrieve agda library
       if: steps.cache-agda.outputs.cache-hit == 'true'
       run: cp -f -R ~/main-build/* $GITHUB_WORKSPACE/main/agda
 
-    - name: Cache miss on agda code; compile Agda code
+    - name: Cache miss (agda); Compile agda library
       if: steps.cache-agda.outputs.cache-hit != 'true'
       run: |
+        set -e
         mkdir -p ~/main-build/_build
-        cp -f -R ~/main-build/_build main/agda/_build
+        cp -f -R ~/main-build/_build $GITHUB_WORKSPACE/main/agda/_build
         rm -r ~/main-build
+        cd main/agda
+        echo "::group::Typechecking and Rendering HTML"
+        ./scripts/render.sh
+        echo "::endgroup::"
 
-        cd main
-        ./scripts/generate-everything-agda.sh Everything
-        cd agda
-        agda --html --html-dir=docs Everything.agda
-        rm Everything.agda
-
+        echo "::group::Installing LaTeX"
+        sudo apt-get update  
         sudo apt-get install texlive-binaries
-        find . -type f -name '*.lagda' | while read -r code ; do
-            agda --latex --latex-dir=. $code
-        done
-        cd ..
-        cp -f -R agda/ ~/main-build/
+        echo "::endgroup::"
 
-# Compile pdf
+        echo "::group::Rendering Agda LaTeX"
+        find . -type f -name '*.lagda' | while read -r code ; do
+            echo "$code"
+            agda --latex --latex-dir=. $code
+            dir=$(dirname "$code")
+            file=$(basename "$code" .lagda).tex
+            sed -i -f ../scripts/replace.sed "$dir/$file"
+        done
+        echo "::endgroup::"
+
+        cd ../..
+        cp -f -R main/agda/ ~/main-build/
+
+    - name: Upload rendered agda code as artefact
+      uses: actions/upload-artifact@v3
+      with:
+        name: agda-code
+        path: main/agda/**/*.tex
+
+    - name: Deploy html to github pages
+      if: steps.cache-agda.outputs.cache-hit != 'true'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: main/agda/docs
+        destination_dir: agda
+
+  generate-pdf:
+    name: Compile LaTeX and generate pdf
+    needs: compile-agda
+    runs-on: ubuntu-20.04
+
+    steps:
+
+    - name: Checkout main
+      uses: actions/checkout@v3.4.0
+      with:
+        path: main
+
+    - name: Download compiled agda code
+      uses: actions/download-artifact@v3
+      with:
+        name: agda-code
+        path: main/agda
+
     - name: Remove .latexmkrc
       run: rm main/.latexmkrc
 
@@ -77,7 +120,7 @@ jobs:
         root_file: paper.tex
 
     - name: Upload generated pdf
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: paper
         path: main/paper.pdf
@@ -88,12 +131,9 @@ jobs:
     - name: Move generated pdf into site folder
       run: mv main/paper.pdf site/paper.pdf
 
-    - name: Move agda html into site folder
-      run: mv main/agda/docs site/agda
-
-    - name: Deploy html and pdf to github pages
-      uses: peaceiris/actions-gh-pages@v3.7.1
+    - name: Deploy html to github pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: site
-        destination_dir: agda-tex
+        destination_dir: paper
