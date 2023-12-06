@@ -147,18 +147,26 @@ The fully new proofs in the paper are:
 - Theorem 2.7, showing that any cardinal finite type with a total order is
   Bishop finite.
 - Theorem 3.4, showing that any cardinal finite set forms a Π-Pretopos.
+- Manifest enumerability is a new definition, as far as we are aware.
 
 Of course, these theorems have some sub-lemmas that are also new (and others
-that have been proven before); we will identify which is which in an update.
-
-Another 
+that have been proven before); we will identify which is which inline in an
+update.
 
 # 2. Could you fix the countdown example or provide some more examples to
 #    demonstrate the full power of your library (which I suppose is the ability to
 #    deal with function types)?
+
+
+
 # 3. Just curious: how (in)efficient is your solution to the countdown problem?
+
 # 4. How would you plan to shrink this paper to 25 LNCS pages?
-# 
+
+As suggested, we will shorten the discussion of theorems already proven
+elsewhere, and instead focus on a high-level summary of the classification of
+predicates, and leave the in-depth proofs for the novel work
+
 # ## Detailed comments for authors
 # 
 # * L88 (and throughout the paper) ‘dependently-typed’: The hyphen is not needed.
