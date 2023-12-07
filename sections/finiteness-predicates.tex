@@ -439,7 +439,8 @@ to be ``coherently constant''~\cite{krausGeneralUniversalProperty2015}.
   
   It is the composition of two operations: first, with
   \AgdaFunction{\ensuremath{\lVert \text{map} \rVert}}, we change the truncated
-  proof of manifest bishop finiteness to a proof of equivalence with fin.
+  proof of manifest bishop finiteness to a proof of equivalence with
+  \AgdaDatatype{Fin}.
 
   Then we use the eliminator from \Cref{elim-prop-coh} with three
   parameters.
@@ -487,7 +488,7 @@ a proof of Cardinal finiteness: it's just the truncation function
 \AgdaInductiveConstructor{\(\lvert \_ \rvert\)}.
 It's the other direction which presents a difficulty:
 \begin{theorem}\label{cardinal-to-manifest-bishop}
-  Any cardinal finite type with a total order is Bishop finite.
+  Any cardinal finite type with a (decidable) total order is Bishop finite.
 \end{theorem}
 \begin{proof}
   The following is a sketch of the proof, which is quite involved in the

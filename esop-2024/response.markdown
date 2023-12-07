@@ -271,13 +271,22 @@ we have available to us two proofs that `A` is discrete.
 >   seems to suppose A is a set however, so this last part of the proof isn’t
 >   actually needed.
 
-There is no assumption that `A` is a set.
+There is no assumption that `A` is a set, I think.
 
 > * L413 ‘‖map‖’, ‘B⇒Fin≃’: should at least give the types (for all the
 >   definitions throughout the paper; I think there are others that are left
 >   undefined too)
+
+We will add the signatures.
+
 > * L416 ‘fin’ -> Fin (Agda code)
+
+Fixed.
+
 > * L445 ‘total order’: Should this total order be decidable?
+
+Yes. We will make this clear.
+
 > * L445 ‘Bishop finite’ -> manifestly Bishop finite
 > * L481 & L484: C should be formatted consistently (throughout the paper)
 > * L511 ‘every finiteness predicate we’ve seen implies decidable equality’: if
