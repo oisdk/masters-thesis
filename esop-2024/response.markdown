@@ -356,11 +356,20 @@ It will be submitted as an artefact.
 > - Most of the contribution in the paper is the Cubical Agda formalization, but I
 >   don't see any supplementary material being uploaded. Is this an accidental
 >   omission, or perhaps an EasyChair issue? In any case, being able to look at
->   the formalization seems rather important here.
+>   the formalisation seems rather important here.
+
+We were unsure when to submit the formalisation.
+The plan is to submit it as an artefact, but we will see if it is possible to
+submit during the review process.
+
 > - A substantial part of the paper reviews definitions and theorems from previous
 >   literature. There are relatively few new results about finite sets. I'd prefer
 >   for the paper to focus on the novelties in the first half of the paper, and
 >   then perhaps spend more space on the proof search library & its applications.
+
+To get the paper to fit in the page limit we will shorten up the early parts
+which focus on preexisting theorems.
+
 >   However, even then I'd find the amount of novelty to be a bit low for a
 >   research paper submission. It's also a bit hard to assess how substantial the
 >   new formalizations are, without having access to the Agda code.
@@ -370,6 +379,11 @@ It will be submitted as an artefact.
 >   formalize in plain (non-cubical) HoTT, with the exception of the proof search
 >   library, but there it'd be nice too see more about how computational
 >   univalence is being used.
+
+It may well be possible to prove the main theorems in the paper without
+computational univalence (although difficult: we use computation in a handful of
+the internal proofs, but this is probably not essential).
+
 > 
 > On the positive side, I found the paper highly readable, and I found the proof
 > search solution for the countdown problem quite fun.
@@ -393,16 +407,27 @@ It will be submitted as an artefact.
 > tense, it'd look nicer to switch to that. The future tense sounds like as if
 > the work hasn't been done yet. Also, line 35 for instance: "all our work will
 > be formalised in Agda" very much sounds like it hasn't yet been formalised!
+
+Fixed.
 > 
 > 26: "in particular Cubical Agda" should be moved out of the citation bracket
+
+Fixed.
+
 > 
 > 31: "quantities like a total order" --> maybe "data like a total ordering"
-> 
+
+Fixed.
+
 > 72: The two citations to Frumin et al. that are next to each other could be
 > replaced with one citation.
-> 
+
+This is fixed by changing to the llncs style.
+
 > 100: "Non Discrete" --> "Non-discrete"
-> 
+
+Fixed.
+
 > 114, Fig. 1: usually, terminology is not capitalized in mathematical English,
 > so I'd prefer to not capitalize "Split Enumerable", "Cardinal finite", etc.
 > Also in the text.

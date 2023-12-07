@@ -23,7 +23,7 @@ And different proofs of \verb+Listable+ that use different total orders will be
 distinguishable.
 
 Recent developments in type
-theory~\cite[in particular Cubical Agda][]{vezzosiCubicalAgdaDependently2019}
+theory, in particular Cubical Agda~\cite{vezzosiCubicalAgdaDependently2019},
 have made constructions like propositional truncation available in proof
 assistants, which
 can be used to patch this ``leak'': any two propositionally truncated values of
@@ -31,7 +31,7 @@ the same type are indistinguishable.
 The propositional truncation of \verb+Listable+, called Cardinal
 finiteness~(\Cref{card-finite-def}), does not reveal an ordering, for instance.
 However, far from closing the gap between classical and constructive proofs,
-this only makes the divide more subtle: while we can't extract quantities like a
+this only makes the divide more subtle: while we can't extract data like a
 total order from a proof of cardinal finiteness, we can extract computational
 content like an algorithm for decidable equality
 (\Cref{cardinal-finite-discrete}), or the cardinality of the underlying type
