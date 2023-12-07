@@ -237,18 +237,42 @@ Fixed
 
 > * L166 fiber: ∃ usually means mere existence in HoTT, but I don’t suppose the
 >   type here is truncated?
+
+It is not truncated. This is the cubical Agda convention, which does differ from
+the HoTT convention.
+
 > * L177: Does ‘equivalent’ here mean equivalence in HoTT (defined in the paper at
 >   L303)?
+
+The precise property proven here is actually isomorphism, but of course this is
+equivalent to equivalence by univalence.
+
 > * L179: Some parts of the formula/code are italicised by the lemma environment
 >   but these look weird.
+
+Fixed
+
 > * L393 ‘More importantly [Hedberg’s theorem]... And of course we know that A
 >   here has decidable equality.’: This proof seems circular. We’re proving
 >   Discrete A, that is, A has decidable equality, and one thing we need to
 >   establish is that Discrete A is a proposition, which is reduced to the
 >   condition that A is a set, at which point we don’t know A has decidable
->   equality yet and cannot use Hedberg’s theorem? The statement of Lemma 2.5
+>   equality yet and cannot use Hedberg’s theorem? 
+
+The condition that `Discrete A` is a proposition is given as:
+
+      isProp (Discrete A)
+    = ∀ (x y : Discrete A) → x ≡ y
+
+Meaning that, when trying to prove that the type `Discrete A` is a proposition,
+we have available to us two proofs that `A` is discrete.
+
+>   The statement of Lemma 2.5
 >   seems to suppose A is a set however, so this last part of the proof isn’t
 >   actually needed.
+
+There is no assumption that `A` is a set.
+
 > * L413 ‘‖map‖’, ‘B⇒Fin≃’: should at least give the types (for all the
 >   definitions throughout the paper; I think there are others that are left
 >   undefined too)
