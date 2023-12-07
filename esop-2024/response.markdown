@@ -167,11 +167,17 @@ formalisation efforts
 > entirely appealing, but on the other hand it’s kind of acceptable: there’s a
 > library that seems useful here and there, but the actual applications may not be
 > so interesting, so for presentation purposes it makes sense to use a larger but
-> not necessarily practical example to show how to use the library. If it’s not
+> not necessarily practical example to show how to use the library.
+
+This is a fair characterisation.
+
+> If it’s not
 > easy to extend the countdown example to cover function types, I suppose it’s
 > fine to fill the gap with some practical (but maybe not-so-interesting)
 > examples.
-> 
+
+We can extend the countdown example to include functions.
+
 > As for the more theoretical part of the paper: Theorem 2.7 is claimed to be new
 > and doesn’t look easy to prove, although conceptually it’s not complicated. With
 > univalence, closure under Pi doesn’t look difficult to prove either. On the
@@ -222,6 +228,9 @@ predicates, and leave the in-depth proofs for the novel work
 > 
 > * L88 (and throughout the paper) ‘dependently-typed’: The hyphen is not needed.
 >   (You do write ‘dependently typed’ in some other places of the paper.)
+
+Fixed
+
 > * L124 ‘Section 2.4’, ‘Section 2.1’: put parentheses around these
 > * L166 fiber: ∃ usually means mere existence in HoTT, but I don’t suppose the
 >   type here is truncated?
