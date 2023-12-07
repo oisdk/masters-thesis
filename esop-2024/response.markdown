@@ -318,14 +318,29 @@ https://arxiv.org/abs/1207.0959 for a more in-depth exploration of it.
 (although those study the Pi-W-pretopos)
 
 > * L769–770: insert a comma after ‘Put another way’ and ‘Secondly’
+
+Done
+
 > * L1025 ‘That’s what we will figure out in this subsection’: This seems to refer
 >   to a smaller subsection which probably has been edited away.
+
+Fixed
+
 > * L1028 ‘This doesn’t get us much closer to a finiteness proof, however: for
 >   that we will need to rely on Dyck words’: I was expecting to generate binary
 >   trees having a specified list of leaves (and there are finitely many such
 >   trees). Would this be significantly harder?
+
+Our approach decomposes the finiteness of the elements and the finiteness of the
+tree shapes.
+To do both at once would require the specification of a binary tree type with a
+predicate that its leaves are equal (after flattening) to some list, which we
+think is less clean.
+
 > * The Agda code should have been submitted as supplementary material.
-> 
+
+It will be submitted as an artefact.
+
 > --------------------------------------------------------------------------------
 > # Review 4
 > 

@@ -48,9 +48,9 @@ practical applications which would simply not be possible without
 computational univalence.
 First and foremost: our proofs of finiteness, constructed with the API we will
 describe, have all the power of full equalities.
-Put another way any proof over a finite type \(A\) can be lifted to any other
+Put another way, any proof over a finite type \(A\) can be lifted to any other
 type with the same cardinality.
-Secondly our proof search can range over functions: we could, for instance, have
+Secondly, our proof search can range over functions: we could, for instance, have
 asked the prover to find if \emph{any} function over \(\AgdaDatatype{Bool}\) is
 associative, and if so return it to us.
 \ExecuteMetaData[agda/Snippets/Bool.tex]{some-assoc}
@@ -374,8 +374,6 @@ of evaluation.
 
 So what data type encapsulates the ``different ways to parenthesise'' a given
 expression?
-That's what we will figure out in this subsection, and what we will prove finite.
-
 One way to approach the problem is with a binary tree.
 A binary tree with \(n\) leaves corresponds in a straightforward way to a
 parenthesisation of \(n\) numbers (Fig.~\ref{countdown-parens}).
