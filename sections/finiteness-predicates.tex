@@ -312,7 +312,7 @@ set.
 For our purposes, this is too much information: it means that when constructing
 the ``category of finite sets'' later on, instead of each type having one
 canonical representative, it will have $n!$ where $n$ is the cardinality of
-the type\footnotemark.
+the type.\footnotemark
 
 \footnotetext{
   We actually do get a category (a groupoid, even) from manifest Bishop
@@ -373,7 +373,7 @@ At first glance, it might seem that we lose any useful properties we could
 derive from \(\AgdaDatatype{\ensuremath{\mathcal{B}}}\).
 Luckily, this is not the case: we will show here how to derive decidable
 equality (\Cref{cardinal-finite-discrete}) and cardinality
-(\Cref{card-finite-cardinality}) out from under the
+(\Cref{card-finite-cardinality}) from under the
 truncation.
 Those two lemmas are proven in
 \cite[Proposition 2.4.9 and 2.4.10]{yorgeyCombinatorialSpeciesLabelled2014}, in
@@ -581,7 +581,7 @@ identity path.
 
 Is the circle finite?
 According to the finiteness predicates we have seen so far, it is not.
-Recall that Hedberg's theorem says every discrete type is a set, and
+Recall that Hedberg's theorem says that every discrete type is a set, and
 every finiteness predicate we've seen implies decidable
 equality.
 
@@ -652,8 +652,9 @@ The first two constructors are point constructors, giving ways to create
 values of type \(\agdacal{K}\;A\).
 They are also recognisable as the two constructors for finite lists, a type
 which represents the free monoid.
-The next two constructors add extra paths to the type: equations that usage of
-the type must obey.
+The next two constructors add extra equations (paths) to the type.
+For a function to be well-defined on $\agdacal{K}\;A$ it must respect these
+equations (and the type checker enforces this condition).
 These extra paths turn the free monoid into the free \emph{commutative}
 (\AgdaInductiveConstructor{com}) \emph{idempotent}
 (\AgdaInductiveConstructor{dup}) monoid.
@@ -668,7 +669,7 @@ However, rather than just being a specification, \(\agdacal{K}\) is fully usable
 as a data type in its own right, thanks to HITs.
 
 \begin{definition}[Kuratowski Finiteness]
-  A type is Kuratowski finite if there exists a Kuratowski-finite subset of that
+  A type is Kuratowski finite if there exists a Kuratowski-finite subset of the
   type which contains every element of the type.
   \ExecuteMetaData[agda/Cardinality/Finite/Kuratowski.tex]{kuratowski-finite-def}
 \end{definition}

@@ -431,26 +431,49 @@ Fixed.
 > 114, Fig. 1: usually, terminology is not capitalized in mathematical English,
 > so I'd prefer to not capitalize "Split Enumerable", "Cardinal finite", etc.
 > Also in the text.
-> 
+
+Will fix.
+
 > 124: Parentheses seem to be missing around "Section 2.4" and "Section 2.1"
-> 
+
+Fixed.
+
 > General comment on formatting: I prefer if the inserted code examples are
 > indented to some degree. Now the Agda snippets start in the first column
 > everywhere.
-> 
+
+Will fix.
+
 > 328: the footnote superscript should go after the punctuation
-> 
+
+Fixed
+
 > 370: "out from under the truncation" --> "from under the truncation" is enough
-> 
+
+Fixed
+
 > 511: "Hedberg's theorem says every" --> "Hedberg's theorem says that every"
-> 
+
+Fixed
+
 > 570: "equations that usage of the type must obey" sounds awkward
-> 
+
+Rephrased to:
+
+The next two constructors add extra equations (paths) to the type.
+For a function to be well-defined on K A it must respect these
+equations (and the type checker enforces this condition).
+ 
 > 576: "in its own right" --> "on its own right"
 > 
 > 578: "of that type" --> "of the type"
+
+Fixed
 > 
 > 737: "dependently-typed" --> "dependently typed"
+
+Fixed
+
 > "proofs of interesting theoretical things" --> maybe use a bit more refined
 > wording
 > 
