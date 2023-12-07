@@ -232,6 +232,9 @@ predicates, and leave the in-depth proofs for the novel work
 Fixed
 
 > * L124 ‘Section 2.4’, ‘Section 2.1’: put parentheses around these
+
+Fixed
+
 > * L166 fiber: ∃ usually means mere existence in HoTT, but I don’t suppose the
 >   type here is truncated?
 > * L177: Does ‘equivalent’ here mean equivalence in HoTT (defined in the paper at
