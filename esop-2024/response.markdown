@@ -271,7 +271,8 @@ we have available to us two proofs that `A` is discrete.
 >   seems to suppose A is a set however, so this last part of the proof isn’t
 >   actually needed.
 
-There is no assumption that `A` is a set, I think.
+There seems to be some confusion here.
+Lemma 2.5 proves that A is a set, it does not take that as an assumption.
 
 > * L413 ‘‖map‖’, ‘B⇒Fin≃’: should at least give the types (for all the
 >   definitions throughout the paper; I think there are others that are left
@@ -288,14 +289,34 @@ Fixed.
 Yes. We will make this clear.
 
 > * L445 ‘Bishop finite’ -> manifestly Bishop finite
+
+Will fix.
+
 > * L481 & L484: C should be formatted consistently (throughout the paper)
+
+Will fix.
+
 > * L511 ‘every finiteness predicate we’ve seen implies decidable equality’: if
 >   Lemma 2.5 pre-supposes A to be a set, then this argument needs fixing (because
 >   Lemma 2.5 is not applicable to the circle, which is not a set).
+
+Lemma 2.5 doesn't presuppose that A is a set.
+
 > * L559: Some motivation for yet another form of finiteness is needed here.
+
+Indeed. We will explain.
+
 > * L607: Some motivation is needed here. In fact I don’t see why it’s important
 >   to emphasise that finite sets form a category or a kind of topos. Wouldn’t it
 >   suffice to say that we want closure under various dependent type formers?
+
+Forming a Pi-pretopos is a stronger result than just proving that finite sets
+have closure under the various toposes.
+The Pi-pretopos is a relatively standard generalised setting for constructive
+mathematics, see, for instance, Rijke and Spitters [2014], or
+https://arxiv.org/abs/1207.0959 for a more in-depth exploration of it.
+(although those study the Pi-W-pretopos)
+
 > * L769–770: insert a comma after ‘Put another way’ and ‘Secondly’
 > * L1025 ‘That’s what we will figure out in this subsection’: This seems to refer
 >   to a smaller subsection which probably has been edited away.
