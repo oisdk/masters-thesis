@@ -500,10 +500,18 @@ Fixed
 > In the HoTT book, "contraction" by itself refers to the function that
 > connects values to the "center of contraction".
 > So you should use "contractible type" as well.
+
+Fixed
+
 > 
 > Section 2.3
 > perhaps the discussion of h-propositions and prop-truncations could
 > be omitted, and you could refer to e.g. the HoTT book.
-> 
+
+Will fix
+
+ 
 > 440:
 > maybe give a reference to a prior proof of Fin's injectivity?
+
+Will fix
