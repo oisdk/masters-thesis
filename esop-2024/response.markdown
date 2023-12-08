@@ -76,12 +76,12 @@ Reviewer 4:
 Firstly we feel it is important to point out that while some of the results
 referred to here are not new, the setting and formalisation is.
 The related work in question here (Firsov and Uustalu [2015] and Frumin,
-Geuvers, Gondelman, and Weide [2018]) does not use cubical Agda, and as such
+Geuvers, Gondelman, and Weide [2018]) does not use cubical Agda (meaning no
+computational univalence), and as such
 their proofs are not immediately transferable to our formalisation.
 The first uses Agda with the K rule, which is incompatible with cubical Agda,
 and makes some proofs (for instance the injectivity of Fin) simpler; the second
 is formalised in Coq with HoTT and no computational univalence.
-
 
 That said, as mentioned in the proposed changes above, we are happy to shorten
 up the exposition of these results for the sake of space, replacing that
