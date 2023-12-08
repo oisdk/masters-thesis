@@ -20,14 +20,14 @@ We think that reviewer 1 offers a short and accurate summary:
 
 This response will consist first of an outline of the changes we plan to make to
 the paper to address the comments, then a response to points made in multiple
-reviews, and finally detailed responses to each review in turn.
+reviews, and finally, detailed responses to each review in turn.
 
 ## Proposed Changes
 
 - Our primary change will be to cut the paper down to fit it into the LNCS page
   limit of 25. 
   We plan to do this by mainly shortening the early sections of the paper, which
-  exposit finiteness predicates and theorems that are now new to this paper.
+  exposit finiteness predicates and theorems that are not new to this paper.
   Instead of giving an in-depth explanation of these proofs we will keep the
   discussion high-level, pointing to the prior work where it exists, and putting
   more focus on the novel work like Theorems 2.7 and 3.4, and the predicate
@@ -40,7 +40,7 @@ reviews, and finally detailed responses to each review in turn.
 - We will include the actual code of the formalisation as an artefact submission
   alongside the paper itself.
   We were not sure if we should submit the code with the original submission
-  (since there was a separate artefact submission process), and we don't think
+  (as there was a separate artefact submission process), and we don't think
   it is possible to submit it in this rebuttal.
   
   The code itself is about 9000 lines, and is typechecked in Cubical Agda
@@ -73,8 +73,8 @@ Reviewer 4:
 Firstly we feel it is important to point out that while some of the results
 referred to here are not new, the setting and formalisation is.
 The related work in question here (Firsov and Uustalu [2015] and Frumin,
-Geuvers, Gondelman, and Weide [2018]) do not use cubical Agda, and as such their
-proofs are not immediately transferable to our formalisation.
+Geuvers, Gondelman, and Weide [2018]) does not use cubical Agda, and as such
+their proofs are not immediately transferable to our formalisation.
 The first uses Agda with the K rule, which is incompatible with cubical Agda,
 and makes some proofs (for instance the injectivity of Fin) simpler; the second
 is formalised in Coq with HoTT and no computational univalence.
@@ -82,7 +82,7 @@ is formalised in Coq with HoTT and no computational univalence.
 That said, as mentioned in the proposed changes above, we are happy to shorten
 up the exposition of these results for the sake of space, replacing that
 exposition with a pointer to some existing work.
-Furthermore, wherever a lemma or theorem has been proven elsewhere we will
+Furthermore, wherever a lemma or theorem has been proven elsewhere, we will
 include an inline reference to that proof (reviewer 3 mentioned lemma 2.2 in
 particular).
 
