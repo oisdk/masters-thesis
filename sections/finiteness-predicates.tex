@@ -326,8 +326,14 @@ What is needed is a proof of finiteness that is a proposition.
 \ExecuteMetaData[agda/Snippets/Introduction.tex]{isProp}
 The mere propositions are one homotopy level higher than the contractible types
 (\Cref{isContr}), the types for which all values are equal to some value.
-They represent the types for which all values are equal, or, the types
-isomorphic to \agdabot\;or \agdatop.
+They represent the types for which all values are equal.
+Two propositions are {\agdatop} and {\agdabot}: in a classical setting, we can
+say that these are the \emph{only} two propositions, that every proposition is
+isomorphic to either {\agdatop} or {\agdabot}.
+Constructively, we need to be a little more careful with our phrasing: we can
+say there is no proposition which is not equal to either of these types
+($\nexists (A : \AgdaDatatype{Type}).\; \AgdaFunction{isProp}\;A \wedge (A \neq \agdatop) \wedge (A \neq \agdabot)$).
+
 You can also define propositions in terms of contractible types: propositions are
 the types whose paths are contractible types.
 Soon (\Cref{isSet}) we will see the next homotopy level, which are
