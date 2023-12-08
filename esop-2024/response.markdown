@@ -3,7 +3,7 @@
 We would like to thank the reviewers for their time and their feedback.
 The comments were thourough and constructive, and will be helpful in improving
 the paper.
-We were happy to see many positive comments, especially with regards to the
+We were happy to see many positive comments, especially with regard to the
 quality of presentation:
 
 > I found the paper highly readable, and I found the proof
@@ -22,8 +22,6 @@ This response will consist first of an outline of the changes we plan to make to
 the paper to address the comments, then a response to points made in multiple
 reviews, and finally detailed responses to each review in turn.
 
---------------------------------------------------------------------------------
-
 ## Proposed Changes
 
 - Our primary change will be to cut the paper down to fit it into the LNCS page
@@ -31,17 +29,83 @@ reviews, and finally detailed responses to each review in turn.
   We plan to do this by mainly shortening the early sections of the paper, which
   exposit finiteness predicates and theorems that are now new to this paper.
   Instead of giving an in-depth explanation of these proofs we will keep the
-  discussion high-level, putting more focus on the novel work like Theorems 2.7
-  and 3.4.
+  discussion high-level, pointing to the prior work where it exists, and putting
+  more focus on the novel work like Theorems 2.7 and 3.4.
   
   We have changed the formatting from acmart to LNCS and at present (without any
   editing) the page count stands at 30, so we think this change will be
   sufficient to get us under the 25-page limit.
  
-- Including 
+- We will include the actual code of the formalisation as an artefact submission
+  alongside the paper itself.
+  We were not sure if we should submit the code with the original draft, and
+  we don't think it is possible to submit it in this rebuttal.
   
+  The code itself is about 9000 lines, and is typechecked in Cubical Agda
+  version 2.6.2 using the cubical library version 0.3.
+  All theorems in the paper are included in the formalisation, and have been
+  typechecked using the `--safe` flag.
+  
+- We will change the example slightly to demonstrate the use of computational
+  univalence better, as described below.
+  
+- We will also address the more minor points made (corrections, typos, etc.)
 
+## Response to Points in Multiple Reviews
 
+### Presentation of standard results in first half of paper
+
+Some of the early parts of the paper present relatively well-known results about
+finiteness.
+From reviewer 3:
+
+> there seems to be quite some overlap between this paper and a
+> few other papers discussed in related work.
+
+Reviewer 4:
+
+> A substantial part of the paper reviews definitions and theorems from previous
+> literature.
+
+Firstly we feel it is important to point out that while some of the results
+referred to here are not new, the setting and formalisation is.
+The related work in question here (Firsov and Uustalu [2015] and Frumin,
+Geuvers, Gondelman, and Weide [2018]) do not use cubical Agda, and as such their
+proofs are not immediately transferable to our formalisation.
+The first uses Agda with the K rule, which is incompatible with cubical Agda,
+and makes some proofs (for instance the injectivity of Fin) simpler; the second
+is formalised in Coq with HoTT and no computational univalence.
+
+That said, as mentioned in the proposed changes above, we are happy to shorten
+up the exposition of these results for the sake of space, replacing that
+exposition with a pointer to some existing work.
+Furthermore, wherever a lemma or theorem has been proven elsewhere we will
+include an inline reference to that proof (reviewer 3 mentioned lemma 2.2 in
+particular), as well as the summary of existing work which is already present.
+
+### Use of univalence, especially in the example
+
+From reviewer 3:
+
+> However, the countdown example doesn’t really demonstrate the aforementioned
+> ability: the exhaustive search is performed on a type which is complex but still
+> doesn’t involve functions, so I find the example somewhat unsatisfactory.
+
+Reviewer 4:
+
+> with the exception of the proof search library, but there it'd be nice too see
+> more about how computational univalence is being used.
+
+In order to better demonstrate computational univalence, we will change the
+example slightly.
+Recall that we used a list-based representation of permutations (`Perm 0 = ⊤;
+Perm (n+1) = Fin (n+1) × Perm n`) over an isomorphism-based representation
+(`Perm n = Fin n ⇔ Fin n`) for performance reasons.
+We will provide a proof that these two representations are isomorphic, and
+*transport* the efficient exhaustive search over the list-based rep to search
+over the isomorphism-based one.
+So the type of countdown solutions will now include a function (in the form of
+the isomorphism), but will (via univalence) search over listed permutations.
 
 > --------------------------------------------------------------------------------
 > # Review 1
@@ -155,10 +219,6 @@ development as a whole).
 However, in the interests of space, we are happy to cut down the exposition of
 these early theorems and instead present them from a high level, with pointers
 to their original proofs.
-
-After converting the paper to the LNCS format it stands at 30 pages, without
-any editing or squeezing, so we think it should be possible to get down to 25
-pages with this change.
 
 > Without univalence or at least function extensionality, it’s probably much more
 > problematic to deal with finiteness that involves higher-order/function types.
