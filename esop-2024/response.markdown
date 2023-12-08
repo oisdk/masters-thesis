@@ -575,7 +575,9 @@ For a function to be well-defined on K A it must respect these
 equations (and the type checker enforces this condition).
  
 > 576: "in its own right" --> "on its own right"
-> 
+
+We think "in its own right" is correct.
+
 > 578: "of that type" --> "of the type"
 
 Fixed
@@ -586,17 +588,27 @@ Fixed
 
 > "proofs of interesting theoretical things" --> maybe use a bit more refined
 > wording
-> 
+
+We will try to clean this up.
+
 > 832: "decidable types can eliminate from double negation" -->
 > "double negation can be eliminated for decidable types"
-> 
+
+Fixed.
+
 > 902: place footnote superscript after the full stop
-> 
+
+Fixed
+
 > 918: "step one." --> "step one"
-> 
+
+Fixed.
+
 > 1171: "dependently-typed, proof perspective" --> "proof perspective" doesn't
 > read right; maybe "ours is the first paper to provide a dependently typed and
 > verified solution to the countdown problem"
+
+Fixed
 > 
 > 1189: "in dependently typed language" --> "in a dependently typed language"
 > 
@@ -605,7 +617,9 @@ Fixed
 > 
 > 38: It might be good to cite https://dl.acm.org/doi/10.1145/3209108.3209197 for
 > the underlying theory, since that version is the closest to Cubical Agda.
-> 
+
+Will add.
+
 > 250: I've never seen "contraction" being used to mean "contractible type".
 > In the HoTT book, "contraction" by itself refers to the function that
 > connects values to the "center of contraction".

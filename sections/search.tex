@@ -136,7 +136,7 @@ cannot be derived from it.
 Omniscience implies exhaustibility: we can use the usual rule of \(\neg \exists x. P(x) \iff \forall x. \neg P(x) \)
 to turn omniscience for some predicate \(P\) into exhaustibility for some
 predicate \(\neg \neg P\), and then use the fact that
-Decidable types can eliminate from double negation
+double negation can be eliminated for decidable types
 ($\AgdaDatatype{Dec}\;A \to \neg \neg A \to A$).
 
 Our focus here is on those types for which omniscience \emph{does} hold,
@@ -211,7 +211,7 @@ Here's an example puzzle:
   once), construct an expression which equals 765.
 \end{displayquote}
 We'll allow the use of \(+\), \(-\), \(\times\), and \(\div\).
-The answer is at the bottom of this page\footnotemark.
+The answer is at the bottom of this page.\footnotemark
 
 \footnotetext{\rotatebox[origin=c]{180}{Answer: \(3 \times (7 \times (50 - 10) - 25)\)}}
 
@@ -243,7 +243,7 @@ The third step (Fig.~\ref{countdown-operators}) is a vector of length \(n\) of f
 chosen from \(+\), \(\times\), \(-\), and \(\div\)).
 Although it is complicated slightly by the fact that the \(n\) in this
 \(n\)-tuple is dependent on the amount of numbers we let through in the filter
-in step one.
+in step one
 (in terms of types, that means we'll need a \(\Sigma\) rather than a
 \(\times\), explanations of which are forthcoming).
 
