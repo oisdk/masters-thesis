@@ -8,8 +8,7 @@ quality of presentation:
 
 > I found the paper highly readable, and I found the proof
 > search solution for the countdown problem quite fun.
->
-> -- Reviewer 4
+>    -- Reviewer 4
 
 We think that reviewer 1 offers a short and accurate summary:
 
@@ -81,6 +80,7 @@ their proofs are not immediately transferable to our formalisation.
 The first uses Agda with the K rule, which is incompatible with cubical Agda,
 and makes some proofs (for instance the injectivity of Fin) simpler; the second
 is formalised in Coq with HoTT and no computational univalence.
+
 
 That said, as mentioned in the proposed changes above, we are happy to shorten
 up the exposition of these results for the sake of space, replacing that
