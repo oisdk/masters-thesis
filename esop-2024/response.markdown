@@ -30,7 +30,8 @@ reviews, and finally detailed responses to each review in turn.
   exposit finiteness predicates and theorems that are now new to this paper.
   Instead of giving an in-depth explanation of these proofs we will keep the
   discussion high-level, pointing to the prior work where it exists, and putting
-  more focus on the novel work like Theorems 2.7 and 3.4.
+  more focus on the novel work like Theorems 2.7 and 3.4, and the predicate
+  manifest enumerability.
   
   We have changed the formatting from acmart to LNCS and at present (without any
   editing) the page count stands at 30, so we think this change will be
@@ -38,18 +39,20 @@ reviews, and finally detailed responses to each review in turn.
  
 - We will include the actual code of the formalisation as an artefact submission
   alongside the paper itself.
-  We were not sure if we should submit the code with the original draft, and
-  we don't think it is possible to submit it in this rebuttal.
+  We were not sure if we should submit the code with the original submission
+  (since there was a separate artefact submission process), and we don't think
+  it is possible to submit it in this rebuttal.
   
   The code itself is about 9000 lines, and is typechecked in Cubical Agda
   version 2.6.2 using the cubical library version 0.3.
-  All theorems in the paper are included in the formalisation, and have been
-  typechecked using the `--safe` flag.
+  All theorems, lemmas, and definitions in the paper are included in the
+  formalisation, and have been typechecked using the `--safe` flag.
   
 - We will change the example slightly to demonstrate the use of computational
   univalence better, as described below.
   
-- We will also address the more minor points made (corrections, typos, etc.)
+- We will also address the more minor points made (corrections, typos, etc.),
+  detailed below.
 
 ## Response to Points in Multiple Reviews
 
@@ -81,7 +84,7 @@ up the exposition of these results for the sake of space, replacing that
 exposition with a pointer to some existing work.
 Furthermore, wherever a lemma or theorem has been proven elsewhere we will
 include an inline reference to that proof (reviewer 3 mentioned lemma 2.2 in
-particular), as well as the summary of existing work which is already present.
+particular).
 
 ### Use of univalence, especially in the example
 
@@ -107,7 +110,11 @@ over the isomorphism-based one.
 So the type of countdown solutions will now include a function (in the form of
 the isomorphism), but will (via univalence) search over listed permutations.
 
-> --------------------------------------------------------------------------------
+## Detailed responses
+
+What follows is a response to each review in detail.
+
+--------------------------------------------------------------------------------
 > # Review 1
 > 
 > ## Overall evaluation
@@ -142,7 +149,7 @@ the isomorphism), but will (via univalence) search over listed permutations.
 > 
 > https://easychair.org/conferences/review_attachment.cgi?rid=11211749&a=31781025&track=294214
 > 
-> --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 > # Review 2
 > 
 > ## Overall evaluation
@@ -175,12 +182,13 @@ the isomorphism), but will (via univalence) search over listed permutations.
 > 
 > ## Detailed comments for authors
 > 
-> Please make sure to respect the margins, see lines 70 and 83 (page 2) and Fig. 2 (page 19).
+> Please make sure to respect the margins, see lines 70 and 83 (page 2) and Fig.
+> 2 (page 19).
 
 Fixed.
 
 > 
-> --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 > # Review 3
 > 
 > ## Overall evaluation
@@ -203,11 +211,7 @@ Fixed.
 > 
 > First of all, I’m not familiar with the literature about constructive
 > finiteness, but there seems to be quite some overlap between this paper and a
-> few other papers discussed in related work. For a specific example: Lemma 2.2 is
-> already proved by Firsov and Uustalu [2014] as ‘lstbl2deq’ in their Section 3.1.
-> I think lemmas/theorems already proved in previous work should be marked
-> explicitly as such, or even just briefly summarised to save space (to fit the
-> whole paper into 25 LNCS pages).
+> few other papers discussed in related work.
 
 Indeed, there is significant overlap with the early part of the paper and other
 work (though we would point to Frumin, D., Geuvers, H., Gondelman, L., van der
@@ -219,6 +223,15 @@ development as a whole).
 However, in the interests of space, we are happy to cut down the exposition of
 these early theorems and instead present them from a high level, with pointers
 to their original proofs.
+
+> For a specific example: Lemma 2.2 is
+> already proved by Firsov and Uustalu [2014] as ‘lstbl2deq’ in their Section 3.1.
+> I think lemmas/theorems already proved in previous work should be marked
+> explicitly as such, or even just briefly summarised to save space (to fit the
+> whole paper into 25 LNCS pages).
+
+We will explicitly mark every theorem and lemma in the paper with a reference to
+pre-existing work, if it exists.
 
 > Without univalence or at least function extensionality, it’s probably much more
 > problematic to deal with finiteness that involves higher-order/function types.
@@ -245,7 +258,6 @@ We will emphasise this contribution more clearly in an update.
 > while using a larger example is a good idea, in this case exhaustive search is
 > not a good way to solve the countdown problem. 
 
-We disagree.
 While it is certainly not an efficient solution, semantically speaking the
 essence of the countdown problem is one of constraint satisfaction, and 
 proving or disproving that a system of constraints is satisfiable amounts to
@@ -267,14 +279,12 @@ formalisation efforts
 > so interesting, so for presentation purposes it makes sense to use a larger but
 > not necessarily practical example to show how to use the library.
 
-This is a fair characterisation.
-
 > If it’s not
 > easy to extend the countdown example to cover function types, I suppose it’s
 > fine to fill the gap with some practical (but maybe not-so-interesting)
 > examples.
 
-We can extend the countdown example to include functions.
+We can extend the countdown example to include functions, as described above.
 
 > As for the more theoretical part of the paper: Theorem 2.7 is claimed to be new
 > and doesn’t look easy to prove, although conceptually it’s not complicated. With
@@ -310,7 +320,7 @@ update.
 >    demonstrate the full power of your library (which I suppose is the ability to
 >    deal with function types)?
 
-Answered above.
+Answered above: we will make the countdown example use function types.
 
 > 3. Just curious: how (in)efficient is your solution to the countdown problem?
 
@@ -318,7 +328,7 @@ The example in the paper takes a few seconds to typecheck.
 
 > 4. How would you plan to shrink this paper to 25 LNCS pages?
 
-As suggested, we will shorten the discussion of theorems already proven
+As suggested above, we will shorten the discussion of theorems already proven
 elsewhere, and instead focus on a high-level summary of the classification of
 predicates, and leave the in-depth proofs for the novel work
 
@@ -403,7 +413,9 @@ Lemma 2.5 doesn't presuppose that A is a set.
 
 > * L559: Some motivation for yet another form of finiteness is needed here.
 
-Indeed. We will explain.
+Kuratowski finiteness is a standard notion of finiteness in constructive
+mathematics, arguably more fundamental than the other predicates presented.
+We will give more explanation as to the motivation in an update.
 
 > * L607: Some motivation is needed here. In fact I don’t see why it’s important
 >   to emphasise that finite sets form a category or a kind of topos. Wouldn’t it
@@ -440,7 +452,7 @@ think is less clean.
 
 It will be submitted as an artefact.
 
-> --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 > # Review 4
 > 
 > ## Overall evaluation
@@ -483,7 +495,6 @@ It may well be possible to prove the main theorems in the paper without
 computational univalence (although difficult: we use computation in a handful of
 the internal proofs, but this is probably not essential).
 
-> 
 > On the positive side, I found the paper highly readable, and I found the proof
 > search solution for the countdown problem quite fun.
 > 
