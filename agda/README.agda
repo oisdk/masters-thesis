@@ -3,188 +3,39 @@
 module README where
 
 ------------------------------------------------------------------------
--- Chapter 2: Programming and Proving in Cubical Agda
+-- Section 2: Finiteness Predicates
 ------------------------------------------------------------------------
 
--- 2.1: Basic Functional Programming in Agda
-import Snippets.Bool using
-  ( Bool -- 2.1
-  ; Boolean
-  ; a-boolean)
-
--- 2.2: Some Functions
-import Snippets.Bool using
-  ( not
-  ; module LambdaNot)
-
-import Function using
-  ( id
-  )
-
-import Snippets.Nat using
-  ( ℕ -- 2.2
-  ; add
-  ; _-_ -- 2.3
-  ; module NonCoveringSub
-  ; _+_ -- 2.4
-  ; module NonTermAdd
-  )
-
--- 2.3: An Expression Evaluator
-import Snippets.Expr using
-  ( Op -- 2.5
-  ; Expr -- 2.6
-  ; module IncorrectEval -- 2.7
-  )
-
--- 2.4: Safe Evaluation with Maybe
-import Data.Maybe using
-  ( Maybe -- 2.8
-  )
-
-import Snippets.Maybe using
-  ( maybe-two
-  ; maybe-func
-  )
-
-import Snippets.Expr using
-  ( _-_ -- 2.9
-  ; ⟦_⟧
-  )
-
-import Data.Maybe.Sugar using
-  ( pure
-  ; _<*>_
-  ; _>>=_ -- 2.10
-  )
-
--- 2.5: Statically Proving the Evaluation is Safe
-
-import Snippets.Expr using
-  ( example-eval
-  ; is-just
-  )
-
-import Data.Bool using
-  ( T
-  )
-
-import Data.Empty using
-  ( ⊥
-  )
-
-import Snippets.Introduction using
-  ( ⊤
-  )
-
-import Data.Empty using
-  ( ¬_
-  )
-
-import Snippets.Expr using
-  ( Pair -- 2.11
-  ; Valid -- 2.12
-  ; ⟦_⟧!
-  ; example-static-eval -- 2.13
-  )
-
-import Snippets.Implicits using
-  ( module Normal
-  ; module ImplicitType -- 2.14
-  )
-
--- 2.6: Equalities
-
-import Snippets.Equality using
-  ( module MLTTEquality -- 2.15
-  ; sym
-  )
-
--- 2.7: Some Proofs of Equality
-import Snippets.Equality using
-  ( refl -- 2.16
-  )
-
-import Snippets.Expr using
-  ( example-static-proof
-  )
-
-import Data.Nat.Properties using
-  ( +-assoc
-  )
-
--- 2.8: Quotients
-
-import Cubical.HITs.S1 using
-  ( S¹ -- 2.17
-  )
-
--- 2.9: Basic Type Formers
-
-import Snippets.Formers using
-  ( ℕ-or-String
-  ; Pair
-  ; fst
-  ; snd
-  ; pair
-  )
-
-import Data.Sigma using
-  ( Σ
-  ; _×_ -- 2.18
-  )
-
-import Data.Sum using
-  ( _⊎_ -- 2.19
-  )
-
--- 2.11: Comparing Classical and Constructive Proofs in Agda
-
-import Snippets.Classical using
-  ( Classical -- 2.20
-  ; lem
-  ; pure
-  ; _>>=_
-  )
-
-import Relation.Nullary.Stable using
-  ( Stable
-  )
-
-------------------------------------------------------------------------
--- Chapter 3: Finiteness Predicates
-------------------------------------------------------------------------
-
--- 3.1: Split Enumerability
+-- 2.1: Split Enumerability
 
 import Cardinality.Finite.SplitEnumerable.Container using
   ( ℰ!
   )
 
+import Container using
+  ( ⟦_⟧
+  )
+
+import Data.List using
+  (List)
+
 import Container.List using
-  ( List -- 3.1
+  ( List
   )
 
 import Data.Fin.Base using
   (module DisplayImpl)
 
-import Data.List using
-  (List)
-
-import Container using
-  ( ⟦_⟧ -- 3.3
+import Function.Fiber using
+  ( fiber
   )
 
 import Container.Membership using
-  ( _∈_ -- 3.4
-  )
-
-import Function.Fiber using
-  ( fiber -- 3.5
+  ( _∈_
   )
 
 import Function.Surjective using
-  ( SplitSurjective -- 3.6
+  ( SplitSurjective
   ; _↠!_
   )
 
@@ -198,11 +49,7 @@ import Data.Sigma.Properties using
 
 import Cardinality.Finite.SplitEnumerable using
   ( split-enum-is-split-surj
-  ; ℰ!⟨2⟩ -- 3.7
-  )
-
-import Function.Surjective.Properties using
-  ( ↠!-ident
+  ; ℰ!⟨2⟩
   )
 
 import Relation.Nullary.Discrete using
@@ -229,26 +76,31 @@ import Function.Surjective.Properties using
 import Cardinality.Finite.SplitEnumerable using
   (ℰ!⇒Discrete)
 
--- 3.2: Manifest Bishop Finiteness
+-- 2.2: Manifest Bishop Finiteness
 
 import Cardinality.Finite.SplitEnumerable using
-  ( module BoolSlop -- 3.8
+  ( module BoolSlop
   )
 
 import HLevels using
-  ( isContr -- 3.9
+  ( isContr
   )
 
 import Container.Membership using
-  ( _∈!_ -- 3.10
+  ( _∈!_
   )
 
 import Cardinality.Finite.ManifestBishop.Container using
   ( ℬ
   )
 
+import Data.List.Membership using
+  ( uniques
+  ; _\\_
+  )
+
 import Snippets.Equivalence using
-  ( isEquiv -- 3.11
+  ( isEquiv
   ; _≃_
   )
 
@@ -256,20 +108,15 @@ import Cardinality.Finite.ManifestBishop using
   ( ℬ⇔Fin≃
   )
 
--- 3.3: Cardinal Finiteness
-
-import Cardinality.Finite.SplitEnumerable using
-  ( ℰ!⟨2⟩
-  ; ℰ!⟨2⟩′
-  )
+-- 2.3: Cardinal Finiteness
 
 import HLevels using
-  ( isProp -- 3.12
+  ( isProp
   )
 
 import HITs.PropositionalTruncation using
-  ( ∥_∥ -- 3.13
-  ; rec -- 3.14
+  ( ∥_∥
+  ; rec
   )
 
 import Cardinality.Finite.Cardinal using
@@ -282,7 +129,7 @@ import Relation.Nullary.Discrete.Properties using
   )
 
 import HLevels using
-  ( isSet -- 3.15
+  ( isSet
   )
 
 import Relation.Nullary.Discrete.Properties using
@@ -290,7 +137,7 @@ import Relation.Nullary.Discrete.Properties using
   )
 
 import HITs.PropositionalTruncation using
-  ( rec→set -- 3.16
+  ( rec→set
   )
 
 import Cardinality.Finite.Cardinal using
@@ -315,20 +162,17 @@ import Data.List.Sort using
 
 import Cardinality.Finite.Cardinal using
   ( ¬⟨𝒞⋂ℬᶜ⟩
+  ; 𝒞⇒ℬ
   )
 
-import Snippets.Classical using
-  ( classical-impl
-  )
-
--- 3.4: Manifest Enumerability
+-- 2.4: Manifest Enumerability
 
 import Cubical.HITs.S1 using
-  ( S¹ -- 3.19
+  ( S¹
   )
 
 import HLevels using
-  ( isGroupoid -- 3.20
+  ( isGroupoid
   )
 
 import Cardinality.Finite.ManifestEnumerable.Container using
@@ -344,7 +188,7 @@ import Cubical.HITs.S1 using
   )
 
 import Function.Surjective using
-  ( Surjective -- 3.21
+  ( Surjective
   ; _↠_
   )
 
@@ -353,13 +197,13 @@ import Cardinality.Finite.ManifestEnumerable using
   )
 
 import HITs.PropositionalTruncation.Properties using
-  ( recompute -- 3.22
+  ( recompute
   )
 
--- 3.5: Kuratowski Finiteness
+-- 2.5: Kuratowski Finiteness
 
 import Algebra.Construct.Free.Semilattice using
-  ( 𝒦 -- 3.23
+  ( 𝒦
   )
 
 import Algebra.Construct.Free.Semilattice.Direct using
@@ -372,26 +216,26 @@ import Algebra.Construct.Free.Semilattice.Relation.Unary.Membership using
 
 import Cardinality.Finite.Kuratowski using
   ( 𝒦ᶠ
-  ; 𝒞⇔𝒦×Discrete -- 3.24
+  ; 𝒞⇔𝒦×Discrete
   )
 
 ------------------------------------------------------------------------
--- Chapter 4: Topos
+-- Section 3: Topos
 ------------------------------------------------------------------------
 
--- 4.1: Categories in HoTT
+-- 3.1: Categories in HoTT
 
 import Categories using
-  ( PreCategory -- 4.1
+  ( PreCategory
   )
 
--- 4.2: The Category of Sets
+-- 3.2: The Category of Sets
 
 import Categories.HSets using
   ( Ob
   )
 
--- 4.3: Closure
+-- 3.3: Closure
 
 import Cardinality.Finite.SplitEnumerable using
   ( _|Σ|_
@@ -411,24 +255,17 @@ import Cardinality.Finite.Cardinal using
   ; 𝒞⇒Choice
   )
 
--- 4.4: The Absence of the Subobject Classifier
-
-import Snippets.Topos using
-  ( Prop-univ
-  ; prop-resize
-  )
-
 ------------------------------------------------------------------------
--- Chapter 5: Search
+-- Section 4: Search
 ------------------------------------------------------------------------
 
 import Snippets.Bool using
   ( _∧_
-  ; ∧-assoc -- 5.1
+  ; ∧-assoc
   ; some-assoc
   )
 
--- 5.1: How to make the Typechecker do Automation
+-- 4.1: How to make the Typechecker do Automation
 
 import Snippets.Bool using
   ( obvious
@@ -437,7 +274,7 @@ import Snippets.Bool using
   ; extremely-obvious
   )
 
--- 5.2: Omniscience
+-- 4.2: Omniscience
 
 import Relation.Nullary.Omniscience using
   ( Exhaustible
@@ -468,44 +305,12 @@ import Cardinality.Finite.Kuratowski using
   ( 𝒦ᶠ⇒Prop-Omniscient
   )
 
--- 5.3: An Interface for Proof Automation
+-- 4.3: An Interface for Proof Automation
 
 import Cardinality.Finite.SplitEnumerable.Search using
   ( ∀?
   ; ∃?
   ; module PreInst
-  )
-
-import Snippets.Bool using
-  ( module PreInst′
-  )
-
-import Cardinality.Finite.SplitEnumerable.Search using
-  ( module WithInst
-  )
-
-import Snippets.Bool using
-  ( ∧-idem -- 5.2
-  ; module BadCurrying
-  )
-
-import Instance using
-  ( it
-  )
-
-import Data.Product.NAry using
-  ( Levels
-  ; max-level
-  ; Types
-  ; ⦅_⦆⁺
-  ; ⦅_⦆
-  ; ArgForm
-  ; _[_]→_
-  ; [_$]
-  ; Π[_$]
-  ; ⦅_⦆[_]→_
-  ; pi-arrs-plus
-  ; Π[_^_$]
   )
 
 import Cardinality.Finite.SplitEnumerable.Search using
@@ -517,7 +322,7 @@ import Snippets.Bool using
   ( ∧-comm
   )
 
--- 5.4: Countdown
+-- 4.4: Countdown
 
 import Countdown using
   ( ℰ!⟨Vec⟩
@@ -542,37 +347,4 @@ import Countdown using
   ; _!⟨_⟩!_
   ; Solution
   ; exampleSolutions
-  )
-
-------------------------------------------------------------------------
--- Chapter 6: Countably Infinite Types
-------------------------------------------------------------------------
-
--- 6.1: Countability
-
-import Cardinality.Infinite.Split using
-  ( ℵ!
-  )
-
-import Codata.Stream using
-  ( Stream
-  )
-
-import Cardinality.Infinite.Split using
-  ( ℵ!⇔ℕ↠!
-  )
-
--- 6.2: Closure
-
-import Data.List.Kleene using
-  ( _⁺
-  ; _⋆
-  )
-
-import Cardinality.Infinite.Split using
-  ( _*⋆_[_]
-  ; _*_
-  ; _|Σ|_
-  ; |star|
-  ; cantor-diag
   )
