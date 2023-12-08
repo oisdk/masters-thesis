@@ -67,6 +67,9 @@
 > ## Detailed comments for authors
 > 
 > Please make sure to respect the margins, see lines 70 and 83 (page 2) and Fig. 2 (page 19).
+
+Fixed.
+
 > 
 > --------------------------------------------------------------------------------
 > # Review 3
