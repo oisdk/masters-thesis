@@ -190,7 +190,41 @@ Agreed. We will include this information, as a table if there is space.
 > and (Manifest Bishop finiteness of X). Do this require a lot of work to
 > formalise? If not it would be a nice addition!
 
-At first glance it looks like it would be some work to formalise: 
+At first glance it looks like it would be some work to formalise: we would need
+to prove that a total order is isomorphic to a listing of the elements of a set.
+
+> I think it should be mentioned that manifest enumerable sets are precisely
+> quotients of finite sets by any (non necessarily decidable) equivalence
+> relation. See Section 4.3 for more thought on that.
+
+This is a valuable insight, and one that we will include.
+
+> The circle being finite seems counterintuitive to me, as its identity types
+> are provably infinite. Even worst the delooping BG for G any infinite group is
+> manifestly enumerable, so calling this a finiteness condition is a bit
+> misleading to me. Maybe point that out as a remark, or restrict finiteness to
+> sets.
+
+We will include this as a remark.
+
+> If Kuratowski finite sets form a Π-pretopos then LEM holds
+> [..]
+> I think that if the author(s) agree with this proof it should be included
+> somewhere in the article, as a subsection or as a remark.
+
+We will include the proof.
+
+> Cardinally finite types form a Boolean topos
+> [..]
+> We don’t think that formalising this would require a lot of work (we might be
+> wrong...), and if so we think it would be a lovely addition to the paper. We
+> think this at least warrant a remark, if the author(s) agree that our sketch
+> of proof is correct.
+
+We will include a remark.
+
+The small corrections and suggestions for improvements are extremely helpful,
+and we will incorporate the corrections into the article.
 
 --------------------------------------------------------------------------------
 > # Review 2
