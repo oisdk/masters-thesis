@@ -1,7 +1,7 @@
 # Rebuttal
 
 We would like to thank the reviewers for their time and their feedback.
-The comments were thourough and constructive, and will be helpful in improving
+The comments were thorough and constructive, and will be helpful in improving
 the paper.
 We were happy to see many positive comments, especially with regard to the
 quality of presentation:
