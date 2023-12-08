@@ -8,6 +8,7 @@ quality of presentation:
 
 > I found the paper highly readable, and I found the proof
 > search solution for the countdown problem quite fun.
+>
 >    -- Reviewer 4
 
 We think that reviewer 1 offers a short and accurate summary:
