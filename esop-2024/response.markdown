@@ -148,7 +148,32 @@ What follows is a response to each review in detail.
 > ## Attachment
 > 
 > https://easychair.org/conferences/review_attachment.cgi?rid=11211749&a=31781025&track=294214
-> 
+
+We would like to thank the reviewer for this especially thorough review.
+With regard to the corrections section:
+
+> While the proofs in the paper are perfectly rigorous, the intuitive
+> explanations sometimes implicitly rely on the law of excluded middle for
+> propositions. This should not be done in a constructive context, at least not
+> without explicitly mentioning that LEM is used. The clearest example is line
+> 333 where it is claimed that any proposition is isomorphic to ⊤ or ⊥. See
+> Section 5 for more details.
+
+This is indeed sloppy prose on our part. It will be fixed.
+
+> The introduction wrongly claims that Kuratowski finite sets form a Π-
+> pretopos, whereas the article proves that cardinally finite types forms a Π-
+> pretopos. This should be corrected. 
+
+Absolutely. We will fix this.
+
+> This is a typo rather than a mathematical
+> mistake, but its a very misleading typo. By the way we think that Kuratowski
+> finite sets forming a Π-pretopos is equivalent to the law of the excluded
+> middle, see Section 4.1 for more info.
+
+With regard to 
+
 --------------------------------------------------------------------------------
 > # Review 2
 > 
@@ -608,11 +633,12 @@ Fixed.
 > read right; maybe "ours is the first paper to provide a dependently typed and
 > verified solution to the countdown problem"
 
-Fixed
-> 
+Fixed.
+
 > 1189: "in dependently typed language" --> "in a dependently typed language"
-> 
-> 
+
+Fixed.
+ 
 > Other comments:
 > 
 > 38: It might be good to cite https://dl.acm.org/doi/10.1145/3209108.3209197 for
