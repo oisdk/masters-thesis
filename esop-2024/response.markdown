@@ -1,3 +1,48 @@
+# Rebuttal
+
+We would like to thank the reviewers for their time and their feedback.
+The comments were thourough and constructive, and will be helpful in improving
+the paper.
+We were happy to see many positive comments, especially with regards to the
+quality of presentation:
+
+> I found the paper highly readable, and I found the proof
+> search solution for the countdown problem quite fun.
+>
+> - Reviewer 4
+
+We think that reviewer 1 offers a short and accurate summary:
+
+> The submission presents a Cubical Agda library about finite sets, which will
+> certainly be useful to many future formalisation projects. It includes valuable
+> automated reasoning tools. Moreover the submission is pleasant and interesting
+> to read.
+
+This response will consist first of an outline of the changes we plan to make to
+the paper to address the comments, then a response to points made in multiple
+reviews, and finally detailed responses to each review in turn.
+
+--------------------------------------------------------------------------------
+
+## Proposed Changes
+
+- Our primary change will be to cut the paper down to fit it into the LNCS page
+  limit of 25. 
+  We plan to do this by mainly shortening the early sections of the paper, which
+  exposit finiteness predicates and theorems that are now new to this paper.
+  Instead of giving an in-depth explanation of these proofs we will keep the
+  discussion high-level, putting more focus on the novel work like Theorems 2.7
+  and 3.4.
+  
+  We have changed the formatting from acmart to LNCS and at present (without any
+  editing) the page count stands at 30, so we think this change will be
+  sufficient to get us under the 25-page limit.
+ 
+- Including 
+  
+
+
+
 > --------------------------------------------------------------------------------
 > # Review 1
 > 
@@ -136,16 +181,6 @@ We will emphasise this contribution more clearly in an update.
 > However, the countdown example doesn’t really demonstrate the aforementioned
 > ability: the exhaustive search is performed on a type which is complex but still
 > doesn’t involve functions, so I find the example somewhat unsatisfactory.
-
-Indeed, this is an oversight on our part.
-Originally, the type in question was meant to contain a function: the
-isomorphism between `Fin`s, used to represent permutations.
-However, as noted in the paper, this type doesn't work for efficiency reasons,
-so we used a different representation of permutations.
-Missing from the paper (but to be included in an update) is a proof that the two
-representations are isomorphic, and therefore equivalent, resulting in a
-finiteness proof over a type which *does* contain a function.
-
 > Also,
 > while using a larger example is a good idea, in this case exhaustive search is
 > not a good way to solve the countdown problem. 
@@ -268,7 +303,8 @@ The condition that `Discrete A` is a proposition is given as:
     = ∀ (x y : Discrete A) → x ≡ y
 
 Meaning that, when trying to prove that the type `Discrete A` is a proposition,
-we have available to us two proofs that `A` is discrete.
+we have available to us two proofs that `A` is discrete, so we can indeed rely 
+on `A` being a set in this context.
 
 >   The statement of Lemma 2.5
 >   seems to suppose A is a set however, so this last part of the proof isn’t
