@@ -53,6 +53,9 @@ reviews, and finally, detailed responses to each review in turn.
   
 - We will also address the more minor points made (corrections, typos, etc.),
   detailed below.
+  
+We are confident these changes are relatively minor and can be fully addressed
+for the camera-ready version.
 
 ## Response to Points in Multiple Reviews
 
@@ -172,7 +175,21 @@ Absolutely. We will fix this.
 > finite sets forming a Π-pretopos is equivalent to the law of the excluded
 > middle, see Section 4.1 for more info.
 
-With regard to 
+With regard to the suggestions for improvements:
+
+> Fig 1 is great! Since all notions of X being finite in the paper correspond to
+> having a map from Fin(n) to X with certain property (sometimes as data and
+> sometimes by asserting their mere existence), I think it would be very helpful
+> to give a table summarising this information as a complement to Fig 1.
+
+Agreed. We will include this information, as a table if there is space.
+
+> The proof of Theorem 2.7 is super nice! I think it can be extended for any X
+> to an equivalence between the types (Cardinal finiteness X + total order on X)
+> and (Manifest Bishop finiteness of X). Do this require a lot of work to
+> formalise? If not it would be a nice addition!
+
+At first glance it looks like it would be some work to formalise: 
 
 --------------------------------------------------------------------------------
 > # Review 2
