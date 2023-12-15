@@ -74,8 +74,11 @@ _≢ᶠ_ _≡ᶠ_ : Fin n → Fin n → Type _
 n ≢ᶠ m = T (not (discreteFin n m .does))
 n ≡ᶠ m = T (discreteFin n m .does)
 
+FInjection : (Fin n → Fin m) → Type
+FInjection f = ∀ {x y} → x ≢ᶠ y → f x ≢ᶠ f y
+
 _F↣_ : ℕ → ℕ → Type₀
-n F↣ m = Σ[ f ⦂ (Fin n → Fin m) ] ∀ {x y} → x ≢ᶠ y → f x ≢ᶠ f y
+n F↣ m = Σ[ f ⦂ (Fin n → Fin m) ] FInjection f
 
 shift : (x y : Fin (suc n)) → x ≢ᶠ y → Fin n
 shift          f0     (fs y)  x≢y = y
