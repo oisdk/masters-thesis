@@ -10,14 +10,6 @@ Perm (suc n) = Fin (suc n) × Perm n
 
 private variable n m : ℕ
 
-map-maybe : (A → B) → Maybe A → Maybe B
-map-maybe f (just x) = just (f x)
-map-maybe _ nothing  = nothing
-
-maybe : (A → B) → B → Maybe A → B
-maybe f b f0 = b
-maybe f b (fs x) = f x
-
 shift : Fin (suc n) → Fin n → Fin (suc n)
 shift f0 = fs
 shift {n = suc _} (fs i) f0     = f0
@@ -118,9 +110,60 @@ tabulate∘index (suc n) (x , xs) =
   (x , tabulate (index xs , index-inj xs)) ≡⟨ cong (x ,_) (tabulate∘index n xs) ⟩
   (x , xs) ∎
 
-Perm⇔ : ∀ n → Perm n ⇔ n F↣ n
-Perm⇔ n .fun x .fst = index x
-Perm⇔ n .fun x .snd = index-inj x
-Perm⇔ n .inv = tabulate
-Perm⇔ n .rightInv f  = Σ≡Prop isProp-inj (funExt (index∘tabulate n f))
-Perm⇔ n .leftInv = tabulate∘index n
+T? : (b : Bool) → Dec (T b)
+T? false = no (λ z → z)
+T? true = yes tt
+
+find : Perm n → Fin n → Fin n
+find {n = suc _} (x , xs) y with T? (not (x ≡ᶠᵇ y))
+... | no  x≡y = f0
+... | yes x≢y = fs (find xs (pull x y x≢y))
+
+¬x≢x : (x : Fin n) → ¬ (x ≢ᶠ x)
+¬x≢x {n = suc _} (fs x) p = ¬x≢x x p
+
+find∘ind : ∀ (xs : Perm n) i → find xs (index xs i) ≡ i
+find∘ind {n = suc _} (x , xs) f0 with T? (not (x ≡ᶠᵇ x))
+... | yes x≢x = ⊥-elim (¬x≢x x x≢x)
+... | no  res = refl
+find∘ind {n = suc _} (x , xs) (fs y) with T? (not (x ≡ᶠᵇ shift x (index xs y)))
+... | no  x≡ = ⊥-elim (x≡ (pull≢shift  x (index xs y)))
+... | yes x≢ = cong fs (cong (find xs) (cong (pull x _) (isPropT _ _) ; pull∘shift x (index xs y)) ; find∘ind xs y)
+
+¬x≢y→x≡y : (x y : Fin n) → ¬ x ≢ᶠ y → x ≡ y
+¬x≢y→x≡y {n = suc _} f0 f0 p = refl
+¬x≢y→x≡y {n = suc _} f0 (fs x) p = ⊥-elim (p tt)
+¬x≢y→x≡y {n = suc _} (fs x) f0 p = ⊥-elim (p tt)
+¬x≢y→x≡y {n = suc _} (fs x) (fs y) p = cong fs (¬x≢y→x≡y x y p)
+
+ind∘find : ∀ (p : Perm n) i → index p (find p i) ≡ i
+ind∘find {n = suc _} (p , ps) i with T? (not (p ≡ᶠᵇ i))
+... | yes p≢i = cong (shift p) (ind∘find ps _) ; shift∘pull p i p≢i
+... | no  p≡i = ¬x≢y→x≡y p i p≡i
+
+≢→≢ᶠ : (x y : Fin n) → x ≢ y → x ≢ᶠ y
+≢→≢ᶠ {n = suc _} f0 f0 p = ⊥-elim (p refl)
+≢→≢ᶠ {n = suc _} f0 (fs x) p = tt
+≢→≢ᶠ {n = suc _} (fs x) f0 p = tt
+≢→≢ᶠ {n = suc _} (fs x) (fs y) p = ≢→≢ᶠ x y (p ∘ cong fs)
+
+open import Data.Fin.Properties using (pred; isSetFin)
+open import Data.Maybe.Properties using (just≢nothing; nothing≢just)
+
+≡→≡ᶠ :  (x y : Fin n) → x ≡ y → ¬ (x ≢ᶠ y)
+≡→≡ᶠ {n = suc _} f0 (fs x) p q = nothing≢just p
+≡→≡ᶠ {n = suc _} (fs x) f0 p q = just≢nothing p
+≡→≡ᶠ {n = suc (suc _)} (fs x) (fs y) p q = ≡→≡ᶠ x y (cong pred p) q
+
+⇔→F↣ : (i : Fin n ⇔ Fin n) → FInjection (i .fun)
+⇔→F↣ i x y p = ≢→≢ᶠ (i .fun x) (i .fun y)
+  λ fx≡fy → ≡→≡ᶠ x y (sym (i .leftInv x) ; cong (i .inv) fx≡fy ; i .leftInv y) p
+
+Perm⇔ : ∀ n → Perm n ⇔ (Fin n ⇔ Fin n)
+Perm⇔ n .fun p .fun = index p
+Perm⇔ n .fun p .inv = find p
+Perm⇔ n .fun p .rightInv = ind∘find p
+Perm⇔ n .fun p .leftInv = find∘ind p
+Perm⇔ n .inv i = tabulate (i .fun , ⇔→F↣ i)
+Perm⇔ n .rightInv i = iso-fun-inj isSetFin _ _ (funExt (index∘tabulate n (i .fun , ⇔→F↣ i)))
+Perm⇔ n .leftInv  p = cong tabulate (Σ≡Prop isProp-inj refl) ; tabulate∘index n p

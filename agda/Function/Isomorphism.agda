@@ -56,12 +56,24 @@ Equivalence.trans ⇔-equiv = trans-⇔
 open import HLevels
 open import Equiv
 
+equivToIso∘isoToEquiv : isSet A → (x : A ⇔ B) → equivToIso (isoToEquiv x) ≡ x
+equivToIso∘isoToEquiv isSetA x i .fun = x .fun
+equivToIso∘isoToEquiv isSetA x i .inv = x .inv
+equivToIso∘isoToEquiv isSetA x i .rightInv = x .rightInv
+equivToIso∘isoToEquiv isSetA x i .leftInv y = isSetA _ y (equivToIso (isoToEquiv x) .leftInv y) (x .leftInv y) i
+
 iso⇔equiv : isSet A → (A ⇔ B) ⇔ (A ≃ B)
 iso⇔equiv isSetA .fun = isoToEquiv
 iso⇔equiv isSetA .inv = equivToIso
 iso⇔equiv isSetA .rightInv x i .fst = x .fst
 iso⇔equiv isSetA .rightInv x i .snd = isPropIsEquiv (x .fst) (isoToEquiv (equivToIso x) .snd) (x .snd) i
-iso⇔equiv isSetA .leftInv x i .fun = x .fun
-iso⇔equiv isSetA .leftInv x i .inv = x .inv
-iso⇔equiv isSetA .leftInv x i .rightInv = x .rightInv
-iso⇔equiv isSetA .leftInv x i .leftInv y = isSetA _ y (equivToIso (isoToEquiv x) .leftInv y) (x .leftInv y) i
+iso⇔equiv isSetA .leftInv = equivToIso∘isoToEquiv isSetA
+
+open import Function.Injective
+open import Cubical.Foundations.Equiv using (equivEq)
+
+iso-fun-inj : isSet A → Injective (Iso.fun {ℓ = a} {ℓ' = b} {A = A} {B = B})
+iso-fun-inj isSetA x y p =
+  sym (equivToIso∘isoToEquiv isSetA x)
+  ; cong equivToIso (equivEq {e = isoToEquiv x} {f = isoToEquiv y} p)
+  ; equivToIso∘isoToEquiv isSetA y
