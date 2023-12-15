@@ -26,18 +26,15 @@ push∘shift f0 (fs x) _ = refl
 push∘shift {n = suc _} (fs x) f0 _ = refl
 push∘shift {n = suc _} (fs x) (fs y) p = cong fs (push∘shift x y p)
 
-shift∘push′ : ∀ (x : Fin (suc n)) y →  (p : x ≢ᶠ push x y) → shift x (push x y) p ≡ y
-shift∘push′ f0 y _ = refl
-shift∘push′ {n = suc _} (fs x) f0 _ = refl
-shift∘push′ {n = suc _} (fs x) (fs y) p = cong fs (shift∘push′ x y p)
-
 shift≢push : ∀ (x : Fin (suc n)) y → x ≢ᶠ push x y
 shift≢push f0 y = tt
 shift≢push {n = suc _} (fs x) f0 = tt
 shift≢push {n = suc _} (fs x) (fs y) = shift≢push x y
 
 shift∘push : ∀ (x : Fin (suc n)) y → shift x (push x y) (shift≢push x y) ≡ y
-shift∘push x y = shift∘push′ x y (shift≢push x y)
+shift∘push f0 y = refl
+shift∘push {n = suc _} (fs x) f0 = refl
+shift∘push {n = suc _} (fs x) (fs y) = cong fs (shift∘push x y)
 
 tabulate : (n F↣ n) → Perm n
 tabulate {zero}  _ = tt
@@ -64,7 +61,7 @@ push-inj {n = suc _} (fs x) (fs y) (fs z) p = push-inj x y z p
 ≢ᶠ-sym {n = suc _} (fs x) (fs y) p = ≢ᶠ-sym x y p
 
 index-inj : (xs : Perm n) → FInjection (index xs)
-index-inj {n = zero} tt {()} {y} p
+index-inj {n = zero} tt {()} p
 index-inj {n = suc n} xs {f0} {fs x} p = shift≢push (xs .fst) _
 index-inj {n = suc n} xs {fs x} {f0} p = ≢ᶠ-sym (xs .fst) (push (xs .fst) (index (xs .snd) x)) (shift≢push (xs .fst) _)
 index-inj {n = suc n} (x , xs) {fs i} {fs j} p = push-inj x _ _ (index-inj xs p)
@@ -80,7 +77,7 @@ tabulate∘index (suc n) (x , xs) =
   cong (x ,_) (cong tabulate (Σ≡Prop isProp-inj (funExt λ i → shift∘push x (index xs i))) ; tabulate∘index n xs) 
 
 _≢?_ : (x y : Fin n) → Dec (x ≢ᶠ y)
-x ≢? y = T? (not ((x ≟ y) .does))
+x ≢? y = T? (not (does (x ≟ y)))
 
 find : Perm n → Fin n → Fin n
 find {n = suc _} (x , xs) y with x ≢? y
@@ -89,8 +86,8 @@ find {n = suc _} (x , xs) y with x ≢? y
 
 ¬x≢x : (x : Fin n) → ¬ (x ≢ᶠ x)
 ¬x≢x x x≢x with x ≟ x
-¬x≢x x x≢x | yes p = x≢x
-¬x≢x x x≢x | no ¬p = ¬p refl
+... | yes p = x≢x
+... | no ¬p = ¬p refl
 
 find∘ind : ∀ (xs : Perm n) i → find xs (index xs i) ≡ i
 find∘ind {n = suc _} (x , xs) f0 with x ≢? x
